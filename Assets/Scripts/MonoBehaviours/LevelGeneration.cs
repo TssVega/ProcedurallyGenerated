@@ -9,65 +9,40 @@ using UnityEngine.Tilemaps;
 
 public class LevelGeneration : MonoBehaviour {
 
-    public string seed;
     public bool generateDebugNumbersForWalls;
-    // Use other seeds than given seed
-    public bool useRandomSeed;
-    // Use the marching squares algorithm to place sprites to neccessary places
-    public bool marchingSquares;
     // If the rooms should be connected
-    public bool connectRooms;
-    // Sides and positions of exit points
     public LevelLayout layout;
-    // First noise density
-    
-    // Portal instance
-    public GameObject portal;
-    // Level start points
-    public GameObject startPoint;
+    // Tile database
+    public TileDatabase tileDatabase;
     // Chest game object
-    public GameObject chest;
-    public List<GameObject> chests = new List<GameObject>();
     [Header("Tilemaps")]
     private Tilemap groundTilemap;
     private Tilemap tilemap;
-    private Tilemap grassTilemap;
     private Tilemap debugTilemap;
-    private Tilemap plantTilemap;
-    // Tile database
-    public TileDatabase tileDatabase;
+    private Tilemap plantTilemap;   
     // A star path instance to scan walls
     private AstarPath path;
     // Two dimensional map array
     private int[,] map;
-    private int[,] grassMap;
-    private int[,] grassTypeMap;
     private int[,] plantMap;
     // Psuedo random number for generating chests and enemies
     System.Random pseudoRandomForLevel;
     System.Random pseudoRandomForGround;
     System.Random pseudoRandomForWalls;
-    System.Random pseudoRandomForGrass;
     System.Random pseudoRandomForPlants;
-    private Player player;
-    // Generate map at the start
-    private void Awake() {
-        // GenerateMap();
-    }
     private void Start() {
         path = FindObjectOfType<AstarPath>();
-        // StartCoroutine(ScanPath());
+        SetLayout(layout);
+    }
+    private void Update() {
+        if(Input.GetKeyDown(KeyCode.Space)) {
+            GenerateMap();
+        }
     }
     private IEnumerator ScanPath() {
         yield return new WaitForSeconds(0.2f);
         if(path) {
             path.Scan();
-        }
-    }
-    // Generate map every time space is pressed
-    private void Update() {
-        if(Input.GetKeyDown("space")) {
-            GenerateMap();
         }
     }
     public void SetLayout(LevelLayout _layout) {
@@ -76,12 +51,8 @@ public class LevelGeneration : MonoBehaviour {
         pseudoRandomForWalls = new System.Random(layout.seed.GetHashCode());
         pseudoRandomForLevel = new System.Random(layout.seed.GetHashCode());
         pseudoRandomForGround = new System.Random(layout.seed.GetHashCode());
-        pseudoRandomForGrass = new System.Random(layout.seed.GetHashCode());
         if(layout.generateWalls) {
             GenerateMap();
-        }
-        else {
-            GenerateExitPoints();
         }
     }
     // Generate random map
@@ -92,162 +63,37 @@ public class LevelGeneration : MonoBehaviour {
         if(!tilemap) {
             tilemap = GameObject.FindWithTag("Grid").transform.GetChild(1).GetComponent<Tilemap>();
         }
-        if(!grassTilemap) {
-            // denseGrassTilemap = GameObject.FindWithTag("GridGrass").transform.GetChild(0).GetComponent<Tilemap>();
-            grassTilemap = GameObject.FindWithTag("Grid").transform.GetChild(2).GetComponent<Tilemap>();
-        }
+        /*
         if(!plantTilemap) {
             plantTilemap = GameObject.FindWithTag("Grid").transform.GetChild(3).GetComponent<Tilemap>();
         }
         if(!debugTilemap) {
             debugTilemap = GameObject.FindWithTag("Grid").transform.GetChild(4).GetComponent<Tilemap>();
         }
-        
+        */
         map = new int[layout.width, layout.height];
-        if(layout.generateGrass) {
-            grassMap = new int[layout.width, layout.height];
-            grassTypeMap = new int[layout.width, layout.height];
-        }
         if(layout.generatePlants) {
             plantMap = new int[layout.width, layout.height];
         }
-        if(randomFill) {
+        if(layout.randomFill) {
             RandomFillMap();
         }
-        if(smooth) {
+        if(layout.smooth) {
             // Smooth edges smoothLevel times
-            for(int i = 0; i < smoothLevel; i++) {
+            for(int i = 0; i < layout.smoothLevel; i++) {
                 SmoothMap();
             }
         }
-        if(generateExitPoints) {
-            GenerateExitPoints();
-        }
-        if(process) {
+        if(layout.process) {
             ProcessMap();
         }
-        if(draw) {
+        if(layout.draw) {
             DrawMap();
         }
-        if(layout.putChests) {
-            PutChests();
-        }
-        if(draw) {
+        if(layout.draw) {
             FillBackground();
         }
-        if(layout.generateGrass) {
-            GenerateGrass();
-        }
-        if(layout.generatePlants) {
-            GeneratePlants();
-        }
         StartCoroutine(ScanPath());
-        player = FindObjectOfType<Player>();
-        if(player) {
-            LoadLevelData(layout.seed, player.saveSlot);
-        }
-    }
-    public void SaveLevelData() {
-        SaveSystem.SaveLevel(this, FindObjectOfType<Player>().saveSlot);
-    }
-    public void AutoSaveLevel() {
-        SaveSystem.SaveLevel(this, 0);
-    }
-    public void LoadLevelData(string seed, int slot) {
-        FileStream stream;
-        bool canUse = false;
-        GameMaster gameMaster = FindObjectOfType<GameMaster>();
-        LevelData data = SaveSystem.LoadLevel(layout.seed, slot);
-        string path = Application.persistentDataPath + "/LevelData" + slot.ToString() + "_" + seed + ".tss";
-        if(File.Exists(path)) {
-            canUse = true;
-            //stream = new FileStream(path, FileMode.Open);
-        }
-        /*
-        else {
-            canUse = false;
-            //stream = null;
-        }
-        */
-        if(canUse) {
-            using(stream = new FileStream(path, FileMode.Open)) {
-                if(File.Exists(path) && stream.Length > 0) {
-                    for(int i = 0; i < chests.Count; i++) {
-                        for(int j = 0; j < 5; j++) {
-                            if(data != null) {
-                                chests[i].GetComponent<Chest>().items[j] = gameMaster.itemData.items[data.chestItemsIndex[i][j]];
-                            }
-                            else if(chests.Count > 0) {
-                                chests[i].GetComponent<Chest>().items[j] = layout.chestList[i].chests[j];
-                            }
-                        }
-                    }
-                    Debug.LogWarning("Put saved items in chests");
-                }
-                else {
-                    for(int i = 0; i < chests.Count; i++) {
-                        for(int j = 0; j < 5; j++) {
-                            if(chests[i]) {
-                                chests[i].GetComponent<Chest>().items = layout.defaultChestItems[i].items.ToArray();
-                            }
-                        }
-                    }
-                    Debug.LogWarning("Put default items in chests");
-                }
-            }
-        }
-        else {
-            Debug.LogWarning("No file for level data found");
-        }
-    }
-    private void GeneratePlants() {
-        for(int i = 0; i < layout.plantFrequency; i++) {
-            bool validCoordinate = false;
-            Vector3Int plantPos = Vector3Int.zero;
-            Coordinate plantCoordinate;
-            while(!validCoordinate) {
-                plantPos = GetRandomLocation();
-                plantCoordinate = ConvertToCoordinates(plantPos);
-                if(plantMap[plantCoordinate.tileX, plantCoordinate.tileY] == 0 && grassMap[plantCoordinate.tileX, plantCoordinate.tileY] != 0) {
-                    plantMap[plantCoordinate.tileX, plantCoordinate.tileY] = 1;
-                    validCoordinate = true;
-                }
-            }
-            plantTilemap.SetTile(plantPos, tileDatabase.plants[pseudoRandomForPlants.Next(0, tileDatabase.plants.Count)]);
-        }
-    }
-    private void GenerateGrass() {
-        // Map out the grass depending on the grass density
-        for(int x = 0; x < layout.width; x++) {
-            for(int y = 0; y < layout.height; y++) {
-                grassMap[x, y] = 0;
-            }
-        }
-        for(int i = 0; i < 3; i++) {
-            for(int x = 0; x < layout.width; x++) {
-                for(int y = 0; y < layout.height; y++) {
-                    if(grassMap[x, y] > 0) {
-                        continue;
-                    }
-                    if(map[x, y] == 1 && GetSurroundingWallCount(x, y) < 8 && i == 0) {
-                        grassMap[x, y] = 3;
-                    }
-                    else if(map[x, y] == 0 && GetSurroundingWallCount(x, y) > 0 && i == 1) {
-                        grassMap[x, y] = 2;
-                    }
-                    else if(map[x, y] == 0 && GetSurroundingGrassCount(x, y, 2) > 0 && i == 2) {
-                        grassMap[x, y] = 1;
-                    }
-                }
-            }
-        }
-        for(int i = 2; i >= 1; i--) {
-            FillGrass(i);
-        }
-        DrawGrass();
-        for(int i = 2; i >= 1; i--) {
-            FixGrassEdges(i);
-        }
     }
     private int ConvertTileIdToTilesetIndex(int id) {
         if(new int[] { 7, 15, 39, 47, 135, 143, 167, 175 }.Contains(id)) {
@@ -300,145 +146,6 @@ public class LevelGeneration : MonoBehaviour {
             return -1;
         }
     }
-    private void FillGrass(int grassLevel) {
-        int repeatAmount = 2;
-        int surroundingGrassCount = 6;
-        for(int i = 0; i < repeatAmount; i++) {
-            for(int x = 0; x < layout.width; x++) {
-                for(int y = 0; y < layout.height; y++) {
-                    if(map[x, y] == 1 || grassMap[x, y] == grassLevel) {
-                        continue;
-                    }
-                    if(GetSurroundingGrassCount(x, y, grassLevel) >= surroundingGrassCount) {
-                        grassMap[x, y] = grassLevel;
-                    }
-                }
-            }
-        }
-    }
-    private void DrawGrass() {
-        for(int x = 0; x < layout.width; x++) {
-            for(int y = 0; y < layout.height; y++) {
-                Vector3Int tileCoordinate = new Vector3Int(x - layout.width / 2, y - layout.height / 2, 0);
-                if(grassMap[x, y] == 3) {
-                    //if(generateDebugNumbersForGrassLevel)
-                    //debugTilemap.SetTile(tileCoordinate, tileDatabase.debugNumbers[3]);
-                    denseGrassTilemap.SetTile(tileCoordinate, tileDatabase.grassTiles[14]);
-                    // lessDenseGrassTilemap.SetTile(tileCoordinate, tileDatabase.lessDenseGrass[pseudoRandomForGrass.Next(0, 4)]);
-                }
-                else if(grassMap[x, y] == 2) {
-                    //if(generateDebugNumbersForGrassLevel)
-                    //debugTilemap.SetTile(tileCoordinate, tileDatabase.debugNumbers[2]);
-                    denseGrassTilemap.SetTile(tileCoordinate, tileDatabase.grassTiles[14]);
-                    //sparseGrassTilemap.SetTile(tileCoordinate, tileDatabase.sparseGrass[pseudoRandomForGrass.Next(0, 8)]);
-                }
-                else if(grassMap[x, y] == 1) {
-                    //if(generateDebugNumbersForGrassLevel)
-                    //debugTilemap.SetTile(tileCoordinate, tileDatabase.debugNumbers[1]);
-                    denseGrassTilemap.SetTile(tileCoordinate, tileDatabase.grassTiles[14]);
-                }
-                /*
-                else {
-                    if(generateDebugNumbersForGrassLevel)
-                        //debugTilemap.SetTile(tileCoordinate, tileDatabase.debugNumbers[0]);
-                }
-                */
-            }
-        }
-    }
-    private void FixGrassEdges(int grassLevel) {
-        for(int x = 0; x < layout.width; x++) {
-            for(int y = 0; y < layout.height; y++) {
-                Vector3Int tileCoordinate = new Vector3Int(x - layout.width / 2, y - layout.height / 2, 0);
-                int grassTileId = 0;
-                if(map[x, y] == 1) {
-                    continue;
-                }
-                // TODO: Check exceptions and return manually. Dont try catch hundreds of times in a frame
-                if(grassMap[x, y] == grassLevel) {
-                    try {
-                        if(grassMap[x - 1, y + 1] >= grassLevel) {
-                            // TopLeft
-                            grassTileId += 128;
-                        }
-                        if(grassMap[x, y + 1] >= grassLevel) {
-                            // Top
-                            grassTileId += 64;
-                        }
-                        if(grassMap[x + 1, y + 1] >= grassLevel) {
-                            // TopRight
-                            grassTileId += 32;
-                        }
-                        if(grassMap[x + 1, y] >= grassLevel) {
-                            // Right
-                            grassTileId += 16;
-                        }
-                        if(grassMap[x + 1, y - 1] >= grassLevel) {
-                            // BottomRight
-                            grassTileId += 8;
-                        }
-                        if(grassMap[x, y - 1] >= grassLevel) {
-                            // Bottom
-                            grassTileId += 4;
-                        }
-                        if(grassMap[x - 1, y - 1] >= grassLevel) {
-                            // BottomLeft
-                            grassTileId += 2;
-                        }
-                        if(grassMap[x - 1, y] >= grassLevel) {
-                            // Left
-                            grassTileId += 1;
-                        }
-                    }
-                    catch(IndexOutOfRangeException) {
-                        continue;
-                    }
-                    if(x == 0 || x == layout.width - 1 || y == 0 || y == layout.height - 1) {
-                        continue;
-                    }
-                    else {
-                        int id = ConvertTileIdToTilesetIndex(grassTileId);
-                        if(id < 0) {
-                            grassMap[x, y] = 0;
-                            denseGrassTilemap.SetTile(tileCoordinate, null);
-                            continue;
-                        }
-                        grassMap[x, y] = grassLevel;
-                        if(grassLevel == 1) {
-                            denseGrassTilemap.SetTile(tileCoordinate, tileDatabase.grassTiles[id]);
-                        }
-                    }
-                }
-                else {
-                    continue;
-                }
-            }
-        }
-    }
-    private void PutChests() {
-        for(int i = 0; i < layout.chestList.Count; i++) {
-            if(layout.defaultChestItems.Count > i && layout.defaultChestItems[i] != null && layout.defaultChestItems[i].randomizeLocation) {
-                Vector3Int randomLocation = GetRandomLocation();
-                Debug.Log("Chest coordinate: " + randomLocation);
-                GameObject clone = Instantiate(chest, randomLocation, Quaternion.identity);
-                layout.chestList[i].chests = layout.defaultChestItems[i].items;
-                clone.GetComponent<Chest>().items = layout.chestList[i].chests.ToArray();
-                clone.GetComponent<Chest>().chestNumber = i;
-                chests.Add(clone);
-            }
-            else {
-                /*
-                // Vector3Int location = layout.chests[i].customLocation;
-                location = new Vector3Int(location.x - width / 2, location.y - height / 2, 0);
-                Debug.Log("Chest coordinate: " + location);
-                GameObject clone = Instantiate(chest, location, Quaternion.identity);
-                clone.GetComponent<Chest>().items = layout.chests[i].ToArray();
-                clone.GetComponent<Chest>().chestNumber = i;
-                chests.Add(clone);
-                */
-            }
-        }
-    }
     public Vector3Int GetRandomLocation() {
         bool valid = false;
         Vector3Int location = Vector3Int.zero;
@@ -452,90 +159,12 @@ public class LevelGeneration : MonoBehaviour {
         location = new Vector3Int(location.x - layout.width / 2, location.y - layout.height / 2, 0);
         return location;
     }
-    private void GenerateExitPoints() {
-        if(layout.leftExit.generationType == GenerationType.PortalAndStart) {
-            Vector3Int tileCoordinate = new Vector3Int(layout.leftExit.portalPosition.x - layout.width / 2, layout.leftExit.portalPosition.y - layout.height / 2, 0);
-            map[layout.leftExit.portalPosition.x, layout.leftExit.portalPosition.y] = 0;
-            tilemap.SetTile(tileCoordinate, null);
-            groundTilemap.SetTile(tileCoordinate, tileDatabase.dirtGround[0]);
-            GameObject portalWest = Instantiate(portal, tileCoordinate, Quaternion.identity);
-            portalWest.GetComponent<LoadNewScene>().sceneName = layout.leftExit.sceneToGo;
-            portalWest.GetComponent<LoadNewScene>().exitPositionName = "east";
-            Vector3Int startPointPosition = new Vector3Int(tileCoordinate.x + 1, tileCoordinate.y, 0);
-            layout.leftExit.exitPositionName = "west";
-            layout.leftExit.exitPosition = startPointPosition;
-            // GameObject westStart = Instantiate(startPoint, startPointPosition, Quaternion.identity);
-            // westStart.GetComponent<StartPoint>().positionName = "west";
-        }
-        if(layout.topExit.generationType == GenerationType.PortalAndStart) {
-            Vector3Int tileCoordinate = new Vector3Int(layout.topExit.portalPosition.x - layout.width / 2, layout.topExit.portalPosition.y - layout.height / 2, 0);
-            map[layout.topExit.portalPosition.x, layout.topExit.portalPosition.y] = 0;
-            tilemap.SetTile(tileCoordinate, null);
-            groundTilemap.SetTile(tileCoordinate, tileDatabase.dirtGround[0]);
-            GameObject portalNorth = Instantiate(portal, tileCoordinate, Quaternion.identity);
-            portalNorth.GetComponent<LoadNewScene>().sceneName = layout.topExit.sceneToGo;
-            portalNorth.GetComponent<LoadNewScene>().exitPositionName = "south";
-            Vector3Int startPointPosition = new Vector3Int(tileCoordinate.x, tileCoordinate.y - 1, 0);
-            layout.topExit.exitPositionName = "north";
-            layout.topExit.exitPosition = startPointPosition;
-            // GameObject northStart = Instantiate(startPoint, startPointPosition, Quaternion.identity);
-            // northStart.GetComponent<StartPoint>().positionName = "north";
-        }
-        if(layout.rightExit.generationType == GenerationType.PortalAndStart) {
-            Vector3Int tileCoordinate = new Vector3Int(layout.rightExit.portalPosition.x - layout.width / 2, layout.rightExit.portalPosition.y - layout.height / 2, 0);
-            map[layout.rightExit.portalPosition.x, layout.rightExit.portalPosition.y] = 0;
-            tilemap.SetTile(tileCoordinate, null);
-            groundTilemap.SetTile(tileCoordinate, tileDatabase.dirtGround[0]);
-            GameObject portalEast = Instantiate(portal, tileCoordinate, Quaternion.identity);
-            portalEast.GetComponent<LoadNewScene>().sceneName = layout.rightExit.sceneToGo;
-            portalEast.GetComponent<LoadNewScene>().exitPositionName = "west";
-            Vector3Int startPointPosition = new Vector3Int(tileCoordinate.x - 1, tileCoordinate.y, 0);
-            layout.rightExit.exitPositionName = "east";
-            layout.rightExit.exitPosition = startPointPosition;
-            // GameObject eastStart = Instantiate(startPoint, startPointPosition, Quaternion.identity);
-            // eastStart.GetComponent<StartPoint>().positionName = "east";
-        }
-        if(layout.bottomExit.generationType == GenerationType.PortalAndStart) {
-            Vector3Int tileCoordinate = new Vector3Int(layout.bottomExit.portalPosition.x - layout.width / 2, layout.bottomExit.portalPosition.y - layout.height / 2, 0);
-            map[layout.bottomExit.portalPosition.x, layout.bottomExit.portalPosition.y] = 0;
-            tilemap.SetTile(tileCoordinate, null);
-            groundTilemap.SetTile(tileCoordinate, tileDatabase.dirtGround[0]);
-            GameObject portalSouth = Instantiate(portal, tileCoordinate, Quaternion.identity);
-            portalSouth.GetComponent<LoadNewScene>().sceneName = layout.bottomExit.sceneToGo;
-            portalSouth.GetComponent<LoadNewScene>().exitPositionName = "north";
-            Vector3Int startPointPosition = new Vector3Int(tileCoordinate.x, tileCoordinate.y + 1, 0);
-            layout.bottomExit.exitPositionName = "south";
-            layout.bottomExit.exitPosition = startPointPosition;
-            // GameObject southStart = Instantiate(startPoint, startPointPosition, Quaternion.identity);
-            // southStart.GetComponent<StartPoint>().positionName = "south";
-        }
-        if(layout.extraExits.Length > 0) {
-            for(int i = 0; i < layout.extraExits.Length; i++) {
-                if(layout.extraExits[i].generationType == GenerationType.PortalAndStart) {
-                    Vector3Int tileCoordinate = new Vector3Int(layout.extraExits[i].portalPosition.x - layout.width / 2, layout.extraExits[i].portalPosition.y - layout.height / 2, 0);
-                    // map[layout.extraExits[i].portalPosition.x, layout.extraExits[i].portalPosition.y] = 0;
-                    // tilemap.SetTile(tileCoordinate, null);
-                    // groundTilemap.SetTile(tileCoordinate, wallTiles[0]);
-                    GameObject _portal = Instantiate(portal, tileCoordinate, Quaternion.identity);
-                    _portal.GetComponent<LoadNewScene>().sceneName = layout.extraExits[i].sceneToGo;
-                    _portal.GetComponent<LoadNewScene>().exitPositionName = layout.extraExits[i].exitPositionName;
-                    Vector3Int startPointPosition = new Vector3Int(tileCoordinate.x, tileCoordinate.y + 1, 0);
-                    layout.extraExits[i].exitPosition = startPointPosition;
-                    // Debug.LogWarning(startPointPosition);
-                }
-                else if(layout.extraExits[i].generationType == GenerationType.OnlyStartPosition) {
-                    Vector3Int tileCoordinate = new Vector3Int(layout.extraExits[i].portalPosition.x - layout.width / 2, layout.extraExits[i].portalPosition.y - layout.height / 2, 0);
-                    layout.extraExits[i].exitPosition = tileCoordinate;
-                }
-            }
-        }
-    }
     private void FillBackground() {
         for(int x = 0; x < layout.width; x++) {
             for(int y = 0; y < layout.height; y++) {
                 Vector3Int tileCoordinate = new Vector3Int(x - layout.width / 2, y - layout.height / 2, 0);
-                if(tilemap.GetTile(tileCoordinate) != tileDatabase.jungleWalls[tileDatabase.jungleWalls.Count - 1]) {
-                    groundTilemap.SetTile(tileCoordinate, tileDatabase.dirtGround[pseudoRandomForGround.Next(0, 9)]);
+                if(tilemap.GetTile(tileCoordinate) != tileDatabase.wallTiles[tileDatabase.wallTiles.Length - 1]) {
+                    groundTilemap.SetTile(tileCoordinate, tileDatabase.groundTiles[pseudoRandomForGround.Next(0, 9)]);
                 }
                 else {
                     groundTilemap.SetTile(tileCoordinate, null);
@@ -545,14 +174,11 @@ public class LevelGeneration : MonoBehaviour {
     }
     // Fill the cells with random values determined by fillPercent value
     private void RandomFillMap() {
-        if(useRandomSeed) {
-            seed = Time.time.ToString();
-        }
-        else {
-            seed = layout.seed;
+        if(layout.useRandomSeed) {
+            layout.seed = Time.time.ToString();
         }
         // To get the same randomization with the same seed
-        System.Random pseudoRandom = new System.Random(seed.GetHashCode());
+        System.Random pseudoRandom = new System.Random(layout.seed.GetHashCode());
         // Fill the edges of the map with wall tiles
         for(int x = 0; x < layout.width; x++) {
             for(int y = 0; y < layout.height; y++) {
@@ -560,7 +186,7 @@ public class LevelGeneration : MonoBehaviour {
                     map[x, y] = 1;
                 }
                 else {
-                    map[x, y] = (pseudoRandom.Next(0, 100) < fillPercent) ? 1 : 0;
+                    map[x, y] = (pseudoRandom.Next(0, 100) < layout.fillPercent) ? 1 : 0;
                 }
             }
         }
@@ -592,12 +218,12 @@ public class LevelGeneration : MonoBehaviour {
                 else if(map[x, y] == 1) {
                     // tilemap.SetTile(tileCoordinate, wallTiles[15]);
                     // tilemap.SetTile(tileCoordinate, tileDatabase.jungleWalls[tileDatabase.jungleWalls.Count - 1]);
-                    tilemap.SetTile(tileCoordinate, tileDatabase.jungleWalls[tileDatabase.jungleWalls.Count - 1]);
+                    tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[tileDatabase.wallTiles.Length - 1]);
                 }
             }
         }
-        if(marchingSquares) {
-            for(int i = 0; i < addSideCount; i++) {
+        if(layout.marchingSquares) {
+            for(int i = 0; i < layout.addSideCount; i++) {
                 AddSides();
             }
         }
@@ -644,7 +270,7 @@ public class LevelGeneration : MonoBehaviour {
                     }
                     if(x == 0 || x == layout.width - 1 || y == 0 || y == layout.height - 1) {
                         // tilemap.SetTile(tileCoordinate, wallTiles[15]);
-                        tilemap.SetTile(tileCoordinate, tileDatabase.jungleWalls[tileDatabase.jungleWalls.Count - 1]);
+                        tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[tileDatabase.wallTiles.Length - 1]);
                         // Debug.Log("The tile " + x +", "+ y + " is on the side so it is setting to tile 15");
                     }
                     else {
@@ -658,9 +284,9 @@ public class LevelGeneration : MonoBehaviour {
                         wallIndexRange[0] = id * 4 > 56 ? 56 : id * 4;
                         wallIndexRange[1] = id * 4 + 4 > 56 ? 56 : id * 4 + 4;
                         if(generateDebugNumbersForWalls) {
-                            debugTilemap.SetTile(tileCoordinate, tileDatabase.debugNumbers[id]);
+                            //debugTilemap.SetTile(tileCoordinate, tileDatabase.debugNumbers[id]);
                         }
-                        tilemap.SetTile(tileCoordinate, tileDatabase.jungleWalls[pseudoRandomForWalls.Next(wallIndexRange[0], wallIndexRange[1])]);
+                        tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[pseudoRandomForWalls.Next(wallIndexRange[0], wallIndexRange[1])]);
                     }
                 }
             }
@@ -683,6 +309,7 @@ public class LevelGeneration : MonoBehaviour {
         }
         return wallCount;
     }
+    /*
     private int GetSurroundingGrassCount(int gridX, int gridY, int grassLevel) {
         int grassCount = 0;
         for(int neighbourX = gridX - 1; neighbourX <= gridX + 1; neighbourX++) {
@@ -699,7 +326,7 @@ public class LevelGeneration : MonoBehaviour {
             }
         }
         return grassCount;
-    }
+    }*/
     // Process map
     private void ProcessMap() {
         List<List<Coordinate>> wallRegions = GetRegions(1);
@@ -707,7 +334,7 @@ public class LevelGeneration : MonoBehaviour {
         List<Room> survivingRooms = new List<Room>();
         // Clear unneccessary walls
         foreach(List<Coordinate> wallRegion in wallRegions) {
-            if(wallRegion.Count < wallThresholdSize) {
+            if(wallRegion.Count < layout.wallThresholdSize) {
                 foreach(Coordinate tile in wallRegion) {
                     Vector3Int tileCoordinate = new Vector3Int(tile.tileX - layout.width / 2, tile.tileY - layout.height / 2, 0);
                     map[tile.tileX, tile.tileY] = 0;
@@ -717,11 +344,11 @@ public class LevelGeneration : MonoBehaviour {
         }
         // Clear unneccessary rooms
         foreach(List<Coordinate> groundRegion in groundRegions) {
-            if(groundRegion.Count < groundThresholdSize) {
+            if(groundRegion.Count < layout.groundThresholdSize) {
                 foreach(Coordinate tile in groundRegion) {
                     Vector3Int tileCoordinate = new Vector3Int(tile.tileX - layout.width / 2, tile.tileY - layout.height / 2, 0);
                     map[tile.tileX, tile.tileY] = 1;
-                    tilemap.SetTile(tileCoordinate, tileDatabase.jungleWalls[tileDatabase.jungleWalls.Count - 1]);
+                    tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[tileDatabase.wallTiles.Length - 1]);
                 }
             }
             else {
@@ -731,7 +358,7 @@ public class LevelGeneration : MonoBehaviour {
         survivingRooms.Sort();
         survivingRooms[0].isMainRoom = true;
         survivingRooms[0].isAccessibleFromMainRoom = true;
-        if(connectRooms) {
+        if(layout.connectRooms) {
             ConnectClosestRooms(survivingRooms);
         }
     }
@@ -812,7 +439,7 @@ public class LevelGeneration : MonoBehaviour {
 
         List<Coordinate> line = GetLine(tileA, tileB);
         foreach(Coordinate c in line) {
-            DrawCircle(c, passageRadius);
+            DrawCircle(c, layout.passageRadius);
         }
     }
     // Circle around the line

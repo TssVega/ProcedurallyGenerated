@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class LevelLayout{
+public class LevelLayout {
 
     public string seed;
 
@@ -40,4 +40,10 @@ public class LevelLayout{
     public int wallThresholdSize = 16;
     // Any ground region smaller than this int will get filled
     public int groundThresholdSize = 16;
+    // Connect seperate rooms?
+    public bool connectRooms;
+    // Use other seeds than given seed
+    public bool useRandomSeed;
+    // Use the marching squares algorithm to place sprites to neccessary places
+    public bool marchingSquares;
 }
