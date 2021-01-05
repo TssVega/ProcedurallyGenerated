@@ -31,14 +31,17 @@ public class LevelGeneration : MonoBehaviour {
     System.Random pseudoRandomForWalls;
     System.Random pseudoRandomForPlants;
     private void Start() {
-        path = FindObjectOfType<AstarPath>();
-        SetLayout(layout);
+        //path = transform.GetChild(0).GetComponent<AstarPath>();
+        //SetLayout(layout);
     }
+    /*
     private void Update() {
+        
         if(Input.GetKeyDown(KeyCode.Space)) {
             GenerateMap();
         }
-    }
+        
+    }*/
     private IEnumerator ScanPath() {
         yield return new WaitForSeconds(0.2f);
         if(path) {
@@ -47,6 +50,15 @@ public class LevelGeneration : MonoBehaviour {
     }
     public void SetLayout(LevelLayout _layout) {
         layout = _layout;
+        pseudoRandomForPlants = new System.Random(layout.seed.GetHashCode());
+        pseudoRandomForWalls = new System.Random(layout.seed.GetHashCode());
+        pseudoRandomForLevel = new System.Random(layout.seed.GetHashCode());
+        pseudoRandomForGround = new System.Random(layout.seed.GetHashCode());
+        if(layout.generateWalls) {
+            GenerateMap();
+        }
+    }
+    public void SetLayout() {
         pseudoRandomForPlants = new System.Random(layout.seed.GetHashCode());
         pseudoRandomForWalls = new System.Random(layout.seed.GetHashCode());
         pseudoRandomForLevel = new System.Random(layout.seed.GetHashCode());
@@ -111,7 +123,7 @@ public class LevelGeneration : MonoBehaviour {
         else if(new int[] { 119 }.Contains(id)) {
             return 4;
         }
-        else if(new int[] { 124, 126, 252, 254 }.Contains(id)) {
+        else if(new int[] { 124, 126, 252, 254}.Contains(id)) {
             return 5;
         }
         else if(new int[] { 127 }.Contains(id)) {
@@ -142,7 +154,7 @@ public class LevelGeneration : MonoBehaviour {
             return 14;
         }
         else {
-            Debug.LogWarning($"Tile formation haven't been specified: {id}");
+            Debug.Log($"Tile formation haven't been specified: {id}");
             return -1;
         }
     }
@@ -156,13 +168,17 @@ public class LevelGeneration : MonoBehaviour {
                 valid = true;
             }
         }
-        location = new Vector3Int(location.x - layout.width / 2, location.y - layout.height / 2, 0);
+        location = new Vector3Int(
+                    (location.x - layout.width / 2) + layout.worldCoordinates.x * layout.width,
+                    (location.y - layout.height / 2) + layout.worldCoordinates.y * layout.height, 0);
         return location;
     }
     private void FillBackground() {
         for(int x = 0; x < layout.width; x++) {
             for(int y = 0; y < layout.height; y++) {
-                Vector3Int tileCoordinate = new Vector3Int(x - layout.width / 2, y - layout.height / 2, 0);
+                Vector3Int tileCoordinate = new Vector3Int(
+                    (x - layout.width / 2) + layout.worldCoordinates.x * layout.width,
+                    (y - layout.height / 2) + layout.worldCoordinates.y * layout.height, 0);
                 if(tilemap.GetTile(tileCoordinate) != tileDatabase.wallTiles[tileDatabase.wallTiles.Length - 1]) {
                     groundTilemap.SetTile(tileCoordinate, tileDatabase.groundTiles[pseudoRandomForGround.Next(0, 9)]);
                 }
@@ -210,7 +226,9 @@ public class LevelGeneration : MonoBehaviour {
     private void DrawMap() {
         for(int x = 0; x < layout.width; x++) {
             for(int y = 0; y < layout.height; y++) {
-                Vector3Int tileCoordinate = new Vector3Int(x - layout.width / 2, y - layout.height / 2, 0);
+                Vector3Int tileCoordinate = new Vector3Int(
+                    (x - layout.width / 2) + layout.worldCoordinates.x * layout.width,
+                    (y - layout.height / 2) + layout.worldCoordinates.y * layout.height, 0);
                 if(map[x, y] == 0) {
                     // tilemap.SetTile(tileCoordinate, tiles[0]);
                     tilemap.SetTile(tileCoordinate, null);
@@ -234,7 +252,9 @@ public class LevelGeneration : MonoBehaviour {
             for(int y = 0; y < layout.height; y++) {
                 // Fill corners according to occupied spaces
                 if(map[x, y] == 1 && GetSurroundingWallCount(x, y) < 8) {
-                    Vector3Int tileCoordinate = new Vector3Int(x - layout.width / 2, y - layout.height / 2, 0);
+                    Vector3Int tileCoordinate = new Vector3Int(
+                    (x - layout.width / 2) + layout.worldCoordinates.x * layout.width,
+                    (y - layout.height / 2) + layout.worldCoordinates.y * layout.height, 0);
                     int wallSideId = 0;
                     // Find other walls around the wall
                     try {
@@ -336,7 +356,9 @@ public class LevelGeneration : MonoBehaviour {
         foreach(List<Coordinate> wallRegion in wallRegions) {
             if(wallRegion.Count < layout.wallThresholdSize) {
                 foreach(Coordinate tile in wallRegion) {
-                    Vector3Int tileCoordinate = new Vector3Int(tile.tileX - layout.width / 2, tile.tileY - layout.height / 2, 0);
+                    Vector3Int tileCoordinate = new Vector3Int(
+                    (tile.tileX - layout.width / 2) + layout.worldCoordinates.x * layout.width,
+                    (tile.tileY - layout.height / 2) + layout.worldCoordinates.y * layout.height, 0);
                     map[tile.tileX, tile.tileY] = 0;
                     tilemap.SetTile(tileCoordinate, null);
                 }
@@ -346,7 +368,9 @@ public class LevelGeneration : MonoBehaviour {
         foreach(List<Coordinate> groundRegion in groundRegions) {
             if(groundRegion.Count < layout.groundThresholdSize) {
                 foreach(Coordinate tile in groundRegion) {
-                    Vector3Int tileCoordinate = new Vector3Int(tile.tileX - layout.width / 2, tile.tileY - layout.height / 2, 0);
+                    Vector3Int tileCoordinate = new Vector3Int(
+                    (tile.tileX - layout.width / 2) + layout.worldCoordinates.x * layout.width,
+                    (tile.tileY - layout.height / 2) + layout.worldCoordinates.y * layout.height, 0);
                     map[tile.tileX, tile.tileY] = 1;
                     tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[tileDatabase.wallTiles.Length - 1]);
                 }

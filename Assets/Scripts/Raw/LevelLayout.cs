@@ -1,11 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [System.Serializable]
 public class LevelLayout {
 
+    // Use other seeds than given seed
+    public bool useRandomSeed = false;
     public string seed;
+
+    public Vector2Int worldCoordinates;
 
     public int width = 64;
     public int height = 64;
@@ -41,9 +43,11 @@ public class LevelLayout {
     // Any ground region smaller than this int will get filled
     public int groundThresholdSize = 16;
     // Connect seperate rooms?
-    public bool connectRooms;
-    // Use other seeds than given seed
-    public bool useRandomSeed;
+    public bool connectRooms = true;
     // Use the marching squares algorithm to place sprites to neccessary places
-    public bool marchingSquares;
+    public bool marchingSquares = true;
+
+    public LevelLayout(string seed) {
+        this.seed = seed;
+    }
 }
