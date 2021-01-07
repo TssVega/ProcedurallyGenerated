@@ -11,7 +11,7 @@ public class WorldGeneration : MonoBehaviour {
     // A 2 dimentional map of string seeds
     private string[,] worldMap = new string[worldSize, worldSize];
     // Current coordinates
-    private Vector2Int currentCoordinates = new Vector2Int(0, 0);
+    private Vector2Int currentCoordinates = new Vector2Int(1, 1);
     // So each world can be same with same seed
     private System.Random pseudoRandomForWorld;
 
@@ -22,8 +22,28 @@ public class WorldGeneration : MonoBehaviour {
             worldSeed = Time.time.ToString();
         }
         pseudoRandomForWorld = new System.Random(worldSeed.GetHashCode());
+        GenerateCurrentLevels();
+        /*
         for(int x = 0; x < worldSize; x++) {
             for(int y = 0; y < worldSize; y++) {
+                worldMap[x, y] = pseudoRandomForWorld.Next().ToString();
+                GameObject levelClone = Instantiate(level, new Vector3(x * levelSize, y * levelSize, 0), Quaternion.identity);
+                LevelGeneration levelGen = levelClone.GetComponent<LevelGeneration>();
+                levelGen.layout = new LevelLayout(worldMap[x, y]) {
+                    worldCoordinates = new Vector2Int(x, y)
+                };
+                levelGen.SetLayout();
+            }
+        }*/
+    }
+
+    private void GenerateCurrentLevels() {
+        for(int x = currentCoordinates.x - 1; x <= currentCoordinates.x + 1; x++) {
+            for(int y = currentCoordinates.y - 1; y <= currentCoordinates.y + 1; y++) {
+                if(x < 0 || y < 0) {
+                    continue;
+                }
+                Debug.Log($"{x}, {y}");
                 worldMap[x, y] = pseudoRandomForWorld.Next().ToString();
                 GameObject levelClone = Instantiate(level, new Vector3(x * levelSize, y * levelSize, 0), Quaternion.identity);
                 LevelGeneration levelGen = levelClone.GetComponent<LevelGeneration>();

@@ -87,24 +87,14 @@ public class LevelGeneration : MonoBehaviour {
         if(layout.generatePlants) {
             plantMap = new int[layout.width, layout.height];
         }
-        if(layout.randomFill) {
-            RandomFillMap();
+        RandomFillMap();
+        GenerateExitPoints();
+        for(int i = 0; i < layout.smoothLevel; i++) {
+            SmoothMap();
         }
-        if(layout.smooth) {
-            // Smooth edges smoothLevel times
-            for(int i = 0; i < layout.smoothLevel; i++) {
-                SmoothMap();
-            }
-        }
-        if(layout.process) {
-            ProcessMap();
-        }
-        if(layout.draw) {
-            DrawMap();
-        }
-        if(layout.draw) {
-            FillBackground();
-        }
+        ProcessMap();
+        DrawMap();
+        FillBackground();
         StartCoroutine(ScanPath());
     }
     private int ConvertTileIdToTilesetIndex(int id) {
@@ -173,6 +163,9 @@ public class LevelGeneration : MonoBehaviour {
                     (location.y - layout.height / 2) + layout.worldCoordinates.y * layout.height, 0);
         return location;
     }
+    private void GenerateExitPoints() {
+        
+    }
     private void FillBackground() {
         for(int x = 0; x < layout.width; x++) {
             for(int y = 0; y < layout.height; y++) {
@@ -198,7 +191,14 @@ public class LevelGeneration : MonoBehaviour {
         // Fill the edges of the map with wall tiles
         for(int x = 0; x < layout.width; x++) {
             for(int y = 0; y < layout.height; y++) {
-                if(x < 5 || x > layout.width - 6 || y < 5 || y > layout.height - 6) {
+                // TODO: fix level connectivity
+                if(new int[] { 30, 31, 32, 33 }.Contains(x) && 
+                    new int[] { 0, 1, 3, 4, 63, 62, 61, 60}.Contains(y) ||
+                        new int[] {30, 31, 32, 33 }.Contains(y) && 
+                        new int[] {0, 1, 2, 3, 63, 62, 61, 60 }.Contains(x)) {
+                    map[x, y] = 0;
+                }
+                else if(x < 5 || x > layout.width - 6 || y < 5 || y > layout.height - 6) {
                     map[x, y] = 1;
                 }
                 else {
@@ -621,9 +621,14 @@ public class LevelGeneration : MonoBehaviour {
                 for(int x = tile.tileX - 1; x <= tile.tileX + 1; x++) {
                     for(int y = tile.tileY - 1; y <= tile.tileY + 1; y++) {
                         if(x == tile.tileX || y == tile.tileY) {
-                            if(map[x, y] == 1) {
-                                edgeTiles.Add(tile);
-                                break;
+                            try {
+                                if(map[x, y] == 1) {
+                                    edgeTiles.Add(tile);
+                                    break;
+                                }
+                            }
+                            catch(IndexOutOfRangeException) {
+                                continue;
                             }
                         }
                     }

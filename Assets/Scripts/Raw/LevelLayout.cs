@@ -41,7 +41,7 @@ public class LevelLayout {
     // Any wall region smaller than this int will get removed
     public int wallThresholdSize = 16;
     // Any ground region smaller than this int will get filled
-    public int groundThresholdSize = 16;
+    public int groundThresholdSize = 0;
     // Connect seperate rooms?
     public bool connectRooms = true;
     // Use the marching squares algorithm to place sprites to neccessary places
