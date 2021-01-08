@@ -47,6 +47,8 @@ public class LevelLayout {
     // Use the marching squares algorithm to place sprites to neccessary places
     public bool marchingSquares = true;
 
+    public int worldSize = 0;
+
     public LevelLayout(string seed) {
         this.seed = seed;
     }

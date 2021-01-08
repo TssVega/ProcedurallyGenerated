@@ -48,7 +48,8 @@ public class WorldGeneration : MonoBehaviour {
                 GameObject levelClone = Instantiate(level, new Vector3(x * levelSize, y * levelSize, 0), Quaternion.identity);
                 LevelGeneration levelGen = levelClone.GetComponent<LevelGeneration>();
                 levelGen.layout = new LevelLayout(worldMap[x, y]) {
-                    worldCoordinates = new Vector2Int(x, y)
+                    worldCoordinates = new Vector2Int(x, y),
+                    worldSize = worldSize
                 };
                 levelGen.SetLayout();
             }
