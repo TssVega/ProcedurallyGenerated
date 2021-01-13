@@ -34,6 +34,7 @@ public class LevelGeneration : MonoBehaviour {
     System.Random pseudoRandomForPlants;
     // A reference to world generation script
     private WorldGeneration worldGeneration;
+
     private void Awake() {
         worldGeneration = FindObjectOfType<WorldGeneration>();
     }
@@ -50,6 +51,15 @@ public class LevelGeneration : MonoBehaviour {
         yield return new WaitForSeconds(0.2f);
         if(path) {
             path.Scan();
+        }
+    }
+    public async Task SetLayoutAsync() {
+        pseudoRandomForPlants = new System.Random(this.layout.seed.GetHashCode());
+        pseudoRandomForWalls = new System.Random(this.layout.seed.GetHashCode());
+        pseudoRandomForLevel = new System.Random(this.layout.seed.GetHashCode());
+        pseudoRandomForGround = new System.Random(this.layout.seed.GetHashCode());
+        if(this.layout.generateWalls) {
+            await Task.Run(() => GenerateMap());
         }
     }
     public void SetLayout(LevelLayout layout) {
@@ -75,7 +85,7 @@ public class LevelGeneration : MonoBehaviour {
         pseudoRandomForPlants = new System.Random(this.layout.seed.GetHashCode());
         pseudoRandomForWalls = new System.Random(this.layout.seed.GetHashCode());
         pseudoRandomForLevel = new System.Random(this.layout.seed.GetHashCode());
-        pseudoRandomForGround = new System.Random(this.layout.seed.GetHashCode());
+        pseudoRandomForGround = new System.Random(this.layout.seed.GetHashCode());        
         if(layout.generateWalls) {
             GenerateMap();
         }
@@ -102,15 +112,16 @@ public class LevelGeneration : MonoBehaviour {
         if(layout.generatePlants) {
             plantMap = new int[layout.width, layout.height];
         }
-        RandomFillMap();
+        RandomFillMap();        
         for(int i = 0; i < layout.smoothLevel; i++) {
-            SmoothMap();
+            SmoothMap();            
         }
         ProcessMap();
+        //StartCoroutine(ProcessMapCoroutine());
         DrawMap();
         FillBackground();
         if(gameObject.activeInHierarchy) {
-            StartCoroutine(ScanPath());
+            //StartCoroutine(ScanPath());
         }        
     }
     private int ConvertTileIdToTilesetIndex(int id) {

@@ -26,7 +26,7 @@ public class WorldGeneration : MonoBehaviour {
             worldSeed = Time.time.ToString();
         }
         pseudoRandomForWorld = new System.Random(worldSeed.GetHashCode());
-        StartCoroutine(GenerateCurrentLevels());
+        GenerateCurrentLevels();
         /*
         for(int x = 0; x < worldSize; x++) {
             for(int y = 0; y < worldSize; y++) {
@@ -50,9 +50,9 @@ public class WorldGeneration : MonoBehaviour {
     }*/
     public void ChangeCurrentCoordinates(Vector2Int coordinates) {
         currentCoordinates = coordinates;
-        StartCoroutine(GenerateCurrentLevels());
+        GenerateCurrentLevels();
     }
-    private IEnumerator GenerateCurrentLevels() {
+    private void GenerateCurrentLevels() {
         for(int x = currentCoordinates.x - 1; x <= currentCoordinates.x + 1; x++) {
             for(int y = currentCoordinates.y - 1; y <= currentCoordinates.y + 1; y++) {
                 if(x < 0 || y < 0 || x > worldSize - 1 || y > worldSize - 1) {
@@ -75,10 +75,9 @@ public class WorldGeneration : MonoBehaviour {
                     worldSize = worldSize
                 };
                 levelClone.SetActive(true);
-                levelGen.SetLayout();
+                StartCoroutine(levelGen.SetLayoutCoroutine());
                 currentRenderedLevels.Add(new Vector2Int(x, y));
             }
         }
-        yield return null;
     }
 }
