@@ -6,6 +6,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using System.Threading.Tasks;
 
 public class LevelGeneration : MonoBehaviour {
 
@@ -31,42 +32,54 @@ public class LevelGeneration : MonoBehaviour {
     System.Random pseudoRandomForGround;
     System.Random pseudoRandomForWalls;
     System.Random pseudoRandomForPlants;
+    // A reference to world generation script
+    private WorldGeneration worldGeneration;
+    private void Awake() {
+        worldGeneration = FindObjectOfType<WorldGeneration>();
+    }
     private void Start() {
         //path = transform.GetChild(0).GetComponent<AstarPath>();
         //SetLayout(layout);
     }
-    /*
-    private void Update() {
-        
-        if(Input.GetKeyDown(KeyCode.Space)) {
-            GenerateMap();
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if(collision.CompareTag("Player")) {
+            worldGeneration.ChangeCurrentCoordinates(layout.worldCoordinates);
         }
-        
-    }*/
+    }
     private IEnumerator ScanPath() {
         yield return new WaitForSeconds(0.2f);
         if(path) {
             path.Scan();
         }
     }
-    public void SetLayout(LevelLayout _layout) {
-        layout = _layout;
-        pseudoRandomForPlants = new System.Random(layout.seed.GetHashCode());
-        pseudoRandomForWalls = new System.Random(layout.seed.GetHashCode());
-        pseudoRandomForLevel = new System.Random(layout.seed.GetHashCode());
-        pseudoRandomForGround = new System.Random(layout.seed.GetHashCode());
-        if(layout.generateWalls) {
+    public void SetLayout(LevelLayout layout) {
+        this.layout = layout;
+        pseudoRandomForPlants = new System.Random(this.layout.seed.GetHashCode());
+        pseudoRandomForWalls = new System.Random(this.layout.seed.GetHashCode());
+        pseudoRandomForLevel = new System.Random(this.layout.seed.GetHashCode());
+        pseudoRandomForGround = new System.Random(this.layout.seed.GetHashCode());
+        if(this.layout.generateWalls) {
             GenerateMap();
         }
     }
     public void SetLayout() {
-        pseudoRandomForPlants = new System.Random(layout.seed.GetHashCode());
-        pseudoRandomForWalls = new System.Random(layout.seed.GetHashCode());
-        pseudoRandomForLevel = new System.Random(layout.seed.GetHashCode());
-        pseudoRandomForGround = new System.Random(layout.seed.GetHashCode());
+        pseudoRandomForPlants = new System.Random(this.layout.seed.GetHashCode());
+        pseudoRandomForWalls = new System.Random(this.layout.seed.GetHashCode());
+        pseudoRandomForLevel = new System.Random(this.layout.seed.GetHashCode());
+        pseudoRandomForGround = new System.Random(this.layout.seed.GetHashCode());
         if(layout.generateWalls) {
             GenerateMap();
         }
+    }
+    public IEnumerator SetLayoutCoroutine() {
+        pseudoRandomForPlants = new System.Random(this.layout.seed.GetHashCode());
+        pseudoRandomForWalls = new System.Random(this.layout.seed.GetHashCode());
+        pseudoRandomForLevel = new System.Random(this.layout.seed.GetHashCode());
+        pseudoRandomForGround = new System.Random(this.layout.seed.GetHashCode());
+        if(layout.generateWalls) {
+            GenerateMap();
+        }
+        yield return null;
     }
     // Generate random map
     private void GenerateMap() {
@@ -96,7 +109,9 @@ public class LevelGeneration : MonoBehaviour {
         ProcessMap();
         DrawMap();
         FillBackground();
-        StartCoroutine(ScanPath());
+        if(gameObject.activeInHierarchy) {
+            StartCoroutine(ScanPath());
+        }        
     }
     private int ConvertTileIdToTilesetIndex(int id) {
         if(new int[] { 7, 15, 39, 47, 135, 143, 167, 175 }.Contains(id)) {
@@ -343,66 +358,42 @@ public class LevelGeneration : MonoBehaviour {
                         if(y + 1 == 64 && x == 29) {
                             // 8
                             int id = 8;
-                            int[] wallIndexRange = new int[2];
-                            wallIndexRange[0] = id * 4 > 56 ? 56 : id * 4;
-                            wallIndexRange[1] = id * 4 + 4 > 56 ? 56 : id * 4 + 4;
-                            tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[pseudoRandomForWalls.Next(wallIndexRange[0], wallIndexRange[1])]);
+                            tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[id]);
                         }
                         else if(y + 1 == 64 && x == 34) {
                             // 5
                             int id = 5;
-                            int[] wallIndexRange = new int[2];
-                            wallIndexRange[0] = id * 4 > 56 ? 56 : id * 4;
-                            wallIndexRange[1] = id * 4 + 4 > 56 ? 56 : id * 4 + 4;
-                            tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[pseudoRandomForWalls.Next(wallIndexRange[0], wallIndexRange[1])]);
+                            tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[id]);
                         }
                         else if(y - 1 == -1 && x == 29) {
                             // 8
                             int id = 8;
-                            int[] wallIndexRange = new int[2];
-                            wallIndexRange[0] = id * 4 > 56 ? 56 : id * 4;
-                            wallIndexRange[1] = id * 4 + 4 > 56 ? 56 : id * 4 + 4;
-                            tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[pseudoRandomForWalls.Next(wallIndexRange[0], wallIndexRange[1])]);
+                            tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[id]);
                         }
                         else if(y - 1 == -1 && x == 34) {
                             // 5
                             int id = 5;
-                            int[] wallIndexRange = new int[2];
-                            wallIndexRange[0] = id * 4 > 56 ? 56 : id * 4;
-                            wallIndexRange[1] = id * 4 + 4 > 56 ? 56 : id * 4 + 4;
-                            tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[pseudoRandomForWalls.Next(wallIndexRange[0], wallIndexRange[1])]);
+                            tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[id]);
                         }
                         else if(x + 1 == 64 && y == 29) {
                             // 2
                             int id = 2;
-                            int[] wallIndexRange = new int[2];
-                            wallIndexRange[0] = id * 4 > 56 ? 56 : id * 4;
-                            wallIndexRange[1] = id * 4 + 4 > 56 ? 56 : id * 4 + 4;
-                            tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[pseudoRandomForWalls.Next(wallIndexRange[0], wallIndexRange[1])]);
+                            tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[id]);
                         }
                         else if(x + 1 == 64 && y == 34) {
                             // 11
                             int id = 11;
-                            int[] wallIndexRange = new int[2];
-                            wallIndexRange[0] = id * 4 > 56 ? 56 : id * 4;
-                            wallIndexRange[1] = id * 4 + 4 > 56 ? 56 : id * 4 + 4;
-                            tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[pseudoRandomForWalls.Next(wallIndexRange[0], wallIndexRange[1])]);
+                            tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[id]);
                         }
                         else if(x - 1 == -1 && y == 29) {
                             // 2
                             int id = 2;
-                            int[] wallIndexRange = new int[2];
-                            wallIndexRange[0] = id * 4 > 56 ? 56 : id * 4;
-                            wallIndexRange[1] = id * 4 + 4 > 56 ? 56 : id * 4 + 4;
-                            tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[pseudoRandomForWalls.Next(wallIndexRange[0], wallIndexRange[1])]);
+                            tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[id]);
                         }
                         else if(x - 1 == -1 && y == 34) {
                             // 11
                             int id = 11;
-                            int[] wallIndexRange = new int[2];
-                            wallIndexRange[0] = id * 4 > 56 ? 56 : id * 4;
-                            wallIndexRange[1] = id * 4 + 4 > 56 ? 56 : id * 4 + 4;
-                            tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[pseudoRandomForWalls.Next(wallIndexRange[0], wallIndexRange[1])]);
+                            tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[id]);
                         }
                         continue;
                     }
@@ -418,13 +409,10 @@ public class LevelGeneration : MonoBehaviour {
                             tilemap.SetTile(tileCoordinate, null);
                             continue;
                         }
-                        int[] wallIndexRange = new int[2];
-                        wallIndexRange[0] = id * 4 > 56 ? 56 : id * 4;
-                        wallIndexRange[1] = id * 4 + 4 > 56 ? 56 : id * 4 + 4;
                         if(generateDebugNumbersForWalls) {
                             //debugTilemap.SetTile(tileCoordinate, tileDatabase.debugNumbers[id]);
                         }
-                        tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[pseudoRandomForWalls.Next(wallIndexRange[0], wallIndexRange[1])]);
+                        tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[id]);
                     }
                 }
             }
