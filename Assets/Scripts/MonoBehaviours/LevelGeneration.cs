@@ -75,13 +75,26 @@ public class LevelGeneration : MonoBehaviour {
         for(int i = 0; i < layout.smoothLevel; i++) {
             await Task.Run(() => SmoothMap());            
         }
-        await Task.Run(() => ProcessMap());
+        ProcessMap();
         //StartCoroutine(DrawMapCoroutine());
         DrawMap();
         FillBackground();
         if(gameObject.activeInHierarchy) {
             //StartCoroutine(ScanPath());
         }
+    }
+    public void UnloadLevel() {
+        for(int x = 0; x < layout.width; x++) {
+            for(int y = 0; y < layout.height; y++) {
+                //map[x, y] = 0;
+                Vector3Int tileCoordinate = new Vector3Int(
+                    (x - layout.width / 2) + layout.worldCoordinates.x * layout.width,
+                    (y - layout.height / 2) + layout.worldCoordinates.y * layout.height, 0);
+                worldGeneration.tilemap.SetTile(tileCoordinate, null);
+                worldGeneration.groundTilemap.SetTile(tileCoordinate, null);
+            }
+        }
+        gameObject.SetActive(false);
     }
     private int ConvertTileIdToTilesetIndex(int id) {
         if(new int[] { 7, 15, 39, 47, 135, 143, 167, 175 }.Contains(id)) {

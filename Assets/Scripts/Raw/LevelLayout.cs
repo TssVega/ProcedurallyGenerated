@@ -36,7 +36,7 @@ public class LevelLayout {
     public int smoothLevel = 4;
     // This will be equal to two all times
     public int addSideCount = 4;
-    // Testing fix ide count variable
+    // Testing fix side count variable
     public int fixSideCount = 2;
     // Any wall region smaller than this int will get removed
     public int wallThresholdSize = 16;

@@ -20,6 +20,7 @@ public class WorldGeneration : MonoBehaviour {
     // So each world can be same with same seed
     private System.Random pseudoRandomForWorld;
     private List<Vector2Int> currentRenderedLevels;
+    private List<LevelGeneration> levels;
     public GameObject level;
     [Header("Tilemaps")]
     public Tilemap groundTilemap;
@@ -27,8 +28,11 @@ public class WorldGeneration : MonoBehaviour {
     public Tilemap debugTilemap;
     public Tilemap plantTilemap;
 
-    private void Start() {
+    private void Awake() {
+        levels = new List<LevelGeneration>();
         currentRenderedLevels = new List<Vector2Int>();
+    }
+    private void Start() {        
         if(randomSeed) {
             worldSeed = Time.time.ToString();
         }
@@ -65,6 +69,7 @@ public class WorldGeneration : MonoBehaviour {
         currentCoordinates = coordinates;
         GenerateCurrentLevels();
     }
+    // Generate adjacent levels and unload farther ones
     private void GenerateCurrentLevels() {
         for(int x = currentCoordinates.x - 1; x <= currentCoordinates.x + 1; x++) {
             for(int y = currentCoordinates.y - 1; y <= currentCoordinates.y + 1; y++) {
@@ -83,6 +88,7 @@ public class WorldGeneration : MonoBehaviour {
                 levelClone.transform.position = new Vector3(x * levelSize, y * levelSize, 0);
                 levelClone.transform.rotation = Quaternion.identity;
                 LevelGeneration levelGen = levelClone.GetComponent<LevelGeneration>();
+                levels.Add(levelGen);
                 levelGen.layout = new LevelLayout(worldMap[x, y]) {
                     worldCoordinates = new Vector2Int(x, y),
                     worldSize = worldSize
@@ -95,11 +101,14 @@ public class WorldGeneration : MonoBehaviour {
                 levelGen.SetLayout();                
             }
         }
-    }
-    private void SetTilesOnWallTilemap() {
-    
-    }
-    private void SetTilesOnGroundTilemap() {
-    
+        // Unload far away levels
+        for(int i = 0; i < levels.Count; i++) {
+            if(levels[i].layout.worldCoordinates.x < currentCoordinates.x - 1 ||
+                levels[i].layout.worldCoordinates.x > currentCoordinates.x + 1 ||
+                levels[i].layout.worldCoordinates.y < currentCoordinates.y - 1 ||
+                levels[i].layout.worldCoordinates.y > currentCoordinates.y + 1) {
+                levels[i].UnloadLevel();
+            }
+        }
     }
 }
