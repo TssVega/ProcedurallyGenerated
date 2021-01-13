@@ -2,6 +2,8 @@
 using System.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using UnityEngine.Tilemaps;
 
 public class WorldGeneration : MonoBehaviour {
     // Should be an odd number so it can have one center
@@ -19,6 +21,11 @@ public class WorldGeneration : MonoBehaviour {
     private System.Random pseudoRandomForWorld;
     private List<Vector2Int> currentRenderedLevels;
     public GameObject level;
+    [Header("Tilemaps")]
+    public Tilemap groundTilemap;
+    public Tilemap tilemap;
+    public Tilemap debugTilemap;
+    public Tilemap plantTilemap;
 
     private void Start() {
         currentRenderedLevels = new List<Vector2Int>();
@@ -26,6 +33,12 @@ public class WorldGeneration : MonoBehaviour {
             worldSeed = Time.time.ToString();
         }
         pseudoRandomForWorld = new System.Random(worldSeed.GetHashCode());
+        if(!groundTilemap) {
+            groundTilemap = GameObject.FindWithTag("Grid").transform.GetChild(0).GetComponent<Tilemap>();
+        }
+        if(!tilemap) {
+            tilemap = GameObject.FindWithTag("Grid").transform.GetChild(1).GetComponent<Tilemap>();
+        }
         GenerateCurrentLevels();
         /*
         for(int x = 0; x < worldSize; x++) {
@@ -75,9 +88,18 @@ public class WorldGeneration : MonoBehaviour {
                     worldSize = worldSize
                 };
                 levelClone.SetActive(true);
-                StartCoroutine(levelGen.SetLayoutCoroutine());
+                /*
+                Thread th = new Thread(() => levelGen.SetLayout(this));
+                th.Start();*/
                 currentRenderedLevels.Add(new Vector2Int(x, y));
+                levelGen.SetLayout();                
             }
         }
+    }
+    private void SetTilesOnWallTilemap() {
+    
+    }
+    private void SetTilesOnGroundTilemap() {
+    
     }
 }

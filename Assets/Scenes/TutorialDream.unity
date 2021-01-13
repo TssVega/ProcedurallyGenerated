@@ -785,7 +785,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -878,3 +878,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: {fileID: 2016924447434614481, guid: 92d0cc0344fabd04c836b5579ba65f3f, type: 3}
+  groundTilemap: {fileID: 0}
+  tilemap: {fileID: 0}
+  debugTilemap: {fileID: 0}
+  plantTilemap: {fileID: 0}

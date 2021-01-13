@@ -15,12 +15,6 @@ public class LevelGeneration : MonoBehaviour {
     public LevelLayout layout;
     // Tile database
     public TileDatabase tileDatabase;
-    // Chest game object
-    [Header("Tilemaps")]
-    private Tilemap groundTilemap;
-    private Tilemap tilemap;
-    private Tilemap debugTilemap;
-    private Tilemap plantTilemap;
     // A star path instance to scan walls
     private AstarPath path;
     // Two dimensional map array
@@ -53,52 +47,17 @@ public class LevelGeneration : MonoBehaviour {
             path.Scan();
         }
     }
-    public async Task SetLayoutAsync() {
-        pseudoRandomForPlants = new System.Random(this.layout.seed.GetHashCode());
-        pseudoRandomForWalls = new System.Random(this.layout.seed.GetHashCode());
-        pseudoRandomForLevel = new System.Random(this.layout.seed.GetHashCode());
-        pseudoRandomForGround = new System.Random(this.layout.seed.GetHashCode());
-        if(this.layout.generateWalls) {
-            await Task.Run(() => GenerateMap());
-        }
-    }
-    public void SetLayout(LevelLayout layout) {
-        this.layout = layout;
-        pseudoRandomForPlants = new System.Random(this.layout.seed.GetHashCode());
-        pseudoRandomForWalls = new System.Random(this.layout.seed.GetHashCode());
-        pseudoRandomForLevel = new System.Random(this.layout.seed.GetHashCode());
-        pseudoRandomForGround = new System.Random(this.layout.seed.GetHashCode());
-        if(this.layout.generateWalls) {
-            GenerateMap();
-        }
-    }
-    public void SetLayout() {
+    public async void SetLayout() {
         pseudoRandomForPlants = new System.Random(this.layout.seed.GetHashCode());
         pseudoRandomForWalls = new System.Random(this.layout.seed.GetHashCode());
         pseudoRandomForLevel = new System.Random(this.layout.seed.GetHashCode());
         pseudoRandomForGround = new System.Random(this.layout.seed.GetHashCode());
         if(layout.generateWalls) {
-            GenerateMap();
+            await GenerateMap();
         }
-    }
-    public IEnumerator SetLayoutCoroutine() {
-        pseudoRandomForPlants = new System.Random(this.layout.seed.GetHashCode());
-        pseudoRandomForWalls = new System.Random(this.layout.seed.GetHashCode());
-        pseudoRandomForLevel = new System.Random(this.layout.seed.GetHashCode());
-        pseudoRandomForGround = new System.Random(this.layout.seed.GetHashCode());        
-        if(layout.generateWalls) {
-            GenerateMap();
-        }
-        yield return null;
     }
     // Generate random map
-    private void GenerateMap() {
-        if(!groundTilemap) {
-            groundTilemap = GameObject.FindWithTag("Grid").transform.GetChild(0).GetComponent<Tilemap>();
-        }
-        if(!tilemap) {
-            tilemap = GameObject.FindWithTag("Grid").transform.GetChild(1).GetComponent<Tilemap>();
-        }
+    private async Task GenerateMap() {
         /*
         if(!plantTilemap) {
             plantTilemap = GameObject.FindWithTag("Grid").transform.GetChild(3).GetComponent<Tilemap>();
@@ -112,17 +71,17 @@ public class LevelGeneration : MonoBehaviour {
         if(layout.generatePlants) {
             plantMap = new int[layout.width, layout.height];
         }
-        RandomFillMap();        
+        await Task.Run(() => RandomFillMap());        
         for(int i = 0; i < layout.smoothLevel; i++) {
-            SmoothMap();            
+            await Task.Run(() => SmoothMap());            
         }
-        ProcessMap();
-        //StartCoroutine(ProcessMapCoroutine());
+        await Task.Run(() => ProcessMap());
+        //StartCoroutine(DrawMapCoroutine());
         DrawMap();
         FillBackground();
         if(gameObject.activeInHierarchy) {
             //StartCoroutine(ScanPath());
-        }        
+        }
     }
     private int ConvertTileIdToTilesetIndex(int id) {
         if(new int[] { 7, 15, 39, 47, 135, 143, 167, 175 }.Contains(id)) {
@@ -196,11 +155,11 @@ public class LevelGeneration : MonoBehaviour {
                 Vector3Int tileCoordinate = new Vector3Int(
                     (x - layout.width / 2) + layout.worldCoordinates.x * layout.width,
                     (y - layout.height / 2) + layout.worldCoordinates.y * layout.height, 0);
-                if(tilemap.GetTile(tileCoordinate) != tileDatabase.wallTiles[tileDatabase.wallTiles.Length - 1]) {
-                    groundTilemap.SetTile(tileCoordinate, tileDatabase.groundTiles[pseudoRandomForGround.Next(0, 9)]);
+                if(worldGeneration.tilemap.GetTile(tileCoordinate) != tileDatabase.wallTiles[tileDatabase.wallTiles.Length - 1]) {
+                    worldGeneration.groundTilemap.SetTile(tileCoordinate, tileDatabase.groundTiles[pseudoRandomForGround.Next(0, 9)]);
                 }
                 else {
-                    groundTilemap.SetTile(tileCoordinate, null);
+                    worldGeneration.groundTilemap.SetTile(tileCoordinate, null);
                 }
             }
         }
@@ -215,7 +174,6 @@ public class LevelGeneration : MonoBehaviour {
         // Fill the edges of the map with wall tiles
         for(int x = 0; x < layout.width; x++) {
             for(int y = 0; y < layout.height; y++) {
-                // TODO: fix level connectivity
                 /*
                 if(new int[] { 30, 31, 32, 33 }.Contains(x) && 
                     new int[] { 0, 1, 2, 3, 63, 62, 61, 60 }.Contains(y) ||
@@ -308,15 +266,15 @@ public class LevelGeneration : MonoBehaviour {
                     (y - layout.height / 2) + layout.worldCoordinates.y * layout.height, 0);
                 if(map[x, y] == 0) {
                     // tilemap.SetTile(tileCoordinate, tiles[0]);
-                    tilemap.SetTile(tileCoordinate, null);
+                    worldGeneration.tilemap.SetTile(tileCoordinate, null);
                 }
                 else if(map[x, y] == 1) {
                     // tilemap.SetTile(tileCoordinate, wallTiles[15]);
                     // tilemap.SetTile(tileCoordinate, tileDatabase.jungleWalls[tileDatabase.jungleWalls.Count - 1]);
-                    tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[tileDatabase.wallTiles.Length - 1]);
+                    worldGeneration.tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[tileDatabase.wallTiles.Length - 1]);
                 }
                 else {
-                    tilemap.SetTile(tileCoordinate, null);
+                    worldGeneration.tilemap.SetTile(tileCoordinate, null);
                 }
             }
         }
@@ -369,61 +327,61 @@ public class LevelGeneration : MonoBehaviour {
                         if(y + 1 == 64 && x == 29) {
                             // 8
                             int id = 8;
-                            tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[id]);
+                            worldGeneration.tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[id]);
                         }
                         else if(y + 1 == 64 && x == 34) {
                             // 5
                             int id = 5;
-                            tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[id]);
+                            worldGeneration.tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[id]);
                         }
                         else if(y - 1 == -1 && x == 29) {
                             // 8
                             int id = 8;
-                            tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[id]);
+                            worldGeneration.tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[id]);
                         }
                         else if(y - 1 == -1 && x == 34) {
                             // 5
                             int id = 5;
-                            tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[id]);
+                            worldGeneration.tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[id]);
                         }
                         else if(x + 1 == 64 && y == 29) {
                             // 2
                             int id = 2;
-                            tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[id]);
+                            worldGeneration.tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[id]);
                         }
                         else if(x + 1 == 64 && y == 34) {
                             // 11
                             int id = 11;
-                            tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[id]);
+                            worldGeneration.tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[id]);
                         }
                         else if(x - 1 == -1 && y == 29) {
                             // 2
                             int id = 2;
-                            tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[id]);
+                            worldGeneration.tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[id]);
                         }
                         else if(x - 1 == -1 && y == 34) {
                             // 11
                             int id = 11;
-                            tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[id]);
+                            worldGeneration.tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[id]);
                         }
                         continue;
                     }
                     if(x == 0 || x == layout.width - 1 || y == 0 || y == layout.height - 1) {
                         // tilemap.SetTile(tileCoordinate, wallTiles[15]);
-                        tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[tileDatabase.wallTiles.Length - 1]);
+                        worldGeneration.tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[tileDatabase.wallTiles.Length - 1]);
                         // Debug.Log("The tile " + x +", "+ y + " is on the side so it is setting to tile 15");
                     }
                     else {
                         int id = ConvertTileIdToTilesetIndex(wallSideId);
                         if(id < 0) {
                             map[x, y] = 0;
-                            tilemap.SetTile(tileCoordinate, null);
+                            worldGeneration.tilemap.SetTile(tileCoordinate, null);
                             continue;
                         }
                         if(generateDebugNumbersForWalls) {
                             //debugTilemap.SetTile(tileCoordinate, tileDatabase.debugNumbers[id]);
                         }
-                        tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[id]);
+                        worldGeneration.tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[id]);
                     }
                 }
             }
@@ -477,7 +435,7 @@ public class LevelGeneration : MonoBehaviour {
                     (tile.tileX - layout.width / 2) + layout.worldCoordinates.x * layout.width,
                     (tile.tileY - layout.height / 2) + layout.worldCoordinates.y * layout.height, 0);
                     map[tile.tileX, tile.tileY] = 0;
-                    tilemap.SetTile(tileCoordinate, null);
+                    worldGeneration.tilemap.SetTile(tileCoordinate, null);
                 }
             }
         }
@@ -489,7 +447,7 @@ public class LevelGeneration : MonoBehaviour {
                     (tile.tileX - layout.width / 2) + layout.worldCoordinates.x * layout.width,
                     (tile.tileY - layout.height / 2) + layout.worldCoordinates.y * layout.height, 0);
                     map[tile.tileX, tile.tileY] = 1;
-                    tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[tileDatabase.wallTiles.Length - 1]);
+                    worldGeneration.tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[tileDatabase.wallTiles.Length - 1]);
                 }
             }
             else {
