@@ -17,6 +17,8 @@ public class WorldGeneration : MonoBehaviour {
     private string[,] worldMap = new string[worldSize, worldSize];
     // Current coordinates
     private Vector2Int currentCoordinates = new Vector2Int(0, 0);
+    // Pathfinding for entities
+    private AstarPath aStarPath;
     // So each world can be same with same seed
     private System.Random pseudoRandomForWorld;
     private List<Vector2Int> currentRenderedLevels;
@@ -31,6 +33,7 @@ public class WorldGeneration : MonoBehaviour {
     private void Awake() {
         levels = new List<LevelGeneration>();
         currentRenderedLevels = new List<Vector2Int>();
+        aStarPath = FindObjectOfType<AstarPath>();
     }
     private void Start() {        
         if(randomSeed) {
@@ -73,15 +76,18 @@ public class WorldGeneration : MonoBehaviour {
     private void GenerateCurrentLevels() {
         for(int x = currentCoordinates.x - 1; x <= currentCoordinates.x + 1; x++) {
             for(int y = currentCoordinates.y - 1; y <= currentCoordinates.y + 1; y++) {
+                if(x == currentCoordinates.x && y == currentCoordinates.y) {
+                    Debug.Log("Rescanning pathfinding...");
+                    int levelSize = 64;
+                    aStarPath.graphs[0].active.data.gridGraph.center = new Vector3Int(levelSize * x, levelSize * y, 0);
+                    StartCoroutine(ScanPath());
+                }
                 if(x < 0 || y < 0 || x > worldSize - 1 || y > worldSize - 1) {
-                    Debug.Log("This level can't exist");
                     continue;
                 }
                 if(currentRenderedLevels.Contains(new Vector2Int(x, y))) {
-                    Debug.Log("This level exists");
                     continue;                    
-                }
-                Debug.Log($"{x}, {y}");
+                }                
                 worldMap[x, y] = pseudoRandomForWorld.Next().ToString();
                 //GameObject levelClone = Instantiate(level, new Vector3(x * levelSize, y * levelSize, 0), Quaternion.identity);
                 GameObject levelClone = ObjectPooler.objectPooler.GetPooledObject(level.name);
@@ -109,6 +115,12 @@ public class WorldGeneration : MonoBehaviour {
                 levels[i].layout.worldCoordinates.y > currentCoordinates.y + 1) {
                 levels[i].UnloadLevel();
             }
+        }
+    }    
+    private IEnumerator ScanPath() {
+        yield return new WaitForSeconds(0.4f);
+        if(aStarPath) {
+            aStarPath.Scan();
         }
     }
 }

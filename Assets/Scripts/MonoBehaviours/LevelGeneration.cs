@@ -15,8 +15,6 @@ public class LevelGeneration : MonoBehaviour {
     public LevelLayout layout;
     // Tile database
     public TileDatabase tileDatabase;
-    // A star path instance to scan walls
-    private AstarPath path;
     // Two dimensional map array
     private int[,] map;
     private int[,] reservedForConnectionsMap;
@@ -41,12 +39,13 @@ public class LevelGeneration : MonoBehaviour {
             worldGeneration.ChangeCurrentCoordinates(layout.worldCoordinates);
         }
     }
+    /*
     private IEnumerator ScanPath() {
         yield return new WaitForSeconds(0.2f);
         if(path) {
             path.Scan();
         }
-    }
+    }*/
     public async void SetLayout() {
         pseudoRandomForPlants = new System.Random(this.layout.seed.GetHashCode());
         pseudoRandomForWalls = new System.Random(this.layout.seed.GetHashCode());
@@ -143,7 +142,7 @@ public class LevelGeneration : MonoBehaviour {
             return 14;
         }
         else {
-            Debug.Log($"Tile formation haven't been specified: {id}");
+            //Debug.Log($"Tile formation haven't been specified: {id}");
             return -1;
         }
     }

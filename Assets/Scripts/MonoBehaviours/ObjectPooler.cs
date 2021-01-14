@@ -47,7 +47,7 @@ public class ObjectPooler : MonoBehaviour {
                 if(!pooledObjects[i].activeInHierarchy && pooledObjects[i].GetComponent<GetPooled>().gameObject.name.Contains(name)) {
                     if(pooledObjects[i].GetComponent<GetPooled>()) {
                         // int index = pooledObjects[i].gameObject.GetComponent<Enemy>().enemy.index;,
-                        Debug.Log("Returning disabled object");
+                        //Debug.Log("Returning disabled object");
                         return pooledObjects[i];
                     }
                     /*
