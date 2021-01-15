@@ -23,6 +23,7 @@ public class WorldGeneration : MonoBehaviour {
     private System.Random pseudoRandomForWorld;
     private List<Vector2Int> currentRenderedLevels;
     private List<LevelGeneration> levels;
+    private LoadingPanel loadingPanel;
     public GameObject level;
     [Header("Tilemaps")]
     public Tilemap groundTilemap;
@@ -34,6 +35,7 @@ public class WorldGeneration : MonoBehaviour {
         levels = new List<LevelGeneration>();
         currentRenderedLevels = new List<Vector2Int>();
         aStarPath = FindObjectOfType<AstarPath>();
+        loadingPanel = FindObjectOfType<LoadingPanel>();
     }
     private void Start() {        
         if(randomSeed) {
@@ -116,11 +118,12 @@ public class WorldGeneration : MonoBehaviour {
                 levels[i].UnloadLevel();
             }
         }
-    }    
+    }
     private IEnumerator ScanPath() {
         yield return new WaitForSeconds(0.4f);
         if(aStarPath) {
             aStarPath.Scan();
         }
+        loadingPanel.FadeOut();
     }
 }
