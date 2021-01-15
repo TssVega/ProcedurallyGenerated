@@ -39,6 +39,11 @@ public class LevelGeneration : MonoBehaviour {
             worldGeneration.ChangeCurrentCoordinates(layout.worldCoordinates);
         }
     }
+    private void OnTriggerExit2D(Collider2D collision) {
+        if(collision.CompareTag("Player")) {
+            worldGeneration.ChangeLastCoordinates(layout.worldCoordinates);
+        }
+    }
     /*
     private IEnumerator ScanPath() {
         yield return new WaitForSeconds(0.2f);

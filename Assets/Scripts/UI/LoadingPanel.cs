@@ -24,6 +24,11 @@ public class LoadingPanel : MonoBehaviour {
             CubeAnimation();
         }
     }
+    public void LoadingLevels() {
+        panel.color = Color.clear;
+        cube.color = Color.white;
+        loadingTip.color = Color.clear;
+    }
     private void CubeAnimation() {
         float newAlpha;
         if(fadingIn) {
@@ -44,8 +49,7 @@ public class LoadingPanel : MonoBehaviour {
     public void FadeOut() {
         if(gameObject.activeInHierarchy) {
             StartCoroutine(Fade(false));
-        }
-        
+        }        
     }
     // Slowly make the screen black from clear
     public void FadeIn() {
@@ -54,6 +58,10 @@ public class LoadingPanel : MonoBehaviour {
         }
     }
     private IEnumerator Fade(bool fadeIn) {
+        /*
+        panel.color = Color.black;
+        cube.color = Color.white;
+        loadingTip.color = Color.white;*/
         float newAlpha;
         if(fadeIn) {
             while(panel.color.a < 1) {

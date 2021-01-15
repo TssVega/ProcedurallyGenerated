@@ -15,6 +15,7 @@ public class WorldGeneration : MonoBehaviour {
     private string worldSeed = "tss";
     // A 2 dimentional map of string seeds
     private string[,] worldMap = new string[worldSize, worldSize];
+    private Vector2Int lastCoordinates = new Vector2Int(-1, -1);
     // Current coordinates
     private Vector2Int currentCoordinates = new Vector2Int(0, 0);
     // Pathfinding for entities
@@ -74,15 +75,27 @@ public class WorldGeneration : MonoBehaviour {
         currentCoordinates = coordinates;
         GenerateCurrentLevels();
     }
+    public void ChangeLastCoordinates(Vector2Int coordinates) {
+        lastCoordinates = coordinates;
+    }
     // Generate adjacent levels and unload farther ones
     private void GenerateCurrentLevels() {
+             
         for(int x = currentCoordinates.x - 1; x <= currentCoordinates.x + 1; x++) {
             for(int y = currentCoordinates.y - 1; y <= currentCoordinates.y + 1; y++) {
+                if(currentCoordinates == lastCoordinates) {
+                    return;
+                }
+                if(!loadingPanel.gameObject.activeInHierarchy) {
+                    loadingPanel.gameObject.SetActive(true);
+                    loadingPanel.LoadingLevels();
+                }
                 if(x == currentCoordinates.x && y == currentCoordinates.y) {
                     Debug.Log("Rescanning pathfinding...");
                     int levelSize = 64;
                     aStarPath.graphs[0].active.data.gridGraph.center = new Vector3Int(levelSize * x, levelSize * y, 0);
                     StartCoroutine(ScanPath());
+                    //ScanPath();
                 }
                 if(x < 0 || y < 0 || x > worldSize - 1 || y > worldSize - 1) {
                     continue;
@@ -120,7 +133,7 @@ public class WorldGeneration : MonoBehaviour {
         }
     }
     private IEnumerator ScanPath() {
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.5f);
         if(aStarPath) {
             aStarPath.Scan();
         }
