@@ -27,16 +27,16 @@ public class WorldGeneration : MonoBehaviour {
     private LoadingPanel loadingPanel;
     public GameObject level;
     [Header("Tilemaps")]
-    public Tilemap groundTilemap;
-    public Tilemap tilemap;
-    public Tilemap debugTilemap;
-    public Tilemap plantTilemap;
+    [HideInInspector] public Tilemap groundTilemap;
+    [HideInInspector] public Tilemap tilemap;
+    [HideInInspector] public Tilemap debugTilemap;
+    [HideInInspector] public Tilemap plantTilemap;
 
     private void Awake() {
         levels = new List<LevelGeneration>();
         currentRenderedLevels = new List<Vector2Int>();
         aStarPath = FindObjectOfType<AstarPath>();
-        loadingPanel = FindObjectOfType<LoadingPanel>();
+        loadingPanel = FindObjectOfType<UICanvas>().loadingPanel.GetComponent<LoadingPanel>();
     }
     private void Start() {        
         if(randomSeed) {
@@ -133,7 +133,7 @@ public class WorldGeneration : MonoBehaviour {
         }
     }
     private IEnumerator ScanPath() {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.5f);        
         if(aStarPath) {
             aStarPath.Scan();
         }
