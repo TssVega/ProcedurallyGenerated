@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 7430841090308141594}
   - component: {fileID: 7430841090308141797}
   - component: {fileID: 7267375318621360048}
+  - component: {fileID: 1364852626}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -131,6 +132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lockedOn: 0
+  joystick: {fileID: 0}
 --- !u!212 &7430841090308141595
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -238,3 +240,70 @@ MonoBehaviour:
   hairColorIndex: 0
   hairStyleIndex: 0
   appearance: {fileID: 11400000, guid: a6e67cc3b8628b147ba0e56aefd53f90, type: 2}
+--- !u!114 &1364852626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7430841090308141598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2407581536be0f3459af11c70760d6f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+  mana: 100
+  energy: 100
+  maxHealth: 100
+  maxMana: 100
+  maxEnergy: 100
+  walkSpeed: 7
+  runSpeed: 15
+  strength: 10
+  agility: 10
+  dexterity: 10
+  intelligence: 10
+  faith: 10
+  wisdom: 10
+  vitality: 10
+  charisma: 10
+  bashDamage: 10
+  pierceDamage: 10
+  slashDamage: 10
+  fireDamage: 10
+  iceDamage: 10
+  lightningDamage: 10
+  airDamage: 10
+  earthDamage: 10
+  lightDamage: 10
+  darkDamage: 10
+  poisonDamage: 10
+  bleedDamage: 10
+  curseDamage: 10
+  bashDefence: 10
+  pierceDefence: 10
+  slashDefence: 10
+  fireDefence: 10
+  iceDefence: 10
+  lightningDefence: 10
+  airDefence: 10
+  earthDefence: 10
+  lightDefence: 10
+  darkDefence: 10
+  poisonDefence: 10
+  bleedDefence: 10
+  curseDefence: 10
+  statPoints: 10
+  maxDamageTimesHealth: 2
+  parryDuration: 0.3
+  blockDuration: 1
+  damageBlockRate: 0.95
+  burningThreshold: 100
+  earthingThreshold: 100
+  frostbiteThreshold: 100
+  shockThreshold: 100
+  lightingThreshold: 100
+  poisonThreshold: 100
+  bleedThreshold: 100
+  curseThreshold: 100

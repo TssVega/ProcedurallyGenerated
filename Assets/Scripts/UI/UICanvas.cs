@@ -9,6 +9,6 @@ public class UICanvas : MonoBehaviour {
 
     private void Start() {
         loadingPanel.SetActive(true);
-        playerUI.SetActive(false);
+        playerUI.SetActive(true);
     }
 }

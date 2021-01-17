@@ -3,31 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
-    /*
-    private Vector2 movementVector;
 
-    private void Start() {
-        movementVector = Vector2.zero;
-    }
-
-    private void Update() {
-        movementVector = Vector2.zero;
-        if(Input.GetKey(KeyCode.LeftArrow)) {
-            movementVector += Vector2.left;
-        }
-        if(Input.GetKey(KeyCode.RightArrow)) {
-            movementVector += Vector2.right;
-        }
-        if(Input.GetKey(KeyCode.UpArrow)) {
-            movementVector += Vector2.up;
-        }
-        if(Input.GetKey(KeyCode.DownArrow)) {
-            movementVector += Vector2.down;
-        }
-        transform.Translate(movementVector.normalized * Time.deltaTime * 8f);
-    }
-    */
-    private float walkSpeed;
     private Rigidbody2D rb2D;
     private Vector2 joystickInput;
     //private Joystick joystick;
@@ -36,12 +12,14 @@ public class PlayerController : MonoBehaviour {
     //private Enemy[] nearbyEnemies;
     //private Player player;
     //private StatusEffects statusFx;
+    public FloatingJoystick joystick;
+    private Stats playerStats;
 #if UNITY_EDITOR
     private float horizontalInput = 0f;
     private float verticalInput = 0f;
 #endif
     // Assign private values
-    private void Start() {
+    private void Awake() {
         /*
         player = FindObjectOfType<Player>();
         statusFx = GetComponent<StatusEffects>();
@@ -49,10 +27,10 @@ public class PlayerController : MonoBehaviour {
         if(FindObjectOfType<UICanvas>()) {
             joystick = FindObjectOfType<UICanvas>().playerUI.GetComponent<UIPlayerStatus>().joystick;
         }*/
-        walkSpeed = 16f;
+        playerStats = FindObjectOfType<Player>().GetComponent<Stats>();
         lockedOn = false;
         rb2D = GetComponent<Rigidbody2D>();
-        //joystickInput = Vector2.zero;
+        joystickInput = Vector2.zero;
     }
     // Get input
     private void Update() {
@@ -90,13 +68,13 @@ public class PlayerController : MonoBehaviour {
     }*/
     private void GetInput() {
         // Input
-        //if(joystick) {
-        //    joystickInput = new Vector2(joystick.Horizontal, joystick.Vertical);
-        //}
-        /*
+        if(joystick) {
+            joystickInput = new Vector2(joystick.Horizontal, joystick.Vertical);
+        }        
         else {
-            joystick = FindObjectOfType<Joystick>();
+            joystick = FindObjectOfType<FloatingJoystick>();
         }
+        /*
         // Check if there is a nearest enemy
         if(!nearestEnemy || !nearestEnemy.gameObject.activeSelf) {
             lockedOn = false;
@@ -121,8 +99,8 @@ public class PlayerController : MonoBehaviour {
                 rb2D.angularVelocity = 0;
             }*/
             // If there is an input
-            /*
-            if(joystick && joystickInput.sqrMagnitude > 0.1f) {
+            
+            if(joystick && joystickInput.sqrMagnitude > 0.01f) {
                 // Look at movement direction
                 if(!lockedOn) {
                     transform.eulerAngles = new Vector3(
@@ -130,8 +108,8 @@ public class PlayerController : MonoBehaviour {
                     rb2D.angularVelocity = 0;
                 }
                 // Move
-                rb2D.AddForce(joystickInput.normalized * walkSpeed);
-            }*/
+                rb2D.AddForce(joystickInput * playerStats.runSpeed);
+            }
             if(horizontalInput != 0 || verticalInput != 0) {
                 Vector3 movingDirection = new Vector3(horizontalInput, verticalInput, 0f);
                 // Look at movement direction
@@ -141,7 +119,7 @@ public class PlayerController : MonoBehaviour {
                     rb2D.angularVelocity = 0;
                 }
                 // Move
-                rb2D.AddForce(movingDirection.normalized * walkSpeed);
+                rb2D.AddForce(movingDirection.normalized * playerStats.runSpeed);
             }
         }
     }
