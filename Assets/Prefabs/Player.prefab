@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 7430841090308141797}
   - component: {fileID: 7267375318621360048}
   - component: {fileID: 1364852626}
+  - component: {fileID: 7430841088790226279}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -233,6 +234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ee5d8620c4c0c3419c56afcd0c437c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stats: {fileID: 0}
   skinColor: {fileID: 7430841090308141595}
   hairColor: {fileID: 7430841088715380488}
   hairStyle: {fileID: 7430841088715380488}
@@ -258,7 +260,6 @@ MonoBehaviour:
   maxHealth: 100
   maxMana: 100
   maxEnergy: 100
-  walkSpeed: 7
   runSpeed: 15
   strength: 10
   agility: 10
@@ -307,3 +308,15 @@ MonoBehaviour:
   poisonThreshold: 100
   bleedThreshold: 100
   curseThreshold: 100
+--- !u!114 &7430841088790226279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7430841090308141598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc37e5c8e154c7146b30b667e29643ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
