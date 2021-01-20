@@ -7,10 +7,13 @@ public class UICanvas : MonoBehaviour {
     public GameObject loadingPanel;
     public GameObject playerUI;
     public GameObject skillTreeUI;
+    public GameObject inventoryUI;
+    //public SelectedItem selectedItem;
 
     private void Start() {
         loadingPanel.SetActive(true);
         playerUI.SetActive(true);
-        skillTreeUI.SetActive(true);
+        skillTreeUI.SetActive(false);
+        inventoryUI.SetActive(false);
     }
 }

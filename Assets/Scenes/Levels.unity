@@ -276,7 +276,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &456590930
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1257,6 +1257,7 @@ MonoBehaviour:
   loadingPanel: {fileID: 320167875}
   playerUI: {fileID: 506769530}
   skillTreeUI: {fileID: 456590929}
+  inventoryUI: {fileID: 0}
 --- !u!1 &1786813028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1776,6 +1777,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8924822674855755687, guid: 2aa1c5c2675c6464a9bba91c0dfbfc32,
+        type: 3}
+      propertyPath: m_RefResolutionX
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 8924822674855755687, guid: 2aa1c5c2675c6464a9bba91c0dfbfc32,
+        type: 3}
+      propertyPath: m_RefResolutionY
+      value: 225
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2aa1c5c2675c6464a9bba91c0dfbfc32, type: 3}

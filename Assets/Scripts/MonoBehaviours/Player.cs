@@ -15,9 +15,32 @@ public class Player : MonoBehaviour {
     [HideInInspector] public int hairStyleIndex = 0;
 
     public CharacterAppearance appearance;
+    public ItemCreator itemCreator;
+    public SpriteRenderer weaponHandle;
+    public SpriteRenderer weaponGuard;
+    public SpriteRenderer weaponBlade;
+
+    // BodyPart[] bodyParts;
 
     private void Awake() {
         stats = GetComponent<Stats>();
+    }
+    private void Start() {
+        SetWeapon(itemCreator.CreateWeaponSprite("tss"));
+    }
+    private void Update() {
+        if(Input.GetKeyDown(KeyCode.Space)) {
+            SetWeapon(itemCreator.CreateWeaponSprite(Time.time.ToString()));
+        }
+    }
+    public void CheckWeapon() {
+        /*
+        if(bodyParts[0].item && bodyParts[0].item.hasTrail) {
+            //weaponTrail.ActivateTrail(bodyParts[0].item);
+        }
+        else {
+            //weaponTrail.StopTrail();
+        }*/
     }
     public void SavePlayer() {
         SaveSystem.Save(this, 0);
@@ -98,5 +121,13 @@ public class Player : MonoBehaviour {
         skinColor.color = appearance.skinColors[skinColorIndex];
         hairColor.color = appearance.hairColors[hairColorIndex];
         hairStyle.sprite = appearance.hairStyles[hairStyleIndex];
+    }
+    public void SetWeapon(Weapon weapon) {
+        weaponHandle.sprite = weapon.weaponHandle;
+        weaponGuard.sprite = weapon.weaponGuard;
+        weaponBlade.sprite = weapon.weaponBlade;
+        weaponHandle.color = weapon.weaponHandleColor;
+        weaponGuard.color = weapon.weaponGuardColor;
+        weaponBlade.color = weapon.weaponBladeColor;
     }
 }
