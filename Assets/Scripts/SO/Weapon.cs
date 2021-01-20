@@ -3,13 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Weapon : Item {
-
-    public Color weaponHandleColor;
-    public Color weaponGuardColor;
-    public Color weaponBladeColor;
-    public Sprite weaponHandle;
-    public Sprite weaponGuard;
-    public Sprite weaponBlade;
     // Damages
     public float bashDamage;
     public float pierceDamage;

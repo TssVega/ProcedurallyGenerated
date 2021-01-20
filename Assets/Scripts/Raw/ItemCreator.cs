@@ -21,12 +21,13 @@ public class ItemCreator : ScriptableObject {
         Color guardColor = weaponGuardColors[pseudoRandom.Next(0, weaponGuardColors.Length)];
         Color bladeColor = weaponBladeColors[pseudoRandom.Next(0, weaponBladeColors.Length)];
         Weapon weapon = CreateInstance("Weapon") as Weapon;
-        weapon.weaponHandle = handle;
-        weapon.weaponGuard = guard;
-        weapon.weaponBlade = blade;
-        weapon.weaponHandleColor = handleColor;
-        weapon.weaponGuardColor = guardColor;
-        weapon.weaponBladeColor = bladeColor;
+        weapon.firstSprite = handle;
+        weapon.secondSprite = guard;
+        weapon.thirdSprite = blade;
+        weapon.firstColor = handleColor;
+        weapon.secondColor = guardColor;
+        weapon.thirdColor = bladeColor;
+        weapon.slot = EquipSlot.RightHand;
         return weapon;
     }
 }

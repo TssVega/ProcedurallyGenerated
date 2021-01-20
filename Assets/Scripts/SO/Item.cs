@@ -38,7 +38,12 @@ public class Item : ScriptableObject {
 
     public int itemSaveIndex;
     public string itemName;
-    public Sprite artwork;
+    public Sprite firstSprite;
+    public Sprite secondSprite;
+    public Sprite thirdSprite;
+    public Color firstColor;
+    public Color secondColor;
+    public Color thirdColor;
     public EquipSlot slot;
     public Rarity rarity;
     public int diamondCost;

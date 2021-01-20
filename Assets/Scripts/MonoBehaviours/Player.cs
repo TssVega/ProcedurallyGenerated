@@ -26,12 +26,12 @@ public class Player : MonoBehaviour {
         stats = GetComponent<Stats>();
     }
     private void Start() {
-        SetWeapon(itemCreator.CreateWeaponSprite("tss"));
+        //SetWeapon(itemCreator.CreateWeaponSprite("tss"));
     }
-    private void Update() {
+    private void Update() { /*
         if(Input.GetKeyDown(KeyCode.Space)) {
             SetWeapon(itemCreator.CreateWeaponSprite(Time.time.ToString()));
-        }
+        }*/
     }
     public void CheckWeapon() {
         /*
@@ -123,11 +123,11 @@ public class Player : MonoBehaviour {
         hairStyle.sprite = appearance.hairStyles[hairStyleIndex];
     }
     public void SetWeapon(Weapon weapon) {
-        weaponHandle.sprite = weapon.weaponHandle;
-        weaponGuard.sprite = weapon.weaponGuard;
-        weaponBlade.sprite = weapon.weaponBlade;
-        weaponHandle.color = weapon.weaponHandleColor;
-        weaponGuard.color = weapon.weaponGuardColor;
-        weaponBlade.color = weapon.weaponBladeColor;
+        weaponHandle.sprite = weapon.firstSprite;
+        weaponGuard.sprite = weapon.secondSprite;
+        weaponBlade.sprite = weapon.thirdSprite;
+        weaponHandle.color = weapon.firstColor;
+        weaponGuard.color = weapon.secondColor;
+        weaponBlade.color = weapon.thirdColor;
     }
 }
