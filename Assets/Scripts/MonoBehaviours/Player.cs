@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
+    public int saveSlot;
+
     public Stats stats;
 
     public SpriteRenderer skinColor;
@@ -43,18 +45,24 @@ public class Player : MonoBehaviour {
         }*/
     }
     public void SavePlayer() {
-        SaveSystem.Save(this, 0);
+        SaveSystem.Save(this, PersistentData.saveSlot);
     }
     public void LoadPlayer() {
-        SaveData data = SaveSystem.Load(0);
+        SaveData data = SaveSystem.Load(PersistentData.saveSlot);
         if(data != null) {
+            saveSlot = data.saveSlot;
+            Vector3 pos = new Vector3(data.position[0], data.position[1], data.position[2]);
+            transform.position = pos;
+            Quaternion quat = new Quaternion(data.rotation[0], data.rotation[1], data.rotation[2], data.rotation[3]);
+            transform.rotation = quat;
+            // Appearance
+            skinColorIndex = data.skinColorIndex;
+            hairColorIndex = data.hairColorIndex;
+            hairStyleIndex = data.hairStyleIndex;            
             skinColorIndex = data.skinColorIndex;
             hairColorIndex = data.hairColorIndex;
             hairStyleIndex = data.hairStyleIndex;
             SetAppearance();
-            skinColorIndex = data.skinColorIndex;
-            hairColorIndex = data.hairColorIndex;
-            hairStyleIndex = data.hairStyleIndex;
             // Status
             stats.health = data.health;
             stats.mana = data.mana;

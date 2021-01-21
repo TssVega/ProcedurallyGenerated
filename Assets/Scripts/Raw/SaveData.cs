@@ -4,6 +4,10 @@ using UnityEngine;
 
 [System.Serializable]
 public class SaveData {
+    public int saveSlot;
+    // Transform
+    public float[] position;
+    public float[] rotation;
     // Appearance
     public int skinColorIndex;
     public int hairColorIndex;
@@ -70,6 +74,18 @@ public class SaveData {
     public int curseThreshold;
 
     public SaveData(Player data) {
+        saveSlot = data.saveSlot;
+        // Position and world data
+        position = new float[3];
+        position[0] = data.transform.position.x;
+        position[1] = data.transform.position.y;
+        position[2] = data.transform.position.z;
+        rotation = new float[4];
+        rotation[0] = data.transform.rotation.x;
+        rotation[1] = data.transform.rotation.y;
+        rotation[2] = data.transform.rotation.z;
+        rotation[3] = data.transform.rotation.w;
+        // Appearance
         skinColorIndex = data.skinColorIndex;
         hairColorIndex = data.hairColorIndex;
         hairStyleIndex = data.hairStyleIndex;

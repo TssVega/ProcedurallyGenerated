@@ -45,9 +45,11 @@ public class WorldGeneration : MonoBehaviour {
     private void Start() {
         player.LoadPlayer();
         // Load world data here
+        /*
         world = new WorldData {
             worldData = new string[worldSize, worldSize]
-        };
+        };*/
+        world = new WorldData(new string[worldSize, worldSize]);
         if(randomSeed) {
             worldSeed = Time.time.ToString();
         }

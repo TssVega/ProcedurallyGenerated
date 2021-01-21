@@ -5,11 +5,16 @@ using UnityEngine;
 public class InventoryPanel : MonoBehaviour {
 
     private Inventory inventory;
+    private Player player;
 
     private void Awake() {
-        inventory = FindObjectOfType<Player>().GetComponent<Inventory>();
+        player = FindObjectOfType<Player>();
+        inventory = player.GetComponent<Inventory>();
     }
     private void OnEnable() {
         inventory.SetInventoryImages();
+    }
+    public void SaveButton() {
+        player.SavePlayer();
     }
 }

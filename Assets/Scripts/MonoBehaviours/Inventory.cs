@@ -21,6 +21,18 @@ public class Inventory : MonoBehaviour {
     private Player player;
 
     private void Awake() {
+        player = FindObjectOfType<Player>();
+        if(FindObjectOfType<InventoryPanel>() != null) {
+            SetInventory();
+        }        
+    }
+    private void Start() {
+        Weapon exampleItem = player.itemCreator.CreateWeaponSprite(Time.time.ToString());
+        AddToInventory(exampleItem);
+        EquipItemInSlot(0);
+        player.SetWeapon(exampleItem);
+    }
+    private void SetInventory() {
         itemImages = new Image[inventorySize];
         itemImagesSecondary = new Image[inventorySize];
         itemImagesTertiary = new Image[inventorySize];
@@ -28,7 +40,6 @@ public class Inventory : MonoBehaviour {
         equipmentImagesSecondary = new Image[inventorySize];
         equipmentImagesTertiary = new Image[inventorySize];
 
-        player = FindObjectOfType<Player>();
         for(int i = 0; i < itemSlots.Length; i++) {
             itemImages[i] = itemSlots[i].transform.GetChild(0).GetComponent<Image>();
             itemImagesSecondary[i] = itemSlots[i].transform.GetChild(1).GetComponent<Image>();
@@ -39,12 +50,6 @@ public class Inventory : MonoBehaviour {
             equipmentImagesSecondary[i] = equipmentSlots[i].transform.GetChild(1).GetComponent<Image>();
             equipmentImagesTertiary[i] = equipmentSlots[i].transform.GetChild(2).GetComponent<Image>();
         }
-    }
-    private void Start() {
-        Weapon exampleItem = player.itemCreator.CreateWeaponSprite(Time.time.ToString());
-        AddToInventory(exampleItem);
-        EquipItemInSlot(0);
-        player.SetWeapon(exampleItem);
     }
     public void SetInventoryImages() {
         for(int i = 0; i < inventorySize; i++) {

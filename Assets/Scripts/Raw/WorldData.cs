@@ -5,4 +5,8 @@ using UnityEngine;
 public class WorldData {
 
     public string[,] worldData;
+
+    public WorldData(string[,] data) {
+        worldData = data;
+    }
 }
