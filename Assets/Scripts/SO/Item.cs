@@ -41,6 +41,9 @@ public class Item : ScriptableObject {
     public Sprite firstSprite;
     public Sprite secondSprite;
     public Sprite thirdSprite;
+    public Sprite firstIcon;
+    public Sprite secondIcon;
+    public Sprite thirdIcon;
     public Color firstColor;
     public Color secondColor;
     public Color thirdColor;

@@ -33,6 +33,8 @@ public class WorldGeneration : MonoBehaviour {
     [HideInInspector] public Tilemap debugTilemap;
     [HideInInspector] public Tilemap plantTilemap;
 
+    private WorldData world;
+
     private void Awake() {
         player = FindObjectOfType<Player>();
         levels = new List<LevelGeneration>();
@@ -42,6 +44,10 @@ public class WorldGeneration : MonoBehaviour {
     }
     private void Start() {
         player.LoadPlayer();
+        // Load world data here
+        world = new WorldData {
+            worldData = new string[worldSize, worldSize]
+        };
         if(randomSeed) {
             worldSeed = Time.time.ToString();
         }
@@ -82,17 +88,16 @@ public class WorldGeneration : MonoBehaviour {
         lastCoordinates = coordinates;
     }
     // Generate adjacent levels and unload farther ones
-    private void GenerateCurrentLevels() {
-             
+    private void GenerateCurrentLevels() {             
         for(int x = currentCoordinates.x - 1; x <= currentCoordinates.x + 1; x++) {
-            for(int y = currentCoordinates.y - 1; y <= currentCoordinates.y + 1; y++) {
+            for(int y = currentCoordinates.y - 1; y <= currentCoordinates.y + 1; y++) {                
                 if(currentCoordinates == lastCoordinates) {
                     return;
                 }
                 if(!loadingPanel.gameObject.activeInHierarchy) {
                     loadingPanel.gameObject.SetActive(true);
                     loadingPanel.LoadingLevels();
-                }
+                }                
                 if(x == currentCoordinates.x && y == currentCoordinates.y) {
                     Debug.Log("Rescanning pathfinding...");
                     int levelSize = 64;
@@ -105,14 +110,18 @@ public class WorldGeneration : MonoBehaviour {
                 }
                 if(currentRenderedLevels.Contains(new Vector2Int(x, y))) {
                     continue;                    
-                }                
-                worldMap[x, y] = pseudoRandomForWorld.Next().ToString();
-                //GameObject levelClone = Instantiate(level, new Vector3(x * levelSize, y * levelSize, 0), Quaternion.identity);
+                }
+                if(world.worldData[x, y] == null) {
+                    world.worldData[x, y] = pseudoRandomForWorld.Next().ToString();
+                }
+                worldMap[x, y] = world.worldData[x, y];
+                // Create a level with object pooling
                 GameObject levelClone = ObjectPooler.objectPooler.GetPooledObject(level.name);
                 levelClone.transform.position = new Vector3(x * levelSize, y * levelSize, 0);
                 levelClone.transform.rotation = Quaternion.identity;
                 LevelGeneration levelGen = levelClone.GetComponent<LevelGeneration>();
                 levels.Add(levelGen);
+                currentRenderedLevels.Add(new Vector2Int(x, y));
                 levelGen.layout = new LevelLayout(worldMap[x, y]) {
                     worldCoordinates = new Vector2Int(x, y),
                     worldSize = worldSize
@@ -121,8 +130,8 @@ public class WorldGeneration : MonoBehaviour {
                 /*
                 Thread th = new Thread(() => levelGen.SetLayout(this));
                 th.Start();*/
-                currentRenderedLevels.Add(new Vector2Int(x, y));
-                levelGen.SetLayout();                
+                
+                levelGen.SetLayout();
             }
         }
         // Unload far away levels
@@ -132,6 +141,8 @@ public class WorldGeneration : MonoBehaviour {
                 levels[i].layout.worldCoordinates.y < currentCoordinates.y - 1 ||
                 levels[i].layout.worldCoordinates.y > currentCoordinates.y + 1) {
                 levels[i].UnloadLevel();
+                levels.RemoveAt(i);
+                currentRenderedLevels.RemoveAt(i);
             }
         }
     }
