@@ -15,9 +15,6 @@ public class WorldGeneration : MonoBehaviour {
     private string worldSeed = "tss";
     // A 2 dimentional map of string seeds
     private string[,] worldMap = new string[worldSize, worldSize];
-    private Vector2Int lastCoordinates = new Vector2Int(-1, -1);
-    // Current coordinates
-    private Vector2Int currentCoordinates = new Vector2Int(0, 0);
     // Pathfinding for entities
     private AstarPath aStarPath;
     // So each world can be same with same seed
@@ -43,13 +40,14 @@ public class WorldGeneration : MonoBehaviour {
         loadingPanel = FindObjectOfType<UICanvas>().loadingPanel.GetComponent<LoadingPanel>();
     }
     private void Start() {
-        player.LoadPlayer();
+        //player.LoadPlayer();
         // Load world data here
         /*
         world = new WorldData {
             worldData = new string[worldSize, worldSize]
         };*/
-        world = new WorldData(new string[worldSize, worldSize]);
+        LoadWorldData();
+        //world = new WorldData(new string[worldSize, worldSize], new int[] { currentCoordinates.x, currentCoordinates.y});
         if(randomSeed) {
             worldSeed = Time.time.ToString();
         }
@@ -82,25 +80,37 @@ public class WorldGeneration : MonoBehaviour {
             StartCoroutine(GenerateCurrentLevels());
         }
     }*/
+    public void SaveWorldData() {
+        SaveSystem.SaveWorld(world, PersistentData.saveSlot);
+    }
+    public void LoadWorldData() {
+        WorldData data = SaveSystem.LoadWorld(PersistentData.saveSlot);
+        if(data != null) {
+            world = new WorldData(data.worldData, data.currentCoordinates, data.lastCoordinates);
+        }
+        else {
+            world = new WorldData(new string[worldSize, worldSize], new int[] { 0, 0 }, new int[] { -1, -1 });
+        }
+    }
     public void ChangeCurrentCoordinates(Vector2Int coordinates) {
-        currentCoordinates = coordinates;
+        world.currentCoordinates = new int[] { coordinates.x, coordinates.y};
         GenerateCurrentLevels();
     }
     public void ChangeLastCoordinates(Vector2Int coordinates) {
-        lastCoordinates = coordinates;
+        world.lastCoordinates = new int[] { coordinates.x, coordinates.y};
     }
     // Generate adjacent levels and unload farther ones
     private void GenerateCurrentLevels() {             
-        for(int x = currentCoordinates.x - 1; x <= currentCoordinates.x + 1; x++) {
-            for(int y = currentCoordinates.y - 1; y <= currentCoordinates.y + 1; y++) {                
-                if(currentCoordinates == lastCoordinates) {
+        for(int x = world.currentCoordinates[0] - 1; x <= world.currentCoordinates[0] + 1; x++) {
+            for(int y = world.currentCoordinates[1] - 1; y <= world.currentCoordinates[1] + 1; y++) {                
+                if(world.currentCoordinates[0] == world.lastCoordinates[0] && world.currentCoordinates[1] == world.lastCoordinates[1]) {
                     return;
                 }
                 if(!loadingPanel.gameObject.activeInHierarchy) {
                     loadingPanel.gameObject.SetActive(true);
                     loadingPanel.LoadingLevels();
                 }                
-                if(x == currentCoordinates.x && y == currentCoordinates.y) {
+                if(x == world.currentCoordinates[0] && y == world.currentCoordinates[1]) {
                     Debug.Log("Rescanning pathfinding...");
                     int levelSize = 64;
                     aStarPath.graphs[0].active.data.gridGraph.center = new Vector3Int(levelSize * x, levelSize * y, 0);
@@ -138,10 +148,10 @@ public class WorldGeneration : MonoBehaviour {
         }
         // Unload far away levels
         for(int i = 0; i < levels.Count; i++) {
-            if(levels[i].layout.worldCoordinates.x < currentCoordinates.x - 1 ||
-                levels[i].layout.worldCoordinates.x > currentCoordinates.x + 1 ||
-                levels[i].layout.worldCoordinates.y < currentCoordinates.y - 1 ||
-                levels[i].layout.worldCoordinates.y > currentCoordinates.y + 1) {
+            if(levels[i].layout.worldCoordinates.x < world.currentCoordinates[0] - 1 ||
+                levels[i].layout.worldCoordinates.x > world.currentCoordinates[0] + 1 ||
+                levels[i].layout.worldCoordinates.y < world.currentCoordinates[1] - 1 ||
+                levels[i].layout.worldCoordinates.y > world.currentCoordinates[1] + 1) {
                 levels[i].UnloadLevel();
                 levels.RemoveAt(i);
                 currentRenderedLevels.RemoveAt(i);

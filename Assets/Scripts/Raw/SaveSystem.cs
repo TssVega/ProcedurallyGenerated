@@ -19,7 +19,7 @@ public static class SaveSystem {
         // SaveData _data = new SaveData(data);
         // bin.Serialize(stream, _data);
         // Close the stream
-        Debug.LogWarning(data + " saved to slot " + slot + " successfully at " + Application.persistentDataPath);
+        Debug.Log(data + " saved to slot " + slot + " successfully at " + Application.persistentDataPath);
         // stream.Close();
     }
     // Load from a slot
@@ -30,6 +30,44 @@ public static class SaveSystem {
             BinaryFormatter bin = new BinaryFormatter();
             using(FileStream stream = new FileStream(path, FileMode.Open)) {
                 SaveData data = bin.Deserialize(stream) as SaveData;
+                Debug.Log("Deserialized file");
+                return data;
+            }
+            // FileStream stream = new FileStream(path, FileMode.Open);
+            // SaveData data = bin.Deserialize(stream) as SaveData;
+            // Debug.Log("Deserialized file");
+            // stream.Close();
+            // return data;
+        }
+        else {
+            Debug.LogWarning("No file found in path");
+            return null;
+        }
+    }
+    public static void SaveWorld(WorldData data, int slot) {
+        // Formatter to convert game data to binary
+        BinaryFormatter bin = new BinaryFormatter();
+        string path = Application.persistentDataPath + "/WorldData" + slot.ToString() + ".tss";
+        using(FileStream stream = new FileStream(path, FileMode.Create)) {
+            WorldData _data = new WorldData(data.worldData, data.currentCoordinates, data.lastCoordinates);
+            bin.Serialize(stream, _data);
+        }
+        // FileStream stream = new FileStream(path, FileMode.Create);
+        // Take the data and write it to the file
+        // SaveData _data = new SaveData(data);
+        // bin.Serialize(stream, _data);
+        // Close the stream
+        Debug.Log(data + " saved to slot " + slot + " successfully at " + Application.persistentDataPath);
+        // stream.Close();
+    }
+    // Load from a slot
+    public static WorldData LoadWorld(int slot) {
+        string path = Application.persistentDataPath + "/WorldData" + slot.ToString() + ".tss";
+        if(File.Exists(path)) {
+            Debug.Log("Deserializing file");
+            BinaryFormatter bin = new BinaryFormatter();
+            using(FileStream stream = new FileStream(path, FileMode.Open)) {
+                WorldData data = bin.Deserialize(stream) as WorldData;
                 Debug.Log("Deserialized file");
                 return data;
             }

@@ -21,10 +21,7 @@ public class Inventory : MonoBehaviour {
     private Player player;
 
     private void Awake() {
-        player = FindObjectOfType<Player>();
-        if(FindObjectOfType<InventoryPanel>() != null) {
-            SetInventory();
-        }        
+        player = FindObjectOfType<Player>();             
     }
     private void Start() {
         Weapon exampleItem = player.itemCreator.CreateWeaponSprite(Time.time.ToString());
@@ -32,7 +29,7 @@ public class Inventory : MonoBehaviour {
         EquipItemInSlot(0);
         player.SetWeapon(exampleItem);
     }
-    private void SetInventory() {
+    public void SetInventory() {
         itemImages = new Image[inventorySize];
         itemImagesSecondary = new Image[inventorySize];
         itemImagesTertiary = new Image[inventorySize];

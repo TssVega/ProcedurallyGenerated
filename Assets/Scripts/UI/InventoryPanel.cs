@@ -10,6 +10,7 @@ public class InventoryPanel : MonoBehaviour {
     private void Awake() {
         player = FindObjectOfType<Player>();
         inventory = player.GetComponent<Inventory>();
+        inventory.SetInventory();
     }
     private void OnEnable() {
         inventory.SetInventoryImages();

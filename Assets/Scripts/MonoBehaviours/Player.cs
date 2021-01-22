@@ -22,12 +22,15 @@ public class Player : MonoBehaviour {
     public SpriteRenderer weaponGuard;
     public SpriteRenderer weaponBlade;
 
+    private WorldGeneration worldGeneration;
     // BodyPart[] bodyParts;
 
     private void Awake() {
+        worldGeneration = FindObjectOfType<WorldGeneration>();
         stats = GetComponent<Stats>();
     }
     private void Start() {
+        LoadPlayer();
         //SetWeapon(itemCreator.CreateWeaponSprite("tss"));
     }
     private void Update() { /*
@@ -46,6 +49,9 @@ public class Player : MonoBehaviour {
     }
     public void SavePlayer() {
         SaveSystem.Save(this, PersistentData.saveSlot);
+        if(worldGeneration) {
+            worldGeneration.SaveWorldData();
+        }        
     }
     public void LoadPlayer() {
         SaveData data = SaveSystem.Load(PersistentData.saveSlot);

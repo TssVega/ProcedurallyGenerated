@@ -21,6 +21,8 @@ public class CharacterCreation : MonoBehaviour {
 
     private Player player;
 
+    private readonly int worldSize = 5;
+
     private void Awake() {
         player = FindObjectOfType<Player>();
         currentSkinColor = appearance.skinColors[currentSkinColorIndex];
@@ -31,6 +33,7 @@ public class CharacterCreation : MonoBehaviour {
         hairImage.sprite = currentHairStyle;
     }
     public void CompleteCharacterCreation() {
+        SetNewGameData();
         player.SavePlayer();
         LoadSceneAsync("Levels");
     }
@@ -90,5 +93,64 @@ public class CharacterCreation : MonoBehaviour {
         }
         hairImage.sprite = currentHairStyle;
         player.hairStyleIndex = currentHairStyleIndex;
+    }
+    private void SetNewGameData() {
+        // World data
+        WorldData world = new WorldData(new string[worldSize, worldSize], new int[] { 0, 0 }, new int[] { -1, -1 });
+        SaveSystem.SaveWorld(world, PersistentData.saveSlot);
+        // Appearance
+        player.skinColor.color = currentSkinColor;
+        player.hairColor.color = currentHairColor;
+        player.hairStyle.sprite = currentHairStyle;
+        player.skinColorIndex = currentSkinColorIndex;
+        player.hairColorIndex = currentHairColorIndex;
+        player.hairStyleIndex = currentHairStyleIndex;
+        // Transform
+        player.transform.position = new Vector3(5, 0, 0);
+        player.transform.rotation = Quaternion.identity;
+        // Status
+        player.stats.health = 100f;
+        player.stats.mana = 100f;
+        player.stats.energy = 100f;
+        player.stats.maxHealth = 100f;
+        player.stats.maxMana = 100f;
+        player.stats.maxEnergy = 100f;
+        // Main
+        player.stats.strength = 10;
+        player.stats.agility = 10;
+        player.stats.dexterity = 10;
+        player.stats.intelligence = 10;
+        player.stats.faith = 10;
+        player.stats.wisdom = 10;
+        player.stats.vitality = 10;
+        player.stats.charisma = 10;
+        // Damages
+        player.stats.bashDamage = 10f;
+        player.stats.pierceDamage = 10f;
+        player.stats.slashDamage = 10f;
+        player.stats.fireDamage = 10f;
+        player.stats.iceDamage = 10f;
+        player.stats.lightningDamage = 10f;
+        player.stats.airDamage = 10f;
+        player.stats.earthDamage = 10f;
+        player.stats.lightDamage = 10f;
+        player.stats.darkDamage = 10f;
+        player.stats.poisonDamage = 10f;
+        player.stats.bleedDamage = 10f;
+        player.stats.curseDamage = 10f;
+        // Defences
+        player.stats.bashDefence = 10f;
+        player.stats.pierceDefence = 10f;
+        player.stats.slashDefence = 10f;
+        player.stats.fireDefence = 10f;
+        player.stats.iceDefence = 10f;
+        player.stats.lightningDefence = 10f;
+        player.stats.airDefence = 10f;
+        player.stats.earthDefence = 10f;
+        player.stats.lightDefence = 10f;
+        player.stats.darkDefence = 10f;
+        player.stats.poisonDefence = 10f;
+        player.stats.bleedDefence = 10f;
+        player.stats.curseDefence = 10f;
     }
 }
