@@ -11,13 +11,50 @@ public class ItemCreator : ScriptableObject {
     public Sprite[] weaponHandles;
     public Sprite[] weaponGuards;
     public Sprite[] weaponBlades;
-    // Chest Armor
+    // UI view of chest armor
     public Color[] chestArmorBaseColors;
     public Color[] chestArmorOverlayColors;
     public Color[] chestArmorBackColors;
     public Sprite[] chestArmorBases;
     public Sprite[] chestArmorOverlays;
     public Sprite[] chestArmorBacks;
+    // In game sprites of chest armor
+    public Sprite[] chestArmorInGame;
+
+    public Item CreateItem(string seed) {
+        System.Random pseudoRandom = new System.Random(seed.GetHashCode());
+        Item item;
+        int slotIndex = pseudoRandom.Next(0, 6);
+        if(slotIndex == 0) {
+            Weapon w = CreateWeaponSprite(seed);
+            item = w;
+        }
+        else if(slotIndex == 1) {
+            // Shield s
+            item = null;
+        }
+        else if(slotIndex == 2) {
+            // Head armor h
+            item = null;
+        }
+        else if(slotIndex == 3) {
+            // Chest armor c
+            Armor a = CreateChestArmorSprite(seed);
+            item = null;
+        }
+        else if(slotIndex == 4) {
+            // Leg armor l
+            item = null;
+        }
+        else if(slotIndex == 5) {
+            // Ring r
+            item = null;
+        }
+        else {
+            item = null;
+        }
+        return item;
+    }
 
     public Weapon CreateWeaponSprite(string seed) {
         System.Random pseudoRandom = new System.Random(seed.GetHashCode());
@@ -41,8 +78,25 @@ public class ItemCreator : ScriptableObject {
         return weapon;
     }
 
-    public Armor CreateArmorSprite() {
+    public Armor CreateChestArmorSprite(string seed) {
+        System.Random pseudoRandom = new System.Random(seed.GetHashCode());
+        Sprite armorBase = chestArmorBases[pseudoRandom.Next(0, chestArmorBases.Length)];
+        Sprite armorOverlay = chestArmorOverlays[pseudoRandom.Next(0, chestArmorOverlays.Length)];
+        Sprite armorBack = chestArmorBacks[pseudoRandom.Next(0, chestArmorBacks.Length)];
+        Sprite inGameArmor = chestArmorInGame[pseudoRandom.Next(0, chestArmorInGame.Length)];
+        Color baseColor = chestArmorBaseColors[pseudoRandom.Next(0, chestArmorBaseColors.Length)];
+        Color overlayColor = chestArmorOverlayColors[pseudoRandom.Next(0, chestArmorOverlayColors.Length)];
+        Color backColor = chestArmorBackColors[pseudoRandom.Next(0, chestArmorBackColors.Length)];
+        //Sprite 
         Armor armor = CreateInstance("Armor") as Armor;
+        armor.firstIcon = armorBase;
+        armor.secondIcon = armorOverlay;
+        armor.thirdIcon = armorBack;
+        armor.firstSprite = inGameArmor;
+        armor.firstColor = baseColor;
+        armor.secondColor = overlayColor;
+        armor.thirdColor = backColor;
+        armor.slot = EquipSlot.Body;
         return armor;
     }
 }

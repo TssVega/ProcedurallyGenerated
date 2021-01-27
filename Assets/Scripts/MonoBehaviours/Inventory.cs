@@ -24,10 +24,16 @@ public class Inventory : MonoBehaviour {
         player = FindObjectOfType<Player>();             
     }
     private void Start() {
+        // Crate example weapon
         Weapon exampleItem = player.itemCreator.CreateWeaponSprite(Time.time.ToString());
         AddToInventory(exampleItem);
         EquipItemInSlot(0);
         player.SetWeapon(exampleItem);
+        // Create example armor
+        Armor testArmor = player.itemCreator.CreateChestArmorSprite(Time.time.ToString());
+        AddToInventory(testArmor);
+        EquipItemInSlot(0);
+        player.SetBodyArmor(testArmor);
     }
     public void SetInventory() {
         itemImages = new Image[inventorySize];
@@ -38,24 +44,24 @@ public class Inventory : MonoBehaviour {
         equipmentImagesTertiary = new Image[inventorySize];
 
         for(int i = 0; i < itemSlots.Length; i++) {
-            itemImages[i] = itemSlots[i].transform.GetChild(0).GetComponent<Image>();
-            itemImagesSecondary[i] = itemSlots[i].transform.GetChild(1).GetComponent<Image>();
-            itemImagesTertiary[i] = itemSlots[i].transform.GetChild(2).GetComponent<Image>();
+            itemImages[i] = itemSlots[i].transform.GetChild(1).GetComponent<Image>();
+            itemImagesSecondary[i] = itemSlots[i].transform.GetChild(2).GetComponent<Image>();
+            itemImagesTertiary[i] = itemSlots[i].transform.GetChild(0).GetComponent<Image>();
         }
         for(int i = 0; i < equipmentSlots.Length; i++) {
-            equipmentImages[i] = equipmentSlots[i].transform.GetChild(0).GetComponent<Image>();
-            equipmentImagesSecondary[i] = equipmentSlots[i].transform.GetChild(1).GetComponent<Image>();
-            equipmentImagesTertiary[i] = equipmentSlots[i].transform.GetChild(2).GetComponent<Image>();
+            equipmentImages[i] = equipmentSlots[i].transform.GetChild(1).GetComponent<Image>();
+            equipmentImagesSecondary[i] = equipmentSlots[i].transform.GetChild(2).GetComponent<Image>();
+            equipmentImagesTertiary[i] = equipmentSlots[i].transform.GetChild(0).GetComponent<Image>();
         }
     }
     public void SetInventoryImages() {
         for(int i = 0; i < inventorySize; i++) {
             if(inventory[i] != null) {
-                itemImages[i].sprite = inventory[i].firstSprite;
+                itemImages[i].sprite = inventory[i].firstIcon;
                 itemImages[i].color = inventory[i].firstColor;
-                itemImagesSecondary[i].sprite = inventory[i].secondSprite;
+                itemImagesSecondary[i].sprite = inventory[i].secondIcon;
                 itemImagesSecondary[i].color = inventory[i].secondColor;
-                itemImagesTertiary[i].sprite = inventory[i].thirdSprite;
+                itemImagesTertiary[i].sprite = inventory[i].thirdIcon;
                 itemImagesTertiary[i].color = inventory[i].thirdColor;
             }
             else {
@@ -69,11 +75,11 @@ public class Inventory : MonoBehaviour {
         }
         for(int i = 0; i < equipment.Count; i++) {
             if(equipment[i] != null) {
-                equipmentImages[i].sprite = equipment[i].firstSprite;
+                equipmentImages[i].sprite = equipment[i].firstIcon;
                 equipmentImages[i].color = equipment[i].firstColor;
-                equipmentImagesSecondary[i].sprite = equipment[i].secondSprite;
+                equipmentImagesSecondary[i].sprite = equipment[i].secondIcon;
                 equipmentImagesSecondary[i].color = equipment[i].secondColor;
-                equipmentImagesTertiary[i].sprite = equipment[i].thirdSprite;
+                equipmentImagesTertiary[i].sprite = equipment[i].thirdIcon;
                 equipmentImagesTertiary[i].color = equipment[i].thirdColor;
             }
             else {

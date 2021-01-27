@@ -18,10 +18,13 @@ public class Player : MonoBehaviour {
 
     public CharacterAppearance appearance;
     public ItemCreator itemCreator;
+    // Sprites for weapons
     public SpriteRenderer weaponHandle;
     public SpriteRenderer weaponGuard;
     public SpriteRenderer weaponBlade;
-
+    // Sprites for body armor
+    public SpriteRenderer bodyArmor;
+    // World generation
     private WorldGeneration worldGeneration;
     // BodyPart[] bodyParts;
 
@@ -33,11 +36,12 @@ public class Player : MonoBehaviour {
         LoadPlayer();
         //SetWeapon(itemCreator.CreateWeaponSprite("tss"));
     }
-    private void Update() { /*
+    /*
+    private void Update() { 
         if(Input.GetKeyDown(KeyCode.Space)) {
             SetWeapon(itemCreator.CreateWeaponSprite(Time.time.ToString()));
-        }*/
-    }
+        }
+    }*/
     public void CheckWeapon() {
         /*
         if(bodyParts[0].item && bodyParts[0].item.hasTrail) {
@@ -143,5 +147,9 @@ public class Player : MonoBehaviour {
         weaponHandle.color = weapon.firstColor;
         weaponGuard.color = weapon.secondColor;
         weaponBlade.color = weapon.thirdColor;
+    }
+    public void SetBodyArmor(Armor armor) {
+        bodyArmor.sprite = armor.firstSprite;
+        bodyArmor.color = armor.firstColor;
     }
 }
