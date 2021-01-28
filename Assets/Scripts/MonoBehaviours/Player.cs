@@ -24,6 +24,9 @@ public class Player : MonoBehaviour {
     public SpriteRenderer weaponBlade;
     // Sprites for body armor
     public SpriteRenderer bodyArmor;
+    // Sprites for helmet
+    public SpriteRenderer helmetBase;
+    public SpriteRenderer helmetProp;
     // World generation
     private WorldGeneration worldGeneration;
     // BodyPart[] bodyParts;
@@ -51,11 +54,19 @@ public class Player : MonoBehaviour {
             //weaponTrail.StopTrail();
         }*/
     }
-    public void SavePlayer() {
-        SaveSystem.Save(this, PersistentData.saveSlot);
-        if(worldGeneration) {
-            worldGeneration.SaveWorldData();
-        }        
+    public void SavePlayer() {        
+        if(worldGeneration && worldGeneration.CanSave()) {
+            SaveSystem.Save(this, PersistentData.saveSlot);
+            if(worldGeneration) {
+                worldGeneration.SaveWorldData();
+            }
+        }
+        else if(!worldGeneration && UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "CharacterCreation") {
+            SaveSystem.Save(this, PersistentData.saveSlot);
+        }
+        else {
+            Debug.LogWarning("Cannot save here");
+        }  
     }
     public void LoadPlayer() {
         SaveData data = SaveSystem.Load(PersistentData.saveSlot);
@@ -151,5 +162,11 @@ public class Player : MonoBehaviour {
     public void SetBodyArmor(Armor armor) {
         bodyArmor.sprite = armor.firstSprite;
         bodyArmor.color = armor.firstColor;
+    }
+    public void SetHelmet(Armor helmet) {
+        helmetBase.sprite = helmet.firstSprite;
+        helmetBase.color = helmet.firstColor;
+        helmetProp.sprite = helmet.secondSprite;
+        helmetProp.color = helmet.secondColor;
     }
 }

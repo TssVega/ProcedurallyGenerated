@@ -72,6 +72,11 @@ public class WorldGeneration : MonoBehaviour {
             }
         }*/
     }
+    public bool CanSave() {
+        bool canSave = !(world.currentCoordinates[0] == world.lastCoordinates[0]
+            && world.currentCoordinates[1] == world.lastCoordinates[1]);
+        return canSave;
+    }
     /*
     private void Update() {
         if(Input.GetKeyDown(KeyCode.Space)) {
@@ -85,6 +90,8 @@ public class WorldGeneration : MonoBehaviour {
     }
     public void LoadWorldData() {
         WorldData data = SaveSystem.LoadWorld(PersistentData.saveSlot);
+        Debug.Log($"Current coordinates: {data.currentCoordinates[0]}, {data.currentCoordinates[1]}");
+        Debug.Log($"Last coordinates: {data.lastCoordinates[0]}, {data.lastCoordinates[1]}");
         if(data != null) {
             world = new WorldData(data.worldData, data.currentCoordinates, data.lastCoordinates);
         }
@@ -93,6 +100,7 @@ public class WorldGeneration : MonoBehaviour {
         }
     }
     public void ChangeCurrentCoordinates(Vector2Int coordinates) {
+        //ChangeLastCoordinates(new Vector2Int(world.currentCoordinates[0], world.currentCoordinates[1]));
         world.currentCoordinates = new int[] { coordinates.x, coordinates.y};
         GenerateCurrentLevels();
     }

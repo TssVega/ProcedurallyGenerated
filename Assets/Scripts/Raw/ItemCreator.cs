@@ -20,7 +20,19 @@ public class ItemCreator : ScriptableObject {
     public Sprite[] chestArmorBacks;
     // In game sprites of chest armor
     public Sprite[] chestArmorInGame;
-
+    // Helmet sprites
+    public Color[] helmetBaseColors;
+    public Color helmetPropColor = Color.white;
+    public Sprite[] helmetBases;
+    public Sprite[] helmetProps;
+    public Sprite[] helmetBasesInGame;
+    public Sprite[] helmetPropsInGame;
+    // Legging sprites
+    public Color[] leggingBaseColors;
+    public Color[] leggingPropColors;
+    public Sprite[] leggingBases;
+    public Sprite[] leggingProps;
+    // Create an item
     public Item CreateItem(string seed) {
         System.Random pseudoRandom = new System.Random(seed.GetHashCode());
         Item item;
@@ -35,16 +47,18 @@ public class ItemCreator : ScriptableObject {
         }
         else if(slotIndex == 2) {
             // Head armor h
-            item = null;
+            Armor h = CreateHelmetSprite(seed);
+            item = h;
         }
         else if(slotIndex == 3) {
             // Chest armor c
             Armor a = CreateChestArmorSprite(seed);
-            item = null;
+            item = a;
         }
         else if(slotIndex == 4) {
             // Leg armor l
-            item = null;
+            Armor l = CreateLeggingSprite(seed);
+            item = l;
         }
         else if(slotIndex == 5) {
             // Ring r
@@ -55,7 +69,7 @@ public class ItemCreator : ScriptableObject {
         }
         return item;
     }
-
+    // Create a weapon sprite
     public Weapon CreateWeaponSprite(string seed) {
         System.Random pseudoRandom = new System.Random(seed.GetHashCode());
         Sprite handle = weaponHandles[pseudoRandom.Next(0, weaponHandles.Length)];
@@ -64,7 +78,7 @@ public class ItemCreator : ScriptableObject {
         Color handleColor = weaponHandleColors[pseudoRandom.Next(0, weaponHandleColors.Length)];
         Color guardColor = weaponGuardColors[pseudoRandom.Next(0, weaponGuardColors.Length)];
         Color bladeColor = weaponBladeColors[pseudoRandom.Next(0, weaponBladeColors.Length)];
-        Weapon weapon = CreateInstance("Weapon") as Weapon;
+        Weapon weapon = CreateInstance<Weapon>();
         weapon.firstSprite = handle;
         weapon.secondSprite = guard;
         weapon.thirdSprite = blade;
@@ -77,7 +91,8 @@ public class ItemCreator : ScriptableObject {
         weapon.slot = EquipSlot.RightHand;
         return weapon;
     }
-
+    // Create a chest armor sprite
+    // TODO: Match chest armor sprite and icons to be consistent
     public Armor CreateChestArmorSprite(string seed) {
         System.Random pseudoRandom = new System.Random(seed.GetHashCode());
         Sprite armorBase = chestArmorBases[pseudoRandom.Next(0, chestArmorBases.Length)];
@@ -88,7 +103,7 @@ public class ItemCreator : ScriptableObject {
         Color overlayColor = chestArmorOverlayColors[pseudoRandom.Next(0, chestArmorOverlayColors.Length)];
         Color backColor = chestArmorBackColors[pseudoRandom.Next(0, chestArmorBackColors.Length)];
         //Sprite 
-        Armor armor = CreateInstance("Armor") as Armor;
+        Armor armor = CreateInstance<Armor>();
         armor.firstIcon = armorBase;
         armor.secondIcon = armorOverlay;
         armor.thirdIcon = armorBack;
@@ -98,5 +113,39 @@ public class ItemCreator : ScriptableObject {
         armor.thirdColor = backColor;
         armor.slot = EquipSlot.Body;
         return armor;
+    }
+    // Create a helmet sprite
+    // TODO: Match helmet sprite and icons to be consistent
+    public Armor CreateHelmetSprite(string seed) {
+        System.Random pseudoRandom = new System.Random(seed.GetHashCode());
+        Sprite helmetBase = helmetBases[pseudoRandom.Next(0, helmetBases.Length)];
+        Sprite helmetProp = helmetProps[pseudoRandom.Next(0, helmetProps.Length)];
+        Sprite helmetBaseInGame = helmetBasesInGame[pseudoRandom.Next(0, helmetBasesInGame.Length)];
+        Sprite helmetPropInGame = helmetPropsInGame[pseudoRandom.Next(0, helmetPropsInGame.Length)];
+        Color baseColor = helmetBaseColors[pseudoRandom.Next(0, helmetBaseColors.Length)];
+        Color propColor = helmetPropColor;
+        Armor helmet = CreateInstance<Armor>();
+        helmet.firstIcon = helmetBase;
+        helmet.secondIcon = helmetProp;
+        helmet.firstSprite = helmetBaseInGame;
+        helmet.secondSprite = helmetPropInGame;
+        helmet.firstColor = baseColor;
+        helmet.secondColor = propColor;
+        helmet.slot = EquipSlot.Head;
+        return helmet;
+    }
+    public Armor CreateLeggingSprite(string seed) {
+        System.Random pseudoRandom = new System.Random(seed.GetHashCode());
+        Sprite leggingBase = leggingBases[pseudoRandom.Next(0, leggingBases.Length)];
+        Sprite leggingProp = leggingProps[pseudoRandom.Next(0, leggingProps.Length)];
+        Color baseColor = leggingBaseColors[pseudoRandom.Next(0, leggingBaseColors.Length)];
+        Color propColor = leggingPropColors[pseudoRandom.Next(0, leggingPropColors.Length)];        
+        Armor legging = CreateInstance<Armor>();
+        legging.firstIcon = leggingBase;
+        legging.secondIcon = leggingProp;
+        legging.firstColor = baseColor;
+        legging.secondColor = propColor;
+        legging.slot = EquipSlot.Legs;
+        return legging;
     }
 }

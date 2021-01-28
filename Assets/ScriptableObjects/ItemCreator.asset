@@ -64,8 +64,8 @@ MonoBehaviour:
   - {r: 0.13207549, g: 0.13207549, b: 0.13207549, a: 1}
   - {r: 0.4245283, g: 0.23429157, b: 0.09803922, a: 1}
   chestArmorBases:
-  - {fileID: 4105025311206683466, guid: ccd33c6d17638f84185d2d6f919e5bd4, type: 3}
-  - {fileID: -4605873947041225936, guid: ccd33c6d17638f84185d2d6f919e5bd4, type: 3}
+  - {fileID: -1112402335522396137, guid: ebb4f7ed48cf6284a8b5463e5948c09e, type: 3}
+  - {fileID: 5550824956012843040, guid: ebb4f7ed48cf6284a8b5463e5948c09e, type: 3}
   chestArmorOverlays:
   - {fileID: -3616223901197906225, guid: 028dcc74100bc4744a5b898d2949bf57, type: 3}
   - {fileID: -3760404856413903024, guid: 028dcc74100bc4744a5b898d2949bf57, type: 3}
@@ -74,5 +74,49 @@ MonoBehaviour:
   chestArmorBacks:
   - {fileID: 8722498328274846790, guid: 028dcc74100bc4744a5b898d2949bf57, type: 3}
   chestArmorInGame:
-  - {fileID: -7470536801103071302, guid: e7b689050de440248a54e43160bf48ea, type: 3}
-  - {fileID: 8965971363349223087, guid: e7b689050de440248a54e43160bf48ea, type: 3}
+  - {fileID: 1477287829503362545, guid: ec84030b3667126418cf91336ae266df, type: 3}
+  - {fileID: -1361894916884067870, guid: ec84030b3667126418cf91336ae266df, type: 3}
+  helmetBaseColors:
+  - {r: 0.8490566, g: 0.8490566, b: 0.8490566, a: 1}
+  - {r: 0.8113208, g: 0.8113208, b: 0.8113208, a: 1}
+  - {r: 0.754717, g: 0.56918603, b: 0.17443931, a: 1}
+  - {r: 0.9528302, g: 0.75956136, b: 0, a: 1}
+  - {r: 0.21698111, g: 0.21698111, b: 0.21698111, a: 1}
+  helmetPropColor: {r: 1, g: 1, b: 1, a: 1}
+  helmetBases:
+  - {fileID: 5478282400592031559, guid: 2897d390fe536624ea4936375c05b069, type: 3}
+  - {fileID: -3938204243445572533, guid: 2897d390fe536624ea4936375c05b069, type: 3}
+  - {fileID: 1705569925001335499, guid: 2897d390fe536624ea4936375c05b069, type: 3}
+  - {fileID: 4983153861927101659, guid: 2897d390fe536624ea4936375c05b069, type: 3}
+  helmetProps:
+  - {fileID: 2003036926474651344, guid: f47f11ecaaad1dd4e936307bdf777d51, type: 3}
+  - {fileID: -5051647243450162747, guid: f47f11ecaaad1dd4e936307bdf777d51, type: 3}
+  - {fileID: -6628357255282513198, guid: f47f11ecaaad1dd4e936307bdf777d51, type: 3}
+  helmetBasesInGame:
+  - {fileID: -6721165401184188268, guid: f454bcb54a0e3194cabb63066b76d5b7, type: 3}
+  helmetPropsInGame:
+  - {fileID: -6503725565346348419, guid: f454bcb54a0e3194cabb63066b76d5b7, type: 3}
+  - {fileID: -5902278125987497403, guid: f454bcb54a0e3194cabb63066b76d5b7, type: 3}
+  - {fileID: -7128643844608218146, guid: f454bcb54a0e3194cabb63066b76d5b7, type: 3}
+  leggingBaseColors:
+  - {r: 0.8584906, g: 0.8584906, b: 0.8584906, a: 1}
+  - {r: 0.7075472, g: 0.7075472, b: 0.7075472, a: 1}
+  - {r: 0.5471698, g: 0.5471698, b: 0.5471698, a: 1}
+  - {r: 0.9150943, g: 0.76882416, b: 0.06474723, a: 1}
+  - {r: 0.103773594, g: 0.103773594, b: 0.103773594, a: 1}
+  leggingPropColors:
+  - {r: 0.8396226, g: 0.8396226, b: 0.8396226, a: 1}
+  - {r: 0.14150941, g: 0.14150941, b: 0.14150941, a: 1}
+  - {r: 0.5377358, g: 0.2610185, b: 0.043120332, a: 1}
+  - {r: 0.6037736, g: 0.0768957, b: 0.0768957, a: 1}
+  - {r: 0.8207547, g: 0.69054097, b: 0.3213332, a: 1}
+  leggingBases:
+  - {fileID: 1337416525602527084, guid: 570db1b95bed2e5428ccd60ef6f367fc, type: 3}
+  - {fileID: 4458628198409967821, guid: 570db1b95bed2e5428ccd60ef6f367fc, type: 3}
+  - {fileID: 2735232617660332362, guid: 570db1b95bed2e5428ccd60ef6f367fc, type: 3}
+  - {fileID: 8693064346957545175, guid: 570db1b95bed2e5428ccd60ef6f367fc, type: 3}
+  leggingProps:
+  - {fileID: -8155310106204610853, guid: 84d5d2ef723dd8044920cd8b8f413682, type: 3}
+  - {fileID: 7743127740008597037, guid: 84d5d2ef723dd8044920cd8b8f413682, type: 3}
+  - {fileID: 6815826609949884503, guid: 84d5d2ef723dd8044920cd8b8f413682, type: 3}
+  - {fileID: -3887963169369315298, guid: 84d5d2ef723dd8044920cd8b8f413682, type: 3}

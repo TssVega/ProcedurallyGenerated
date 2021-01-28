@@ -34,6 +34,15 @@ public class Inventory : MonoBehaviour {
         AddToInventory(testArmor);
         EquipItemInSlot(0);
         player.SetBodyArmor(testArmor);
+        // Create example helmet
+        Armor testHelmet = player.itemCreator.CreateHelmetSprite(Time.time.ToString());
+        AddToInventory(testHelmet);
+        EquipItemInSlot(0);
+        player.SetHelmet(testHelmet);
+        // Create example legging
+        Armor testLegging = player.itemCreator.CreateLeggingSprite(Time.time.ToString());
+        AddToInventory(testLegging);
+        EquipItemInSlot(0);
     }
     public void SetInventory() {
         itemImages = new Image[inventorySize];
