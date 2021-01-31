@@ -43,6 +43,11 @@ public class Inventory : MonoBehaviour {
         Armor testLegging = player.itemCreator.CreateLeggingSprite(Time.time.ToString());
         AddToInventory(testLegging);
         EquipItemInSlot(0);
+        // Create example shield
+        Shield testShield = player.itemCreator.CreateShieldSprite(Time.time.ToString());
+        AddToInventory(testShield);
+        EquipItemInSlot(0);
+        player.SetShield(testShield);
     }
     public void SetInventory() {
         itemImages = new Image[inventorySize];

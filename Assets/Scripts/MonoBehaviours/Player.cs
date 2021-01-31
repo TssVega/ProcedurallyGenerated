@@ -27,6 +27,8 @@ public class Player : MonoBehaviour {
     // Sprites for helmet
     public SpriteRenderer helmetBase;
     public SpriteRenderer helmetProp;
+    // Sprite for shield
+    public SpriteRenderer shield;
     // World generation
     private WorldGeneration worldGeneration;
     // BodyPart[] bodyParts;
@@ -168,5 +170,9 @@ public class Player : MonoBehaviour {
         helmetBase.color = helmet.firstColor;
         helmetProp.sprite = helmet.secondSprite;
         helmetProp.color = helmet.secondColor;
+    }
+    public void SetShield(Shield shield) {
+        this.shield.sprite = shield.firstSprite;
+        this.shield.color = shield.firstColor;
     }
 }

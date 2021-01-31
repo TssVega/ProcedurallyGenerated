@@ -32,6 +32,12 @@ public class ItemCreator : ScriptableObject {
     public Color[] leggingPropColors;
     public Sprite[] leggingBases;
     public Sprite[] leggingProps;
+    // Shield sprites
+    public Color[] shieldBaseColors;
+    public Color[] shieldPropColors;
+    public Sprite[] shieldBases;
+    public Sprite[] shieldProps;
+    public Sprite[] shieldInGame;
     // Create an item
     public Item CreateItem(string seed) {
         System.Random pseudoRandom = new System.Random(seed.GetHashCode());
@@ -147,5 +153,21 @@ public class ItemCreator : ScriptableObject {
         legging.secondColor = propColor;
         legging.slot = EquipSlot.Legs;
         return legging;
+    }
+    public Shield CreateShieldSprite(string seed) {
+        System.Random pseudoRandom = new System.Random(seed.GetHashCode());
+        Sprite shieldBase = shieldBases[pseudoRandom.Next(0, shieldBases.Length)];
+        Sprite shieldProp = shieldProps[pseudoRandom.Next(0, shieldProps.Length)];
+        Sprite inGame = shieldInGame[pseudoRandom.Next(0, shieldInGame.Length)];
+        Color baseColor = shieldBaseColors[pseudoRandom.Next(0, shieldPropColors.Length)];
+        Color propColor = shieldPropColors[pseudoRandom.Next(0, shieldPropColors.Length)];
+        Shield shield = CreateInstance<Shield>();
+        shield.firstIcon = shieldBase;
+        shield.secondIcon = shieldProp;
+        shield.firstSprite = inGame;
+        shield.firstColor = baseColor;
+        shield.secondColor = propColor;
+        shield.slot = EquipSlot.LeftHand;
+        return shield;
     }
 }
