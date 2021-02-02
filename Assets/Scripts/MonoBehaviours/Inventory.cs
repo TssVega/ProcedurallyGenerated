@@ -25,29 +25,34 @@ public class Inventory : MonoBehaviour {
     }
     private void Start() {
         // Crate example weapon
-        Weapon exampleItem = player.itemCreator.CreateWeaponSprite(Time.time.ToString());
+        Weapon exampleItem = player.itemCreator.CreateWeapon("testWeapon");
         AddToInventory(exampleItem);
         EquipItemInSlot(0);
         player.SetWeapon(exampleItem);
         // Create example armor
-        Armor testArmor = player.itemCreator.CreateChestArmorSprite(Time.time.ToString());
+        Armor testArmor = player.itemCreator.CreateChestArmor("testArmor");
         AddToInventory(testArmor);
         EquipItemInSlot(0);
         player.SetBodyArmor(testArmor);
         // Create example helmet
-        Armor testHelmet = player.itemCreator.CreateHelmetSprite(Time.time.ToString());
+        Armor testHelmet = player.itemCreator.CreateHelmet("testHelmet");
         AddToInventory(testHelmet);
         EquipItemInSlot(0);
         player.SetHelmet(testHelmet);
         // Create example legging
-        Armor testLegging = player.itemCreator.CreateLeggingSprite(Time.time.ToString());
+        Armor testLegging = player.itemCreator.CreateLegging("testLegging");
         AddToInventory(testLegging);
         EquipItemInSlot(0);
         // Create example shield
-        Shield testShield = player.itemCreator.CreateShieldSprite(Time.time.ToString());
+        Shield testShield = player.itemCreator.CreateShield("testShield");
         AddToInventory(testShield);
         EquipItemInSlot(0);
         player.SetShield(testShield);
+        // Create example ring
+        Ring testRing = player.itemCreator.CreateRing("testRing");
+        AddToInventory(testRing);
+        EquipItemInSlot(0);
+        //player.set
     }
     public void SetInventory() {
         itemImages = new Image[inventorySize];

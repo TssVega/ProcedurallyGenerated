@@ -96,7 +96,7 @@ public class CharacterCreation : MonoBehaviour {
     }
     private void SetNewGameData() {
         // World data
-        WorldData world = new WorldData(new string[worldSize, worldSize], new int[] { 0, 0 }, new int[] { -1, -1 });
+        WorldData world = new WorldData(new string[worldSize, worldSize], new int[] { 0, 0 });
         SaveSystem.SaveWorld(world, PersistentData.saveSlot);
         // Appearance
         player.skinColor.color = currentSkinColor;

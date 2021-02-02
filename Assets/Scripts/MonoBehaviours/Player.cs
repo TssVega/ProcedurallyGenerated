@@ -56,19 +56,11 @@ public class Player : MonoBehaviour {
             //weaponTrail.StopTrail();
         }*/
     }
-    public void SavePlayer() {        
-        if(worldGeneration && worldGeneration.CanSave()) {
-            SaveSystem.Save(this, PersistentData.saveSlot);
-            if(worldGeneration) {
-                worldGeneration.SaveWorldData();
-            }
+    public void SavePlayer() {
+        SaveSystem.Save(this, PersistentData.saveSlot);
+        if(worldGeneration) {
+            worldGeneration.SaveWorldData();
         }
-        else if(!worldGeneration && UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "CharacterCreation") {
-            SaveSystem.Save(this, PersistentData.saveSlot);
-        }
-        else {
-            Debug.LogWarning("Cannot save here");
-        }  
     }
     public void LoadPlayer() {
         SaveData data = SaveSystem.Load(PersistentData.saveSlot);

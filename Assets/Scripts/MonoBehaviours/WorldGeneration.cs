@@ -86,6 +86,7 @@ public class WorldGeneration : MonoBehaviour {
         }
     }*/
     public void SaveWorldData() {
+        ChangeLastCoordinates(new Vector2Int(-1, -1));
         SaveSystem.SaveWorld(world, PersistentData.saveSlot);
     }
     public void LoadWorldData() {
@@ -93,10 +94,12 @@ public class WorldGeneration : MonoBehaviour {
         Debug.Log($"Current coordinates: {data.currentCoordinates[0]}, {data.currentCoordinates[1]}");
         Debug.Log($"Last coordinates: {data.lastCoordinates[0]}, {data.lastCoordinates[1]}");
         if(data != null) {
-            world = new WorldData(data.worldData, data.currentCoordinates, data.lastCoordinates);
+            world = new WorldData(data.worldData, data.currentCoordinates);
         }
         else {
-            world = new WorldData(new string[worldSize, worldSize], new int[] { 0, 0 }, new int[] { -1, -1 });
+            world = new WorldData(new string[worldSize, worldSize], new int[] { 0, 0 }) {
+                lastCoordinates = new int[] { -1, -1 }
+            };
         }
     }
     public void ChangeCurrentCoordinates(Vector2Int coordinates) {

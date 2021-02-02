@@ -9,9 +9,9 @@ public class WorldData {
     public int[] currentCoordinates;
     public int[] lastCoordinates;
 
-    public WorldData(string[,] data, int[] current, int[] last) {
+    public WorldData(string[,] data, int[] current) {
         worldData = data;
         currentCoordinates = current;
-        lastCoordinates = last;
+        lastCoordinates = new int[] { -1, -1 };
     }
 }

@@ -38,13 +38,19 @@ public class ItemCreator : ScriptableObject {
     public Sprite[] shieldBases;
     public Sprite[] shieldProps;
     public Sprite[] shieldInGame;
+    // Ring sprites
+    public Color[] ringBaseColors;
+    public Color[] ringJewelColors;
+    public Sprite[] ringBases;
+    public Sprite[] ringSockets;
+    public Sprite[] ringJewels;
     // Create an item
     public Item CreateItem(string seed) {
         System.Random pseudoRandom = new System.Random(seed.GetHashCode());
         Item item;
         int slotIndex = pseudoRandom.Next(0, 6);
         if(slotIndex == 0) {
-            Weapon w = CreateWeaponSprite(seed);
+            Weapon w = CreateWeapon(seed);
             item = w;
         }
         else if(slotIndex == 1) {
@@ -53,22 +59,22 @@ public class ItemCreator : ScriptableObject {
         }
         else if(slotIndex == 2) {
             // Head armor h
-            Armor h = CreateHelmetSprite(seed);
+            Armor h = CreateHelmet(seed);
             item = h;
         }
         else if(slotIndex == 3) {
             // Chest armor c
-            Armor a = CreateChestArmorSprite(seed);
+            Armor a = CreateChestArmor(seed);
             item = a;
         }
         else if(slotIndex == 4) {
             // Leg armor l
-            Armor l = CreateLeggingSprite(seed);
+            Armor l = CreateLegging(seed);
             item = l;
         }
         else if(slotIndex == 5) {
-            // Ring r
-            item = null;
+            Ring r = CreateRing(seed);
+            item = r;
         }
         else {
             item = null;
@@ -76,7 +82,7 @@ public class ItemCreator : ScriptableObject {
         return item;
     }
     // Create a weapon sprite
-    public Weapon CreateWeaponSprite(string seed) {
+    public Weapon CreateWeapon(string seed) {
         System.Random pseudoRandom = new System.Random(seed.GetHashCode());
         Sprite handle = weaponHandles[pseudoRandom.Next(0, weaponHandles.Length)];
         Sprite guard = weaponGuards[pseudoRandom.Next(0, weaponGuards.Length)];
@@ -99,7 +105,7 @@ public class ItemCreator : ScriptableObject {
     }
     // Create a chest armor sprite
     // TODO: Match chest armor sprite and icons to be consistent
-    public Armor CreateChestArmorSprite(string seed) {
+    public Armor CreateChestArmor(string seed) {
         System.Random pseudoRandom = new System.Random(seed.GetHashCode());
         Sprite armorBase = chestArmorBases[pseudoRandom.Next(0, chestArmorBases.Length)];
         Sprite armorOverlay = chestArmorOverlays[pseudoRandom.Next(0, chestArmorOverlays.Length)];
@@ -122,7 +128,7 @@ public class ItemCreator : ScriptableObject {
     }
     // Create a helmet sprite
     // TODO: Match helmet sprite and icons to be consistent
-    public Armor CreateHelmetSprite(string seed) {
+    public Armor CreateHelmet(string seed) {
         System.Random pseudoRandom = new System.Random(seed.GetHashCode());
         Sprite helmetBase = helmetBases[pseudoRandom.Next(0, helmetBases.Length)];
         Sprite helmetProp = helmetProps[pseudoRandom.Next(0, helmetProps.Length)];
@@ -140,7 +146,7 @@ public class ItemCreator : ScriptableObject {
         helmet.slot = EquipSlot.Head;
         return helmet;
     }
-    public Armor CreateLeggingSprite(string seed) {
+    public Armor CreateLegging(string seed) {
         System.Random pseudoRandom = new System.Random(seed.GetHashCode());
         Sprite leggingBase = leggingBases[pseudoRandom.Next(0, leggingBases.Length)];
         Sprite leggingProp = leggingProps[pseudoRandom.Next(0, leggingProps.Length)];
@@ -154,7 +160,7 @@ public class ItemCreator : ScriptableObject {
         legging.slot = EquipSlot.Legs;
         return legging;
     }
-    public Shield CreateShieldSprite(string seed) {
+    public Shield CreateShield(string seed) {
         System.Random pseudoRandom = new System.Random(seed.GetHashCode());
         Sprite shieldBase = shieldBases[pseudoRandom.Next(0, shieldBases.Length)];
         Sprite shieldProp = shieldProps[pseudoRandom.Next(0, shieldProps.Length)];
@@ -169,5 +175,24 @@ public class ItemCreator : ScriptableObject {
         shield.secondColor = propColor;
         shield.slot = EquipSlot.LeftHand;
         return shield;
+    }
+    public Ring CreateRing(string seed) {
+        System.Random pseudoRandom = new System.Random(seed.GetHashCode());
+        Sprite ringBase = ringBases[pseudoRandom.Next(0, ringBases.Length)];
+        Sprite ringSocket = ringSockets[pseudoRandom.Next(0, ringSockets.Length)];
+        Sprite ringJewel = ringJewels[pseudoRandom.Next(0, ringJewels.Length)];
+        Color baseColor = ringBaseColors[pseudoRandom.Next(0, ringBaseColors.Length)];
+        Color jewelColor = ringJewelColors[pseudoRandom.Next(0, ringJewelColors.Length)];
+        Ring ring = CreateInstance<Ring>();
+        ring.firstIcon = ringBase;
+        ring.firstColor = baseColor;
+        if(ringJewel != null) {
+            ring.secondIcon = ringSocket;
+            ring.thirdIcon = ringJewel;
+            ring.secondColor = baseColor;
+            ring.thirdColor = jewelColor;
+        }              
+        ring.slot = EquipSlot.Finger;
+        return ring;
     }
 }
