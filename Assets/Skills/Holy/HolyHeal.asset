@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d46b9586e0d4c14c9eb757a686d0ece, type: 3}
+  m_Name: HolyHeal
+  m_EditorClassIdentifier: 
+  skillIndex: 1
+  skillName: Holy Heal
+  skillDescription: Channel your inner faith for a moment to gain some health
+  skillIcon: {fileID: 0}
+  acquired: 0
+  manaCost: 0
+  channelingTime: 1.5
+  castTime: 0
+  cooldown: 4
+  buffData:
+    healAmount: 10
+    channelingParticleNames:
+    - HolyHealChannelling
+    castingParticleNames: []
+    particleNames:
+    - HolyHealActivate
+    lifetime: 1.5

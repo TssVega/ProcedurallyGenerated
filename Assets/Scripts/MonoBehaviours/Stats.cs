@@ -67,20 +67,11 @@ public class Stats : MonoBehaviour {
     public int curseThreshold;
     //[Header("Skills")]
     //public List<Skill> skills;
-    public List<float> skillCooldowns;
+    
 
     private void Awake() {
         //int skillCooldownsSize = FindObjectOfType<GameMaster>().talentDatabase.talents.Length;
         //SkillCooldowns = new List<float>(skillCooldownsSize);
     }
-    private void Update() {
-        CountCooldowns();
-    }
-    private void CountCooldowns() {
-        for(int i = 0; i < skillCooldowns.Count; i++) {
-            if(skillCooldowns[i] > 0) {
-                skillCooldowns[i] -= Time.deltaTime;
-            }
-        }
-    }
+    
 }

@@ -32,7 +32,7 @@ public static class CalculateDamage {
                 damage = CalculateDecreasedDamage(rawDamage, defender.earthDefence);
                 break;
             case AttackType.Light:
-                if(false/*defender.GetComponent<StatusEffects>().lit*/) {
+                if(Random.Range(0, 10) > 5/*defender.GetComponent<StatusEffects>().lit*/) {
                     damage = rawDamage;
                 }
                 else {

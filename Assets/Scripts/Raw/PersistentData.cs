@@ -4,5 +4,5 @@ using UnityEngine;
 
 public static class PersistentData {
 
-    public static int saveSlot = 0;
+    public static int saveSlot = 1;
 }

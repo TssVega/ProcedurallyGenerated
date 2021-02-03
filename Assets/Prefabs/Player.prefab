@@ -582,6 +582,36 @@ Transform:
   m_Father: {fileID: 7430841090308141593}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6207032633084782513
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8843314161316362494}
+  m_Layer: 0
+  m_Name: ProjectileExitPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8843314161316362494
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6207032633084782513}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.25, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7430841090308141593}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7430841088715380494
 GameObject:
   m_ObjectHideFlags: 0
@@ -704,6 +734,7 @@ Transform:
   - {fileID: 4242263327567548541}
   - {fileID: 2051631119454864719}
   - {fileID: 263076109121583476}
+  - {fileID: 8843314161316362494}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -904,7 +935,6 @@ MonoBehaviour:
   poisonThreshold: 100
   bleedThreshold: 100
   curseThreshold: 100
-  skillCooldowns: []
 --- !u!114 &7430841088790226279
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -917,6 +947,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc37e5c8e154c7146b30b667e29643ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillDatabase: {fileID: 11400000, guid: b84645b6f2bdb204bbc1cb0eb4d331c0, type: 2}
+  currentSkills:
+  - {fileID: 11400000, guid: 02a87aea90e6d0d4fb2c61eb387b57d5, type: 2}
+  - {fileID: 11400000, guid: 29bff4a83ce14c445961ba9d2dc6b69d, type: 2}
+  skillCooldowns: []
+  projectileExitPos: {fileID: 8843314161316362494}
 --- !u!114 &6743054238499159456
 MonoBehaviour:
   m_ObjectHideFlags: 0
