@@ -8,7 +8,7 @@ public class UICanvas : MonoBehaviour {
     public GameObject playerUI;
     public GameObject skillTreeUI;
     public GameObject inventoryUI;
-    //public SelectedItem selectedItem;
+    public SelectedItem selectedItem;
 
     private void Start() {
         loadingPanel.SetActive(true);

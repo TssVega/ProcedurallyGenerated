@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour {
     //private StatusEffects statusFx;
     public FloatingJoystick joystick;
     private Stats playerStats;
+    private StatusEffects statusEffects;
 #if UNITY_EDITOR
     private float horizontalInput = 0f;
     private float verticalInput = 0f;
@@ -28,6 +29,7 @@ public class PlayerController : MonoBehaviour {
             joystick = FindObjectOfType<UICanvas>().playerUI.GetComponent<UIPlayerStatus>().joystick;
         }*/
         playerStats = FindObjectOfType<Player>().GetComponent<Stats>();
+        statusEffects = GetComponent<StatusEffects>();
         lockedOn = false;
         rb2D = GetComponent<Rigidbody2D>();
         joystickInput = Vector2.zero;
@@ -99,8 +101,11 @@ public class PlayerController : MonoBehaviour {
                 rb2D.angularVelocity = 0;
             }*/
             // If there is an input
-            
-            if(joystick && joystickInput.sqrMagnitude > 0.01f) {
+
+            if(joystick && joystickInput.sqrMagnitude > 0.01f &&
+                (!statusEffects.chanelling
+                 && !statusEffects.stunned
+                 && !statusEffects.immobilized)) {
                 // Look at movement direction
                 if(!lockedOn) {
                     transform.eulerAngles = new Vector3(
@@ -110,7 +115,13 @@ public class PlayerController : MonoBehaviour {
                 // Move
                 rb2D.AddForce(joystickInput * playerStats.runSpeed);
             }
-            if(horizontalInput != 0 || verticalInput != 0) {
+            else if(statusEffects.chanelling || statusEffects.stunned || statusEffects.immobilized) {
+                rb2D.velocity = Vector2.zero;
+            }
+            if(horizontalInput != 0 || verticalInput != 0 &&
+                (!statusEffects.chanelling
+                 && !statusEffects.stunned
+                 && !statusEffects.immobilized)) {
                 Vector3 movingDirection = new Vector3(horizontalInput, verticalInput, 0f);
                 // Look at movement direction
                 if(!lockedOn) {
@@ -120,6 +131,9 @@ public class PlayerController : MonoBehaviour {
                 }
                 // Move
                 rb2D.AddForce(movingDirection.normalized * playerStats.runSpeed);
+            }
+            else if(statusEffects.chanelling || statusEffects.stunned || statusEffects.immobilized) {
+                rb2D.velocity = Vector2.zero;
             }
         }
     }

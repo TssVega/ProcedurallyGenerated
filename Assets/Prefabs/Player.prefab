@@ -711,6 +711,7 @@ GameObject:
   - component: {fileID: 1364852626}
   - component: {fileID: 7430841088790226279}
   - component: {fileID: 6743054238499159456}
+  - component: {fileID: 846367717328815083}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1121,6 +1122,35 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+--- !u!114 &846367717328815083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7430841090308141598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bde332c1a9495294daf47a94f1ff2362, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stunned: 0
+  frostbitten: 0
+  airborne: 0
+  bleeding: 0
+  poisoned: 0
+  cursed: 0
+  burning: 0
+  regenerating: 0
+  chilled: 0
+  darkSigil: 0
+  timeBombed: 0
+  immobilized: 0
+  earthed: 0
+  lit: 0
+  cannotBeFrostbitten: 0
+  spedUp: 0
+  chanelling: 0
 --- !u!1 &7431417711832503863
 GameObject:
   m_ObjectHideFlags: 0

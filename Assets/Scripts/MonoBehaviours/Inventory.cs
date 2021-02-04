@@ -11,17 +11,24 @@ public class Inventory : MonoBehaviour {
 
     public GameObject[] itemSlots;
     public GameObject[] equipmentSlots;
+    public GameObject selectedItemSlot;
     private Image[] itemImages;
     private Image[] itemImagesSecondary;
     private Image[] itemImagesTertiary;
     private Image[] equipmentImages;
     private Image[] equipmentImagesSecondary;
     private Image[] equipmentImagesTertiary;
+    private Image selectedItemImage;
+    private Image selectedItemImageSecondary;
+    private Image selectedItemImageTertiary;
 
     private Player player;
 
     private void Awake() {
-        player = FindObjectOfType<Player>();             
+        player = FindObjectOfType<Player>();
+        for(int i = 0; i < itemSlots.Length; i++) {
+            itemSlots[i].GetComponent<ItemSlot>().slotIndex = i;
+        }
     }
     private void Start() {
         // Crate example weapon
@@ -72,6 +79,10 @@ public class Inventory : MonoBehaviour {
             equipmentImagesSecondary[i] = equipmentSlots[i].transform.GetChild(2).GetComponent<Image>();
             equipmentImagesTertiary[i] = equipmentSlots[i].transform.GetChild(0).GetComponent<Image>();
         }
+        // Set up selected item
+        selectedItemImage = selectedItemSlot.transform.GetChild(1).GetComponent<Image>();
+        selectedItemImageSecondary = selectedItemSlot.transform.GetChild(2).GetComponent<Image>();
+        selectedItemImageTertiary = selectedItemSlot.transform.GetChild(0).GetComponent<Image>();
     }
     public void SetInventoryImages() {
         for(int i = 0; i < inventorySize; i++) {

@@ -10,6 +10,7 @@ public class SkillUser : MonoBehaviour {
     private Stats stats;
     public List<float> skillCooldowns;
     public Transform projectileExitPos;
+    private StatusEffects statusEffects;
 
     private void Awake() {
         skillCooldowns = new List<float>();
@@ -17,6 +18,7 @@ public class SkillUser : MonoBehaviour {
             skillCooldowns.Add(0f);
         }
         stats = GetComponent<Stats>();
+        statusEffects = GetComponent<StatusEffects>();
     }
     private void Update() {
         CountCooldowns();
@@ -44,6 +46,9 @@ public class SkillUser : MonoBehaviour {
         }
     }
     private IEnumerator ThrowProjectile(ProjectileSkill proj) {
+        // Set status effects
+        statusEffects.StartChanelling(proj.channelingTime);
+        // Set projectile game object
         skillCooldowns[proj.skillIndex] = proj.cooldown;
         GameObject projectile = ObjectPooler.objectPooler.GetPooledObject("Projectile");
         // Set channelling particles
@@ -86,6 +91,9 @@ public class SkillUser : MonoBehaviour {
         yield return new WaitForSeconds(proj.castTime);        
     }
     private IEnumerator Buff(BuffSkill buff) {
+        // Set status effects
+        statusEffects.StartChanelling(buff.channelingTime);
+        // Set buffer game object
         skillCooldowns[buff.skillIndex] = buff.cooldown;
         GameObject b = ObjectPooler.objectPooler.GetPooledObject("Buff");
         b.GetComponent<Buff>().SetBuff(buff.buffData);
