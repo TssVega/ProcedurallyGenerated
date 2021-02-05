@@ -8,32 +8,60 @@ using UnityEngine.UI;
 public class ItemSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler {
 
     public int slotIndex;
-    private Player player;
-    private Inventory _inventory;
-    private InventoryPanel parent;
+
+    private Inventory inventory;
     private SelectedItem selectedItem;
-    private bool visible = true;
-    private Image image;
-    private TextMeshProUGUI quantityText;
+    private Canvas canvas;
+    private RectTransform itemSlotGrid;
+    private RectTransform rectTransform;
+    private CanvasGroup canvasGroup;
 
     private void OnEnable() {
+        inventory = FindObjectOfType<Inventory>();
+        canvas = FindObjectOfType<Canvas>();
         selectedItem = FindObjectOfType<UICanvas>().selectedItem;
-        quantityText = transform.GetChild(3).GetComponent<TextMeshProUGUI>();        
+        itemSlotGrid = FindObjectOfType<GridLayoutGroup>().GetComponent<RectTransform>();
+        rectTransform = GetComponent<RectTransform>();
+        canvasGroup = GetComponent<CanvasGroup>();
     }
 
     public void OnBeginDrag(PointerEventData eventData) {
-        //selectedItem.
+        if(inventory.inventory[slotIndex]) {
+            inventory.SetVisibilityOfInventorySlot(false, slotIndex);
+            Item item = inventory.inventory[slotIndex];
+            selectedItem.SetImages(item.firstIcon, item.secondIcon, item.thirdIcon, item.firstColor, item.secondColor, item.thirdColor);
+            selectedItem.rectTransform.anchoredPosition = itemSlotGrid.localPosition + rectTransform.localPosition;
+            canvasGroup.blocksRaycasts = false;
+        }
     }
 
     public void OnDrag(PointerEventData eventData) {
-        throw new System.NotImplementedException();
+        selectedItem.rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
     }
 
     public void OnDrop(PointerEventData eventData) {
-        throw new System.NotImplementedException();
+        Debug.Log("On drop called");
+        ItemSlot droppedSlot = GetComponent<ItemSlot>();
+        EquipmentSlot fromEquipmentSlot = eventData.pointerDrag.GetComponent<EquipmentSlot>();
+        ItemSlot fromSlot = eventData.pointerDrag.GetComponent<ItemSlot>();
+        if(fromSlot && inventory.inventory[fromSlot.slotIndex]) {
+            if(fromSlot && droppedSlot && fromSlot != droppedSlot) {
+                inventory.MoveItem(fromSlot.slotIndex, droppedSlot.slotIndex);
+            }
+        }
+        else if(fromEquipmentSlot) {
+            if(fromEquipmentSlot && droppedSlot && fromEquipmentSlot != droppedSlot) {
+                inventory.UnequipItem(fromEquipmentSlot.slotIndex, droppedSlot.slotIndex);
+            }
+        }
+        selectedItem.Release();
+        inventory.SetVisibilityOfInventorySlot(true, slotIndex);
     }
 
     public void OnEndDrag(PointerEventData eventData) {
-        throw new System.NotImplementedException();
+        Debug.Log("On end drag called");
+        canvasGroup.blocksRaycasts = true;
+        selectedItem.Release();
+        inventory.SetVisibilityOfInventorySlot(true, slotIndex);
     }
 }

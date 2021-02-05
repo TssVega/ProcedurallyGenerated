@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Inventory : MonoBehaviour {
 
     public List<Item> equipment;
     public List<Item> inventory;
+    public int[] quantities;
     private readonly int inventorySize = 70;
 
     public GameObject[] itemSlots;
@@ -18,16 +20,21 @@ public class Inventory : MonoBehaviour {
     private Image[] equipmentImages;
     private Image[] equipmentImagesSecondary;
     private Image[] equipmentImagesTertiary;
-    private Image selectedItemImage;
-    private Image selectedItemImageSecondary;
-    private Image selectedItemImageTertiary;
+    private TextMeshProUGUI[] quantityTexts;
 
     private Player player;
 
     private void Awake() {
+        quantities = new int[70];
         player = FindObjectOfType<Player>();
         for(int i = 0; i < itemSlots.Length; i++) {
             itemSlots[i].GetComponent<ItemSlot>().slotIndex = i;
+        }
+        for(int i = 0; i < equipmentSlots.Length; i++) {
+            equipmentSlots[i].GetComponent<EquipmentSlot>().slotIndex = i;
+        }
+        for(int i = 0; i < quantities.Length; i++) {
+            quantities[i] = 0;
         }
     }
     private void Start() {
@@ -59,7 +66,12 @@ public class Inventory : MonoBehaviour {
         Ring testRing = player.itemCreator.CreateRing("testRing");
         AddToInventory(testRing);
         EquipItemInSlot(0);
-        //player.set
+        // Create test item
+        Weapon testWeapon = player.itemCreator.CreateWeapon("testItem");
+        AddToInventory(testWeapon);
+        // Another test item
+        Armor testing = player.itemCreator.CreateChestArmor("chest");
+        AddToInventory(testing);
     }
     public void SetInventory() {
         itemImages = new Image[inventorySize];
@@ -68,6 +80,7 @@ public class Inventory : MonoBehaviour {
         equipmentImages = new Image[inventorySize];
         equipmentImagesSecondary = new Image[inventorySize];
         equipmentImagesTertiary = new Image[inventorySize];
+        quantityTexts = new TextMeshProUGUI[inventorySize];
 
         for(int i = 0; i < itemSlots.Length; i++) {
             itemImages[i] = itemSlots[i].transform.GetChild(1).GetComponent<Image>();
@@ -79,10 +92,47 @@ public class Inventory : MonoBehaviour {
             equipmentImagesSecondary[i] = equipmentSlots[i].transform.GetChild(2).GetComponent<Image>();
             equipmentImagesTertiary[i] = equipmentSlots[i].transform.GetChild(0).GetComponent<Image>();
         }
-        // Set up selected item
-        selectedItemImage = selectedItemSlot.transform.GetChild(1).GetComponent<Image>();
-        selectedItemImageSecondary = selectedItemSlot.transform.GetChild(2).GetComponent<Image>();
-        selectedItemImageTertiary = selectedItemSlot.transform.GetChild(0).GetComponent<Image>();
+        for(int i = 0; i < quantities.Length; i++) {
+            quantityTexts[i] = itemSlots[i].transform.GetChild(3).GetComponent<TextMeshProUGUI>();
+        }
+    }    
+    public void UpdateSlot(int index) {
+        if(inventory[index] != null) {
+            itemImages[index].sprite = inventory[index].firstIcon;
+            itemImages[index].color = inventory[index].firstColor;
+            itemImagesSecondary[index].sprite = inventory[index].secondIcon;
+            itemImagesSecondary[index].color = inventory[index].secondColor;
+            itemImagesTertiary[index].sprite = inventory[index].thirdIcon;
+            itemImagesTertiary[index].color = inventory[index].thirdColor;
+            quantityTexts[index].text = quantities[index] > 1 ? quantities[index].ToString() : "";
+        }
+        else {
+            itemImages[index].sprite = null;
+            itemImages[index].color = Color.clear;
+            itemImagesSecondary[index].sprite = null;
+            itemImagesSecondary[index].color = Color.clear;
+            itemImagesTertiary[index].sprite = null;
+            itemImagesTertiary[index].color = Color.clear;
+            quantityTexts[index].text = "";
+        }
+    }
+    public void UpdateEquipmentSlot(int index) {
+        if(equipment[index] != null) {
+            equipmentImages[index].sprite = equipment[index].firstIcon;
+            equipmentImages[index].color = equipment[index].firstColor;
+            equipmentImagesSecondary[index].sprite = equipment[index].secondIcon;
+            equipmentImagesSecondary[index].color = equipment[index].secondColor;
+            equipmentImagesTertiary[index].sprite = equipment[index].thirdIcon;
+            equipmentImagesTertiary[index].color = equipment[index].thirdColor;
+        }
+        else {
+            equipmentImages[index].sprite = null;
+            equipmentImages[index].color = Color.clear;
+            equipmentImagesSecondary[index].sprite = null;
+            equipmentImagesSecondary[index].color = Color.clear;
+            equipmentImagesTertiary[index].sprite = null;
+            equipmentImagesTertiary[index].color = Color.clear;
+        }
     }
     public void SetInventoryImages() {
         for(int i = 0; i < inventorySize; i++) {
@@ -93,6 +143,7 @@ public class Inventory : MonoBehaviour {
                 itemImagesSecondary[i].color = inventory[i].secondColor;
                 itemImagesTertiary[i].sprite = inventory[i].thirdIcon;
                 itemImagesTertiary[i].color = inventory[i].thirdColor;
+                quantityTexts[i].text = quantities[i] > 1 ? quantities[i].ToString() : "";
             }
             else {
                 itemImages[i].sprite = null;
@@ -101,6 +152,7 @@ public class Inventory : MonoBehaviour {
                 itemImagesSecondary[i].color = Color.clear;
                 itemImagesTertiary[i].sprite = null;
                 itemImagesTertiary[i].color = Color.clear;
+                quantityTexts[i].text = "";
             }
         }
         for(int i = 0; i < equipment.Count; i++) {
@@ -124,16 +176,33 @@ public class Inventory : MonoBehaviour {
     }
     public void EquipItem(Item item) {
         // RightHand, LeftHand, Head, Body, Legs, Finger, Consumable
-        if(equipment[(int)item.slot] != null) {
+        /*if(equipment[(int)item.slot] != null) {
             AddToInventory(equipment[(int)item.slot]);
-        }
+        }*/
         equipment[(int)item.slot] = item;
+        UpdateEquipmentSlot((int)item.slot);
     }
     public void EquipItemInSlot(int slot) {
-        if(inventory[slot] != null && !inventory[slot].consumable) {
-            Item item = inventory[slot];
-            inventory[slot] = null;
+        Item item;
+        if(inventory[slot] != null) {
+            item = inventory[slot];
+        }
+        else {
+            return;
+        }
+        if(item && !item.consumable && !equipment[(int)item.slot]) {            
             EquipItem(item);
+            inventory[slot] = null;
+            quantities[slot]--;
+        }
+        else if(item && !item.consumable && equipment[(int)item.slot]) {
+            Item tempItem = equipment[(int)item.slot];
+            //equipment[(int)item.slot] = null;
+            inventory[slot] = null;
+            quantities[slot]--;
+            EquipItem(item);
+            AddToInventory(tempItem);
+            UpdateSlot((int)tempItem.slot);
         }
     }
     public bool AddToInventory(Item item) {
@@ -143,9 +212,94 @@ public class Inventory : MonoBehaviour {
             }
             else {
                 inventory[i] = item;
+                quantities[i]++;
+                UpdateSlot(i);
                 return true;
             }            
         }
         return false;
+    }
+    public void MoveItem(int fromSlot, int toSlot) {
+        if(!inventory[fromSlot]) {
+            return;
+        }
+        if(!inventory[toSlot]) {
+            inventory[toSlot] = inventory[fromSlot];
+            quantities[toSlot]++;
+            inventory[fromSlot] = null;
+            quantities[fromSlot]--;
+        }
+        else {
+            Item tempItem = inventory[toSlot];
+            inventory[toSlot] = inventory[fromSlot];
+            inventory[fromSlot] = tempItem;
+            // Swap quantities
+            int tempQuantity = quantities[toSlot];
+            quantities[toSlot] = quantities[fromSlot];
+            quantities[fromSlot] = tempQuantity;
+        }
+        UpdateSlot(fromSlot);
+        UpdateSlot(toSlot);
+    }
+    public void UnequipItem(int fromSlot, int toSlot) {
+        if(!equipment[fromSlot]) {
+            return;
+        }
+        if(!inventory[toSlot]) {
+            inventory[toSlot] = equipment[fromSlot];
+            quantities[toSlot]++;
+            equipment[fromSlot] = null;
+        }
+        else {
+            return;
+        }
+        UpdateEquipmentSlot(fromSlot);
+        UpdateSlot(toSlot);
+    }
+    public void SetVisibilityOfInventorySlot(bool visible, int index) {
+        if(visible) {
+            if(inventory[index]) {
+                itemImages[index].sprite = inventory[index].firstIcon;
+                itemImages[index].color = inventory[index].firstColor;
+                itemImagesSecondary[index].sprite = inventory[index].secondIcon;
+                itemImagesSecondary[index].color = inventory[index].secondColor;
+                itemImagesTertiary[index].sprite = inventory[index].thirdIcon;
+                itemImagesTertiary[index].color = inventory[index].thirdColor;
+                quantityTexts[index].text = quantities[index] > 1 ? quantities[index].ToString() : "";
+            }            
+        }
+        else {
+            if(inventory[index]) {
+                itemImages[index].sprite = null;
+                itemImages[index].color = Color.clear;
+                itemImagesSecondary[index].sprite = null;
+                itemImagesSecondary[index].color = Color.clear;
+                itemImagesTertiary[index].sprite = null;
+                itemImagesTertiary[index].color = Color.clear;
+                quantityTexts[index].text = "";
+            }            
+        }
+    }
+    public void SetVisibilityOfEquipmentSlot(bool visible, int index) {
+        if(visible) {
+            if(equipment[index]) {
+                equipmentImages[index].sprite = equipment[index].firstIcon;
+                equipmentImages[index].color = equipment[index].firstColor;
+                equipmentImagesSecondary[index].sprite = equipment[index].secondIcon;
+                equipmentImagesSecondary[index].color = equipment[index].secondColor;
+                equipmentImagesTertiary[index].sprite = equipment[index].thirdIcon;
+                equipmentImagesTertiary[index].color = equipment[index].thirdColor;
+            }            
+        }
+        else {
+            if(equipment[index]) {
+                equipmentImages[index].sprite = null;
+                equipmentImages[index].color = Color.clear;
+                equipmentImagesSecondary[index].sprite = null;
+                equipmentImagesSecondary[index].color = Color.clear;
+                equipmentImagesTertiary[index].sprite = null;
+                equipmentImagesTertiary[index].color = Color.clear;
+            }            
+        }
     }
 }
