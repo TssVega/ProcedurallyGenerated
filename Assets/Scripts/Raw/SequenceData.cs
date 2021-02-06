@@ -5,6 +5,5 @@ using UnityEngine;
 [System.Serializable]
 public class SequenceData {
 
-    public ActiveSkill active;
-    public float duration;
+    public ActiveSkill activeSkill;
 }

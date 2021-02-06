@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5246199755132014252}
   - component: {fileID: -2355026312439513895}
   - component: {fileID: 534517066499460022}
+  - component: {fileID: -4501983127560725091}
   m_Layer: 0
   m_Name: HolyHealActivate
   m_TagString: Untagged
@@ -4827,3 +4828,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   amountToPool: 0
   expandable: 1
+--- !u!114 &-4501983127560725091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 708123084056293196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b2f774f27aad3b47b7e64e95b3b4bb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 1

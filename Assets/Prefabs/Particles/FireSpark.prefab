@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 9125957280518587559}
   - component: {fileID: 9125957280518587556}
   - component: {fileID: 5226196864958003218}
+  - component: {fileID: -3068092668140211653}
   m_Layer: 0
   m_Name: FireSpark
   m_TagString: Untagged
@@ -4778,3 +4779,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   amountToPool: 0
   expandable: 1
+--- !u!114 &-3068092668140211653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9125957280518587562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b2f774f27aad3b47b7e64e95b3b4bb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 3

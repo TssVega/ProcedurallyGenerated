@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Skills/SkillSequence")]
-public class SkillSequence : ScriptableObject {
+public class SkillSequence : ActiveSkill {
 
     public List<SequenceData> sequence;
 }

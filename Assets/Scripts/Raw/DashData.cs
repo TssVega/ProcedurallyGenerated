@@ -5,7 +5,5 @@ using UnityEngine;
 [System.Serializable]
 public class DashData {
 
-    public string[] channelingParticleNames;
-    public string[] castingParticleNames;
-    public string[] particleNames;
+    public float dashMultiplier;
 }

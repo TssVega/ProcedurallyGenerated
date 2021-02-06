@@ -9,22 +9,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d43363dad53c8bd469a134df327bd261, type: 3}
-  m_Name: Dash
+  m_Script: {fileID: 11500000, guid: 93330a1eca1b3204e8a2a27076590790, type: 3}
+  m_Name: Bash
   m_EditorClassIdentifier: 
   skillIndex: 0
-  skillName: Dash
-  skillDescription: Leap forward for a small distance
+  skillName: bash
+  skillDescription: 
   skillIcon: {fileID: 0}
   acquired: 0
   manaCost: 0
-  channelingTime: 0
+  channelingTime: 0.33
   castTime: 0
-  cooldown: 1
+  cooldown: 0
   channelingParticleNames: []
   castingParticleNames: []
   particleNames: []
-  channelingAnimationName: 
+  channelingAnimationName: Bash
   castingAnimationName: 
-  dashData:
-    dashMultiplier: 4
+  attackType: 2
+  damageRate: 0
+  duration: 0
+  totalHits: 1
+  movementSpeed: 0
+  movementVector: {x: 0, y: 0}
+  hitbox: {fileID: 0}

@@ -9,22 +9,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d43363dad53c8bd469a134df327bd261, type: 3}
-  m_Name: Dash
+  m_Script: {fileID: 11500000, guid: ba4ea1f0e494fe54ea92a72a4a766252, type: 3}
+  m_Name: ThrustAttack
   m_EditorClassIdentifier: 
-  skillIndex: 0
-  skillName: Dash
-  skillDescription: Leap forward for a small distance
+  skillIndex: 3
+  skillName: Thrust
+  skillDescription: Perform a thrust attack to deal pierce damage
   skillIcon: {fileID: 0}
   acquired: 0
   manaCost: 0
   channelingTime: 0
   castTime: 0
-  cooldown: 1
+  cooldown: 0.5
   channelingParticleNames: []
   castingParticleNames: []
   particleNames: []
   channelingAnimationName: 
   castingAnimationName: 
-  dashData:
-    dashMultiplier: 4
+  sequence:
+  - activeSkill: {fileID: 11400000, guid: 62b8c818c2645f14c92b19515d9998bc, type: 2}
+  - activeSkill: {fileID: 11400000, guid: e497d4eee1b33ec4790f37706ae8193f, type: 2}

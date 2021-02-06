@@ -115,7 +115,7 @@ public class PlayerController : MonoBehaviour {
                 // Move
                 rb2D.AddForce(joystickInput * playerStats.runSpeed);
             }
-            else if(statusEffects.chanelling || statusEffects.stunned || statusEffects.immobilized) {
+            else if(statusEffects.stunned || statusEffects.immobilized) {
                 rb2D.velocity = Vector2.zero;
             }
             if(horizontalInput != 0 || verticalInput != 0 &&
@@ -132,7 +132,7 @@ public class PlayerController : MonoBehaviour {
                 // Move
                 rb2D.AddForce(movingDirection.normalized * playerStats.runSpeed);
             }
-            else if(statusEffects.chanelling || statusEffects.stunned || statusEffects.immobilized) {
+            else if(statusEffects.stunned || statusEffects.immobilized) {
                 rb2D.velocity = Vector2.zero;
             }
         }
