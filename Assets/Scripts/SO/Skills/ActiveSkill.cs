@@ -9,7 +9,10 @@ public class ActiveSkill : Skill {
     public float castTime;
     public float cooldown;
 
-    protected virtual void Activate(Stats target) {
+    public virtual void Launch(StatusEffects status) {
+    
+    }
+    public virtual void Activate(StatusEffects target, Stats targetStats) {
     
     }
 }

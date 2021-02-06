@@ -712,6 +712,7 @@ GameObject:
   - component: {fileID: 7430841088790226279}
   - component: {fileID: 6743054238499159456}
   - component: {fileID: 846367717328815083}
+  - component: {fileID: 7401711136557819561}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -952,6 +953,7 @@ MonoBehaviour:
   currentSkills:
   - {fileID: 11400000, guid: 02a87aea90e6d0d4fb2c61eb387b57d5, type: 2}
   - {fileID: 11400000, guid: 29bff4a83ce14c445961ba9d2dc6b69d, type: 2}
+  - {fileID: 11400000, guid: f8ae79d36f3b538408903cd9174fdcd0, type: 2}
   skillCooldowns: []
   projectileExitPos: {fileID: 8843314161316362494}
 --- !u!114 &6743054238499159456
@@ -1044,6 +1046,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  quantities: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   itemSlots:
   - {fileID: 0}
   - {fileID: 0}
@@ -1122,6 +1125,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  selectedItemSlot: {fileID: 0}
 --- !u!114 &846367717328815083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1151,6 +1155,19 @@ MonoBehaviour:
   cannotBeFrostbitten: 0
   spedUp: 0
   chanelling: 0
+--- !u!114 &7401711136557819561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7430841090308141598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccbfe9be1e1668a42a2e274b97e369a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toughSkin: {fileID: 11400000, guid: 65efdbf97688d7f4fa84313bd8ae2949, type: 2}
 --- !u!1 &7431417711832503863
 GameObject:
   m_ObjectHideFlags: 0

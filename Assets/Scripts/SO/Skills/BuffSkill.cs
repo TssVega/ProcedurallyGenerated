@@ -7,7 +7,7 @@ public class BuffSkill : ActiveSkill {
 
     public BuffData buffData;
 
-    protected override void Activate(Stats target) {
+    public override void Activate(StatusEffects target, Stats attackerStats) {
         // Heal target here
     }
 }

@@ -7,10 +7,12 @@ public class ProjectileSkill : ActiveSkill {
 
     public ProjectileData projectileData;
 
-    protected override void Activate(Stats target) {
-        /*
-        if(target.) {
+    public override void Activate(StatusEffects targetStatus, Stats attackerStats) {
         
-        }*/
+        if(targetStatus) {
+            targetStatus.TakeDamage(
+                projectileData.damageRate * DamageFromDamageType.GetDamage(projectileData.attackType, attackerStats),
+                projectileData.attackType);
+        }
     }
 }
