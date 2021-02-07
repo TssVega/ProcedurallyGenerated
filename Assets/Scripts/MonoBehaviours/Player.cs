@@ -29,9 +29,15 @@ public class Player : MonoBehaviour {
     public SpriteRenderer helmetProp;
     // Sprite for shield
     public SpriteRenderer shield;
+    // Sprites for bows
+    public SpriteRenderer bowFirst;
+    public SpriteRenderer bowSecond;
+    public SpriteRenderer bowThird;
     // World generation
     private WorldGeneration worldGeneration;
     // BodyPart[] bodyParts;
+    public GameObject releasedBowString;
+    public GameObject[] tenseBowStrings;
 
     private void Awake() {
         worldGeneration = FindObjectOfType<WorldGeneration>();
@@ -39,6 +45,10 @@ public class Player : MonoBehaviour {
     }
     private void Start() {
         LoadPlayer();
+        releasedBowString.SetActive(false);
+        for(int i = 0; i < tenseBowStrings.Length; i++) {
+            tenseBowStrings[i].SetActive(false);
+        }
         //SetWeapon(itemCreator.CreateWeaponSprite("tss"));
     }
     /*
@@ -146,16 +156,59 @@ public class Player : MonoBehaviour {
         hairStyle.sprite = appearance.hairStyles[hairStyleIndex];
     }
     public void SetWeapon(Weapon weapon) {
-        weaponHandle.sprite = weapon.firstSprite;
-        weaponGuard.sprite = weapon.secondSprite;
-        weaponBlade.sprite = weapon.thirdSprite;
-        weaponHandle.color = weapon.firstColor;
-        weaponGuard.color = weapon.secondColor;
-        weaponBlade.color = weapon.thirdColor;
+        ClearWeapons();
+        if(weapon.weaponType == WeaponType.OneHanded) {
+            weaponHandle.sprite = weapon.firstSprite;
+            weaponGuard.sprite = weapon.secondSprite;
+            weaponBlade.sprite = weapon.thirdSprite;
+            weaponHandle.color = weapon.firstColor;
+            weaponGuard.color = weapon.secondColor;
+            weaponBlade.color = weapon.thirdColor;
+        }
+        else if(weapon.weaponType == WeaponType.TwoHanded) {
+        
+        }
+        else if(weapon.weaponType == WeaponType.Bow) {
+            bowFirst.sprite = weapon.firstSprite;
+            bowSecond.sprite = weapon.secondSprite;
+            bowThird.sprite = weapon.thirdSprite;
+            bowFirst.color = weapon.firstColor;
+            bowSecond.color = weapon.secondColor;
+            bowThird.color = weapon.thirdColor;
+            for(int i = 0; i < tenseBowStrings.Length; i++) {
+                tenseBowStrings[i].SetActive(true);
+            }
+
+        }
+        else if(weapon.weaponType == WeaponType.Dagger) {
+            
+        }
+    }
+    public void ClearWeapons() {
+        weaponHandle.sprite = null;
+        weaponGuard.sprite = null;
+        weaponBlade.sprite = null;
+        weaponHandle.color = Color.clear;
+        weaponGuard.color = Color.clear;
+        weaponBlade.color = Color.clear;
+        bowFirst.sprite = null;
+        bowSecond.sprite = null;
+        bowThird.sprite = null;
+        bowFirst.color = Color.clear;
+        bowSecond.color = Color.clear;
+        bowThird.color = Color.clear;
+        releasedBowString.SetActive(false);
+        for(int i = 0; i < tenseBowStrings.Length; i++) {
+            tenseBowStrings[i].SetActive(false);
+        }
     }
     public void SetBodyArmor(Armor armor) {
         bodyArmor.sprite = armor.firstSprite;
         bodyArmor.color = armor.firstColor;
+    }
+    public void ClearBodyArmor() {
+        bodyArmor.sprite = null;
+        bodyArmor.color = Color.clear;
     }
     public void SetHelmet(Armor helmet) {
         helmetBase.sprite = helmet.firstSprite;
@@ -163,8 +216,18 @@ public class Player : MonoBehaviour {
         helmetProp.sprite = helmet.secondSprite;
         helmetProp.color = helmet.secondColor;
     }
+    public void ClearHelmet() {
+        helmetBase.sprite = null;
+        helmetBase.color = Color.clear;
+        helmetProp.sprite = null;
+        helmetProp.color = Color.clear;
+    }
     public void SetShield(Shield shield) {
         this.shield.sprite = shield.firstSprite;
         this.shield.color = shield.firstColor;
+    }
+    public void ClearShield() {
+        this.shield.sprite = null;
+        this.shield.color = Color.clear;
     }
 }

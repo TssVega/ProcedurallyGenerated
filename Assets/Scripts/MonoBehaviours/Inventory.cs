@@ -179,6 +179,36 @@ public class Inventory : MonoBehaviour {
         /*if(equipment[(int)item.slot] != null) {
             AddToInventory(equipment[(int)item.slot]);
         }*/
+        if(item is Weapon) {
+            Weapon w = item as Weapon;                      
+            if(w.weaponType != WeaponType.OneHanded) {
+                if(CanAddToInventory()) {
+                    UnequipItem((int)EquipSlot.LeftHand, GetEmptyInventorySlot());
+                }
+                else {
+                    return;
+                }
+            }
+            player.SetWeapon(w);
+        }
+        else if(item is Armor) {
+            if(item.slot == EquipSlot.Body) {
+                player.SetBodyArmor(item as Armor);
+            }
+            if(item.slot == EquipSlot.Head) {
+                player.SetHelmet(item as Armor);
+            }
+        }
+        else if(item is Shield) {
+            Shield s = item as Shield;
+            if(CanAddToInventory()) {
+                UnequipItem((int)EquipSlot.RightHand, GetEmptyInventorySlot());
+            }
+            else {
+                return;
+            }
+            player.SetShield(s);
+        }
         equipment[(int)item.slot] = item;
         UpdateEquipmentSlot((int)item.slot);
     }
@@ -190,7 +220,10 @@ public class Inventory : MonoBehaviour {
         else {
             return;
         }
-        if(item && !item.consumable && !equipment[(int)item.slot]) {            
+        if(!CanAddToInventory()) {
+            return;
+        }
+        if(item && !item.consumable && !equipment[(int)item.slot]) {    
             EquipItem(item);
             inventory[slot] = null;
             quantities[slot]--;
@@ -216,6 +249,28 @@ public class Inventory : MonoBehaviour {
                 UpdateSlot(i);
                 return true;
             }            
+        }
+        return false;
+    }
+    private int GetEmptyInventorySlot() {
+        for(int i = 0; i < inventorySize; i++) {
+            if(inventory[i] != null) {
+                continue;
+            }
+            else {
+                return i;
+            }
+        }
+        return -1;
+    }
+    private bool CanAddToInventory() {
+        for(int i = 0; i < inventorySize; i++) {
+            if(inventory[i] != null) {
+                continue;
+            }
+            else {
+                return true;
+            }
         }
         return false;
     }
@@ -248,13 +303,30 @@ public class Inventory : MonoBehaviour {
         if(!inventory[toSlot]) {
             inventory[toSlot] = equipment[fromSlot];
             quantities[toSlot]++;
-            equipment[fromSlot] = null;
+            UpdateSpritesOnUnequip(equipment[fromSlot]);
+            equipment[fromSlot] = null;            
         }
         else {
             return;
         }
         UpdateEquipmentSlot(fromSlot);
         UpdateSlot(toSlot);
+    }
+    private void UpdateSpritesOnUnequip(Item item) {
+        if(item is Weapon) {
+            player.ClearWeapons();
+        }
+        else if(item is Armor) {
+            if(item.slot == EquipSlot.Body) {
+                player.ClearBodyArmor();
+            }
+            else if(item.slot == EquipSlot.Head) {
+                player.ClearHelmet();
+            }
+        }
+        else if(item is Shield) {
+            player.ClearShield();
+        }
     }
     public void SetVisibilityOfInventorySlot(bool visible, int index) {
         if(visible) {

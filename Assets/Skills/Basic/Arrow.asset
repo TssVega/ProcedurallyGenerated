@@ -31,7 +31,8 @@ MonoBehaviour:
   projectileData:
     attacker: {fileID: 0}
     attackType: 1
+    arrowSkill: 1
     damageRate: 0.4
     rotationSpeed: 0
-    projectileSpeed: 15
-    lifetime: 2
+    projectileSpeed: 25
+    lifetime: 1

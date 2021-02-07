@@ -120,6 +120,7 @@ public class ItemCreator : ScriptableObject {
             weapon.secondColor = guardColor;
             weapon.thirdColor = bladeColor;
             weapon.slot = EquipSlot.RightHand;
+            weapon.weaponType = WeaponType.OneHanded;
         }
         else if(type == WeaponType.TwoHanded) {
             weapon.slot = EquipSlot.RightHand;
@@ -131,6 +132,7 @@ public class ItemCreator : ScriptableObject {
             weapon.firstIcon = bowBase;
             weapon.firstColor = bowColor;
             weapon.slot = EquipSlot.RightHand;
+            weapon.weaponType = WeaponType.Bow;
         }
         return weapon;
     }

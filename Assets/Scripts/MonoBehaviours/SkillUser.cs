@@ -12,6 +12,8 @@ public class SkillUser : MonoBehaviour {
     public Transform projectileExitPos;
     private StatusEffects statusEffects;
     public Animator animator;
+    private Player player;
+    private Inventory inventory;
 
     private void Awake() {
         skillCooldowns = new List<float>();
@@ -20,6 +22,8 @@ public class SkillUser : MonoBehaviour {
         }
         stats = GetComponent<Stats>();
         statusEffects = GetComponent<StatusEffects>();
+        player = GetComponent<Player>();
+        inventory = GetComponent<Inventory>();
     }
     private void Update() {
         CountCooldowns();
@@ -51,6 +55,17 @@ public class SkillUser : MonoBehaviour {
         }        
         if(skill is ProjectileSkill) {
             ProjectileSkill proj = skill as ProjectileSkill;
+            if(proj.projectileData.arrowSkill) {
+                Weapon w = inventory.equipment[0] as Weapon;
+                if(w == null) {
+                    statusEffects.GiveMana(skill.manaCost);
+                    return;
+                }
+                if(w.weaponType != WeaponType.Bow) {
+                    statusEffects.GiveMana(skill.manaCost);
+                    return;
+                }
+            }
             StartCoroutine(ThrowProjectile(proj));
         }
         else if(skill is BuffSkill) {
@@ -73,6 +88,13 @@ public class SkillUser : MonoBehaviour {
     private IEnumerator ThrowProjectile(ProjectileSkill proj) {
         // Set status effects
         statusEffects.StartChanelling(proj.channelingTime);
+        // Set bow string appearance on Loose skill usage
+        if(proj.projectileData.arrowSkill) {
+            player.releasedBowString.SetActive(true);
+            for(int i = 0; i < player.tenseBowStrings.Length; i++) {
+                player.tenseBowStrings[i].SetActive(false);
+            }
+        }
         if(proj.focusedSkill) {
             statusEffects.StartImmobilize(proj.channelingTime);
         }
@@ -283,7 +305,13 @@ public class SkillUser : MonoBehaviour {
         for(int i = 0; i < skillCooldowns.Count; i++) {
             if(skillCooldowns[i] > 0) {
                 skillCooldowns[i] -= Time.deltaTime;
-            }
-        }
+                if(i == 4 && skillCooldowns[i] < 0) {
+                    for(int j = 0; j < player.tenseBowStrings.Length; j++) {
+                        player.tenseBowStrings[j].SetActive(true);
+                    }
+                    player.releasedBowString.SetActive(false);
+                }
+            }            
+        }        
     }
 }

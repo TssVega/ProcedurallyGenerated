@@ -153,6 +153,9 @@ public class StatusEffects : MonoBehaviour {
         //    player.PlayerConsumeMana(amount);
         //}
     }
+    public void GiveMana(float amount) {
+        stats.mana += amount;
+    }
     public bool CanUseMana(float amount) {
         return stats.mana >= amount;
     }

@@ -7,6 +7,7 @@ public class ProjectileData {
 
     public GameObject attacker;
     public AttackType attackType;
+    public bool arrowSkill;     // Arrow skills can only be used with bows
     public float damageRate;
     public float rotationSpeed;
     public float projectileSpeed;
