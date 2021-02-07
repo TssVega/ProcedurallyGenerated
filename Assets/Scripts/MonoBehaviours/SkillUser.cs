@@ -87,7 +87,9 @@ public class SkillUser : MonoBehaviour {
             channelingParticles[i].transform.position = transform.position;
             channelingParticles[i].transform.rotation = Quaternion.identity;
             channelingParticles[i].SetActive(true);
-            channelingParticles[i].GetComponent<ParticleSystem>().Play();
+            if(channelingParticles[i].GetComponent<ParticleSystem>()) {
+                channelingParticles[i].GetComponent<ParticleSystem>().Play();
+            }
         }
         PlayAnimation(proj.channelingAnimationName);
         yield return new WaitForSeconds(proj.channelingTime);
@@ -99,7 +101,9 @@ public class SkillUser : MonoBehaviour {
             castingParticles[i].transform.position = transform.position;
             castingParticles[i].transform.rotation = Quaternion.identity;
             castingParticles[i].SetActive(true);
-            castingParticles[i].GetComponent<ParticleSystem>().Play();
+            if(castingParticles[i].GetComponent<ParticleSystem>()) {
+                castingParticles[i].GetComponent<ParticleSystem>().Play();
+            }
         }
         // Set projectile game object        
         projectile.GetComponent<Projectile>().SetProjectile(proj.projectileData);
@@ -114,10 +118,18 @@ public class SkillUser : MonoBehaviour {
         for(int i = 0; i < proj.particleNames.Length; i++) {
             particles.Add(ObjectPooler.objectPooler.GetPooledObject(proj.particleNames[i]));
             particles[i].transform.parent = projectile.transform;
+            if(particles[i].GetComponent<TrailRenderer>()) {
+                particles[i].GetComponent<TrailRenderer>().emitting = false;
+            }
             particles[i].transform.position = projectile.transform.position;
             particles[i].transform.rotation = Quaternion.identity;
             particles[i].SetActive(true);
-            particles[i].GetComponent<ParticleSystem>().Play();
+            if(particles[i].GetComponent<TrailRenderer>()) {
+                particles[i].GetComponent<TrailRenderer>().emitting = true;
+            }
+            if(particles[i].GetComponent<ParticleSystem>()) {
+                particles[i].GetComponent<ParticleSystem>().Play();
+            }            
         }
         StopAnimation();
     }

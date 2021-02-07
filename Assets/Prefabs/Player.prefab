@@ -976,7 +976,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 241b922b96fc52941b6407af48d16395, type: 2}
   - {fileID: 11400000, guid: 64da67a8a7a5ae54ab685d18d2f002d2, type: 2}
   - {fileID: 11400000, guid: b689240464fda454998452772a238875, type: 2}
-  - {fileID: 11400000, guid: 29bff4a83ce14c445961ba9d2dc6b69d, type: 2}
+  - {fileID: 11400000, guid: b3c5048739aeb8b448cd77e8dd18f1a8, type: 2}
   skillCooldowns: []
   projectileExitPos: {fileID: 8843314161316362494}
   animator: {fileID: 3732230040238435773}

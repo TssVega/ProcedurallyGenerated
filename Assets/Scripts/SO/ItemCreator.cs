@@ -44,6 +44,9 @@ public class ItemCreator : ScriptableObject {
     public Sprite[] ringBases;
     public Sprite[] ringSockets;
     public Sprite[] ringJewels;
+    // Bow sprites
+    public Color[] bowColors;
+    public Sprite[] bowBases;
     // Create an item
     public Item CreateItem(string seed) {
         System.Random pseudoRandom = new System.Random(seed.GetHashCode());
@@ -54,8 +57,8 @@ public class ItemCreator : ScriptableObject {
             item = w;
         }
         else if(slotIndex == 1) {
-            // Shield s
-            item = null;
+            Shield s = CreateShield(seed);
+            item = s;
         }
         else if(slotIndex == 2) {
             // Head armor h
@@ -84,23 +87,51 @@ public class ItemCreator : ScriptableObject {
     // Create a weapon sprite
     public Weapon CreateWeapon(string seed) {
         System.Random pseudoRandom = new System.Random(seed.GetHashCode());
-        Sprite handle = weaponHandles[pseudoRandom.Next(0, weaponHandles.Length)];
-        Sprite guard = weaponGuards[pseudoRandom.Next(0, weaponGuards.Length)];
-        Sprite blade = weaponBlades[pseudoRandom.Next(0, weaponBlades.Length)];
-        Color handleColor = weaponHandleColors[pseudoRandom.Next(0, weaponHandleColors.Length)];
-        Color guardColor = weaponGuardColors[pseudoRandom.Next(0, weaponGuardColors.Length)];
-        Color bladeColor = weaponBladeColors[pseudoRandom.Next(0, weaponBladeColors.Length)];
+        WeaponType type = WeaponType.OneHanded;
+        //int index = pseudoRandom.Next(0, 4);
+        int index = 2;  // To try out bows
+        if(index == 0) {
+            type = WeaponType.OneHanded;
+        }
+        else if(index == 1) {
+            type = WeaponType.TwoHanded;
+        }
+        else if(index == 2) {
+            type = WeaponType.Bow;
+        }
+        else if(index == 3) {
+            type = WeaponType.Dagger;
+        }
         Weapon weapon = CreateInstance<Weapon>();
-        weapon.firstSprite = handle;
-        weapon.secondSprite = guard;
-        weapon.thirdSprite = blade;
-        weapon.firstIcon = handle;
-        weapon.secondIcon = guard;
-        weapon.thirdIcon = blade;
-        weapon.firstColor = handleColor;
-        weapon.secondColor = guardColor;
-        weapon.thirdColor = bladeColor;
-        weapon.slot = EquipSlot.RightHand;
+        if(type == WeaponType.OneHanded) {
+            Sprite handle = weaponHandles[pseudoRandom.Next(0, weaponHandles.Length)];
+            Sprite guard = weaponGuards[pseudoRandom.Next(0, weaponGuards.Length)];
+            Sprite blade = weaponBlades[pseudoRandom.Next(0, weaponBlades.Length)];
+            Color handleColor = weaponHandleColors[pseudoRandom.Next(0, weaponHandleColors.Length)];
+            Color guardColor = weaponGuardColors[pseudoRandom.Next(0, weaponGuardColors.Length)];
+            Color bladeColor = weaponBladeColors[pseudoRandom.Next(0, weaponBladeColors.Length)];
+            weapon.firstSprite = handle;
+            weapon.secondSprite = guard;
+            weapon.thirdSprite = blade;
+            weapon.firstIcon = handle;
+            weapon.secondIcon = guard;
+            weapon.thirdIcon = blade;
+            weapon.firstColor = handleColor;
+            weapon.secondColor = guardColor;
+            weapon.thirdColor = bladeColor;
+            weapon.slot = EquipSlot.RightHand;
+        }
+        else if(type == WeaponType.TwoHanded) {
+            weapon.slot = EquipSlot.RightHand;
+        }
+        else if(type == WeaponType.Bow) {
+            Sprite bowBase = bowBases[pseudoRandom.Next(0, bowBases.Length)];
+            Color bowColor = bowColors[pseudoRandom.Next(0, bowColors.Length)];
+            weapon.firstSprite = bowBase;
+            weapon.firstIcon = bowBase;
+            weapon.firstColor = bowColor;
+            weapon.slot = EquipSlot.RightHand;
+        }
         return weapon;
     }
     // Create a chest armor sprite

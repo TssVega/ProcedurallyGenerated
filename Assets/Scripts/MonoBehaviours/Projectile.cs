@@ -23,7 +23,9 @@ public class Projectile : MonoBehaviour {
     }
     private void EndProjectile() {
         for(int i = 0; i < transform.childCount; i++) {
-            transform.GetChild(i).GetComponent<ParticleSystem>().Stop();
+            if(transform.GetChild(i).GetComponent<ParticleSystem>()) {
+                transform.GetChild(i).GetComponent<ParticleSystem>().Stop();
+            }            
             transform.GetChild(i).gameObject.SetActive(false);
         }
         transform.DetachChildren();

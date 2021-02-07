@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Weapon : Item {
+
+    public WeaponType weaponType;
     // Damages
     public float bashDamage;
     public float pierceDamage;
@@ -17,4 +19,8 @@ public class Weapon : Item {
     public float poisonDamage;
     public float bleedDamage;
     public float curseDamage;
+}
+
+public enum WeaponType {
+    OneHanded, TwoHanded, Bow, Dagger
 }

@@ -160,3 +160,13 @@ MonoBehaviour:
   ringJewels:
   - {fileID: 0}
   - {fileID: 6650434616320487656, guid: 079b9aa2ff726704280984f51a945705, type: 3}
+  bowColors:
+  - {r: 0.5471698, g: 0.330347, b: 0.04387683, a: 1}
+  - {r: 0.3490566, g: 0.3490566, b: 0.3490566, a: 1}
+  - {r: 0.7830189, g: 0.7830189, b: 0.7830189, a: 1}
+  - {r: 0.4528302, g: 0.31830958, b: 0.091847636, a: 1}
+  bowBases:
+  - {fileID: 3941281049051110410, guid: 67c5cedd46f47e64f8b50d6001f1dab6, type: 3}
+  - {fileID: 5489302328335830633, guid: 67c5cedd46f47e64f8b50d6001f1dab6, type: 3}
+  - {fileID: -8559238915597860439, guid: 67c5cedd46f47e64f8b50d6001f1dab6, type: 3}
+  - {fileID: 1574898213684309166, guid: 67c5cedd46f47e64f8b50d6001f1dab6, type: 3}
