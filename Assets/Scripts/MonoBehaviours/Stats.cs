@@ -73,5 +73,281 @@ public class Stats : MonoBehaviour {
         //int skillCooldownsSize = FindObjectOfType<GameMaster>().talentDatabase.talents.Length;
         //SkillCooldowns = new List<float>(skillCooldownsSize);
     }
-    
+    public void OnItemEquip(Item item) {
+        if(item is Weapon weap) {
+            AddStats(weap);
+        }
+        if(item is Armor armor) {
+            AddStats(armor);
+        }
+        if(item is Shield shi) {
+            AddStats(shi);
+        }
+        if(item is Ring ring) {
+            AddStats(ring);
+        }
+    }
+    public void OnItemUnequip(Item item) {
+        if(item is Weapon weap) {
+            RemoveStats(weap);
+        }
+        if(item is Armor armor) {
+            RemoveStats(armor);
+        }
+        if(item is Shield shi) {
+            RemoveStats(shi);
+        }
+        if(item is Ring ring) {
+            RemoveStats(ring);
+        }
+    }
+    public void AddStats(Weapon weapon) {
+        strength += weapon.strength;
+        agility += weapon.agility;
+        dexterity += weapon.dexterity;
+        intelligence += weapon.intelligence;
+        faith += weapon.faith;
+        wisdom += weapon.wisdom;
+        vitality += weapon.vitality;
+        charisma += weapon.charisma;
+        // Damages
+        bashDamage += weapon.bashDamage;
+        pierceDamage += weapon.pierceDamage;
+        slashDamage += weapon.slashDamage;
+        fireDamage += weapon.fireDamage;
+        iceDamage += weapon.iceDamage;
+        lightningDamage += weapon.lightningDamage;
+        airDamage += weapon.airDamage;
+        earthDamage += weapon.earthDamage;
+        lightDamage += weapon.lightDamage;
+        darkDamage += weapon.darkDamage;
+        poisonDamage += weapon.poisonDamage;
+        bleedDamage += weapon.bleedDamage;
+        curseDamage += weapon.curseDamage;
+        // Defences
+        /*
+        for(int i = 0; i < weapon.physicalDamageStats.Length; i++) {
+            stats.physicalStats[i] += weapon.physicalDamageStats[i];
+        }
+        for(int i = 0; i < weapon.magicOffenceStats.Length; i++) {
+            stats.magicOffenceStats[i] += weapon.magicOffenceStats[i];
+        }
+        for(int i = 0; i < weapon.damageOverTimeOffence.Length; i++) {
+            stats.damageOverTimeStats[i] += weapon.damageOverTimeOffence[i];
+        }
+        for(int i = 0; i < weapon.mainStats.Length; i++) {
+            stats.mainStats[i] += weapon.mainStats[i];
+        }
+        */
+    }
+    public void RemoveStats(Weapon weapon) {
+        strength -= weapon.strength;
+        agility -= weapon.agility;
+        dexterity -= weapon.dexterity;
+        intelligence -= weapon.intelligence;
+        faith -= weapon.faith;
+        wisdom -= weapon.wisdom;
+        vitality -= weapon.vitality;
+        charisma -= weapon.charisma;
+        // Damages
+        bashDamage -= weapon.bashDamage;
+        pierceDamage -= weapon.pierceDamage;
+        slashDamage -= weapon.slashDamage;
+        fireDamage -= weapon.fireDamage;
+        iceDamage -= weapon.iceDamage;
+        lightningDamage -= weapon.lightningDamage;
+        airDamage -= weapon.airDamage;
+        earthDamage -= weapon.earthDamage;
+        lightDamage -= weapon.lightDamage;
+        darkDamage -= weapon.darkDamage;
+        poisonDamage -= weapon.poisonDamage;
+        bleedDamage -= weapon.bleedDamage;
+        curseDamage -= weapon.curseDamage;
+    }
+    // Add armor stats to player on equip
+    public void AddStats(Armor armor) {
+        strength += armor.strength;
+        agility += armor.agility;
+        dexterity += armor.dexterity;
+        intelligence += armor.intelligence;
+        faith += armor.faith;
+        wisdom += armor.wisdom;
+        vitality += armor.vitality;
+        charisma += armor.charisma;
+        // Defences
+        bashDefence += armor.bashDefence;
+        pierceDefence += armor.pierceDefence;
+        slashDefence += armor.slashDefence;
+        fireDefence += armor.fireDefence;
+        iceDefence += armor.iceDefence;
+        lightningDefence += armor.lightningDefence;
+        airDefence += armor.airDefence;
+        earthDefence += armor.earthDefence;
+        lightDefence += armor.lightDefence;
+        darkDefence += armor.darkDefence;
+        poisonDefence += armor.poisonDefence;
+        bleedDefence += armor.bleedDefence;
+        curseDefence += armor.curseDefence;
+    }
+    // Remove armor stats from player on unequip
+    public void RemoveStats(Armor armor) {
+        strength -= armor.strength;
+        agility -= armor.agility;
+        dexterity -= armor.dexterity;
+        intelligence -= armor.intelligence;
+        faith -= armor.faith;
+        wisdom -= armor.wisdom;
+        vitality -= armor.vitality;
+        charisma -= armor.charisma;
+        // Defences
+        bashDefence -= armor.bashDefence;
+        pierceDefence -= armor.pierceDefence;
+        slashDefence -= armor.slashDefence;
+        fireDefence -= armor.fireDefence;
+        iceDefence -= armor.iceDefence;
+        lightningDefence -= armor.lightningDefence;
+        airDefence -= armor.airDefence;
+        earthDefence -= armor.earthDefence;
+        lightDefence -= armor.lightDefence;
+        darkDefence -= armor.darkDefence;
+        poisonDefence -= armor.poisonDefence;
+        bleedDefence -= armor.bleedDefence;
+        curseDefence -= armor.curseDefence;
+    }
+    // Add armor stats to player on equip
+    public void AddStats(Shield shield) {
+        parryDuration = shield.parryDuration;
+        blockDuration = shield.blockDuration;
+        damageBlockRate = shield.damageBlockRate;
+        // Main
+        strength += shield.strength;
+        agility += shield.agility;
+        dexterity += shield.dexterity;
+        intelligence += shield.intelligence;
+        faith += shield.faith;
+        wisdom += shield.wisdom;
+        vitality += shield.vitality;
+        charisma += shield.charisma;
+        // Defences
+        bashDefence += shield.bashDefence;
+        pierceDefence += shield.pierceDefence;
+        slashDefence += shield.slashDefence;
+        fireDefence += shield.fireDefence;
+        iceDefence += shield.iceDefence;
+        lightningDefence += shield.lightningDefence;
+        airDefence += shield.airDefence;
+        earthDefence += shield.earthDefence;
+        lightDefence += shield.lightDefence;
+        darkDefence += shield.darkDefence;
+        poisonDefence += shield.poisonDefence;
+        bleedDefence += shield.bleedDefence;
+        curseDefence += shield.curseDefence;
+    }
+    // Remove armor stats from player on unequip
+    public void RemoveStats(Shield shield) {
+        parryDuration = 0.2f;
+        blockDuration = 0.5f;
+        damageBlockRate = 0.90f;
+        // Main
+        strength -= shield.strength;
+        agility -= shield.agility;
+        dexterity -= shield.dexterity;
+        intelligence -= shield.intelligence;
+        faith -= shield.faith;
+        wisdom -= shield.wisdom;
+        vitality -= shield.vitality;
+        charisma -= shield.charisma;
+        // Defences
+        bashDefence -= shield.bashDefence;
+        pierceDefence -= shield.pierceDefence;
+        slashDefence -= shield.slashDefence;
+        fireDefence -= shield.fireDefence;
+        iceDefence -= shield.iceDefence;
+        lightningDefence -= shield.lightningDefence;
+        airDefence -= shield.airDefence;
+        earthDefence -= shield.earthDefence;
+        lightDefence -= shield.lightDefence;
+        darkDefence -= shield.darkDefence;
+        poisonDefence -= shield.poisonDefence;
+        bleedDefence -= shield.bleedDefence;
+        curseDefence -= shield.curseDefence;
+    }
+    public void AddStats(Ring ring) {
+        // Main
+        strength += ring.strength;
+        agility += ring.agility;
+        dexterity += ring.dexterity;
+        intelligence += ring.intelligence;
+        faith += ring.faith;
+        wisdom += ring.wisdom;
+        vitality += ring.vitality;
+        charisma += ring.charisma;
+        // Damages
+        bashDamage += ring.bashDamage;
+        pierceDamage += ring.pierceDamage;
+        slashDamage += ring.slashDamage;
+        fireDamage += ring.fireDamage;
+        iceDamage += ring.iceDamage;
+        lightningDamage += ring.lightningDamage;
+        airDamage += ring.airDamage;
+        earthDamage += ring.earthDamage;
+        lightDamage += ring.lightDamage;
+        darkDamage += ring.darkDamage;
+        poisonDamage += ring.poisonDamage;
+        bleedDamage += ring.bleedDamage;
+        curseDamage += ring.curseDamage;
+        // Defences
+        bashDefence += ring.bashDefence;
+        pierceDefence += ring.pierceDefence;
+        slashDefence += ring.slashDefence;
+        fireDefence += ring.fireDefence;
+        iceDefence += ring.iceDefence;
+        lightningDefence += ring.lightningDefence;
+        airDefence += ring.airDefence;
+        earthDefence += ring.earthDefence;
+        lightDefence += ring.lightDefence;
+        darkDefence += ring.darkDefence;
+        poisonDefence += ring.poisonDefence;
+        bleedDefence += ring.bleedDefence;
+        curseDefence += ring.curseDefence;
+    }
+    // Remove armor stats from player on unequip
+    public void RemoveStats(Ring ring) {
+        strength -= ring.strength;
+        agility -= ring.agility;
+        dexterity -= ring.dexterity;
+        intelligence -= ring.intelligence;
+        faith -= ring.faith;
+        wisdom -= ring.wisdom;
+        vitality -= ring.vitality;
+        charisma -= ring.charisma;
+        // Damages
+        bashDamage -= ring.bashDamage;
+        pierceDamage -= ring.pierceDamage;
+        slashDamage -= ring.slashDamage;
+        fireDamage -= ring.fireDamage;
+        iceDamage -= ring.iceDamage;
+        lightningDamage -= ring.lightningDamage;
+        airDamage -= ring.airDamage;
+        earthDamage -= ring.earthDamage;
+        lightDamage -= ring.lightDamage;
+        darkDamage -= ring.darkDamage;
+        poisonDamage -= ring.poisonDamage;
+        bleedDamage -= ring.bleedDamage;
+        curseDamage -= ring.curseDamage;
+        // Defences
+        bashDefence -= ring.bashDefence;
+        pierceDefence -= ring.pierceDefence;
+        slashDefence -= ring.slashDefence;
+        fireDefence -= ring.fireDefence;
+        iceDefence -= ring.iceDefence;
+        lightningDefence -= ring.lightningDefence;
+        airDefence -= ring.airDefence;
+        earthDefence -= ring.earthDefence;
+        lightDefence -= ring.lightDefence;
+        darkDefence -= ring.darkDefence;
+        poisonDefence -= ring.poisonDefence;
+        bleedDefence -= ring.bleedDefence;
+        curseDefence -= ring.curseDefence;
+    }
 }

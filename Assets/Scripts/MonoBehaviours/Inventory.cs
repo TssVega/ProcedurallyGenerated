@@ -23,10 +23,12 @@ public class Inventory : MonoBehaviour {
     private TextMeshProUGUI[] quantityTexts;
 
     private Player player;
+    private Stats stats;
 
     private void Awake() {
         quantities = new int[70];
         player = FindObjectOfType<Player>();
+        stats = GetComponent<Stats>();
         for(int i = 0; i < itemSlots.Length; i++) {
             itemSlots[i].GetComponent<ItemSlot>().slotIndex = i;
         }
@@ -41,31 +43,25 @@ public class Inventory : MonoBehaviour {
         // Crate example weapon
         Weapon exampleItem = player.itemCreator.CreateWeapon("testWeapon");
         AddToInventory(exampleItem);
-        EquipItemInSlot(0);
-        player.SetWeapon(exampleItem);
+        //player.SetWeapon(exampleItem);
         // Create example armor
         Armor testArmor = player.itemCreator.CreateChestArmor("testArmor");
         AddToInventory(testArmor);
-        EquipItemInSlot(0);
-        player.SetBodyArmor(testArmor);
+        //player.SetBodyArmor(testArmor);
         // Create example helmet
         Armor testHelmet = player.itemCreator.CreateHelmet("testHelmet");
         AddToInventory(testHelmet);
-        EquipItemInSlot(0);
-        player.SetHelmet(testHelmet);
+        //player.SetHelmet(testHelmet);
         // Create example legging
         Armor testLegging = player.itemCreator.CreateLegging("testLegging");
         AddToInventory(testLegging);
-        EquipItemInSlot(0);
         // Create example shield
         Shield testShield = player.itemCreator.CreateShield("testShield");
         AddToInventory(testShield);
-        EquipItemInSlot(0);
-        player.SetShield(testShield);
+        //player.SetShield(testShield);
         // Create example ring
         Ring testRing = player.itemCreator.CreateRing("testRing");
         AddToInventory(testRing);
-        EquipItemInSlot(0);
         // Create test item
         Weapon testWeapon = player.itemCreator.CreateWeapon("testItem");
         AddToInventory(testWeapon);
@@ -180,7 +176,7 @@ public class Inventory : MonoBehaviour {
             AddToInventory(equipment[(int)item.slot]);
         }*/
         if(item is Weapon) {
-            Weapon w = item as Weapon;                      
+            Weapon w = item as Weapon;
             if(w.weaponType != WeaponType.OneHanded) {
                 if(CanAddToInventory()) {
                     UnequipItem((int)EquipSlot.LeftHand, GetEmptyInventorySlot());
@@ -209,7 +205,11 @@ public class Inventory : MonoBehaviour {
             }
             player.SetShield(s);
         }
+        else if(item is Ring) {
+            Debug.Log("Trying to equip ring");
+        }
         equipment[(int)item.slot] = item;
+        stats.OnItemEquip(item);
         UpdateEquipmentSlot((int)item.slot);
     }
     public void EquipItemInSlot(int slot) {
@@ -223,10 +223,10 @@ public class Inventory : MonoBehaviour {
         if(!CanAddToInventory()) {
             return;
         }
-        if(item && !item.consumable && !equipment[(int)item.slot]) {    
-            EquipItem(item);
+        if(item && !item.consumable && !equipment[(int)item.slot]) {
             inventory[slot] = null;
             quantities[slot]--;
+            EquipItem(item);            
         }
         else if(item && !item.consumable && equipment[(int)item.slot]) {
             Item tempItem = equipment[(int)item.slot];
@@ -235,6 +235,8 @@ public class Inventory : MonoBehaviour {
             quantities[slot]--;
             EquipItem(item);
             AddToInventory(tempItem);
+            stats.OnItemUnequip(tempItem);
+            //UnequipItem(slot, GetEmptyInventorySlot());
             UpdateSlot((int)tempItem.slot);
         }
     }
@@ -301,9 +303,10 @@ public class Inventory : MonoBehaviour {
             return;
         }
         if(!inventory[toSlot]) {
-            inventory[toSlot] = equipment[fromSlot];
+            inventory[toSlot] = equipment[fromSlot];            
             quantities[toSlot]++;
             UpdateSpritesOnUnequip(equipment[fromSlot]);
+            stats.OnItemUnequip(equipment[fromSlot]);
             equipment[fromSlot] = null;            
         }
         else {

@@ -88,6 +88,7 @@ public class ItemCreator : ScriptableObject {
     public Weapon CreateWeapon(string seed) {
         System.Random pseudoRandom = new System.Random(seed.GetHashCode());
         WeaponType type = WeaponType.OneHanded;
+        int estimatedPower = pseudoRandom.Next(0, 100);
         //int index = pseudoRandom.Next(0, 4);
         int index = 2;  // To try out bows
         if(index == 0) {
@@ -133,6 +134,9 @@ public class ItemCreator : ScriptableObject {
             weapon.firstColor = bowColor;
             weapon.slot = EquipSlot.RightHand;
             weapon.weaponType = WeaponType.Bow;
+            weapon.bashDamage = pseudoRandom.Next(0, estimatedPower);
+            weapon.pierceDamage = pseudoRandom.Next(0, estimatedPower);
+            weapon.slashDamage = pseudoRandom.Next(0, estimatedPower);
         }
         return weapon;
     }

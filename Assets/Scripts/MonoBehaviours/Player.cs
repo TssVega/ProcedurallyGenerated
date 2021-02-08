@@ -44,11 +44,8 @@ public class Player : MonoBehaviour {
         stats = GetComponent<Stats>();
     }
     private void Start() {
-        LoadPlayer();
-        releasedBowString.SetActive(false);
-        for(int i = 0; i < tenseBowStrings.Length; i++) {
-            tenseBowStrings[i].SetActive(false);
-        }
+        ClearWeapons();
+        LoadPlayer();        
         //SetWeapon(itemCreator.CreateWeaponSprite("tss"));
     }
     /*
