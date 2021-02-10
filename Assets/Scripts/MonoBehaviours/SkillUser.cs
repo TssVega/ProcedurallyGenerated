@@ -248,7 +248,7 @@ public class SkillUser : MonoBehaviour {
             particles[i].SetActive(true);
             particles[i].GetComponent<ParticleSystem>().Play();
         }
-        dash.Launch(statusEffects);
+        dash.Launch(statusEffects, stats);
         StopAnimation();
     }
     private IEnumerator StartAreaSkill(AreaSkill area) {
@@ -290,7 +290,7 @@ public class SkillUser : MonoBehaviour {
             particles[i].SetActive(true);
             particles[i].GetComponent<ParticleSystem>().Play();
         }
-        area.Launch(statusEffects);
+        area.Launch(statusEffects, stats);
         StopAnimation();
     }
     private void PlayAnimation(string animationName) {

@@ -7,8 +7,8 @@ public class DashSkill : ActiveSkill {
 
     public DashData dashData;
 
-    public override void Launch(StatusEffects status) {
-        Move(status.GetComponent<Rigidbody2D>(), status.GetComponent<Stats>());
+    public override void Launch(StatusEffects status, Stats stats) {
+        Move(status.GetComponent<Rigidbody2D>(), stats);
     }
     private void Move(Rigidbody2D dasher, Stats dasherStats) {
         Rigidbody2D rb2d = dasher.GetComponent<Rigidbody2D>();

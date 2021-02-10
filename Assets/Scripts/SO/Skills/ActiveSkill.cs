@@ -15,10 +15,10 @@ public class ActiveSkill : Skill {
     public string channelingAnimationName;
     public string castingAnimationName;
 
-    public virtual void Launch(StatusEffects status) {
+    public virtual void Launch(StatusEffects status, Stats stats) {
     
     }
-    public virtual void Activate(StatusEffects target, Stats targetStats) {
+    public virtual void Activate(StatusEffects target, Stats attackerStats) {
     
     }
 }

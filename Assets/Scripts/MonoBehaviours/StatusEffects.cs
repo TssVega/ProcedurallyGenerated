@@ -53,6 +53,8 @@ public class StatusEffects : MonoBehaviour {
     public bool cannotBeFrostbitten = false;
     public bool spedUp = false;
     public bool chanelling = false;
+    public bool blocking = false;
+    public bool parrying = false;
     [Header("Status Effect Counters")]
     private int lightningStacks = 0;
     private bool lightningStacksCounterRunning = false;
@@ -140,6 +142,8 @@ public class StatusEffects : MonoBehaviour {
         lit = false;
         cannotBeFrostbitten = false;
         chanelling = false;
+        blocking = false;
+        parrying = false;
     }
     public void Heal(float amount) {
         stats.health += Mathf.Clamp(amount, 0, stats.maxHealth - stats.health);
@@ -901,5 +905,25 @@ public class StatusEffects : MonoBehaviour {
         yield return new WaitForSeconds(duration);
         spedUp = false;
         stats.runSpeed = originalSpeed;
+    }
+    public void StartBlocking(float duration) {
+        if(gameObject.activeInHierarchy) {
+            StartCoroutine(Blocking(duration));
+        }
+    }
+    private IEnumerator Blocking(float duration){
+        blocking = true;
+        yield return new WaitForSeconds(duration);
+        blocking = false;
+    }
+    public void StartParrying(float duration) {
+        if(gameObject.activeInHierarchy) {
+            StartCoroutine(Parry(duration));
+        }
+    }
+    private IEnumerator Parry(float duration) {
+        parrying = true;
+        yield return new WaitForSeconds(duration);
+        parrying = false;
     }
 }
