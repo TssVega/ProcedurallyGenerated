@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Grid
   - Level
+  - Enemy
   layers:
   - Default
   - TransparentFX

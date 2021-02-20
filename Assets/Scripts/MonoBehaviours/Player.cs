@@ -154,6 +154,9 @@ public class Player : MonoBehaviour {
     }
     public void SetWeapon(Weapon weapon) {
         ClearWeapons();
+        if(!weapon) {            
+            return;
+        }        
         if(weapon.weaponType == WeaponType.OneHanded) {
             weaponHandle.sprite = weapon.firstSprite;
             weaponGuard.sprite = weapon.secondSprite;
@@ -163,7 +166,7 @@ public class Player : MonoBehaviour {
             weaponBlade.color = weapon.thirdColor;
         }
         else if(weapon.weaponType == WeaponType.TwoHanded) {
-        
+
         }
         else if(weapon.weaponType == WeaponType.Bow) {
             bowFirst.sprite = weapon.firstSprite;
@@ -175,10 +178,9 @@ public class Player : MonoBehaviour {
             for(int i = 0; i < tenseBowStrings.Length; i++) {
                 tenseBowStrings[i].SetActive(true);
             }
-
         }
         else if(weapon.weaponType == WeaponType.Dagger) {
-            
+
         }
     }
     public void ClearWeapons() {
@@ -198,6 +200,7 @@ public class Player : MonoBehaviour {
         for(int i = 0; i < tenseBowStrings.Length; i++) {
             tenseBowStrings[i].SetActive(false);
         }
+        Debug.Log("Clearing weapons");
     }
     public void SetBodyArmor(Armor armor) {
         bodyArmor.sprite = armor.firstSprite;

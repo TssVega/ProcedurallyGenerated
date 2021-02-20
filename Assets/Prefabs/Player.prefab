@@ -69,7 +69,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 4
   m_Sprite: {fileID: -7629907422311904842, guid: e0b2867a4eaddac489a2c69b04d84ff2,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -344,7 +344,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 4
   m_Sprite: {fileID: -7629907422311904842, guid: e0b2867a4eaddac489a2c69b04d84ff2,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -750,7 +750,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 4
   m_Sprite: {fileID: -7629907422311904842, guid: e0b2867a4eaddac489a2c69b04d84ff2,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1508,7 +1508,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 241b922b96fc52941b6407af48d16395, type: 2}
   - {fileID: 11400000, guid: 64da67a8a7a5ae54ab685d18d2f002d2, type: 2}
   - {fileID: 11400000, guid: b689240464fda454998452772a238875, type: 2}
-  - {fileID: 11400000, guid: b3c5048739aeb8b448cd77e8dd18f1a8, type: 2}
+  - {fileID: 11400000, guid: 02a87aea90e6d0d4fb2c61eb387b57d5, type: 2}
   skillCooldowns: []
   projectileExitPos: {fileID: 8843314161316362494}
   animator: {fileID: 3732230040238435773}
@@ -1711,6 +1711,8 @@ MonoBehaviour:
   cannotBeFrostbitten: 0
   spedUp: 0
   chanelling: 0
+  blocking: 0
+  parrying: 0
 --- !u!114 &7401711136557819561
 MonoBehaviour:
   m_ObjectHideFlags: 0

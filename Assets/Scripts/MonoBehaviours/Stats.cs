@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Stats : MonoBehaviour {
 
+    public int team;
     [Header("Status")]
     public float health;
     public float mana;

@@ -27,18 +27,20 @@ public class SkillUser : MonoBehaviour {
     }
     private void Update() {
         CountCooldowns();
-        if(Input.GetKeyDown(KeyCode.Alpha1)) {
-            UseSkill(currentSkills[0]);
-        }
-        if(Input.GetKeyDown(KeyCode.Alpha2)) {
-            UseSkill(currentSkills[1]);
-        }
-        if(Input.GetKeyDown(KeyCode.Alpha3)) {
-            UseSkill(currentSkills[2]);
-        }
-        if(Input.GetKeyDown(KeyCode.Alpha4)) {
-            UseSkill(currentSkills[3]);
-        }
+        if(player) {
+            if(Input.GetKeyDown(KeyCode.Alpha1)) {
+                UseSkill(currentSkills[0]);
+            }
+            if(Input.GetKeyDown(KeyCode.Alpha2)) {
+                UseSkill(currentSkills[1]);
+            }
+            if(Input.GetKeyDown(KeyCode.Alpha3)) {
+                UseSkill(currentSkills[2]);
+            }
+            if(Input.GetKeyDown(KeyCode.Alpha4)) {
+                UseSkill(currentSkills[3]);
+            }
+        }        
     }
     public void UseSkill(ActiveSkill skill) {
         if(skill.skillIndex > 0 && skillCooldowns[skill.skillIndex] > 0f) {
@@ -128,7 +130,7 @@ public class SkillUser : MonoBehaviour {
             }
         }
         // Set projectile game object        
-        projectile.GetComponent<Projectile>().SetProjectile(proj.projectileData);
+        projectile.GetComponent<Projectile>().SetProjectile(proj, stats);
         projectile.transform.position = projectileExitPos.position;
         projectile.transform.rotation = Quaternion.identity;        
         projectile.SetActive(true);
@@ -303,13 +305,18 @@ public class SkillUser : MonoBehaviour {
     }
     private void CountCooldowns() {
         for(int i = 0; i < skillCooldowns.Count; i++) {
+            if(skillCooldowns[i] <= 0) {
+                continue;                
+            }
             if(skillCooldowns[i] > 0) {
                 skillCooldowns[i] -= Time.deltaTime;
-                if(i == 4 && skillCooldowns[i] < 0) {
-                    for(int j = 0; j < player.tenseBowStrings.Length; j++) {
-                        player.tenseBowStrings[j].SetActive(true);
-                    }
-                    player.releasedBowString.SetActive(false);
+                if(skillDatabase.skills[i] is ProjectileSkill proj && skillCooldowns[i] <= 0) {
+                    if(proj.projectileData.arrowSkill) {
+                        for(int j = 0; j < player.tenseBowStrings.Length; j++) {
+                            player.tenseBowStrings[j].SetActive(true);
+                        }
+                        player.releasedBowString.SetActive(false);
+                    }                    
                 }
             }            
         }        

@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour {
 
+    private ProjectileSkill projectileSkill;
     private ProjectileData projectileData;
     private Rigidbody2D rb2d;
     private Vector3 projectileVector;
     private float countdown;
+    private Stats attackerStats;
 
     private void Awake() {
         rb2d = GetComponent<Rigidbody2D>();
@@ -21,6 +23,11 @@ public class Projectile : MonoBehaviour {
     private void FixedUpdate() {
         gameObject.transform.position += projectileVector * projectileData.projectileSpeed * Time.fixedDeltaTime;
     }
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if(collision.GetComponent<Stats>() && projectileData.team != collision.GetComponent<Stats>().team  ) {
+            projectileSkill.Activate(collision.GetComponent<StatusEffects>(), attackerStats);
+        }
+    }
     private void EndProjectile() {
         for(int i = 0; i < transform.childCount; i++) {
             if(transform.GetChild(i).GetComponent<ParticleSystem>()) {
@@ -31,9 +38,11 @@ public class Projectile : MonoBehaviour {
         transform.DetachChildren();
         gameObject.SetActive(false);
     }
-    public void SetProjectile(ProjectileData data) {        
-        projectileData = data;
+    public void SetProjectile(ProjectileSkill skill, Stats attackerStats) {
+        projectileSkill = skill;
+        projectileData = skill.projectileData;
         countdown = projectileData.lifetime;
+        this.attackerStats = attackerStats;
     }
     public void StartProjectile(Transform target) {
         if(target) {

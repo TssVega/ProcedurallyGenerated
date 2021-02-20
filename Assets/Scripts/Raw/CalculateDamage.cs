@@ -73,8 +73,8 @@ public static class CalculateDamage {
     */
     private static float CalculateDecreasedDamage(float damage, float armor) {
         float damageReductionRate = (Mathf.Log10(armor) - 0.9f + armor * 0.02f) * 0.2f;
-        damage *= 1 - damageReductionRate;
-        damage = Mathf.Clamp(damage, 0, float.MaxValue);
+        damage *= 1f - damageReductionRate;
+        damage = Mathf.Clamp(damage, 0f, float.MaxValue);
         return damage;
     }
     /*
