@@ -90,7 +90,7 @@ public class ItemCreator : ScriptableObject {
         WeaponType type = WeaponType.OneHanded;
         int estimatedPower = pseudoRandom.Next(0, 100);
         //int index = pseudoRandom.Next(0, 4);
-        int index = 2;  // To try out bows
+        int index = 0;  // To try out bows
         if(index == 0) {
             type = WeaponType.OneHanded;
         }

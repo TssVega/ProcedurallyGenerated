@@ -20,6 +20,7 @@ MonoBehaviour:
   skillIcon: {fileID: 0}
   acquired: 0
   manaCost: 0
+  focusedSkill: 0
   channelingTime: 0.1
   castTime: 0
   cooldown: 0
@@ -34,4 +35,4 @@ MonoBehaviour:
   totalHits: 1
   movementSpeed: 0
   movementVector: {x: 0, y: 0}
-  hitbox: {fileID: 0}
+  hitbox: {fileID: 6890043100139161156, guid: 3ec92c4a7cc49364da510a88805e9d5e, type: 3}

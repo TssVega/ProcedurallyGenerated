@@ -39,6 +39,8 @@ public class Player : MonoBehaviour {
     public GameObject releasedBowString;
     public GameObject[] tenseBowStrings;
 
+    public Transform testTarget;
+
     private void Awake() {
         worldGeneration = FindObjectOfType<WorldGeneration>();
         stats = GetComponent<Stats>();
@@ -49,7 +51,15 @@ public class Player : MonoBehaviour {
         //SetWeapon(itemCreator.CreateWeaponSprite("tss"));
     }
     /*
-    private void Update() { 
+    private void Update() {
+        
+        if(RelativePosition.GetRelativePosition(transform, testTarget) == Relative.Behind) {
+            Debug.Log("You are looking behind the enemy");
+        }
+        else if(RelativePosition.GetRelativePosition(transform, testTarget) == Relative.None) {
+            Debug.Log("You are looking away");
+        }
+        
         if(Input.GetKeyDown(KeyCode.Space)) {
             SetWeapon(itemCreator.CreateWeaponSprite(Time.time.ToString()));
         }

@@ -292,7 +292,9 @@ public class SkillUser : MonoBehaviour {
             particles[i].SetActive(true);
             particles[i].GetComponent<ParticleSystem>().Play();
         }
-        area.Launch(statusEffects, stats);
+        if(area.hitbox) {
+            area.Launch(stats);
+        }        
         StopAnimation();
     }
     private void PlayAnimation(string animationName) {
