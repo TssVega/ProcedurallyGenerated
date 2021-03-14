@@ -66,13 +66,13 @@ public class Stats : MonoBehaviour {
     public int poisonThreshold;
     public int bleedThreshold;
     public int curseThreshold;
-    //[Header("Skills")]
-    //public List<Skill> skills;
+
+    public StatusEffects status;
     
 
     private void Awake() {
         //int skillCooldownsSize = FindObjectOfType<GameMaster>().talentDatabase.talents.Length;
-        //SkillCooldowns = new List<float>(skillCooldownsSize);
+        status = GetComponent<StatusEffects>();
     }
     public void OnItemEquip(Item item) {
         if(item is Weapon weap) {

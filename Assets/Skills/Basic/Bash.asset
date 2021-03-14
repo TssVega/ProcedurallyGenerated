@@ -16,8 +16,8 @@ MonoBehaviour:
   skillName: bash
   skillDescription: 
   skillIcon: {fileID: 0}
-  acquired: 0
   manaCost: 0
+  focusedSkill: 0
   channelingTime: 0.33
   castTime: 0
   cooldown: 0
@@ -32,4 +32,4 @@ MonoBehaviour:
   totalHits: 1
   movementSpeed: 0
   movementVector: {x: 0, y: 0}
-  hitbox: {fileID: 0}
+  hitbox: {fileID: 6890043100139161156, guid: 9b6fa8579b551ca4bad10ad5efe0d696, type: 3}

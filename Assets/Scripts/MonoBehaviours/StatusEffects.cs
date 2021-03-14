@@ -165,7 +165,7 @@ public class StatusEffects : MonoBehaviour {
     public bool CanUseMana(float amount) {
         return stats.mana >= amount;
     }
-    public void TakeDamage(float amount, AttackType attackType) {
+    public void TakeDamage(float amount, AttackType attackType, Skill skill, StatusEffects attacker) {
         float damage = 0f;
         if(stats) {
             damage = CalculateDamage.Calculate(amount, attackType, stats);
@@ -173,36 +173,42 @@ public class StatusEffects : MonoBehaviour {
         if(passives) {
             damage = passives.OnHitTaken(amount, attackType, stats);
         }
-        // If this target is dark sigiled, add sigil charges
-        if(darkSigilRunning && attackType == AttackType.Dark) {
-            AddDarkSigilCharge(damage);
+        if(parrying && skill.interruptable) {
+            damage = 0f;
+            attacker.StartStun(stats.vitality * 0.05f);
         }
-        // Activate frostbite damage and end frostbite counter
-        if(frostbitten && attackType == AttackType.Ice) {
-            damage += GetFrostbiteDamage();
-            StopFrostbite();
-            SetFrostbiteDamage(0f);
-        }
-        // If this gameObject is earthed, it takes half damage from lightning attacks
-        if(earthed && attackType == AttackType.Lightning) {
-            damage *= lightningDamageForEarthedMultiplier;
-        }
-        // Get more damage from lightning when chilled
-        if(chilled && attackType == AttackType.Lightning) {
-            damage *= lightningDamageForChilledMultiplier;
-        }
-        // If the target is enlightened, the next light attack will ignore all armor
-        if(lit && attackType == AttackType.Light) {
-            StopEnlighten();
-        }
-        // Fire attacks end the chill effect
-        if(chilled && attackType == AttackType.Fire) {
-            StopChill();
-        }
-        // Ice attacks end burning effect
-        if(burning && attackType == AttackType.Ice) {
-            StopBurn();
-        }
+        else {
+            // If this target is dark sigiled, add sigil charges
+            if(darkSigilRunning && attackType == AttackType.Dark) {
+                AddDarkSigilCharge(damage);
+            }
+            // Activate frostbite damage and end frostbite counter
+            if(frostbitten && attackType == AttackType.Ice) {
+                damage += GetFrostbiteDamage();
+                StopFrostbite();
+                SetFrostbiteDamage(0f);
+            }
+            // If this gameObject is earthed, it takes half damage from lightning attacks
+            if(earthed && attackType == AttackType.Lightning) {
+                damage *= lightningDamageForEarthedMultiplier;
+            }
+            // Get more damage from lightning when chilled
+            if(chilled && attackType == AttackType.Lightning) {
+                damage *= lightningDamageForChilledMultiplier;
+            }
+            // If the target is enlightened, the next light attack will ignore all armor
+            if(lit && attackType == AttackType.Light) {
+                StopEnlighten();
+            }
+            // Fire attacks end the chill effect
+            if(chilled && attackType == AttackType.Fire) {
+                StopChill();
+            }
+            // Ice attacks end burning effect
+            if(burning && attackType == AttackType.Ice) {
+                StopBurn();
+            }
+        }        
         damage = Mathf.Clamp(damage, 0f, stats.maxDamageTimesHealth * stats.maxHealth);
         stats.health -= damage;
         //statusParticles.StartHitParticles();
@@ -260,17 +266,17 @@ public class StatusEffects : MonoBehaviour {
         chanelling = false;
     }
     // Add lightningStacks
-    public void AddLightningStacks(int amount, float damage, float duration) {
+    public void AddLightningStacks(int amount, float damage, float duration, Skill skill, StatusEffects attacker) {
         lightningStacks += amount;
-        CheckLightningStacks(damage, duration);
+        CheckLightningStacks(damage, duration, skill, attacker);
     }
     // Check lightningStacks
-    public void CheckLightningStacks(float damage, float duration) {
+    public void CheckLightningStacks(float damage, float duration, Skill skill, StatusEffects attacker) {
         if(lightningStacks >= stats.shockThreshold) {
             lightningStacks = 0;
             StartStun(duration);
             //statusParticles.StartShockedParticles(duration);
-            TakeDamage(damage, AttackType.Lightning);
+            TakeDamage(damage, AttackType.Lightning, skill, attacker);
         }
         else if(lightningStacks > 0) {
             if(!lightningStacksCounterRunning && gameObject.activeInHierarchy) {
@@ -284,7 +290,7 @@ public class StatusEffects : MonoBehaviour {
         if(!lightningStacksCounterRunning) {
             lightningStacksCounterRunning = true;
         }
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1f);
         if(lightningStacks > 0 && gameObject.activeInHierarchy) {
             StartCoroutine(DecreaseLightningStacks());
         }
@@ -350,15 +356,15 @@ public class StatusEffects : MonoBehaviour {
             }
         }
     }
-    public void AddFireStacks(int amount, float damage, float duration) {
+    public void AddFireStacks(int amount, float damage, float duration, Skill skill, StatusEffects attacker) {
         fireStacks += amount;
-        CheckFireStacks(duration, damage);
+        CheckFireStacks(duration, damage, skill, attacker);
     }
     // Check earthStacks
-    public void CheckFireStacks(float duration, float damage) {
+    public void CheckFireStacks(float duration, float damage, Skill skill, StatusEffects attacker) {
         if(fireStacks >= stats.burningThreshold) {
             fireStacks = 0;
-            StartBurn(duration, damage);
+            StartBurn(duration, damage, skill, attacker);
         }
         else if(fireStacks > 0) {
             if(!fireStacksCounterRunning && gameObject.activeInHierarchy) {
@@ -380,13 +386,13 @@ public class StatusEffects : MonoBehaviour {
             fireStacksCounterRunning = false;
         }
     }
-    private void StartBurn(float duration, float damage) {
+    private void StartBurn(float duration, float damage, Skill skill, StatusEffects attacker) {
         if(gameObject.activeInHierarchy) {
             if(burning) {
                 StopBurn();
             }
             //statusParticles.StartBurningParticles(duration);
-            burnCounter = StartCoroutine(Burn(duration, damage));
+            burnCounter = StartCoroutine(Burn(duration, damage, skill, attacker));
         }
     }
     public void StopBurn() {
@@ -396,13 +402,13 @@ public class StatusEffects : MonoBehaviour {
             burning = false;
         }
     }
-    public IEnumerator Burn(float duration, float damage) {
+    public IEnumerator Burn(float duration, float damage, Skill skill, StatusEffects attacker) {
         float period = 2f;
         bool done = false;
         burning = true;
         while(!done) {
             yield return new WaitForSeconds(period);
-            TakeDamage(damage, AttackType.Fire);
+            TakeDamage(damage, AttackType.Fire, skill, attacker);
             duration -= period;
             if(duration <= 0) {
                 done = true;
@@ -411,17 +417,17 @@ public class StatusEffects : MonoBehaviour {
         //statusParticles.StopBurningParticles();
         burning = false;
     }
-    public void AddPoisonStacks(int amount, float damage, float duration) {
+    public void AddPoisonStacks(int amount, float damage, float duration, Skill skill, StatusEffects attacker) {
         poisonStacks += amount;
-        CheckPoisonStacks(duration, damage);
+        CheckPoisonStacks(duration, damage, skill, attacker);
     }
     // Check stacks
-    public void CheckPoisonStacks(float duration, float damage) {
+    public void CheckPoisonStacks(float duration, float damage, Skill skill, StatusEffects attacker) {
         if(poisonStacks >= stats.poisonThreshold) {
             poisonStacks = 0;
             float poisonDamageInterval = 1f;
             // Decrease poison damage interval by 1 second per tick
-            StartPoison(duration, damage, poisonDamageInterval);
+            StartPoison(duration, damage, poisonDamageInterval, skill, attacker);
         }
         else if(poisonStacks > 0) {
             if(!poisonStacksCounterRunning && gameObject.activeInHierarchy) {
@@ -443,25 +449,25 @@ public class StatusEffects : MonoBehaviour {
             poisonStacksCounterRunning = false;
         }
     }
-    private void StartPoison(float duration, float damage, float periodTimeDecrease) {
+    private void StartPoison(float duration, float damage, float periodTimeDecrease, Skill skill, StatusEffects attacker) {
         if(gameObject.activeInHierarchy) {
             if(poisoned) {
                 StopPoison();
             }
-            poisonCounter = StartCoroutine(Poison(duration, damage, periodTimeDecrease));
+            poisonCounter = StartCoroutine(Poison(duration, damage, periodTimeDecrease, skill, attacker));
         }
     }
     public void StopPoison() {
         StopCoroutine(poisonCounter);
         poisoned = false;
     }
-    private IEnumerator Poison(float duration, float damage, float periodTimeDecrease) {
+    private IEnumerator Poison(float duration, float damage, float periodTimeDecrease, Skill skill, StatusEffects attacker) {
         float period = 10f;
         bool done = false;
         poisoned = true;
         while(!done) {
             yield return new WaitForSeconds(period);
-            TakeDamage(damage, AttackType.Poison);
+            TakeDamage(damage, AttackType.Poison, skill, attacker);
             duration -= period;
             period = period <= 1 ? 1 : period -= periodTimeDecrease;
             if(duration <= 0) {
@@ -470,17 +476,17 @@ public class StatusEffects : MonoBehaviour {
         }
         poisoned = false;
     }
-    public void AddBleedStacks(int amount, float damage, float duration) {
+    public void AddBleedStacks(int amount, float damage, float duration, Skill skill, StatusEffects attacker) {
         bleedStacks += amount;
-        CheckBleedStacks(duration, damage);
+        CheckBleedStacks(duration, damage, skill, attacker);
     }
     // Check stacks
-    public void CheckBleedStacks(float duration, float damage) {
+    public void CheckBleedStacks(float duration, float damage, Skill skill, StatusEffects attacker) {
         if(bleedStacks >= stats.bleedThreshold) {
             bleedStacks = 0;
             float bleedDamageIncrease = damage / 4f;
             // Increase bleed damage by damage / 4 per tick
-            StartBleed(duration, damage, bleedDamageIncrease);
+            StartBleed(duration, damage, bleedDamageIncrease, skill, attacker);
         }
         else if(bleedStacks > 0) {
             if(!bleedStacksCounterRunning && gameObject.activeInHierarchy) {
@@ -502,25 +508,25 @@ public class StatusEffects : MonoBehaviour {
             bleedStacksCounterRunning = false;
         }
     }
-    private void StartBleed(float duration, float damage, float damageIncrease) {
+    private void StartBleed(float duration, float damage, float damageIncrease, Skill skill, StatusEffects attacker) {
         if(gameObject.activeInHierarchy) {
             if(bleeding) {
                 StopBleed();
             }
-            bleedCounter = StartCoroutine(Bleed(duration, damage, damageIncrease));
+            bleedCounter = StartCoroutine(Bleed(duration, damage, damageIncrease, skill, attacker));
         }
     }
     public void StopBleed() {
         StopCoroutine(bleedCounter);
         bleeding = false;
     }
-    public IEnumerator Bleed(float duration, float damage, float damageIncrease) {
+    public IEnumerator Bleed(float duration, float damage, float damageIncrease, Skill skill, StatusEffects attacker) {
         float period = 5f;
         bool done = false;
         bleeding = true;
         while(!done) {
             yield return new WaitForSeconds(period);
-            TakeDamage(damage, AttackType.Bleed);
+            TakeDamage(damage, AttackType.Bleed, skill, attacker);
             duration -= period;
             damage += damageIncrease;
             if(duration <= 0) {
@@ -529,16 +535,16 @@ public class StatusEffects : MonoBehaviour {
         }
         bleeding = false;
     }
-    public void AddCurseStacks(int amount, float damage, float duration) {
+    public void AddCurseStacks(int amount, float damage, float duration, Skill skill, StatusEffects attacker) {
         curseStacks += amount;
-        CheckCurseStacks(duration, damage);
+        CheckCurseStacks(duration, damage, skill, attacker);
     }
     // Check stacks
-    public void CheckCurseStacks(float duration, float damage) {
+    public void CheckCurseStacks(float duration, float damage, Skill skill, StatusEffects attacker) {
         if(curseStacks >= stats.curseThreshold) {
             curseStacks = 0;
             // Increase bleed damage by damage / 4 per tick
-            StartCurse(duration, damage);
+            StartCurse(duration, damage, skill, attacker);
         }
         else if(curseStacks > 0) {
             if(!curseStacksCounterRunning && gameObject.activeInHierarchy) {
@@ -560,25 +566,25 @@ public class StatusEffects : MonoBehaviour {
             curseStacksCounterRunning = false;
         }
     }
-    public void StartCurse(float duration, float damage) {
+    public void StartCurse(float duration, float damage, Skill skill, StatusEffects attacker) {
         if(gameObject.activeInHierarchy) {
             if(cursed) {
                 StopCurse();
             }
-            curseCounter = StartCoroutine(Curse(duration, damage));
+            curseCounter = StartCoroutine(Curse(duration, damage, skill, attacker));
         }
     }
     public void StopCurse() {
         StopCoroutine(curseCounter);
         cursed = false;
     }
-    public IEnumerator Curse(float duration, float damage) {
+    public IEnumerator Curse(float duration, float damage, Skill skill, StatusEffects attacker) {
         float period = 2f;
         bool done = false;
         cursed = true;
         while(!done) {
             yield return new WaitForSeconds(period);
-            TakeDamage(damage, AttackType.Curse);
+            TakeDamage(damage, AttackType.Curse, skill, attacker);
             duration -= period;
             if(duration <= 0) {
                 done = true;
@@ -712,12 +718,12 @@ public class StatusEffects : MonoBehaviour {
         else if(player)
             GetComponent<PlayerMovement>().walkSpeed = originalSpeed;*/
     }
-    public void StartDarkSigil(float duration, float damageRate) {
+    public void StartDarkSigil(float duration, float damageRate, Skill skill, StatusEffects attacker) {
         if(gameObject.activeInHierarchy) {
             if(!darkSigilRunning && !cannotBeDarkSigiled) {
                 Debug.LogWarning("Dark sigil started");
                 StartCoroutine(DarkSigilCooldown(darkSigilCooldown));
-                darkSigilCounter = StartCoroutine(DarkSigil(duration, damageRate));
+                darkSigilCounter = StartCoroutine(DarkSigil(duration, damageRate, skill, attacker));
             }
         }
     }
@@ -728,13 +734,13 @@ public class StatusEffects : MonoBehaviour {
     }
     // Dark sigil deals dark damage when time ends depending on the target's 
     // Dark damage taken during DarkSigil effect
-    private IEnumerator DarkSigil(float duration, float damageRate) {
+    private IEnumerator DarkSigil(float duration, float damageRate, Skill skill, StatusEffects attacker) {
         darkSigil = true;
         if(!darkSigilRunning) {
             darkSigilRunning = true;
         }
         yield return new WaitForSeconds(duration);
-        TakeDamage(darkSigilCharge * damageRate, AttackType.Dark);
+        TakeDamage(darkSigilCharge * damageRate, AttackType.Dark, skill, attacker);
         darkSigilCharge = 0;
         darkSigil = false;
         darkSigilRunning = false;
@@ -772,22 +778,22 @@ public class StatusEffects : MonoBehaviour {
         }
         immobilized = false;
     }
-    public void StartTimeBomb(float seconds, float damage, AttackType attackType) {
+    public void StartTimeBomb(float seconds, float damage, AttackType attackType, Skill skill, StatusEffects attacker) {
         if(gameObject.activeInHierarchy) {
             if(timeBombed) {
                 EndTimeBomb();
             }
-            timeBombCounter = StartCoroutine(TimeBomb(seconds, damage, attackType));
+            timeBombCounter = StartCoroutine(TimeBomb(seconds, damage, attackType, skill, attacker));
         }
     }
     public void EndTimeBomb() {
         StopCoroutine(timeBombCounter);
         timeBombed = false;
     }
-    public IEnumerator TimeBomb(float seconds, float damage, AttackType attackType) {
+    public IEnumerator TimeBomb(float seconds, float damage, AttackType attackType, Skill skill, StatusEffects attacker) {
         timeBombed = true;
         yield return new WaitForSeconds(seconds);
-        TakeDamage(damage, attackType);
+        TakeDamage(damage, attackType, skill, attacker);
         timeBombed = false;
     }
     public void AddEarthStacks(int amount, float heal, float duration, GameObject damager) {

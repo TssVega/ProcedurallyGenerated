@@ -18,7 +18,8 @@ public class AreaSkill : ActiveSkill {
         clone.transform.position = pos;
         clone.transform.rotation = rot;
         clone.SetActive(true);*/
-        targetStatus.TakeDamage(DamageFromDamageType.GetDamage(attackType, attackerStats) * damageRate, attackType);
+        targetStatus.TakeDamage(DamageFromDamageType.GetDamage(attackType, attackerStats)
+            * damageRate, attackType, this, attackerStats.status);
     }
     public override void Launch(Stats attackerStats) {
         GameObject hitboxObject = ObjectPooler.objectPooler.GetPooledObject(hitbox.name);

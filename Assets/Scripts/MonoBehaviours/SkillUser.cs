@@ -67,7 +67,7 @@ public class SkillUser : MonoBehaviour {
         }
         else {
             statusEffects.UseMana(skill.manaCost);
-        }        
+        }
         if(skill is ProjectileSkill) {
             ProjectileSkill proj = skill as ProjectileSkill;
             if(proj.projectileData.arrowSkill) {
@@ -98,6 +98,10 @@ public class SkillUser : MonoBehaviour {
         else if(skill is AreaSkill) {
             AreaSkill area = skill as AreaSkill;
             StartCoroutine(StartAreaSkill(area));
+        }
+        else if(skill is BlockSkill) {
+            BlockSkill block = skill as BlockSkill;
+            StartCoroutine(StartBlockSkill(block));
         }
     }
     private IEnumerator ThrowProjectile(ProjectileSkill proj) {
@@ -309,6 +313,48 @@ public class SkillUser : MonoBehaviour {
             particles[i].SetActive(true);
             particles[i].GetComponent<ParticleSystem>().Play();
         }                
+        StopAnimation();
+    }
+    private IEnumerator StartBlockSkill(BlockSkill block) {
+        statusEffects.StartChanelling(block.channelingTime);
+        if(block.focusedSkill) {
+            statusEffects.StartImmobilize(block.channelingTime);
+        }
+        skillCooldowns[block.skillIndex] = block.cooldown;
+        // Set channelling particles
+        List<GameObject> channelingParticles = new List<GameObject>();
+        for(int i = 0; i < block.channelingParticleNames.Length; i++) {
+            channelingParticles.Add(ObjectPooler.objectPooler.GetPooledObject(block.channelingParticleNames[i]));
+            channelingParticles[i].transform.parent = transform;
+            channelingParticles[i].transform.position = transform.position;
+            channelingParticles[i].transform.rotation = Quaternion.identity;
+            channelingParticles[i].SetActive(true);
+            channelingParticles[i].GetComponent<ParticleSystem>().Play();
+        }
+        PlayAnimation(block.channelingAnimationName);
+        yield return new WaitForSeconds(block.channelingTime);
+        List<GameObject> castingParticles = new List<GameObject>();
+        for(int i = 0; i < block.castingParticleNames.Length; i++) {
+            castingParticles.Add(ObjectPooler.objectPooler.GetPooledObject(block.castingParticleNames[i]));
+            castingParticles[i].transform.parent = transform;
+            castingParticles[i].transform.position = transform.position;
+            castingParticles[i].transform.rotation = Quaternion.identity;
+            castingParticles[i].SetActive(true);
+            castingParticles[i].GetComponent<ParticleSystem>().Play();
+        }
+        PlayAnimation(block.castingAnimationName);
+        block.Launch(statusEffects);
+        yield return new WaitForSeconds(block.castTime);
+        List<GameObject> particles = new List<GameObject>();
+        for(int i = 0; i < block.particleNames.Length; i++) {
+            particles.Add(ObjectPooler.objectPooler.GetPooledObject(block.particleNames[i]));
+            //particles[i] = ObjectPooler.objectPooler.GetPooledObject(proj.projectileData.particleNames[i]);
+            particles[i].transform.parent = transform;
+            particles[i].transform.position = transform.position;
+            particles[i].transform.rotation = Quaternion.identity;
+            particles[i].SetActive(true);
+            particles[i].GetComponent<ParticleSystem>().Play();
+        }
         StopAnimation();
     }
     private void PlayAnimation(string animationName) {

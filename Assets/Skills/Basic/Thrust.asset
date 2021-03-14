@@ -16,8 +16,8 @@ MonoBehaviour:
   skillName: thrust
   skillDescription: 
   skillIcon: {fileID: 0}
-  acquired: 0
   manaCost: 0
+  focusedSkill: 0
   channelingTime: 0.1
   castTime: 0
   cooldown: 0
@@ -32,4 +32,4 @@ MonoBehaviour:
   totalHits: 1
   movementSpeed: 0
   movementVector: {x: 0, y: 0}
-  hitbox: {fileID: 0}
+  hitbox: {fileID: 6890043100139161156, guid: e15f05b17f5d7fb47b4d0a415a1d0f5f, type: 3}

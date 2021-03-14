@@ -18,6 +18,9 @@ public class ActiveSkill : Skill {
     public virtual void Launch(Stats stats) {
     
     }
+    public virtual void Launch(StatusEffects targetStatus) {
+
+    }
     public virtual void Launch(StatusEffects targetStatus, Stats stats) {
 
     }
