@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e88be1862513a784cb150b541627d590, type: 3}
   m_Name: ToughSkin
   m_EditorClassIdentifier: 
-  skillIndex: 2
+  skillIndex: 7
   skillName: Tough Skin
   skillDescription: Every 10 seconds the first damage you take is reduced. This cooldown
     is reset if you take damage before this skill is ready. Vitality increases the

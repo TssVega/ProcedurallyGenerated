@@ -16,7 +16,6 @@ MonoBehaviour:
   skillName: Holy Heal
   skillDescription: Channel your inner faith for a moment to gain some health
   skillIcon: {fileID: 0}
-  acquired: 0
   manaCost: 0
   focusedSkill: 0
   channelingTime: 1.5
@@ -30,5 +29,6 @@ MonoBehaviour:
   channelingAnimationName: 
   castingAnimationName: 
   buffData:
-    healAmount: 10
+    buffType: 0
+    healRate: 2
     lifetime: 1.5

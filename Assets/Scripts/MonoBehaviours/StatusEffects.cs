@@ -8,6 +8,7 @@ public class StatusEffects : MonoBehaviour {
     private Player player;
     //private Enemy enemy;
     private Stats stats;
+    private Passives passives;
     //private StatusBar bar;
     //public StatusParticles statusParticles;
     // Coroutines
@@ -88,6 +89,7 @@ public class StatusEffects : MonoBehaviour {
         player = GetComponent<Player>();
         //enemy = GetComponent<Enemy>();
         stats = GetComponent<Stats>();
+        passives = GetComponent<Passives>();
         //if(enemy) {
         //    stats.walkSpeed = enemy.enemy.speed;
         //}
@@ -167,6 +169,9 @@ public class StatusEffects : MonoBehaviour {
         float damage = 0f;
         if(stats) {
             damage = CalculateDamage.Calculate(amount, attackType, stats);
+        }
+        if(passives) {
+            damage = passives.OnHitTaken(amount, attackType, stats);
         }
         // If this target is dark sigiled, add sigil charges
         if(darkSigilRunning && attackType == AttackType.Dark) {

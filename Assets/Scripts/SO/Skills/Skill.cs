@@ -8,5 +8,4 @@ public class Skill : ScriptableObject{
     public string skillName;
     [TextArea(3, 20)]public string skillDescription;
     public Sprite skillIcon;
-    public bool acquired;
 }

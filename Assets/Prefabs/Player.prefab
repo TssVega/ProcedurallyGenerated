@@ -1425,6 +1425,7 @@ MonoBehaviour:
   tenseBowStrings:
   - {fileID: 37480372180291882}
   - {fileID: 1626710822409075103}
+  testTarget: {fileID: 0}
 --- !u!114 &1364852626
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1437,6 +1438,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2407581536be0f3459af11c70760d6f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  team: 0
   health: 100
   mana: 100
   energy: 100
@@ -1504,11 +1506,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillDatabase: {fileID: 11400000, guid: b84645b6f2bdb204bbc1cb0eb4d331c0, type: 2}
+  acquiredSkills:
+  - {fileID: 11400000, guid: 241b922b96fc52941b6407af48d16395, type: 2}
+  - {fileID: 11400000, guid: 64da67a8a7a5ae54ab685d18d2f002d2, type: 2}
+  - {fileID: 11400000, guid: b689240464fda454998452772a238875, type: 2}
+  - {fileID: 11400000, guid: 02a87aea90e6d0d4fb2c61eb387b57d5, type: 2}
+  - {fileID: 11400000, guid: 29bff4a83ce14c445961ba9d2dc6b69d, type: 2}
   currentSkills:
   - {fileID: 11400000, guid: 241b922b96fc52941b6407af48d16395, type: 2}
   - {fileID: 11400000, guid: 64da67a8a7a5ae54ab685d18d2f002d2, type: 2}
   - {fileID: 11400000, guid: b689240464fda454998452772a238875, type: 2}
   - {fileID: 11400000, guid: 02a87aea90e6d0d4fb2c61eb387b57d5, type: 2}
+  - {fileID: 11400000, guid: 29bff4a83ce14c445961ba9d2dc6b69d, type: 2}
   skillCooldowns: []
   projectileExitPos: {fileID: 8843314161316362494}
   animator: {fileID: 3732230040238435773}

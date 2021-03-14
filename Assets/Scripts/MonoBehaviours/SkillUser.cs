@@ -6,6 +6,7 @@ public class SkillUser : MonoBehaviour {
 
     //public List<Skill> skills;
     public SkillDatabase skillDatabase;
+    public List<Skill> acquiredSkills;
     public List<ActiveSkill> currentSkills;
     private Stats stats;
     public List<float> skillCooldowns;
@@ -40,7 +41,19 @@ public class SkillUser : MonoBehaviour {
             if(Input.GetKeyDown(KeyCode.Alpha4)) {
                 UseSkill(currentSkills[3]);
             }
-        }        
+            if(Input.GetKeyDown(KeyCode.Alpha5)) {
+                UseSkill(currentSkills[4]);
+            }
+            if(Input.GetKeyDown(KeyCode.Alpha6)) {
+                UseSkill(currentSkills[5]);
+            }
+            if(Input.GetKeyDown(KeyCode.Alpha7)) {
+                UseSkill(currentSkills[6]);
+            }
+            if(Input.GetKeyDown(KeyCode.Alpha8)) {
+                UseSkill(currentSkills[7]);
+            }
+        }
     }
     public void UseSkill(ActiveSkill skill) {
         if(skill.skillIndex > 0 && skillCooldowns[skill.skillIndex] > 0f) {
@@ -135,8 +148,7 @@ public class SkillUser : MonoBehaviour {
         projectile.transform.rotation = Quaternion.identity;        
         projectile.SetActive(true);
         projectile.GetComponent<Projectile>().StartProjectile((projectileExitPos.position - transform.position).normalized);
-        PlayAnimation(proj.castingAnimationName);
-        yield return new WaitForSeconds(proj.castTime);
+        PlayAnimation(proj.castingAnimationName);        
         // Set projectile particles
         List<GameObject> particles = new List<GameObject>();
         for(int i = 0; i < proj.particleNames.Length; i++) {
@@ -155,6 +167,7 @@ public class SkillUser : MonoBehaviour {
                 particles[i].GetComponent<ParticleSystem>().Play();
             }            
         }
+        yield return new WaitForSeconds(proj.castTime);
         StopAnimation();
     }
     private IEnumerator Buff(BuffSkill buff) {
@@ -182,6 +195,7 @@ public class SkillUser : MonoBehaviour {
         }
         PlayAnimation(buff.channelingAnimationName);
         yield return new WaitForSeconds(buff.channelingTime);
+        buff.Launch(statusEffects, stats);
         // Set casting particles
         List<GameObject> castingParticles = new List<GameObject>();
         for(int i = 0; i < buff.castingParticleNames.Length; i++) {
@@ -239,6 +253,7 @@ public class SkillUser : MonoBehaviour {
             castingParticles[i].GetComponent<ParticleSystem>().Play();
         }
         PlayAnimation(dash.castingAnimationName);
+        dash.Launch(statusEffects, stats);
         yield return new WaitForSeconds(dash.castTime);
         List<GameObject> particles = new List<GameObject>();
         for(int i = 0; i < dash.particleNames.Length; i++) {
@@ -249,8 +264,7 @@ public class SkillUser : MonoBehaviour {
             particles[i].transform.rotation = Quaternion.identity;
             particles[i].SetActive(true);
             particles[i].GetComponent<ParticleSystem>().Play();
-        }
-        dash.Launch(statusEffects, stats);
+        }        
         StopAnimation();
     }
     private IEnumerator StartAreaSkill(AreaSkill area) {
@@ -281,6 +295,9 @@ public class SkillUser : MonoBehaviour {
             castingParticles[i].GetComponent<ParticleSystem>().Play();
         }
         PlayAnimation(area.castingAnimationName);
+        if(area.hitbox) {
+            area.Launch(stats);
+        }
         yield return new WaitForSeconds(area.castTime);
         List<GameObject> particles = new List<GameObject>();
         for(int i = 0; i < area.particleNames.Length; i++) {
@@ -291,10 +308,7 @@ public class SkillUser : MonoBehaviour {
             particles[i].transform.rotation = Quaternion.identity;
             particles[i].SetActive(true);
             particles[i].GetComponent<ParticleSystem>().Play();
-        }
-        if(area.hitbox) {
-            area.Launch(stats);
-        }        
+        }                
         StopAnimation();
     }
     private void PlayAnimation(string animationName) {

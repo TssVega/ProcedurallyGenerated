@@ -6,30 +6,41 @@ public class Passives : MonoBehaviour {
 
     public PassiveSkill toughSkin;
     private float toughSkinCounter;
+    private bool toughSkinOnline;
+    private SkillUser skillUser;
     private readonly float toughSkinCooldown = 10f;
 
-    private void Start() {
-        if(toughSkin.acquired) {
+    private void Awake() {
+        skillUser = GetComponent<SkillUser>();
+        toughSkinCounter = 0f;
+        toughSkinOnline = false;
+    }
+    private void OnEnable() {
+        if(skillUser.acquiredSkills.Contains(toughSkin)) {
             toughSkinCounter = toughSkinCooldown;
-            toughSkin.online = true;
+            toughSkinOnline = true;
+        }
+        else {
+            toughSkinOnline = false;
         }
     }
     private void Update() {
-        if(toughSkin.acquired && toughSkinCounter > 0) {
+        if(skillUser.acquiredSkills.Contains(toughSkin) && toughSkinCounter > 0) {
             toughSkinCounter -= Time.deltaTime;
         }
-        else if(toughSkin.acquired) {
-            toughSkin.online = true;
+        else if(skillUser.acquiredSkills.Contains(toughSkin)) {
+            toughSkinOnline = true;
         }
     }
-    public float OnHitTaken(float damage, Stats attacker, Stats defender) {
+    public float OnHitTaken(float damage, AttackType type, Stats defender) {        
         float reducedDamage = damage;
-        if(toughSkin.acquired && toughSkin.online) {
-            reducedDamage = damage / (defender.vitality * 0.7f);
-            toughSkin.online = false;
+        if(skillUser.acquiredSkills.Contains(toughSkin) && toughSkinOnline) {
+            reducedDamage = damage / (defender.vitality * 0.3f);
+            toughSkinOnline = false;
             toughSkinCounter = toughSkinCooldown;
+            Debug.Log("Tough skin activated");
         }
-        else if(toughSkin.acquired && !toughSkin.online) {
+        else if(skillUser.acquiredSkills.Contains(toughSkin) && !toughSkinOnline) {
             toughSkinCounter = toughSkinCooldown;
         }
         return reducedDamage;

@@ -5,6 +5,11 @@ using UnityEngine;
 [System.Serializable]
 public class BuffData {
 
-    public float healAmount;
+    public BuffType buffType;
+    public float healRate;
     public float lifetime;
+}
+
+public enum BuffType {
+    Heal
 }
