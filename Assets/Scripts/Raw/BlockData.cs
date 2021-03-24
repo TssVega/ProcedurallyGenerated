@@ -6,7 +6,6 @@ using UnityEngine;
 public class BlockData {
 
     public BlockType blockType;
-    public float duration;
 }
 
 public enum BlockType {

@@ -29,28 +29,28 @@ public class SkillUser : MonoBehaviour {
     private void Update() {
         CountCooldowns();
         if(player) {
-            if(Input.GetKeyDown(KeyCode.Alpha1)) {
+            if(Input.GetKey(KeyCode.Alpha1)) {
                 UseSkill(currentSkills[0]);
             }
-            if(Input.GetKeyDown(KeyCode.Alpha2)) {
+            if(Input.GetKey(KeyCode.Alpha2)) {
                 UseSkill(currentSkills[1]);
             }
-            if(Input.GetKeyDown(KeyCode.Alpha3)) {
+            if(Input.GetKey(KeyCode.Alpha3)) {
                 UseSkill(currentSkills[2]);
             }
-            if(Input.GetKeyDown(KeyCode.Alpha4)) {
+            if(Input.GetKey(KeyCode.Alpha4)) {
                 UseSkill(currentSkills[3]);
             }
-            if(Input.GetKeyDown(KeyCode.Alpha5)) {
+            if(Input.GetKey(KeyCode.Alpha5)) {
                 UseSkill(currentSkills[4]);
             }
-            if(Input.GetKeyDown(KeyCode.Alpha6)) {
+            if(Input.GetKey(KeyCode.Alpha6)) {
                 UseSkill(currentSkills[5]);
             }
-            if(Input.GetKeyDown(KeyCode.Alpha7)) {
+            if(Input.GetKey(KeyCode.Alpha7)) {
                 UseSkill(currentSkills[6]);
             }
-            if(Input.GetKeyDown(KeyCode.Alpha8)) {
+            if(Input.GetKey(KeyCode.Alpha8)) {
                 UseSkill(currentSkills[7]);
             }
         }

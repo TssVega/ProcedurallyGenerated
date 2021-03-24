@@ -9,11 +9,11 @@ public class BlockSkill : ActiveSkill {
 
     public override void Launch(StatusEffects statusEffects) {
         if(blockData.blockType == BlockType.Block) {
-            statusEffects.StartBlocking(blockData.duration);
+            statusEffects.StartBlocking(castTime);
+            Debug.Log("Blocking");
         }
         else if(blockData.blockType == BlockType.Parry) {
-            Debug.Log("Parrying");
-            statusEffects.StartParrying(blockData.duration);
+            statusEffects.StartParrying(castTime);
         }
     }
 }

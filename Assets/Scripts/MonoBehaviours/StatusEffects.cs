@@ -36,6 +36,7 @@ public class StatusEffects : MonoBehaviour {
     private Coroutine chanellingCounter;
     private Coroutine fireStacksCounter;
     private Coroutine locatingTarget;
+    private Coroutine blockingCoroutine;
     [Header("Status Effects")]
     public bool stunned = false;        // Prevents movement and attacking
     public bool frostbitten = false;    // Get more damage from ice or water when frostbitten
@@ -78,12 +79,17 @@ public class StatusEffects : MonoBehaviour {
     private int bleedStacks = 0;
     private bool curseStacksCounterRunning = false;
     private int curseStacks = 0;
-    private bool locatingTargetRunning = false;
+    private bool blockingCoroutineRunning = false;
+    //private bool locatingTargetRunning = false;
     // Constant values
     private const float lightningDamageForChilledMultiplier = 1.2f;
     private const float lightningDamageForEarthedMultiplier = 0.5f;
     private const int frostbiteCooldown = 16;
     private const int darkSigilCooldown = 15;
+    // Game objects
+    public Transform defaultShieldTransform;
+    public Transform forwardShieldTransform;
+    public Transform parryTransform;
 
     private void OnEnable() {
         player = GetComponent<Player>();
@@ -127,7 +133,8 @@ public class StatusEffects : MonoBehaviour {
         bleedStacksCounterRunning = false;
         curseStacks = 0;
         curseStacksCounterRunning = false;
-        locatingTargetRunning = false;
+        blockingCoroutineRunning = false;
+        //locatingTargetRunning = false;
         stunned = false;
         frostbitten = false;
         airborne = false;
@@ -911,7 +918,7 @@ public class StatusEffects : MonoBehaviour {
         if(chilled) {
             StopChill();
         }
-        stats.runSpeed *= 1 * speedRate;
+        stats.runSpeed *= 1f * speedRate;
         spedUp = true;
         yield return new WaitForSeconds(duration);
         spedUp = false;
@@ -919,22 +926,43 @@ public class StatusEffects : MonoBehaviour {
     }
     public void StartBlocking(float duration) {
         if(gameObject.activeInHierarchy) {
-            StartCoroutine(Blocking(duration));
+            if(blockingCoroutineRunning) {
+                StopBlocking();
+                StopCoroutine(blockingCoroutine);
+            }
+            blockingCoroutine = StartCoroutine(Blocking(duration));
         }
     }
     private IEnumerator Blocking(float duration){
+        blockingCoroutineRunning = true;
         blocking = true;
+        Debug.Log("setting block frame");
+        defaultShieldTransform.position = forwardShieldTransform.position;
+        defaultShieldTransform.rotation = forwardShieldTransform.rotation;
         yield return new WaitForSeconds(duration);
+        defaultShieldTransform.localPosition = Vector3.zero;
+        defaultShieldTransform.localRotation = Quaternion.identity;
         blocking = false;
+        blockingCoroutineRunning = false;
+    }
+    private void StopBlocking() {
+        defaultShieldTransform.localPosition = Vector3.zero;
+        defaultShieldTransform.localRotation = Quaternion.identity;
+        blocking = false;
+        blockingCoroutineRunning = false;
     }
     public void StartParrying(float duration) {
-        if(gameObject.activeInHierarchy) {
-            StartCoroutine(Parry(duration));
+        if(gameObject.activeInHierarchy) {            
+            blockingCoroutine = StartCoroutine(Parry(duration));
         }
     }
     private IEnumerator Parry(float duration) {
         parrying = true;
+        defaultShieldTransform.position = parryTransform.position;
+        defaultShieldTransform.rotation = parryTransform.rotation;
         yield return new WaitForSeconds(duration);
+        defaultShieldTransform.localPosition = Vector3.zero;
+        defaultShieldTransform.localRotation = Quaternion.identity;
         parrying = false;
     }
 }

@@ -67,6 +67,9 @@ public class Inventory : MonoBehaviour {
         AddToInventory(testWeapon);
         // Another test item
         Armor testing = player.itemCreator.CreateChestArmor("chest");
+        // Test shield
+        Shield teshShield = player.itemCreator.CreateShield("testShield");
+        AddToInventory(teshShield);
         AddToInventory(testing);
     }
     public void SetInventory() {
@@ -198,7 +201,7 @@ public class Inventory : MonoBehaviour {
         else if(item is Shield) {
             Shield s = item as Shield;
             if(CanAddToInventory()) {
-                UnequipItem((int)EquipSlot.RightHand, GetEmptyInventorySlot());
+                UnequipItem((int)EquipSlot.LeftHand, GetEmptyInventorySlot());
             }
             else {
                 return;

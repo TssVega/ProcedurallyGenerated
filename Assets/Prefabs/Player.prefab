@@ -1,5 +1,65 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &629901771
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 629901772}
+  m_Layer: 0
+  m_Name: ForwardShieldPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &629901772
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 629901771}
+  m_LocalRotation: {x: 0, y: 0, z: -0.38268343, w: 0.92387956}
+  m_LocalPosition: {x: 0.4, y: 0.2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4242263327567548541}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -45}
+--- !u!1 &1034733772
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1034733773}
+  m_Layer: 0
+  m_Name: ParryTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1034733773
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1034733772}
+  m_LocalRotation: {x: 0, y: 0, z: 0.13052616, w: 0.9914449}
+  m_LocalPosition: {x: 0, y: 0.3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4242263327567548541}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 15}
 --- !u!1 &37480372180291882
 GameObject:
   m_ObjectHideFlags: 0
@@ -1493,6 +1553,7 @@ MonoBehaviour:
   poisonThreshold: 100
   bleedThreshold: 100
   curseThreshold: 100
+  status: {fileID: 0}
 --- !u!114 &7430841088790226279
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1511,14 +1572,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 64da67a8a7a5ae54ab685d18d2f002d2, type: 2}
   - {fileID: 11400000, guid: b689240464fda454998452772a238875, type: 2}
   - {fileID: 11400000, guid: 02a87aea90e6d0d4fb2c61eb387b57d5, type: 2}
-  - {fileID: 11400000, guid: 29bff4a83ce14c445961ba9d2dc6b69d, type: 2}
+  - {fileID: 11400000, guid: 8aeda6e147b8b384dacd06beab97e20d, type: 2}
   - {fileID: 11400000, guid: e6f68451e97468d42a916d2e73f7733e, type: 2}
   currentSkills:
   - {fileID: 11400000, guid: 241b922b96fc52941b6407af48d16395, type: 2}
   - {fileID: 11400000, guid: 64da67a8a7a5ae54ab685d18d2f002d2, type: 2}
   - {fileID: 11400000, guid: b689240464fda454998452772a238875, type: 2}
   - {fileID: 11400000, guid: 02a87aea90e6d0d4fb2c61eb387b57d5, type: 2}
-  - {fileID: 11400000, guid: 29bff4a83ce14c445961ba9d2dc6b69d, type: 2}
+  - {fileID: 11400000, guid: 8aeda6e147b8b384dacd06beab97e20d, type: 2}
   - {fileID: 11400000, guid: e6f68451e97468d42a916d2e73f7733e, type: 2}
   skillCooldowns: []
   projectileExitPos: {fileID: 8843314161316362494}
@@ -1724,6 +1785,9 @@ MonoBehaviour:
   chanelling: 0
   blocking: 0
   parrying: 0
+  defaultShieldTransform: {fileID: 6269725305972604879}
+  forwardShieldTransform: {fileID: 629901772}
+  parryTransform: {fileID: 1034733773}
 --- !u!114 &7401711136557819561
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1765,6 +1829,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6269725305972604879}
+  - {fileID: 629901772}
+  - {fileID: 1034733773}
   m_Father: {fileID: 7430841090308141593}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
