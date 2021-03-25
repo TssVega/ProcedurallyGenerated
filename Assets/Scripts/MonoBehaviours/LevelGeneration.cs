@@ -26,9 +26,11 @@ public class LevelGeneration : MonoBehaviour {
     System.Random pseudoRandomForPlants;
     // A reference to world generation script
     private WorldGeneration worldGeneration;
+    private ChestGeneration chestGeneration;
 
     private void Awake() {
         worldGeneration = FindObjectOfType<WorldGeneration>();
+        chestGeneration = GetComponent<ChestGeneration>();
     }
     private void Start() {
         //path = transform.GetChild(0).GetComponent<AstarPath>();
@@ -151,6 +153,7 @@ public class LevelGeneration : MonoBehaviour {
             return -1;
         }
     }
+    // Returns the coordinates of a valid location in the level
     public Vector3Int GetRandomLocation() {
         bool valid = false;
         Vector3Int location = Vector3Int.zero;
@@ -166,6 +169,7 @@ public class LevelGeneration : MonoBehaviour {
                     (location.y - layout.height / 2) + layout.worldCoordinates.y * layout.height, 0);
         return location;
     }
+    // Fills the background of the level
     private void FillBackground() {
         for(int x = 0; x < layout.width; x++) {
             for(int y = 0; y < layout.height; y++) {

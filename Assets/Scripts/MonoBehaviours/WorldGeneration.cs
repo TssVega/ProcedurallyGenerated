@@ -152,8 +152,7 @@ public class WorldGeneration : MonoBehaviour {
                 levelClone.SetActive(true);
                 /*
                 Thread th = new Thread(() => levelGen.SetLayout(this));
-                th.Start();*/
-                
+                th.Start();*/                
                 levelGen.SetLayout();
             }
         }

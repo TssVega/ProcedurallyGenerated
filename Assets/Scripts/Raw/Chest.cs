@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
 public class Chest {
 
-    private List<Item> items;
+    public string[] items;  // If the string is null the item doesn't exist
 }
