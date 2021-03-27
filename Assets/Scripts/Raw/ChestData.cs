@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class ChestData {
     // string[chestIndex, itemIndex]
-    public string[,] chests;
+    public string[,] chests = new string[5, 10];
 
     public ChestData(ChestGeneration chestGen) {
         for(int i = 0; i < chests.GetUpperBound(0); i++) {
