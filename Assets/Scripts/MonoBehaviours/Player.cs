@@ -41,13 +41,19 @@ public class Player : MonoBehaviour {
 
     public Transform testTarget;
 
+    private IInteractable interaction;
+
+    private UICanvas uiCanvas;
+
     private void Awake() {
         worldGeneration = FindObjectOfType<WorldGeneration>();
         stats = GetComponent<Stats>();
+        uiCanvas = FindObjectOfType<UICanvas>();
     }
     private void Start() {
         ClearWeapons();
-        LoadPlayer();        
+        LoadPlayer();
+        ClearInteraction();
         //SetWeapon(itemCreator.CreateWeaponSprite("tss"));
     }
     /*
@@ -239,5 +245,18 @@ public class Player : MonoBehaviour {
     public void ClearShield() {
         this.shield.sprite = null;
         this.shield.color = Color.clear;
+    }
+    public void SetInteraction(IInteractable interactable) {
+        interaction = interactable;
+        uiCanvas.ChangeInteractButton(interactable.UISprite);
+    }
+    public void ClearInteraction() {
+        interaction = null;
+        uiCanvas.ClearInteractButton();
+    }
+    public void Interact() {
+        if(interaction != null) {
+            interaction.Interact();
+        }
     }
 }

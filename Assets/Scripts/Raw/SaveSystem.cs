@@ -9,7 +9,7 @@ public static class SaveSystem {
     public static void Save(Player data, int slot) {
         // Formatter to convert game data to binary
         BinaryFormatter bin = new BinaryFormatter();
-        string path = $"{Application.persistentDataPath} /GameData {slot} .tss";
+        string path = $"{Application.persistentDataPath}/GameData{slot}.tss";
         using(FileStream stream = new FileStream(path, FileMode.Create)) {
             SaveData _data = new SaveData(data);
             bin.Serialize(stream, _data);
@@ -23,7 +23,7 @@ public static class SaveSystem {
     }
     // Load from a slot
     public static SaveData Load(int slot) {
-        string path = $"{Application.persistentDataPath} /GameData {slot} .tss";
+        string path = $"{Application.persistentDataPath}/GameData{slot}.tss";
         if(File.Exists(path)) {
             BinaryFormatter bin = new BinaryFormatter();
             using(FileStream stream = new FileStream(path, FileMode.Open)) {
@@ -44,7 +44,7 @@ public static class SaveSystem {
     public static void SaveWorld(WorldData data, int slot) {
         // Formatter to convert game data to binary
         BinaryFormatter bin = new BinaryFormatter();
-        string path = $"{Application.persistentDataPath} /WorldData {slot} .tss";
+        string path = $"{Application.persistentDataPath}/WorldData{slot}.tss";
         using(FileStream stream = new FileStream(path, FileMode.Create)) {
             WorldData _data = new WorldData(data.worldData, data.currentCoordinates);
             bin.Serialize(stream, _data);
@@ -58,7 +58,7 @@ public static class SaveSystem {
     }
     // Load from a slot
     public static WorldData LoadWorld(int slot) {
-        string path = $"{Application.persistentDataPath} /WorldData {slot} .tss";
+        string path = $"{Application.persistentDataPath}/WorldData{slot}.tss";
         if(File.Exists(path)) {
             BinaryFormatter bin = new BinaryFormatter();
             using(FileStream stream = new FileStream(path, FileMode.Open)) {
@@ -79,7 +79,7 @@ public static class SaveSystem {
     public static void SaveChests(ChestGeneration data, int slot, Vector2Int coordinates) {
         // Formatter to convert game data to binary
         BinaryFormatter bin = new BinaryFormatter();
-        string path = $"{Application.persistentDataPath} /ChestData {slot}_{coordinates.x}x{coordinates.y}y .tss";
+        string path = $"{Application.persistentDataPath}/ChestData{slot}_{coordinates.x}x{coordinates.y}y.tss";
         using(FileStream stream = new FileStream(path, FileMode.Create)) {
             ChestData _data = new ChestData(data);
             bin.Serialize(stream, _data);
@@ -94,7 +94,7 @@ public static class SaveSystem {
     }
     // Load from a slot
     public static ChestData LoadChests(int slot, Vector2Int coordinates) {
-        string path = $"{Application.persistentDataPath} /ChestData {slot}_{coordinates.x}x{coordinates.y}y .tss";
+        string path = $"{Application.persistentDataPath}/ChestData{slot}_{coordinates.x}x{coordinates.y}y.tss";
         if(File.Exists(path)) {
             Debug.Log("Deserializing file");
             BinaryFormatter bin = new BinaryFormatter();

@@ -113,6 +113,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0103c351200c4e43b7ca9eddbf7e2b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chestObject: {fileID: 6891694344508322230, guid: 1ec5bdd2d6fb6d24d921dc424b1045e2,
+    type: 3}
+  chests: []
 --- !u!61 &6886192618472798170
 BoxCollider2D:
   m_ObjectHideFlags: 0

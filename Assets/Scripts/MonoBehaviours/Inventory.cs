@@ -41,6 +41,7 @@ public class Inventory : MonoBehaviour {
     }
     private void Start() {
         // Crate example weapon
+        /*
         Weapon exampleItem = player.itemCreator.CreateWeapon("testWeapon");
         AddToInventory(exampleItem);
         //player.SetWeapon(exampleItem);
@@ -68,9 +69,13 @@ public class Inventory : MonoBehaviour {
         // Another test item
         Armor testing = player.itemCreator.CreateChestArmor("chest");
         // Test shield
-        Shield teshShield = player.itemCreator.CreateShield("testShield");
-        AddToInventory(teshShield);
-        AddToInventory(testing);
+        Shield teshShield = player.itemCreator.CreateShield("testShield");*/
+        //AddToInventory(teshShield);
+        //AddToInventory(testing);
+        for(int i = 0; i < 40; i++) {
+            Weapon weapon = player.itemCreator.CreateWeapon(i.ToString());
+            AddToInventory(weapon);
+        }
     }
     public void SetInventory() {
         itemImages = new Image[inventorySize];

@@ -46,18 +46,20 @@ public class WorldGeneration : MonoBehaviour {
         world = new WorldData {
             worldData = new string[worldSize, worldSize]
         };*/
-        LoadWorldData();
-        //world = new WorldData(new string[worldSize, worldSize], new int[] { currentCoordinates.x, currentCoordinates.y});
-        if(randomSeed) {
-            worldSeed = Time.time.ToString();
-        }
-        pseudoRandomForWorld = new System.Random(worldSeed.GetHashCode());
         if(!groundTilemap) {
             groundTilemap = GameObject.FindWithTag("Grid").transform.GetChild(0).GetComponent<Tilemap>();
         }
         if(!tilemap) {
             tilemap = GameObject.FindWithTag("Grid").transform.GetChild(1).GetComponent<Tilemap>();
         }
+        groundTilemap.ClearAllTiles();
+        tilemap.ClearAllTiles();
+        LoadWorldData();
+        //world = new WorldData(new string[worldSize, worldSize], new int[] { currentCoordinates.x, currentCoordinates.y});
+        if(randomSeed) {
+            worldSeed = Time.time.ToString();
+        }
+        pseudoRandomForWorld = new System.Random(worldSeed.GetHashCode());        
         GenerateCurrentLevels();
         /*
         for(int x = 0; x < worldSize; x++) {

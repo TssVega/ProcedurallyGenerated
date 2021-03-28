@@ -88,6 +88,7 @@ public class LevelGeneration : MonoBehaviour {
         if(gameObject.activeInHierarchy) {
             //StartCoroutine(ScanPath());
         }
+        chestGeneration.LoadChests(PersistentData.saveSlot, layout.seed, this);
     }
     public void UnloadLevel() {
         for(int x = 0; x < layout.width; x++) {
@@ -100,6 +101,7 @@ public class LevelGeneration : MonoBehaviour {
                 worldGeneration.groundTilemap.SetTile(tileCoordinate, null);
             }
         }
+        chestGeneration.ClearChests();
         gameObject.SetActive(false);
     }
     private int ConvertTileIdToTilesetIndex(int id) {
@@ -168,6 +170,13 @@ public class LevelGeneration : MonoBehaviour {
                     (location.x - layout.width / 2) + layout.worldCoordinates.x * layout.width,
                     (location.y - layout.height / 2) + layout.worldCoordinates.y * layout.height, 0);
         return location;
+    }
+    public bool IsValidLocation(Vector2Int coordinates) {
+        bool valid = false;
+        if(map[coordinates.x, coordinates.y] == 0) {
+            valid = true;
+        }
+        return valid;
     }
     // Fills the background of the level
     private void FillBackground() {
