@@ -252,7 +252,9 @@ public class Player : MonoBehaviour {
     }
     public void ClearInteraction() {
         interaction = null;
-        uiCanvas.ClearInteractButton();
+        if(uiCanvas) {
+            uiCanvas.ClearInteractButton();
+        }        
     }
     public void Interact() {
         if(interaction != null) {

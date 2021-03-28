@@ -29,15 +29,17 @@ public class Inventory : MonoBehaviour {
         quantities = new int[70];
         player = FindObjectOfType<Player>();
         stats = GetComponent<Stats>();
-        for(int i = 0; i < itemSlots.Length; i++) {
-            itemSlots[i].GetComponent<ItemSlot>().slotIndex = i;
-        }
-        for(int i = 0; i < equipmentSlots.Length; i++) {
-            equipmentSlots[i].GetComponent<EquipmentSlot>().slotIndex = i;
-        }
-        for(int i = 0; i < quantities.Length; i++) {
-            quantities[i] = 0;
-        }
+        if(GetComponent<UICanvas>()) {
+            for(int i = 0; i < itemSlots.Length; i++) {
+                itemSlots[i].GetComponent<ItemSlot>().slotIndex = i;
+            }
+            for(int i = 0; i < equipmentSlots.Length; i++) {
+                equipmentSlots[i].GetComponent<EquipmentSlot>().slotIndex = i;
+            }
+            for(int i = 0; i < quantities.Length; i++) {
+                quantities[i] = 0;
+            }
+        }        
     }
     private void Start() {
         // Crate example weapon
@@ -72,10 +74,12 @@ public class Inventory : MonoBehaviour {
         Shield teshShield = player.itemCreator.CreateShield("testShield");*/
         //AddToInventory(teshShield);
         //AddToInventory(testing);
-        for(int i = 0; i < 40; i++) {
-            Weapon weapon = player.itemCreator.CreateWeapon(i.ToString());
-            AddToInventory(weapon);
-        }
+        if(GetComponent<UICanvas>()) {
+            for(int i = 0; i < 40; i++) {
+                Weapon weapon = player.itemCreator.CreateWeapon(i.ToString());
+                AddToInventory(weapon);
+            }
+        }        
     }
     public void SetInventory() {
         itemImages = new Image[inventorySize];
