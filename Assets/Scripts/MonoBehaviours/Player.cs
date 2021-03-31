@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 public class Player : MonoBehaviour {
 
@@ -83,6 +84,21 @@ public class Player : MonoBehaviour {
         SaveSystem.Save(this, PersistentData.saveSlot);
         if(worldGeneration) {
             worldGeneration.SaveWorldData();
+        }
+        // Save chests here
+        ReplaceAutosaveFilesWithSlotSpecificOnes();
+        /*
+        for(int i = 0; i < chestGen.Length; i++) {
+            chestGen[i].SaveChests(PersistentData.saveSlot);
+        }*/
+    }
+    public void ReplaceAutosaveFilesWithSlotSpecificOnes() {
+        List<string> autosaveFiles = PersistentData.GetAutosaveFiles();
+        if(autosaveFiles.Count < 1) {
+            return;
+        }
+        for(int i = 0; i < autosaveFiles.Count; i++) {
+            File.Move(autosaveFiles[i], autosaveFiles[i].Replace("Data0", $"Data{PersistentData.saveSlot}"));
         }
     }
     public void LoadPlayer() {

@@ -29,7 +29,7 @@ public class Inventory : MonoBehaviour {
         quantities = new int[70];
         player = FindObjectOfType<Player>();
         stats = GetComponent<Stats>();
-        if(GetComponent<UICanvas>()) {
+        if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name.Equals("Levels")) {
             for(int i = 0; i < itemSlots.Length; i++) {
                 itemSlots[i].GetComponent<ItemSlot>().slotIndex = i;
             }
@@ -73,13 +73,7 @@ public class Inventory : MonoBehaviour {
         // Test shield
         Shield teshShield = player.itemCreator.CreateShield("testShield");*/
         //AddToInventory(teshShield);
-        //AddToInventory(testing);
-        if(GetComponent<UICanvas>()) {
-            for(int i = 0; i < 40; i++) {
-                Weapon weapon = player.itemCreator.CreateWeapon(i.ToString());
-                AddToInventory(weapon);
-            }
-        }        
+        //AddToInventory(testing);      
     }
     public void SetInventory() {
         itemImages = new Image[inventorySize];

@@ -15,7 +15,7 @@ public class MainMenu : MonoBehaviour {
     public void LoadGame(int slot) {
         PersistentData.saveSlot = slot;
         PersistentData.GetFileNames();
-        if(!string.IsNullOrEmpty(PersistentData.GetFileName(slot.ToString(), "GameData"))) {
+        if(!string.IsNullOrEmpty(PersistentData.GetFileName(slot.ToString(), "GameData", ""))) {
             LoadSceneAsync("Levels");
         }        
     }

@@ -10,20 +10,25 @@ public class ChestGeneration : MonoBehaviour {
     private List<ChestObject> chestObjects = new List<ChestObject>();
     private System.Random pseudoRandomForChests;
     private readonly int maxChestCount = 5;
-    private readonly int maxItemCountInChest = 10;
+    private readonly int maxItemCountInChest = 16;
 
+    private LevelGeneration levelGeneration;
+
+    private void Awake() {
+        levelGeneration = GetComponent<LevelGeneration>();
+    }
     // Load chest data from binary file
-    public void LoadChests(int slot, string seed, LevelGeneration levelGen) {
+    public void LoadChests(int slot, string seed) {
         pseudoRandomForChests = new System.Random(seed.GetHashCode());
         int chestCount = pseudoRandomForChests.Next(0, maxChestCount);        
         int itemCount = pseudoRandomForChests.Next(0, maxItemCountInChest);
-        if(levelGen.layout.worldCoordinates.x == 0 && levelGen.layout.worldCoordinates.y == 2) {
+        if(levelGeneration.layout.worldCoordinates.x == 0 && levelGeneration.layout.worldCoordinates.y == 2) {
             Debug.Log($"Chest count: {chestCount}");
             Debug.Log($"Item count: {itemCount}");
             Debug.Log($"Seed: {seed}");
         }        
         chests = new Chest[chestCount];
-        ChestData chestData = SaveSystem.LoadChests(slot, levelGen.layout.worldCoordinates);
+        ChestData chestData = SaveSystem.LoadChests(slot, levelGeneration.layout.worldCoordinates);
         // Get the chest content data from file. If there is no data, create a new file
         if(chestData != null && chestCount != 0) {
             for(int i = 0; i < chestCount; i++) {
@@ -35,7 +40,7 @@ public class ChestGeneration : MonoBehaviour {
                         chests[i].items[j] = chestData.chests[i, j];
                     }
                     else {
-                        chests[i].items[j] = Time.time.ToString();
+                        chests[i].items[j] = Random.Range(0, 99999999).ToString();
                     }
                 }
             }
@@ -46,17 +51,18 @@ public class ChestGeneration : MonoBehaviour {
                     items = new string[itemCount]
                 };
                 for(int j = 0; j < itemCount; j++) {
-                    chests[i].items[j] = Time.time.ToString();
+                    chests[i].items[j] = Random.Range(0, 99999999).ToString();
                 }
             }
         }
-        PutChests(chestCount, levelGen);
+        PutChests(chestCount, levelGeneration);
     }
     public void PutChests(int count, LevelGeneration levelGen) {
         for(int i = 0; i < count; i++) {
             GameObject chestClone = ObjectPooler.objectPooler.GetPooledObject("Chest");
             chestClone.transform.position = GetRandomLocationForChest(pseudoRandomForChests, levelGen.layout.height, levelGen);
             chestClone.transform.rotation = Quaternion.identity;
+            chestClone.GetComponent<ChestObject>().SetChest(chests[i]);
             chestClone.SetActive(true);
             chestObjects.Add(chestClone.GetComponent<ChestObject>());
             if(levelGen.layout.worldCoordinates.x == 0 && levelGen.layout.worldCoordinates.y == 2) {
@@ -65,10 +71,14 @@ public class ChestGeneration : MonoBehaviour {
         }
     }
     public void ClearChests() {
-        for(int i = 0; i < chestObjects.Count; i++) {
+        SaveChests(0);
+        for(int i = 0; i < chestObjects.Count; i++) {            
             chestObjects[i].gameObject.SetActive(false);
         }
         chestObjects.Clear();
+    }
+    public void SaveChests(int slot) {
+        SaveSystem.SaveChests(this, slot, levelGeneration.layout.worldCoordinates);
     }
     public Vector3Int GetRandomLocationForChest(System.Random pseudoRnd, int mapSize, LevelGeneration levelGen) {
         bool valid = false;

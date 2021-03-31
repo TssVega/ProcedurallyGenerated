@@ -5,12 +5,21 @@ using UnityEngine;
 [System.Serializable]
 public class ChestData {
     // string[chestIndex, itemIndex]
-    public string[,] chests = new string[5, 10];
+    public string[,] chests;
+
+    private const int maxChestCount = 5;
+    private const int maxItemCount = 16;
 
     public ChestData(ChestGeneration chestGen) {
-        for(int i = 0; i < chests.GetUpperBound(0); i++) {
-            for(int j = 0; j < chests.GetUpperBound(1); j++) {
-                this.chests[i, j] = chestGen.chests[i].items[j];
+        chests = new string[maxChestCount, maxItemCount];
+        for(int i = 0; i < maxChestCount; i++) {
+            for(int j = 0; j < maxItemCount; j++) {
+                if(i < chestGen.chests.Length && j < chestGen.chests[i].items.Length) {
+                    this.chests[i, j] = chestGen.chests[i].items[j];
+                }
+                else {
+                    this.chests[i, j] = null;
+                }
             }
         }
     }

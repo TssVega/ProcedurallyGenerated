@@ -7,7 +7,7 @@ using UnityEngine.Tilemaps;
 
 public class WorldGeneration : MonoBehaviour {
     // Should be an odd number so it can have one center
-    private const int worldSize = 5;
+    public const int worldSize = 5;
     private const int levelSize = 64;
     // Should we use random seed?
     private bool randomSeed = false;
@@ -73,6 +73,9 @@ public class WorldGeneration : MonoBehaviour {
                 levelGen.SetLayout();
             }
         }*/
+    }
+    public int WorldSize {
+        get => worldSize;
     }
     public bool CanSave() {
         bool canSave = !(world.currentCoordinates[0] == world.lastCoordinates[0]
