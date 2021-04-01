@@ -50,7 +50,7 @@ public class ItemCreator : ScriptableObject {
     // Create an item
     public Item CreateItem(string seed) {
         System.Random pseudoRandom = new System.Random(seed.GetHashCode());
-        Item item;
+        Item item;        
         int slotIndex = pseudoRandom.Next(0, 6);
         if(slotIndex == 0) {
             Weapon w = CreateWeapon(seed);
@@ -82,6 +82,9 @@ public class ItemCreator : ScriptableObject {
         else {
             item = null;
         }
+        if(item) {
+            item.seed = seed;
+        }        
         return item;
     }
     // Create a weapon sprite

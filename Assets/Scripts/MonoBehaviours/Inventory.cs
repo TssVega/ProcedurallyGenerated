@@ -10,6 +10,7 @@ public class Inventory : MonoBehaviour {
     public List<Item> inventory;
     public int[] quantities;
     private readonly int inventorySize = 70;
+    private readonly int equipmentSize = 6;
 
     public GameObject[] itemSlots;
     public GameObject[] equipmentSlots;
@@ -74,6 +75,12 @@ public class Inventory : MonoBehaviour {
         Shield teshShield = player.itemCreator.CreateShield("testShield");*/
         //AddToInventory(teshShield);
         //AddToInventory(testing);      
+    }
+    public int InventorySize {
+        get => inventorySize;
+    }
+    public int EquipmentSize {
+        get => equipmentSize;
     }
     public void SetInventory() {
         itemImages = new Image[inventorySize];
@@ -191,14 +198,14 @@ public class Inventory : MonoBehaviour {
                     return;
                 }
             }
-            player.SetWeapon(w);
+            player.SetItem(w);
         }
         else if(item is Armor) {
             if(item.slot == EquipSlot.Body) {
-                player.SetBodyArmor(item as Armor);
+                player.SetItem(item);
             }
             if(item.slot == EquipSlot.Head) {
-                player.SetHelmet(item as Armor);
+                player.SetItem(item);
             }
         }
         else if(item is Shield) {
@@ -209,7 +216,7 @@ public class Inventory : MonoBehaviour {
             else {
                 return;
             }
-            player.SetShield(s);
+            player.SetItem(s);
         }
         else if(item is Ring) {
             Debug.Log("Trying to equip ring");
@@ -323,18 +330,18 @@ public class Inventory : MonoBehaviour {
     }
     private void UpdateSpritesOnUnequip(Item item) {
         if(item is Weapon) {
-            player.ClearWeapons();
+            player.ClearItem(item);
         }
         else if(item is Armor) {
             if(item.slot == EquipSlot.Body) {
-                player.ClearBodyArmor();
+                player.ClearItem(item);
             }
             else if(item.slot == EquipSlot.Head) {
-                player.ClearHelmet();
+                player.ClearItem(item);
             }
         }
         else if(item is Shield) {
-            player.ClearShield();
+            player.ClearItem(item);
         }
     }
     public void SetVisibilityOfInventorySlot(bool visible, int index) {

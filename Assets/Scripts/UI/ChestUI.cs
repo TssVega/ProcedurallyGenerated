@@ -41,6 +41,7 @@ public class ChestUI : MonoBehaviour {
                 continue;
             }
             Item item = null;
+            Debug.Log("index = " + i);
             if(string.IsNullOrEmpty(chestObject.chestContent.items[i])) {
                 firstIcons[i].sprite = null;
                 firstIcons[i].color = Color.clear;
@@ -53,7 +54,7 @@ public class ChestUI : MonoBehaviour {
                 item = itemCreator.CreateItem(chestObject.chestContent.items[i]);
             }
             if(item == null) {
-                return;
+                continue;
             }
             if(item.firstIcon) {
                 firstIcons[i].sprite = item.firstIcon;

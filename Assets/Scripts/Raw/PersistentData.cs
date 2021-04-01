@@ -45,7 +45,11 @@ public static class PersistentData {
     public static void DeleteFile(string key1, string key2, string key3) {
         string fileName = GetFileName(key1, key2, key3);
         File.Delete(fileName);
-        Debug.LogWarning(fileName + " deleted");
+    }
+    public static void DeleteFiles(List<string> files) {
+        for(int i = 0; i < files.Count; i++) {
+            File.Delete(files[i]);
+        }
     }
     public static List<string> GetAutosaveFiles() {
         List<string> autosaveFiles = new List<string>();
@@ -56,6 +60,16 @@ public static class PersistentData {
             }
         }
         return autosaveFiles;
+    }
+    public static List<string> GetAllFilesWithKey(string key1, string key2, string key3) {
+        List<string> files = new List<string>();
+        GetFileNames();
+        for(int i = 0; i < fileNames.Count; i++) {
+            if(fileNames[i].Contains(key1) && fileNames[i].Contains(key2) && fileNames[i].Contains(key3)) {
+                files.Add(fileNames[i]);
+            }
+        }
+        return files;
     }
     public static void ClearAutosaveFiles() {
         GetFileNames();

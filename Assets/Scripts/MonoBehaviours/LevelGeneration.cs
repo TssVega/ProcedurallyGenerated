@@ -88,7 +88,7 @@ public class LevelGeneration : MonoBehaviour {
         if(gameObject.activeInHierarchy) {
             //StartCoroutine(ScanPath());
         }
-        chestGeneration.LoadChests(PersistentData.saveSlot, layout.seed);
+        chestGeneration.LoadChests(0, layout.seed);
     }
     public void UnloadLevel() {
         for(int x = 0; x < layout.width; x++) {

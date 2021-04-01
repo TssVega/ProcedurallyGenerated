@@ -72,9 +72,31 @@ public class SaveData {
     public int poisonThreshold;
     public int bleedThreshold;
     public int curseThreshold;
+    // Inventory and equipment
+    public string[] inventory;
+    public string[] equipment;
 
     public SaveData(Player data) {
         saveSlot = data.saveSlot;
+        // Inventory and equipment
+        inventory = new string[data.inventory.InventorySize];
+        for(int i = 0; i < data.inventory.InventorySize; i++) {
+            if(data.inventory.inventory[i]) {
+                inventory[i] = data.inventory.inventory[i].seed;
+            }
+            else {
+                inventory[i] = null;
+            }
+        }
+        equipment = new string[data.inventory.EquipmentSize];
+        for(int i = 0; i < data.inventory.EquipmentSize; i++) {
+            if(data.inventory.equipment[i]) {
+                equipment[i] = data.inventory.equipment[i].seed;
+            }
+            else {
+                equipment[i] = null;
+            }
+        }
         // Position and world data
         position = new float[3];
         position[0] = data.transform.position.x;

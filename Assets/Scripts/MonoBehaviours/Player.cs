@@ -8,6 +8,7 @@ public class Player : MonoBehaviour {
     public int saveSlot;
 
     public Stats stats;
+    public Inventory inventory;
 
     public SpriteRenderer skinColor;
     public SpriteRenderer hairColor;
@@ -50,6 +51,7 @@ public class Player : MonoBehaviour {
         worldGeneration = FindObjectOfType<WorldGeneration>();
         stats = GetComponent<Stats>();
         uiCanvas = FindObjectOfType<UICanvas>();
+        inventory = GetComponent<Inventory>();
     }
     private void Start() {
         ClearWeapons();
@@ -86,6 +88,10 @@ public class Player : MonoBehaviour {
             worldGeneration.SaveWorldData();
         }
         // Save chests here
+        ChestGeneration[] chestGenerators = FindObjectsOfType<ChestGeneration>();
+        for(int i = 0; i < chestGenerators.Length; i++) {
+            chestGenerators[i].SaveChests(0);
+        }
         ReplaceAutosaveFilesWithSlotSpecificOnes();
         /*
         for(int i = 0; i < chestGen.Length; i++) {
@@ -98,7 +104,10 @@ public class Player : MonoBehaviour {
             return;
         }
         for(int i = 0; i < autosaveFiles.Count; i++) {
-            File.Move(autosaveFiles[i], autosaveFiles[i].Replace("Data0", $"Data{PersistentData.saveSlot}"));
+            if(File.Exists(autosaveFiles[i].Replace("Data0", $"Data{PersistentData.saveSlot}"))) {
+                File.Delete(autosaveFiles[i].Replace("Data0", $"Data{PersistentData.saveSlot}"));
+            }
+            File.Copy(autosaveFiles[i], autosaveFiles[i].Replace("Data0", $"Data{PersistentData.saveSlot}"));
         }
     }
     public void LoadPlayer() {
@@ -109,6 +118,24 @@ public class Player : MonoBehaviour {
             transform.position = pos;
             Quaternion quat = new Quaternion(data.rotation[0], data.rotation[1], data.rotation[2], data.rotation[3]);
             transform.rotation = quat;
+            // Inventory and equipment
+            for(int i = 0; i < data.inventory.Length; i++) {
+                if(data.inventory[i] != null) {
+                    inventory.inventory[i] = itemCreator.CreateItem(data.inventory[i]);
+                }
+                else {
+                    inventory.inventory[i] = null;
+                }
+            }
+            for(int i = 0; i < data.equipment.Length; i++) {
+                if(data.equipment[i] != null) {
+                    inventory.equipment[i] = itemCreator.CreateItem(data.equipment[i]);
+                    SetItem(inventory.equipment[i]);
+                }
+                else {
+                    inventory.equipment[i] = null;
+                }
+            }
             // Appearance
             skinColorIndex = data.skinColorIndex;
             hairColorIndex = data.hairColorIndex;
@@ -234,31 +261,63 @@ public class Player : MonoBehaviour {
         }
         Debug.Log("Clearing weapons");
     }
-    public void SetBodyArmor(Armor armor) {
+    public void SetItem(Item item) {
+        if(item is Armor) {
+            if(item.slot == EquipSlot.Body) {
+                SetBodyArmor(item as Armor);
+            }
+            else if(item.slot == EquipSlot.Head) {
+                SetHelmet(item as Armor);
+            }
+        }
+        if(item is Shield) {
+            SetShield(item as Shield);
+        }
+        if(item is Weapon) {
+            SetWeapon(item as Weapon);
+        }
+    }
+    public void ClearItem(Item item) {
+        if(item is Armor) {
+            if(item.slot == EquipSlot.Body) {
+                ClearBodyArmor();
+            }
+            else if(item.slot == EquipSlot.Head) {
+                ClearHelmet();
+            }
+        }
+        if(item is Shield) {
+            ClearShield();
+        }
+        if(item is Weapon) {
+            ClearWeapons();
+        }
+    }
+    private void SetBodyArmor(Armor armor) {
         bodyArmor.sprite = armor.firstSprite;
         bodyArmor.color = armor.firstColor;
     }
-    public void ClearBodyArmor() {
+    private void ClearBodyArmor() {
         bodyArmor.sprite = null;
         bodyArmor.color = Color.clear;
     }
-    public void SetHelmet(Armor helmet) {
+    private void SetHelmet(Armor helmet) {
         helmetBase.sprite = helmet.firstSprite;
         helmetBase.color = helmet.firstColor;
         helmetProp.sprite = helmet.secondSprite;
         helmetProp.color = helmet.secondColor;
     }
-    public void ClearHelmet() {
+    private void ClearHelmet() {
         helmetBase.sprite = null;
         helmetBase.color = Color.clear;
         helmetProp.sprite = null;
         helmetProp.color = Color.clear;
     }
-    public void SetShield(Shield shield) {
+    private void SetShield(Shield shield) {
         this.shield.sprite = shield.firstSprite;
         this.shield.color = shield.firstColor;
     }
-    public void ClearShield() {
+    private void ClearShield() {
         this.shield.sprite = null;
         this.shield.color = Color.clear;
     }

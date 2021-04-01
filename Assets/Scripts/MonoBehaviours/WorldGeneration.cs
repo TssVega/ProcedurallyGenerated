@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine.Tilemaps;
+using System.IO;
 
 public class WorldGeneration : MonoBehaviour {
     // Should be an odd number so it can have one center
@@ -46,6 +47,8 @@ public class WorldGeneration : MonoBehaviour {
         world = new WorldData {
             worldData = new string[worldSize, worldSize]
         };*/
+        PersistentData.ClearAutosaveFiles();
+        GetAutosaveFiles();
         if(!groundTilemap) {
             groundTilemap = GameObject.FindWithTag("Grid").transform.GetChild(0).GetComponent<Tilemap>();
         }
@@ -76,6 +79,12 @@ public class WorldGeneration : MonoBehaviour {
     }
     public int WorldSize {
         get => worldSize;
+    }
+    private void GetAutosaveFiles() {
+        List<string> chestFiles = PersistentData.GetAllFilesWithKey($"ChestData{PersistentData.saveSlot}", $"", $"");
+        for(int i = 0; i < chestFiles.Count; i++) {
+            File.Copy(chestFiles[i], chestFiles[i].Replace($"Data{PersistentData.saveSlot}", "Data0"));
+        }
     }
     public bool CanSave() {
         bool canSave = !(world.currentCoordinates[0] == world.lastCoordinates[0]

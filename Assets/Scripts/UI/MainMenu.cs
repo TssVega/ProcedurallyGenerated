@@ -10,6 +10,8 @@ public class MainMenu : MonoBehaviour {
 
     public void StartNewGame(int slot) {
         PersistentData.saveSlot = slot;
+        List<string> saveFiles = PersistentData.GetAllFilesWithKey($"Data{slot}", "", "");
+        PersistentData.DeleteFiles(saveFiles);
         LoadSceneAsync("CharacterCreation");
     }
     public void LoadGame(int slot) {

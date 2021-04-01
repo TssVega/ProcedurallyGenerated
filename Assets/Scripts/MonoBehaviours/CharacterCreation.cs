@@ -105,6 +105,13 @@ public class CharacterCreation : MonoBehaviour {
         player.skinColorIndex = currentSkinColorIndex;
         player.hairColorIndex = currentHairColorIndex;
         player.hairStyleIndex = currentHairStyleIndex;
+        // Inventory and equipment
+        for(int i = 0; i < player.inventory.InventorySize; i++) {
+            player.inventory.inventory[i] = null;
+        }
+        for(int i = 0; i < player.inventory.EquipmentSize; i++) {
+            player.inventory.equipment[i] = null;
+        }
         // Transform
         player.transform.position = new Vector3(5, 0, 0);
         player.transform.rotation = Quaternion.identity;

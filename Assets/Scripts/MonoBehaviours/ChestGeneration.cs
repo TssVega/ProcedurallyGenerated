@@ -40,7 +40,7 @@ public class ChestGeneration : MonoBehaviour {
                         chests[i].items[j] = chestData.chests[i, j];
                     }
                     else {
-                        chests[i].items[j] = Random.Range(0, 99999999).ToString();
+                        chests[i].items[j] = null;
                     }
                 }
             }
@@ -58,6 +58,9 @@ public class ChestGeneration : MonoBehaviour {
         PutChests(chestCount, levelGeneration);
     }
     public void PutChests(int count, LevelGeneration levelGen) {
+        if(count < 1) {
+            return;
+        }
         for(int i = 0; i < count; i++) {
             GameObject chestClone = ObjectPooler.objectPooler.GetPooledObject("Chest");
             chestClone.transform.position = GetRandomLocationForChest(pseudoRandomForChests, levelGen.layout.height, levelGen);
@@ -65,9 +68,6 @@ public class ChestGeneration : MonoBehaviour {
             chestClone.GetComponent<ChestObject>().SetChest(chests[i]);
             chestClone.SetActive(true);
             chestObjects.Add(chestClone.GetComponent<ChestObject>());
-            if(levelGen.layout.worldCoordinates.x == 0 && levelGen.layout.worldCoordinates.y == 2) {
-                Debug.Log($"Chest position: {chestClone.transform.position}");
-            }
         }
     }
     public void ClearChests() {
