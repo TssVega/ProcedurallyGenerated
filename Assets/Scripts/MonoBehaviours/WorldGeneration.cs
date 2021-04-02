@@ -8,7 +8,7 @@ using System.IO;
 
 public class WorldGeneration : MonoBehaviour {
     // Should be an odd number so it can have one center
-    public const int worldSize = 5;
+    public const int worldSize = 100;
     private const int levelSize = 64;
     // Should we use random seed?
     private bool randomSeed = false;
@@ -111,7 +111,8 @@ public class WorldGeneration : MonoBehaviour {
             world = new WorldData(data.worldData, data.currentCoordinates);
         }
         else {
-            world = new WorldData(new string[worldSize, worldSize], new int[] { 0, 0 }) {
+            Debug.Log("Generating new world data");
+            world = new WorldData(new string[worldSize, worldSize], new int[] { 0, 0 }) {                
                 lastCoordinates = new int[] { -1, -1 }
             };
         }
@@ -149,9 +150,10 @@ public class WorldGeneration : MonoBehaviour {
                     continue;                    
                 }
                 if(world.worldData[x, y] == null) {
-                    world.worldData[x, y] = pseudoRandomForWorld.Next().ToString();
+                    //pseudoRandomForWorld = new System.Random(worldSeed.GetHashCode());
+                    world.worldData[x, y] = pseudoRandomForWorld.Next(x + 1, y * worldSize + worldSize + 1).ToString();
+                    Debug.Log($"Generating seed for level {x}x, {y}y = {world.worldData[x, y]}");
                 }
-                worldMap[x, y] = world.worldData[x, y];
                 // Create a level with object pooling
                 GameObject levelClone = ObjectPooler.objectPooler.GetPooledObject(level.name);
                 levelClone.transform.position = new Vector3(x * levelSize, y * levelSize, 0);
@@ -159,7 +161,7 @@ public class WorldGeneration : MonoBehaviour {
                 LevelGeneration levelGen = levelClone.GetComponent<LevelGeneration>();
                 levels.Add(levelGen);
                 currentRenderedLevels.Add(new Vector2Int(x, y));
-                levelGen.layout = new LevelLayout(worldMap[x, y]) {
+                levelGen.layout = new LevelLayout(world.worldData[x, y]) {
                     worldCoordinates = new Vector2Int(x, y),
                     worldSize = worldSize
                 };

@@ -49,6 +49,7 @@ public class ChestUI : MonoBehaviour {
                 secondIcons[i].color = Color.clear;
                 thirdIcons[i].sprite = null;
                 thirdIcons[i].color = Color.clear;
+                Debug.Log($"String is null or empty = {chestObject.chestContent.items[i]}");
             }
             else {
                 item = itemCreator.CreateItem(chestObject.chestContent.items[i]);

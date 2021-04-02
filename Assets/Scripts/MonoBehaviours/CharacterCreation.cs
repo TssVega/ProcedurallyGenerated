@@ -21,7 +21,7 @@ public class CharacterCreation : MonoBehaviour {
 
     private Player player;
 
-    private readonly int worldSize = 5;
+    private readonly int worldSize = 100;
 
     private void Awake() {
         player = FindObjectOfType<Player>();

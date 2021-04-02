@@ -12,12 +12,14 @@ public class MainMenu : MonoBehaviour {
         PersistentData.saveSlot = slot;
         List<string> saveFiles = PersistentData.GetAllFilesWithKey($"Data{slot}", "", "");
         PersistentData.DeleteFiles(saveFiles);
+        PersistentData.ClearAutosaveFiles();
         LoadSceneAsync("CharacterCreation");
     }
     public void LoadGame(int slot) {
         PersistentData.saveSlot = slot;
-        PersistentData.GetFileNames();
+        PersistentData.GetFileNames();        
         if(!string.IsNullOrEmpty(PersistentData.GetFileName(slot.ToString(), "GameData", ""))) {
+            PersistentData.ClearAutosaveFiles();
             LoadSceneAsync("Levels");
         }        
     }
