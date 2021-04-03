@@ -132,6 +132,12 @@ public class WorldGeneration : MonoBehaviour {
                 if(world.currentCoordinates[0] == world.lastCoordinates[0] && world.currentCoordinates[1] == world.lastCoordinates[1]) {
                     return;
                 }
+                if(x == world.currentCoordinates[0] - 1 && y == world.currentCoordinates[1] - 1
+                    || x == world.currentCoordinates[0] - 1 && y == world.currentCoordinates[1] + 1
+                    || x == world.currentCoordinates[0] + 1 && y == world.currentCoordinates[1] - 1
+                    || x == world.currentCoordinates[0] + 1 && y == world.currentCoordinates[1] + 1) {
+                    continue;
+                }
                 if(!loadingPanel.gameObject.activeInHierarchy) {
                     loadingPanel.gameObject.SetActive(true);
                     loadingPanel.LoadingLevels();

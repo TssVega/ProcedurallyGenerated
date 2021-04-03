@@ -81,9 +81,14 @@ public class LevelGeneration : MonoBehaviour {
         for(int i = 0; i < layout.smoothLevel; i++) {
             await Task.Run(() => SmoothMap());            
         }
-        ProcessMap();
+        await Task.Run(() => ProcessMap());
         //StartCoroutine(DrawMapCoroutine());
-        DrawMap();
+        SetTiles(await Task.Run(() => DrawMap()));
+        if(layout.marchingSquares) {
+            for(int i = 0; i < layout.addSideCount; i++) {
+                AddSides();
+            }
+        }
         FillBackground();
         if(gameObject.activeInHierarchy) {
             //StartCoroutine(ScanPath());
@@ -104,6 +109,7 @@ public class LevelGeneration : MonoBehaviour {
         chestGeneration.ClearChests();
         gameObject.SetActive(false);
     }
+    
     private int ConvertTileIdToTilesetIndex(int id) {
         if(new int[] { 7, 15, 39, 47, 135, 143, 167, 175 }.Contains(id)) {
             return 0;
@@ -288,29 +294,58 @@ public class LevelGeneration : MonoBehaviour {
         }
     }
     // Draw map with sprites
-    private void DrawMap() {
+    private TileBase[] DrawMap() {
+        TileBase[] tiles = new TileBase[layout.width * layout.height];
+        //int[] linearMap = new int[layout.width * layout.height];
+        int index = 0;
+        //Vector3Int bottomLeft = new Vector3Int((-layout.width / 2) + layout.worldCoordinates.x * layout.width, (-layout.height / 2) + layout.worldCoordinates.y * layout.height, 0);
+        //Vector3Int topRight = new Vector3Int((layout.width-layout.width / 2) + layout.worldCoordinates.x * layout.width, (layout.height-layout.height / 2) + layout.worldCoordinates.y * layout.height, 0);
+        //BoundsInt bounds = new BoundsInt(bottomLeft, topRight);
+        for(int x = 0; x < layout.width; x++) {
+            for(int y = 0; y < layout.height; y++) {
+                /*
+                Vector3Int tileCoordinate = new Vector3Int(
+                    (x - layout.width / 2) + layout.worldCoordinates.x * layout.width,
+                    (y - layout.height / 2) + layout.worldCoordinates.y * layout.height, 0);*/
+                //linearMap[index] = map[x, y];
+                /*
+                if(linearMap[index] == 0) {
+                    tiles[index] = null;
+                }
+                else if(linearMap[index] == 1) {
+                    tiles[index] = tileDatabase.wallTiles[tileDatabase.wallTiles.Length - 1];
+                }
+                else {
+                    tiles[index] = null;
+                }
+                */
+                if(map[x, y] == 0) {
+                    tiles[index] = null;
+                    //worldGeneration.tilemap.SetTile(tileCoordinate, null);                    
+                }
+                else if(map[x, y] == 1) {
+                    tiles[index] = tileDatabase.wallTiles[tileDatabase.wallTiles.Length - 1];
+                    //worldGeneration.tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[tileDatabase.wallTiles.Length - 1]);                    
+                }
+                else {
+                    tiles[index] = null;
+                    //worldGeneration.tilemap.SetTile(tileCoordinate, null);                    
+                }                
+                index++;
+            }
+        }
+        return tiles;
+        //worldGeneration.tilemap.SetTilesBlock(bounds, tiles);
+    }
+    private void SetTiles(TileBase[] tiles) {
+        int index = 0;
         for(int x = 0; x < layout.width; x++) {
             for(int y = 0; y < layout.height; y++) {
                 Vector3Int tileCoordinate = new Vector3Int(
                     (x - layout.width / 2) + layout.worldCoordinates.x * layout.width,
                     (y - layout.height / 2) + layout.worldCoordinates.y * layout.height, 0);
-                if(map[x, y] == 0) {
-                    // tilemap.SetTile(tileCoordinate, tiles[0]);
-                    worldGeneration.tilemap.SetTile(tileCoordinate, null);
-                }
-                else if(map[x, y] == 1) {
-                    // tilemap.SetTile(tileCoordinate, wallTiles[15]);
-                    // tilemap.SetTile(tileCoordinate, tileDatabase.jungleWalls[tileDatabase.jungleWalls.Count - 1]);
-                    worldGeneration.tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[tileDatabase.wallTiles.Length - 1]);
-                }
-                else {
-                    worldGeneration.tilemap.SetTile(tileCoordinate, null);
-                }
-            }
-        }
-        if(layout.marchingSquares) {
-            for(int i = 0; i < layout.addSideCount; i++) {
-                AddSides();
+                worldGeneration.tilemap.SetTile(tileCoordinate, tiles[index]);
+                index++;
             }
         }
     }
@@ -465,7 +500,7 @@ public class LevelGeneration : MonoBehaviour {
                     (tile.tileX - layout.width / 2) + layout.worldCoordinates.x * layout.width,
                     (tile.tileY - layout.height / 2) + layout.worldCoordinates.y * layout.height, 0);
                     map[tile.tileX, tile.tileY] = 0;
-                    worldGeneration.tilemap.SetTile(tileCoordinate, null);
+                    //worldGeneration.tilemap.SetTile(tileCoordinate, null);
                 }
             }
         }
@@ -477,7 +512,7 @@ public class LevelGeneration : MonoBehaviour {
                     (tile.tileX - layout.width / 2) + layout.worldCoordinates.x * layout.width,
                     (tile.tileY - layout.height / 2) + layout.worldCoordinates.y * layout.height, 0);
                     map[tile.tileX, tile.tileY] = 1;
-                    worldGeneration.tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[tileDatabase.wallTiles.Length - 1]);
+                    //worldGeneration.tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[tileDatabase.wallTiles.Length - 1]);
                 }
             }
             else {
