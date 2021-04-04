@@ -15,9 +15,11 @@ MonoBehaviour:
   skillIndex: 1
   skillName: Bash
   skillDescription: Prepare for a short time to perform a stronger attack
-  skillIcon: {fileID: 0}
-  acquired: 0
+  skillIcon: {fileID: -53310205219150220, guid: 7851403918e7b7d488e90e9b350976de,
+    type: 3}
+  interruptable: 0
   manaCost: 0
+  focusedSkill: 0
   channelingTime: 0
   castTime: 0
   cooldown: 0.8
@@ -26,6 +28,7 @@ MonoBehaviour:
   particleNames: []
   channelingAnimationName: 
   castingAnimationName: 
+  attackType: 2
   sequence:
   - activeSkill: {fileID: 11400000, guid: 62b8c818c2645f14c92b19515d9998bc, type: 2}
   - activeSkill: {fileID: 11400000, guid: 164e90f7d7e81394c82769a7abe8abec, type: 2}

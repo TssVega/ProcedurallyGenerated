@@ -15,8 +15,9 @@ MonoBehaviour:
   skillIndex: 4
   skillName: Loose
   skillDescription: Loose an arrow
-  skillIcon: {fileID: 0}
-  acquired: 0
+  skillIcon: {fileID: -670977565870606260, guid: 7851403918e7b7d488e90e9b350976de,
+    type: 3}
+  interruptable: 0
   manaCost: 0
   focusedSkill: 0
   channelingTime: 0
@@ -28,11 +29,12 @@ MonoBehaviour:
   - Arrow
   channelingAnimationName: 
   castingAnimationName: 
+  attackType: 1
   projectileData:
-    attacker: {fileID: 0}
-    attackType: 1
+    team: 0
     arrowSkill: 1
     damageRate: 0.4
     rotationSpeed: 0
     projectileSpeed: 25
+    hitTime: 0
     lifetime: 1

@@ -1463,6 +1463,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   saveSlot: 0
   stats: {fileID: 0}
+  inventory: {fileID: 0}
   skinColor: {fileID: 7430841090308141595}
   hairColor: {fileID: 7430841088715380488}
   hairStyle: {fileID: 7430841088715380488}
@@ -1568,19 +1569,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillDatabase: {fileID: 11400000, guid: b84645b6f2bdb204bbc1cb0eb4d331c0, type: 2}
   acquiredSkills:
+  - {fileID: 11400000, guid: f8ae79d36f3b538408903cd9174fdcd0, type: 2}
   - {fileID: 11400000, guid: 241b922b96fc52941b6407af48d16395, type: 2}
   - {fileID: 11400000, guid: 64da67a8a7a5ae54ab685d18d2f002d2, type: 2}
   - {fileID: 11400000, guid: b689240464fda454998452772a238875, type: 2}
-  - {fileID: 11400000, guid: 02a87aea90e6d0d4fb2c61eb387b57d5, type: 2}
   - {fileID: 11400000, guid: 8aeda6e147b8b384dacd06beab97e20d, type: 2}
-  - {fileID: 11400000, guid: e6f68451e97468d42a916d2e73f7733e, type: 2}
+  - {fileID: 11400000, guid: b3c5048739aeb8b448cd77e8dd18f1a8, type: 2}
   currentSkills:
+  - {fileID: 11400000, guid: f8ae79d36f3b538408903cd9174fdcd0, type: 2}
   - {fileID: 11400000, guid: 241b922b96fc52941b6407af48d16395, type: 2}
   - {fileID: 11400000, guid: 64da67a8a7a5ae54ab685d18d2f002d2, type: 2}
   - {fileID: 11400000, guid: b689240464fda454998452772a238875, type: 2}
-  - {fileID: 11400000, guid: 02a87aea90e6d0d4fb2c61eb387b57d5, type: 2}
   - {fileID: 11400000, guid: 8aeda6e147b8b384dacd06beab97e20d, type: 2}
-  - {fileID: 11400000, guid: e6f68451e97468d42a916d2e73f7733e, type: 2}
+  - {fileID: 11400000, guid: b3c5048739aeb8b448cd77e8dd18f1a8, type: 2}
   skillCooldowns: []
   projectileExitPos: {fileID: 8843314161316362494}
   animator: {fileID: 3732230040238435773}

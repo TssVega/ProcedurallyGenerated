@@ -16,7 +16,7 @@ MonoBehaviour:
   skillName: basicDash
   skillDescription: 
   skillIcon: {fileID: 0}
-  acquired: 0
+  interruptable: 0
   manaCost: 0
   focusedSkill: 0
   channelingTime: 0.1
@@ -27,5 +27,6 @@ MonoBehaviour:
   particleNames: []
   channelingAnimationName: 
   castingAnimationName: 
+  attackType: 13
   dashData:
     dashMultiplier: 0.5

@@ -15,9 +15,10 @@ MonoBehaviour:
   skillIndex: 0
   skillName: Dash
   skillDescription: Leap forward for a small distance
-  skillIcon: {fileID: 0}
-  acquired: 0
+  skillIcon: {fileID: 21300000, guid: 0cd69803be151954091f386d0478f2a1, type: 3}
+  interruptable: 0
   manaCost: 0
+  focusedSkill: 0
   channelingTime: 0
   castTime: 0
   cooldown: 1
@@ -26,5 +27,6 @@ MonoBehaviour:
   particleNames: []
   channelingAnimationName: 
   castingAnimationName: 
+  attackType: 13
   dashData:
     dashMultiplier: 4

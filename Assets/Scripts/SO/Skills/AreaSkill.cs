@@ -5,7 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Skills/Area Skill")]
 public class AreaSkill : ActiveSkill {
 
-    public AttackType attackType;
     public float damageRate;
     public float duration;
     public float totalHits;

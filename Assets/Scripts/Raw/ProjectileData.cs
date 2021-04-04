@@ -6,7 +6,6 @@ using UnityEngine;
 public class ProjectileData {
 
     public int team;
-    public AttackType attackType;
     public bool arrowSkill;     // Arrow skills can only be used with bows
     public float damageRate;
     public float rotationSpeed;

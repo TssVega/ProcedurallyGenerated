@@ -11,8 +11,8 @@ public class ProjectileSkill : ActiveSkill {
         
         if(targetStatus) {
             targetStatus.TakeDamage(
-                projectileData.damageRate * DamageFromDamageType.GetDamage(projectileData.attackType, attackerStats),
-                projectileData.attackType, this, attackerStats.status);
+                projectileData.damageRate * DamageFromDamageType.GetDamage(attackType, attackerStats),
+                attackType, this, attackerStats.status);
         }
     }
 }

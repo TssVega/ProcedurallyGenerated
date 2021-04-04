@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 252917ceecf705b4a83065abc3da48a3, type: 3}
   m_Name: Block
   m_EditorClassIdentifier: 
-  skillIndex: 0
+  skillIndex: 5
   skillName: Block
   skillDescription: Raise your shield to block attacks you are facing. Be careful,
     you can still get hit from behind.
-  skillIcon: {fileID: 0}
+  skillIcon: {fileID: -8764487522292916938, guid: 7851403918e7b7d488e90e9b350976de,
+    type: 3}
   interruptable: 1
   manaCost: 0
   focusedSkill: 0
@@ -28,5 +29,6 @@ MonoBehaviour:
   particleNames: []
   channelingAnimationName: 
   castingAnimationName: 
+  attackType: 13
   blockData:
     blockType: 0

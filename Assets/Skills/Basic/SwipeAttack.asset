@@ -15,9 +15,11 @@ MonoBehaviour:
   skillIndex: 2
   skillName: Swipe
   skillDescription: Perform a swipe attack to deal slash damage
-  skillIcon: {fileID: 0}
-  acquired: 0
+  skillIcon: {fileID: -6228180742015094104, guid: 7851403918e7b7d488e90e9b350976de,
+    type: 3}
+  interruptable: 0
   manaCost: 0
+  focusedSkill: 0
   channelingTime: 0
   castTime: 0
   cooldown: 0.5

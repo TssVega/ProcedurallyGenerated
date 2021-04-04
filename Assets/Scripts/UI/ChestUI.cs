@@ -83,6 +83,11 @@ public class ChestUI : MonoBehaviour {
             }
         }
     }
+    public void TakeAllItems() {
+        for(int i = 0; i < chestObject.chestContent.items.Length; i++) {
+            TakeItemOnSlot(i);
+        }
+    }
     public void TakeItemOnSlot(int slot) {
         // If the item is successfully added to inventory
         if(slot >= chestObject.chestContent.items.Length) {
