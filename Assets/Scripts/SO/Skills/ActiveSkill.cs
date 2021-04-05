@@ -14,7 +14,6 @@ public class ActiveSkill : Skill {
     public string[] particleNames;
     public string channelingAnimationName;
     public string castingAnimationName;
-    public AttackType attackType;
 
     public virtual void Launch(Stats stats) {
     

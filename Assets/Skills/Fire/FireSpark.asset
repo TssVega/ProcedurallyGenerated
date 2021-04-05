@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06483e1273c0bf64e9475d86de85f9d9, type: 3}
   m_Name: FireSpark
   m_EditorClassIdentifier: 
-  skillIndex: 5
+  skillIndex: 6
   skillName: Fire Spark
   skillDescription: Shoot a tiny spark
   skillIcon: {fileID: 0}
-  acquired: 0
+  interruptable: 0
+  attackType: 0
+  skillPointsNeeded: 2
   manaCost: 0
   focusedSkill: 0
   channelingTime: 0
@@ -30,7 +32,6 @@ MonoBehaviour:
   castingAnimationName: 
   projectileData:
     team: 0
-    attackType: 3
     arrowSkill: 0
     damageRate: 0.3
     rotationSpeed: 0

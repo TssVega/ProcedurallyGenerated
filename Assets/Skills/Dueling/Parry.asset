@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 252917ceecf705b4a83065abc3da48a3, type: 3}
   m_Name: Parry
   m_EditorClassIdentifier: 
-  skillIndex: 8
+  skillIndex: 9
   skillName: Parry
   skillDescription: Parry the next physical attack for a brief moment. If you parry
     successfully, your enemy gets stunned for a short time
   skillIcon: {fileID: 0}
   interruptable: 0
+  attackType: 3
+  skillPointsNeeded: 2
   manaCost: 0
   focusedSkill: 0
   channelingTime: 0
@@ -30,4 +32,3 @@ MonoBehaviour:
   castingAnimationName: 
   blockData:
     blockType: 1
-    duration: 0.3

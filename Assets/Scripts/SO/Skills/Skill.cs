@@ -9,4 +9,6 @@ public class Skill : ScriptableObject{
     [TextArea(3, 20)]public string skillDescription;
     public Sprite skillIcon;
     public bool interruptable;
+    public AttackType attackType;
+    public int skillPointsNeeded;
 }

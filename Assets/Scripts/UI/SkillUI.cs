@@ -8,7 +8,7 @@ public class SkillUI : MonoBehaviour {
     private SkillUser playerSkills;
     public Image[] skillButtons;
     private Image[] skillMasks;
-    private int maxActiveSkills = 11;
+    private readonly int maxActiveSkills = 11;
     private bool[] pressing;
 
     private void Awake() {
@@ -19,7 +19,10 @@ public class SkillUI : MonoBehaviour {
             skillMasks[i] = skillButtons[i].transform.GetChild(0).GetComponent<Image>();
         }
     }
-    private void Start() {        
+    private void Start() {
+        RefreshSkillSlots();
+    }
+    public void RefreshSkillSlots() {
         for(int i = 0; i < maxActiveSkills; i++) {
             if(i >= playerSkills.currentSkills.Count) {
                 skillButtons[i].sprite = null;

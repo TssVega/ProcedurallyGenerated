@@ -56,7 +56,7 @@ public class SkillUser : MonoBehaviour {
         }
     }
     public void UseSkill(ActiveSkill skill) {
-        if(skill.skillIndex > 0 && skillCooldowns[skill.skillIndex] > 0f) {
+        if(skill.skillIndex >= 0 && skillCooldowns[skill.skillIndex] > 0f) {
             return;
         }
         if(statusEffects.chanelling || statusEffects.stunned) {
