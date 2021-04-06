@@ -19,6 +19,7 @@ public class SkillTreeManager : MonoBehaviour, IDragHandler {
     public GameObject debugText;
     public GameObject skillInfoPanel;
     public GameObject skillTreeCloser;
+    public TextMeshProUGUI statPointsText;
 
     private RectTransform talentPanelTransform;
     //private TalentDatabase talentDatabase;
@@ -59,6 +60,10 @@ public class SkillTreeManager : MonoBehaviour, IDragHandler {
         }
         talentPanelTransform = talentPanel.GetComponent<RectTransform>();
         uiCanvas = FindObjectOfType<UICanvas>().GetComponent<Canvas>();
+        UpdateStatPoints();
+    }
+    private void UpdateStatPoints() {
+        statPointsText.text = playerStats.statPoints.ToString();
     }
     private void GenerateTalentSlots() {
         if(slotsGenerated) {

@@ -40,10 +40,10 @@ public static class ColorBySkillType {
             color = new Color32(55, 87, 60, 255);
         }
         else if(attackType == AttackType.Pierce) {
-            color = new Color32(222, 222, 222, 255);
+            color = new Color32(50, 50, 50, 255);
         }
         else if(attackType == AttackType.Slash) {
-            color = new Color32(251, 89, 89, 255);
+            color = new Color32(251, 50, 50, 255);
         }
         else {
             color = Color.white;

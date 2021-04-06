@@ -9,6 +9,7 @@ public class Player : MonoBehaviour {
 
     public Stats stats;
     public Inventory inventory;
+    public SkillUser skillUser;
 
     public SpriteRenderer skinColor;
     public SpriteRenderer hairColor;
@@ -50,6 +51,7 @@ public class Player : MonoBehaviour {
     private void Awake() {
         worldGeneration = FindObjectOfType<WorldGeneration>();
         stats = GetComponent<Stats>();
+        skillUser = GetComponent<SkillUser>();
         uiCanvas = FindObjectOfType<UICanvas>();
         inventory = GetComponent<Inventory>();
     }
@@ -204,6 +206,23 @@ public class Player : MonoBehaviour {
             stats.poisonThreshold = data.poisonThreshold;
             stats.bleedThreshold = data.bleedThreshold;
             stats.curseThreshold = data.curseThreshold;
+            // Skills
+            for(int i = 0; i < data.acquiredSkills.Length; i++) {
+                if(data.acquiredSkills[i] >= 0) {
+                    skillUser.acquiredSkills[i] = skillUser.skillDatabase.skills[data.acquiredSkills[i]];
+                }
+                else {
+                    skillUser.acquiredSkills[i] = null;
+                }
+            }
+            for(int i = 0; i < 11; i++) {
+                if(data.currentSkills[i] >= 0) {
+                    skillUser.currentSkills[i] = skillUser.skillDatabase.skills[data.currentSkills[i]] as ActiveSkill;
+                }
+                else {
+                    skillUser.currentSkills[i] = null;
+                }
+            }
         }        
     }
     private void SetAppearance() {

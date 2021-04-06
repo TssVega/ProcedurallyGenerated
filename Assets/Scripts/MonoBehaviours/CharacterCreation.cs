@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class CharacterCreation : MonoBehaviour {
 
@@ -10,6 +11,11 @@ public class CharacterCreation : MonoBehaviour {
     public Image hairImage;
 
     public CharacterAppearance appearance;
+
+    public TextMeshProUGUI skinColorText;
+    public TextMeshProUGUI hairColorText;
+    public TextMeshProUGUI hairStyleText;
+    public TextMeshProUGUI confirmText;
 
     private Color currentSkinColor;
     private Color currentHairColor;
@@ -20,10 +26,12 @@ public class CharacterCreation : MonoBehaviour {
     private int currentHairStyleIndex = 0;
 
     private Player player;
+    private LocalizationManager localizationManager;
 
     private readonly int worldSize = 100;
 
     private void Awake() {
+        localizationManager = FindObjectOfType<LocalizationManager>();
         player = FindObjectOfType<Player>();
         currentSkinColor = appearance.skinColors[currentSkinColorIndex];
         currentHairColor = appearance.hairColors[currentHairColorIndex];
@@ -31,6 +39,10 @@ public class CharacterCreation : MonoBehaviour {
         skinImage.color = currentSkinColor;
         hairImage.color = currentHairColor;
         hairImage.sprite = currentHairStyle;
+    }
+    private void Start() {
+        RefreshTexts();
+        Debug.Log(localizationManager.GetLanguage());
     }
     public void CompleteCharacterCreation() {
         SetNewGameData();
@@ -93,6 +105,12 @@ public class CharacterCreation : MonoBehaviour {
         }
         hairImage.sprite = currentHairStyle;
         player.hairStyleIndex = currentHairStyleIndex;
+    }
+    public void RefreshTexts() {
+        skinColorText.text = localizationManager.GetText("skinColor");
+        hairColorText.text = localizationManager.GetText("hairColor");
+        hairStyleText.text = localizationManager.GetText("hairStyle");
+        confirmText.text = localizationManager.GetText("complete");
     }
     private void SetNewGameData() {
         // World data
@@ -159,5 +177,22 @@ public class CharacterCreation : MonoBehaviour {
         player.stats.poisonDefence = 10f;
         player.stats.bleedDefence = 10f;
         player.stats.curseDefence = 10f;
+        // Stat points
+        player.stats.statPoints = 10;
+        // Skills
+        // Beginner skills
+        player.skillUser.acquiredSkills = new List<Skill>();
+        for(int i = 0; i < 6; i++) {
+            player.skillUser.acquiredSkills.Add(player.skillUser.skillDatabase.skills[i]);
+        }
+        player.skillUser.currentSkills = new List<ActiveSkill>();
+        for(int i = 0; i < 11; i++) {
+            if(i < 6) {
+                player.skillUser.currentSkills.Add(player.skillUser.skillDatabase.skills[i] as ActiveSkill);
+            }
+            else {
+                player.skillUser.currentSkills.Add(null);
+            }
+        }
     }
 }

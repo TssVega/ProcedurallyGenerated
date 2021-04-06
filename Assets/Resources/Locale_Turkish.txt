@@ -1,0 +1,8 @@
+{"play":"Yeni Oyun",
+"load":"Devam Et",
+"options":"Ayarlar",
+"language":"Dil",
+"skinColor":"Ten Rengi",
+"hairColor":"Sa\u00e7 Rengi",
+"hairStyle":"Sa\u00e7 Stili",
+"complete":"Tamamla"}

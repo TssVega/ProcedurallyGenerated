@@ -2,12 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class MainMenu : MonoBehaviour {
 
-    public GameObject startNewGamePanel;
-    public GameObject loadGamePanel;
+    public LocalizationManager localizationManager;
+    public TextMeshProUGUI playText;
+    public TextMeshProUGUI loadText;
+    public TextMeshProUGUI optionsText;
 
+    public void OnEnable() {
+        RefreshTexts();
+    }
+    public void RefreshTexts() {
+        playText.text = localizationManager.GetText("play");
+        loadText.text = localizationManager.GetText("load");
+        optionsText.text = localizationManager.GetText("options");
+    }
     public void StartNewGame(int slot) {
         PersistentData.saveSlot = slot;
         List<string> saveFiles = PersistentData.GetAllFilesWithKey($"Data{slot}", "", "");

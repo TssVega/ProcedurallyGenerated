@@ -75,6 +75,9 @@ public class SaveData {
     // Inventory and equipment
     public string[] inventory;
     public string[] equipment;
+    // Skills
+    public int[] acquiredSkills;
+    public int[] currentSkills;
 
     public SaveData(Player data) {
         saveSlot = data.saveSlot;
@@ -171,5 +174,27 @@ public class SaveData {
         poisonThreshold = data.stats.poisonThreshold;
         bleedThreshold = data.stats.bleedThreshold;
         curseThreshold = data.stats.curseThreshold;
+        // Skills
+        acquiredSkills = new int[data.skillUser.acquiredSkills.Count];
+        for(int i = 0; i < data.skillUser.acquiredSkills.Count; i++) {
+            if(data.skillUser.acquiredSkills[i]) {
+                acquiredSkills[i] = data.skillUser.acquiredSkills[i].skillIndex;
+            }
+            else {
+                acquiredSkills[i] = -1;
+            }
+        }
+        currentSkills = new int[11];
+        for(int i = 0; i < 11; i++) {
+            if(i >= data.skillUser.currentSkills.Count) {
+                break;
+            }
+            if(data.skillUser.currentSkills[i]) {
+                currentSkills[i] = data.skillUser.currentSkills[i].skillIndex;
+            }
+            else {
+                currentSkills[i] = -1;
+            }
+        }
     }
 }

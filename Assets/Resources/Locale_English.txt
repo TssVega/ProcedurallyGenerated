@@ -1,0 +1,8 @@
+{"play":"New Game",
+"load":"Load Game",
+"options":"Settings",
+"language":"Language",
+"skinColor":"Skin Color",
+"hairColor":"Hair Color",
+"hairStyle":"Hair Style",
+"complete":"Complete"}
