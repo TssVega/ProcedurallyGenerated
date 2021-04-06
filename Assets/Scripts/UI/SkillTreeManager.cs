@@ -62,7 +62,7 @@ public class SkillTreeManager : MonoBehaviour, IDragHandler {
         uiCanvas = FindObjectOfType<UICanvas>().GetComponent<Canvas>();
         UpdateStatPoints();
     }
-    private void UpdateStatPoints() {
+    public void UpdateStatPoints() {
         statPointsText.text = playerStats.statPoints.ToString();
     }
     private void GenerateTalentSlots() {

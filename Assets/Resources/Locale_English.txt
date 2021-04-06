@@ -5,4 +5,7 @@
 "skinColor":"Skin Color",
 "hairColor":"Hair Color",
 "hairStyle":"Hair Style",
-"complete":"Complete"}
+"complete":"Complete",
+"learn":"Learn",
+"skillPoints":"Skill Points",
+"skillInfoNotif":"Select any slot"}
