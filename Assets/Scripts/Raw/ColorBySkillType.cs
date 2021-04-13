@@ -7,7 +7,7 @@ public static class ColorBySkillType {
     public static Color32 GetColorByType(AttackType attackType) {
         Color32 color;
         if(attackType == AttackType.Fire) {
-            color = new Color32(197, 25, 0, 255);
+            color = new Color32(255, 219, 0, 255);
         }
         else if(attackType == AttackType.Ice) {
             color = new Color32(0, 198, 255, 255);
@@ -40,7 +40,7 @@ public static class ColorBySkillType {
             color = new Color32(55, 87, 60, 255);
         }
         else if(attackType == AttackType.Pierce) {
-            color = new Color32(50, 50, 50, 255);
+            color = new Color32(200, 200, 200, 255);
         }
         else if(attackType == AttackType.Slash) {
             color = new Color32(251, 50, 50, 255);

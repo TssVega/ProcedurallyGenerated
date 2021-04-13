@@ -15,7 +15,8 @@ MonoBehaviour:
   skillIndex: 7
   skillName: Holy Heal
   skillDescription: Channel your inner faith for a moment to gain some health
-  skillIcon: {fileID: 0}
+  skillIcon: {fileID: -1834977244087336064, guid: 8bdf6964d84a55d46a85dcf8ea72d604,
+    type: 3}
   interruptable: 0
   attackType: 12
   skillPointsNeeded: 2

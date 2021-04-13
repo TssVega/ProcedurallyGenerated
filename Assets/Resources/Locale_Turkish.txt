@@ -8,4 +8,5 @@
 "complete":"Tamamla",
 "learn":"\u00d6\u011fren",
 "skillPoints":"Yetenek Puan\u0131",
-"skillInfoNotif":"Herhangi bir yuva se\u00e7iniz"}
+"skillInfoNotif":"Herhangi bir yuva se\u00e7iniz",
+"passiveNotif":"Pasif yetenek devrede"}

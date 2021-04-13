@@ -15,9 +15,10 @@ MonoBehaviour:
   skillIndex: 6
   skillName: Fire Spark
   skillDescription: Shoot a tiny spark
-  skillIcon: {fileID: 0}
+  skillIcon: {fileID: -8991306704326573702, guid: 8bdf6964d84a55d46a85dcf8ea72d604,
+    type: 3}
   interruptable: 0
-  attackType: 0
+  attackType: 3
   skillPointsNeeded: 2
   manaCost: 0
   focusedSkill: 0

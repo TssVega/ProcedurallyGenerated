@@ -8,4 +8,5 @@
 "complete":"Complete",
 "learn":"Learn",
 "skillPoints":"Skill Points",
-"skillInfoNotif":"Select any slot"}
+"skillInfoNotif":"Select any slot",
+"passiveNotif":"Passive skill activated"}

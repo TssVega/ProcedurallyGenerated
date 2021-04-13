@@ -26,19 +26,25 @@ public class SkillInfoPanel : MonoBehaviour {
         playerSkills = FindObjectOfType<Player>().GetComponent<SkillUser>();
         skillUI = FindObjectOfType<SkillUI>();
     }
-    private void Start() {
-        RefreshText();
+    private void OnEnable() {
+        //RefreshText();
     }
     public void SetSkill(Skill skill) {
         currentSkill = skill;
         Refresh();
+        RefreshText();
     }
     public void LearnSkill() {
+        if(playerSkills.acquiredSkills.Contains(currentSkill)) {
+            return;
+        }
         if(playerStats.statPoints >= currentSkill.skillPointsNeeded) {
             playerStats.statPoints -= currentSkill.skillPointsNeeded;
             playerSkills.acquiredSkills.Add(currentSkill);
             Refresh();
+            RefreshText();
             skillTree.UpdateStatPoints();
+            skillTree.RefreshAcquiredStatus();
         }        
     }
     private void Refresh() {
@@ -86,8 +92,16 @@ public class SkillInfoPanel : MonoBehaviour {
         skillUI.RefreshSkillSlots();
         Refresh();
     }
-    private void RefreshText() {
-        guideText.text = localizationManager.GetText("skillInfoNotif");
+    private void RefreshText() {        
         acquireText.text = localizationManager.GetText("learn");
+        if(playerSkills.acquiredSkills.Contains(currentSkill) && currentSkill is ActiveSkill) {
+            guideText.text = localizationManager.GetText("skillInfoNotif");
+        }
+        else if(playerSkills.acquiredSkills.Contains(currentSkill) && currentSkill is PassiveSkill) {
+            guideText.text = localizationManager.GetText("passiveNotif");
+        }
+        else {
+            guideText.text = "";
+        }
     }
 }

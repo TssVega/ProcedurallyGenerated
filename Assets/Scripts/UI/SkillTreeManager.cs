@@ -9,6 +9,7 @@ public class SkillTreeManager : MonoBehaviour, IDragHandler {
 
     public List<GameObject> talentButtons;
     public List<Image> talentIcons;
+    public List<GameObject> acquiredFrames;
     public Sprite skillFrame;
     public Sprite fillFrame;
     //public TextMeshProUGUI statPoints;
@@ -26,6 +27,7 @@ public class SkillTreeManager : MonoBehaviour, IDragHandler {
     //private GameMaster gameMaster;
     // private int currentPanel = 0;
     private Stats playerStats;
+    private SkillUser playerSkills;
     private float distance = 150f;  // Distance between slots in pixels
     private readonly float distanceBetweenTiers = 96f;
     private bool slotsGenerated = false;
@@ -41,12 +43,10 @@ public class SkillTreeManager : MonoBehaviour, IDragHandler {
     public GameObject skillSlot;
     public SkillDatabase skillDatabase;
 
-    private void Start() {
-        //confirmationPanel.gameObject.SetActive(false);
-    }
     private void OnEnable() {
         if(FindObjectOfType<Player>()) {
             playerStats = FindObjectOfType<Player>().GetComponent<Stats>();
+            playerSkills = FindObjectOfType<Player>().GetComponent<SkillUser>();
         }
         if(playerStats) {
             //statPoints.text = playerStats.statPoints.ToString();
@@ -55,6 +55,7 @@ public class SkillTreeManager : MonoBehaviour, IDragHandler {
         //talentDatabase = gameMaster.talentDatabase;
         talentPanel = gameObject;
         GenerateTalentSlots();
+        RefreshAcquiredStatus();
         if(playerStats) {
             //statPoints.text = playerStats.statPoints.ToString();
         }
@@ -103,11 +104,12 @@ public class SkillTreeManager : MonoBehaviour, IDragHandler {
                 counter++;                
                 talentButtons.Add(clone);                
                 talentIcons.Add(clone.GetComponent<Image>());
+                acquiredFrames.Add(clone.transform.GetChild(0).gameObject);
             }
             distance += distanceBetweenTiers;
         }
         // TODO: Activate when all skills are in the database
-        //AssignTalentSlots();
+        //AssignTalentSlots();   
         AssignTalents();
         slotsGenerated = true;
     }
@@ -140,8 +142,19 @@ public class SkillTreeManager : MonoBehaviour, IDragHandler {
     private void AssignTalents() {
         for(int i = basicSkillCount; i < skillDatabase.skills.Count; i++) {
             if(skillDatabase.skills[i] && skillDatabase.skills[i].skillIcon) {
-                talentIcons[i].sprite = skillDatabase.skills[i].skillIcon;
-                talentIcons[i].color = ColorBySkillType.GetColorByType(skillDatabase.skills[i].attackType);
+                Debug.Log("Setting skill icon" + skillDatabase.skills[i].skillIcon.name + " of " + talentIcons[i].name);
+                talentIcons[i - basicSkillCount].sprite = skillDatabase.skills[i].skillIcon;
+                talentIcons[i - basicSkillCount].color = ColorBySkillType.GetColorByType(skillDatabase.skills[i].attackType);
+            }
+        }
+    }
+    public void RefreshAcquiredStatus() {
+        for(int i = basicSkillCount; i < skillDatabase.skills.Count; i++) {
+            if(playerSkills.acquiredSkills.Contains(skillDatabase.skills[i])) {
+                acquiredFrames[i - basicSkillCount].SetActive(true);
+            }
+            else {
+                acquiredFrames[i - basicSkillCount].SetActive(false);
             }
         }
     }
