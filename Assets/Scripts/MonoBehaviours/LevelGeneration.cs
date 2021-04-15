@@ -18,15 +18,18 @@ public class LevelGeneration : MonoBehaviour {
     // Two dimensional map array
     private int[,] map;
     private int[,] reservedForConnectionsMap;
-    private int[,] plantMap;
     // Psuedo random number for generating chests and enemies
     System.Random pseudoRandomForLevel;
     System.Random pseudoRandomForGround;
+    System.Random pseudoRandomForTorches;
     System.Random pseudoRandomForWalls;
     System.Random pseudoRandomForPlants;
     // A reference to world generation script
     private WorldGeneration worldGeneration;
     private ChestGeneration chestGeneration;
+
+    private List<Vector3Int> wallCoordinates;
+    private readonly int torchCount = 10;
 
     private void Awake() {
         worldGeneration = FindObjectOfType<WorldGeneration>();
@@ -58,6 +61,7 @@ public class LevelGeneration : MonoBehaviour {
         pseudoRandomForWalls = new System.Random(this.layout.seed.GetHashCode());
         pseudoRandomForLevel = new System.Random(this.layout.seed.GetHashCode());
         pseudoRandomForGround = new System.Random(this.layout.seed.GetHashCode());
+        pseudoRandomForTorches = new System.Random(this.layout.seed.GetHashCode());
         if(layout.generateWalls) {
             await GenerateMap();
         }
@@ -74,9 +78,7 @@ public class LevelGeneration : MonoBehaviour {
         */
         map = new int[layout.width, layout.height];
         reservedForConnectionsMap = new int[layout.width, layout.height];
-        if(layout.generatePlants) {
-            plantMap = new int[layout.width, layout.height];
-        }
+        wallCoordinates = new List<Vector3Int>();
         await Task.Run(() => RandomFillMap());        
         for(int i = 0; i < layout.smoothLevel; i++) {
             await Task.Run(() => SmoothMap());            
@@ -90,10 +92,23 @@ public class LevelGeneration : MonoBehaviour {
             }
         }
         FillBackground();
+        GenerateTorches();
         if(gameObject.activeInHierarchy) {
             //StartCoroutine(ScanPath());
         }
         chestGeneration.LoadChests(0, layout.seed);
+    }
+    private void GenerateTorches() {
+        for(int i = 0; i < torchCount; i++) {
+            Vector3Int torchPosition = GetRandomWallCoordinates();
+            GameObject torchClone = ObjectPooler.objectPooler.GetPooledObject("Torch");
+            torchClone.transform.position = torchPosition;
+            torchClone.transform.rotation = Quaternion.identity;
+            torchClone.SetActive(true);
+        }
+    }
+    private Vector3Int GetRandomWallCoordinates() {
+        return wallCoordinates[pseudoRandomForTorches.Next(0, wallCoordinates.Count)];
     }
     public void UnloadLevel() {
         for(int x = 0; x < layout.width; x++) {
@@ -108,8 +123,7 @@ public class LevelGeneration : MonoBehaviour {
         }
         chestGeneration.ClearChests();
         gameObject.SetActive(false);
-    }
-    
+    }    
     private int ConvertTileIdToTilesetIndex(int id) {
         if(new int[] { 7, 15, 39, 47, 135, 143, 167, 175 }.Contains(id)) {
             return 0;
@@ -192,7 +206,7 @@ public class LevelGeneration : MonoBehaviour {
                     (x - layout.width / 2) + layout.worldCoordinates.x * layout.width,
                     (y - layout.height / 2) + layout.worldCoordinates.y * layout.height, 0);
                 if(worldGeneration.tilemap.GetTile(tileCoordinate) != tileDatabase.wallTiles[tileDatabase.wallTiles.Length - 1]) {
-                    worldGeneration.groundTilemap.SetTile(tileCoordinate, tileDatabase.groundTiles[pseudoRandomForGround.Next(0, 9)]);
+                    worldGeneration.groundTilemap.SetTile(tileCoordinate, tileDatabase.groundTiles[pseudoRandomForGround.Next(0, tileDatabase.groundTiles.Length)]);
                 }
                 else {
                     worldGeneration.groundTilemap.SetTile(tileCoordinate, null);
@@ -443,6 +457,9 @@ public class LevelGeneration : MonoBehaviour {
                             worldGeneration.tilemap.SetTile(tileCoordinate, null);
                             continue;
                         }
+                        else if(id != 14) {
+                            wallCoordinates.Add(tileCoordinate);
+                        }
                         if(generateDebugNumbersForWalls) {
                             //debugTilemap.SetTile(tileCoordinate, tileDatabase.debugNumbers[id]);
                         }
@@ -496,9 +513,9 @@ public class LevelGeneration : MonoBehaviour {
         foreach(List<Coordinate> wallRegion in wallRegions) {
             if(wallRegion.Count < layout.wallThresholdSize) {
                 foreach(Coordinate tile in wallRegion) {
-                    Vector3Int tileCoordinate = new Vector3Int(
+                    /*Vector3Int tileCoordinate = new Vector3Int(
                     (tile.tileX - layout.width / 2) + layout.worldCoordinates.x * layout.width,
-                    (tile.tileY - layout.height / 2) + layout.worldCoordinates.y * layout.height, 0);
+                    (tile.tileY - layout.height / 2) + layout.worldCoordinates.y * layout.height, 0);*/
                     map[tile.tileX, tile.tileY] = 0;
                     //worldGeneration.tilemap.SetTile(tileCoordinate, null);
                 }
@@ -508,9 +525,9 @@ public class LevelGeneration : MonoBehaviour {
         foreach(List<Coordinate> groundRegion in groundRegions) {
             if(groundRegion.Count < layout.groundThresholdSize) {
                 foreach(Coordinate tile in groundRegion) {
-                    Vector3Int tileCoordinate = new Vector3Int(
+                    /*Vector3Int tileCoordinate = new Vector3Int(
                     (tile.tileX - layout.width / 2) + layout.worldCoordinates.x * layout.width,
-                    (tile.tileY - layout.height / 2) + layout.worldCoordinates.y * layout.height, 0);
+                    (tile.tileY - layout.height / 2) + layout.worldCoordinates.y * layout.height, 0);*/
                     map[tile.tileX, tile.tileY] = 1;
                     //worldGeneration.tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[tileDatabase.wallTiles.Length - 1]);
                 }

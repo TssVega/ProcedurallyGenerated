@@ -49,7 +49,7 @@ public class SkillUI : MonoBehaviour {
     }
     public void UseSkill() {
         for(int i = 0; i < maxActiveSkills; i++) {
-            if(pressing[i]) {
+            if(pressing[i] && playerSkills.currentSkills[i]) {
                 playerSkills.UseSkill(playerSkills.currentSkills[i]);
             }
         }
