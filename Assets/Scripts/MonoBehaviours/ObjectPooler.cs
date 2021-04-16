@@ -61,7 +61,7 @@ public class ObjectPooler : MonoBehaviour {
             }
             // Expand the pool if needed
             for(int i = 0; i < objectsToPool.Count; i++) {
-                if(objectsToPool[i].GetComponent<GetPooled>().name == name) {
+                if(objectsToPool[i].GetComponent<GetPooled>().gameObject.name.Contains(name)) {
                     GameObject clone = Instantiate(objectsToPool[i]);
                     clone.SetActive(false);
                     pooledObjects.Add(clone);

@@ -215,7 +215,49 @@ public class StatusEffects : MonoBehaviour {
             if(burning && attackType == AttackType.Ice) {
                 StopBurn();
             }
-        }        
+        }
+        switch(attackType) {
+            case AttackType.Slash:
+                InstantiateDamageTakenParticles("SlashDamageTaken");
+                break;
+            case AttackType.Bash:
+                InstantiateDamageTakenParticles("BashDamageTaken");
+                break;
+            case AttackType.Pierce:
+                InstantiateDamageTakenParticles("PierceDamageTaken");
+                break;
+            case AttackType.Fire:
+                InstantiateDamageTakenParticles("FireDamageTaken");
+                break;
+            case AttackType.Ice:
+                InstantiateDamageTakenParticles("IceDamageTaken");
+                break;
+            case AttackType.Air:
+                InstantiateDamageTakenParticles("AirDamageTaken");
+                break;
+            case AttackType.Earth:
+                InstantiateDamageTakenParticles("EarthDamageTaken");
+                break;
+            case AttackType.Lightning:
+                InstantiateDamageTakenParticles("LightningDamageTaken");
+                break;
+            case AttackType.Light:
+                InstantiateDamageTakenParticles("LightDamageTaken");
+                break;
+            case AttackType.Dark:
+                InstantiateDamageTakenParticles("DarkDamageTaken");
+                break;
+            case AttackType.Poison:
+                InstantiateDamageTakenParticles("PoisonDamageTaken");
+                break;
+            case AttackType.Bleed:
+                InstantiateDamageTakenParticles("BloodDamageTaken");
+                break;
+            case AttackType.Curse:
+                InstantiateDamageTakenParticles("CurseDamageTaken");
+                break;
+            default: break;
+        }
         damage = Mathf.Clamp(damage, 0f, stats.maxDamageTimesHealth * stats.maxHealth);
         stats.health -= damage;
         //statusParticles.StartHitParticles();
@@ -235,6 +277,12 @@ public class StatusEffects : MonoBehaviour {
             stats.health = 0;
             enemy.EnemyDie();
         }*/
+    }
+    private void InstantiateDamageTakenParticles(string name) {
+        GameObject damageTakenParticles = ObjectPooler.objectPooler.GetPooledObject(name);
+        damageTakenParticles.transform.position = transform.position;
+        damageTakenParticles.transform.rotation = Quaternion.identity;
+        damageTakenParticles.SetActive(true);
     }
     /*
     private IEnumerator LocateTargetWhenHit() {

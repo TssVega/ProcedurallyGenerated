@@ -76,21 +76,21 @@ MonoBehaviour:
     worldSize: 0
   tileDatabase:
     wallTiles:
-    - {fileID: 11400000, guid: 70a5e9588655bfd4b88e5b2f6f2d1b64, type: 2}
-    - {fileID: 11400000, guid: 4b9190e6624dd9e42b8db5cfda3930eb, type: 2}
-    - {fileID: 11400000, guid: faf835cacbe2d4f40949ba1b5b08de6a, type: 2}
-    - {fileID: 11400000, guid: 3d00f5d9d6cd38a428ec4c55b0498dba, type: 2}
-    - {fileID: 11400000, guid: 03c5e79704c706943aa601578f368a3a, type: 2}
-    - {fileID: 11400000, guid: ec8d43723683b4a47aac0dd52f6f05a1, type: 2}
-    - {fileID: 11400000, guid: f8814ea896dd19e44963949213bb16fc, type: 2}
-    - {fileID: 11400000, guid: 57dd6f0727ab03c4798367840f819654, type: 2}
-    - {fileID: 11400000, guid: 4fecc972e51d6574392ba0f4ca4a9fd7, type: 2}
-    - {fileID: 11400000, guid: 7aec59af907e5a34b8fb3038d052bb07, type: 2}
-    - {fileID: 11400000, guid: 04455dcefadcda74cbf8b52ec7a9e4a3, type: 2}
-    - {fileID: 11400000, guid: 1d404e86d79f412439f15c44e8c5c594, type: 2}
-    - {fileID: 11400000, guid: ef6091ea5e1cc2c46ad2a34548304b22, type: 2}
-    - {fileID: 11400000, guid: a37a92d240d97be48b49b73df645dc03, type: 2}
-    - {fileID: 11400000, guid: 391a8b97f81f2614ab18890aa973e10a, type: 2}
+    - {fileID: 11400000, guid: 33be99366c417e7499442f1b3ab4893b, type: 2}
+    - {fileID: 11400000, guid: 746ad9e64685ce54f8d67cedd6c38211, type: 2}
+    - {fileID: 11400000, guid: 37c8b8a451b8b8d42bd725ec8bb13b6b, type: 2}
+    - {fileID: 11400000, guid: fee1b41e96d24df41ba942f101dec08b, type: 2}
+    - {fileID: 11400000, guid: cb7603907d47b4d4080b4c175b54de04, type: 2}
+    - {fileID: 11400000, guid: 1d1c5b8c76a310245bf033ef4d0f8098, type: 2}
+    - {fileID: 11400000, guid: 24e79d572815ef143ab470ecd4a999fe, type: 2}
+    - {fileID: 11400000, guid: 501f0d066a08a86408acf9d60bb3cf21, type: 2}
+    - {fileID: 11400000, guid: fc329b02d65cb194c9731ae033c2c7bc, type: 2}
+    - {fileID: 11400000, guid: 658bd2038c191fd4fa3336c4f483a270, type: 2}
+    - {fileID: 11400000, guid: 6b1aed109535f9b4d85502ebfe04db51, type: 2}
+    - {fileID: 11400000, guid: d1d3a7afa24459a47b4dddd432607e6f, type: 2}
+    - {fileID: 11400000, guid: c7df40295accd9a4bb8244cba338ca26, type: 2}
+    - {fileID: 11400000, guid: dff2b6667208edd42bf2b32276f35f87, type: 2}
+    - {fileID: 11400000, guid: 9763eccf110203146bf27f34f20cda30, type: 2}
     groundTiles:
     - {fileID: 11400000, guid: ec4d88ba50a91cb4ab301731a42965ce, type: 2}
     - {fileID: 11400000, guid: 8d611f3ce7ef16742aa6b102cf8fef44, type: 2}

@@ -18,33 +18,72 @@ MonoBehaviour:
   - {r: 0.31283376, g: 0.3584906, b: 0.3139216, a: 1}
   - {r: 0.23535956, g: 0.38886794, b: 0.4056604, a: 1}
   - {r: 0.21698111, g: 0.20519675, b: 0, a: 1}
+  - {r: 0.8867924, g: 0.39834994, b: 0, a: 1}
+  - {r: 0.31132078, g: 0.2400486, b: 0.06901923, a: 1}
+  - {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 1}
+  - {r: 0.7169812, g: 0.3719038, b: 0, a: 1}
+  - {r: 0.6886792, g: 0.26769766, b: 0, a: 1}
   weaponGuardColors:
   - {r: 0.3584906, g: 0.3584906, b: 0.3584906, a: 1}
   - {r: 0.509434, g: 0.509434, b: 0.509434, a: 1}
   - {r: 0.7075472, g: 0.7075472, b: 0.7075472, a: 1}
   - {r: 0.8490566, g: 0.8490566, b: 0.8490566, a: 1}
   - {r: 0.9622642, g: 0.9622642, b: 0.9622642, a: 1}
+  - {r: 0.8113208, g: 0.6059167, b: 0, a: 1}
+  - {r: 0.7075472, g: 0.52328986, b: 0, a: 1}
+  - {r: 1, g: 0.85554737, b: 0.2028302, a: 1}
+  - {r: 0.9150943, g: 0.5042108, b: 0, a: 1}
+  - {r: 0.40988785, g: 0.5754717, b: 0.4329286, a: 1}
   weaponBladeColors:
   - {r: 0.6509434, g: 0.6509434, b: 0.6509434, a: 1}
   - {r: 0.745283, g: 0.65757203, b: 0.4464667, a: 1}
   - {r: 1, g: 0.8826081, b: 0.2971698, a: 1}
   - {r: 0.735849, g: 0.735849, b: 0.735849, a: 1}
   - {r: 0.8867924, g: 0.8867924, b: 0.8867924, a: 1}
+  - {r: 0.8301887, g: 0.52774686, b: 0, a: 1}
+  - {r: 0.39048594, g: 0.6132076, b: 0.4167951, a: 1}
+  - {r: 0.6415094, g: 0.5355998, b: 0.5355998, a: 1}
+  - {r: 0.5754717, g: 0.5132222, b: 0.4316038, a: 1}
+  - {r: 0.4993337, g: 0.46747062, b: 0.5188679, a: 1}
   weaponHandles:
-  - {fileID: 8303983070345238448, guid: 3b14fb81ce6ed7e4db48564e38b4f3f9, type: 3}
-  - {fileID: 669874894656188112, guid: 3b14fb81ce6ed7e4db48564e38b4f3f9, type: 3}
-  - {fileID: -609314689473151979, guid: 3b14fb81ce6ed7e4db48564e38b4f3f9, type: 3}
-  - {fileID: -7972961813494275144, guid: 3b14fb81ce6ed7e4db48564e38b4f3f9, type: 3}
+  - {fileID: -695647299148466859, guid: fa3a85f1ddd41414b824e7eb4b765a59, type: 3}
+  - {fileID: -478400794987163594, guid: fa3a85f1ddd41414b824e7eb4b765a59, type: 3}
+  - {fileID: -8008494177924084149, guid: fa3a85f1ddd41414b824e7eb4b765a59, type: 3}
+  - {fileID: 22391383441544271, guid: fa3a85f1ddd41414b824e7eb4b765a59, type: 3}
+  - {fileID: 5368923027254203941, guid: fa3a85f1ddd41414b824e7eb4b765a59, type: 3}
+  - {fileID: -6873308175560122322, guid: fa3a85f1ddd41414b824e7eb4b765a59, type: 3}
+  - {fileID: -8537806031134110966, guid: fa3a85f1ddd41414b824e7eb4b765a59, type: 3}
+  - {fileID: -5891640949478001707, guid: fa3a85f1ddd41414b824e7eb4b765a59, type: 3}
   weaponGuards:
-  - {fileID: -7075850275229403969, guid: dc1ed5ef6d314594886f354eef6d7cc0, type: 3}
-  - {fileID: 6779865353778135252, guid: dc1ed5ef6d314594886f354eef6d7cc0, type: 3}
-  - {fileID: -3751549171837250252, guid: dc1ed5ef6d314594886f354eef6d7cc0, type: 3}
-  - {fileID: -461509134459162598, guid: dc1ed5ef6d314594886f354eef6d7cc0, type: 3}
+  - {fileID: 3723510067366100973, guid: af3ce0d83ed66c148810df60e083f854, type: 3}
+  - {fileID: 7583759099928927742, guid: af3ce0d83ed66c148810df60e083f854, type: 3}
+  - {fileID: 6454485335134050932, guid: af3ce0d83ed66c148810df60e083f854, type: 3}
+  - {fileID: -7569811754725535442, guid: af3ce0d83ed66c148810df60e083f854, type: 3}
+  - {fileID: 7644175527478222920, guid: af3ce0d83ed66c148810df60e083f854, type: 3}
+  - {fileID: 2967093209712325379, guid: af3ce0d83ed66c148810df60e083f854, type: 3}
+  - {fileID: -4771878204155091443, guid: af3ce0d83ed66c148810df60e083f854, type: 3}
+  - {fileID: -5567419552387766977, guid: af3ce0d83ed66c148810df60e083f854, type: 3}
+  - {fileID: -1210203067499490273, guid: af3ce0d83ed66c148810df60e083f854, type: 3}
+  - {fileID: 185653923594836125, guid: af3ce0d83ed66c148810df60e083f854, type: 3}
+  - {fileID: 5461810067310873693, guid: af3ce0d83ed66c148810df60e083f854, type: 3}
+  - {fileID: 1322740515472544244, guid: af3ce0d83ed66c148810df60e083f854, type: 3}
   weaponBlades:
-  - {fileID: -6587006132444247609, guid: de9890250db720d459bf560ccec13213, type: 3}
-  - {fileID: -2445433549273179918, guid: de9890250db720d459bf560ccec13213, type: 3}
-  - {fileID: -8213075895890060532, guid: de9890250db720d459bf560ccec13213, type: 3}
-  - {fileID: 6467012152879250504, guid: de9890250db720d459bf560ccec13213, type: 3}
+  - {fileID: 6045361570575769648, guid: acdfadd20ac3123418f41ef5ce9b711f, type: 3}
+  - {fileID: 6255758845287443903, guid: acdfadd20ac3123418f41ef5ce9b711f, type: 3}
+  - {fileID: -3573278201015489090, guid: acdfadd20ac3123418f41ef5ce9b711f, type: 3}
+  - {fileID: 6411426780767237544, guid: acdfadd20ac3123418f41ef5ce9b711f, type: 3}
+  - {fileID: -7679408033796827174, guid: acdfadd20ac3123418f41ef5ce9b711f, type: 3}
+  - {fileID: -1263416315221080312, guid: acdfadd20ac3123418f41ef5ce9b711f, type: 3}
+  - {fileID: -7441123792781607921, guid: acdfadd20ac3123418f41ef5ce9b711f, type: 3}
+  - {fileID: 2117170236677030691, guid: acdfadd20ac3123418f41ef5ce9b711f, type: 3}
+  - {fileID: 3196900935774991803, guid: acdfadd20ac3123418f41ef5ce9b711f, type: 3}
+  - {fileID: 2770305047137165833, guid: acdfadd20ac3123418f41ef5ce9b711f, type: 3}
+  - {fileID: -4877564817899209938, guid: acdfadd20ac3123418f41ef5ce9b711f, type: 3}
+  - {fileID: 2726180349033653564, guid: acdfadd20ac3123418f41ef5ce9b711f, type: 3}
+  - {fileID: 3211346949266917354, guid: acdfadd20ac3123418f41ef5ce9b711f, type: 3}
+  - {fileID: -6977160329177305389, guid: acdfadd20ac3123418f41ef5ce9b711f, type: 3}
+  - {fileID: -2288126338172601125, guid: acdfadd20ac3123418f41ef5ce9b711f, type: 3}
+  - {fileID: 2132521779802858922, guid: acdfadd20ac3123418f41ef5ce9b711f, type: 3}
   chestArmorBaseColors:
   - {r: 0.8207547, g: 0.8207547, b: 0.8207547, a: 1}
   - {r: 0.6698113, g: 0.6698113, b: 0.6698113, a: 1}
