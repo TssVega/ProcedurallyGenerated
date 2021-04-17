@@ -314,7 +314,7 @@ public class Player : MonoBehaviour {
     }
     private void SetBodyArmor(Armor armor) {
         bodyArmor.sprite = armor.firstSprite;
-        bodyArmor.color = armor.firstColor;
+        bodyArmor.color = armor.secondColor;
     }
     private void ClearBodyArmor() {
         bodyArmor.sprite = null;

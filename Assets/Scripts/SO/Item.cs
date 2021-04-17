@@ -79,10 +79,6 @@ public class Item : ScriptableObject {
     public virtual void OnHitTaken() {
     }
 }
-
-public enum Rarity {
-    Common, Rare, Epic, Unique
-}
 // Equip slots of items
 public enum EquipSlot {
     RightHand, LeftHand, Head, Body, Legs, Finger, Consumable

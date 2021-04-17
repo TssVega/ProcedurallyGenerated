@@ -35,16 +35,21 @@ MonoBehaviour:
   - {r: 0.9150943, g: 0.5042108, b: 0, a: 1}
   - {r: 0.40988785, g: 0.5754717, b: 0.4329286, a: 1}
   weaponBladeColors:
-  - {r: 0.6509434, g: 0.6509434, b: 0.6509434, a: 1}
-  - {r: 0.745283, g: 0.65757203, b: 0.4464667, a: 1}
-  - {r: 1, g: 0.8826081, b: 0.2971698, a: 1}
-  - {r: 0.735849, g: 0.735849, b: 0.735849, a: 1}
-  - {r: 0.8867924, g: 0.8867924, b: 0.8867924, a: 1}
-  - {r: 0.8301887, g: 0.52774686, b: 0, a: 1}
-  - {r: 0.39048594, g: 0.6132076, b: 0.4167951, a: 1}
-  - {r: 0.6415094, g: 0.5355998, b: 0.5355998, a: 1}
-  - {r: 0.5754717, g: 0.5132222, b: 0.4316038, a: 1}
-  - {r: 0.4993337, g: 0.46747062, b: 0.5188679, a: 1}
+  - {r: 0.8207547, g: 0.49433252, b: 0.112273075, a: 1}
+  - {r: 0.6415094, g: 0.5717141, b: 0.56585974, a: 1}
+  - {r: 0.8773585, g: 0.8773585, b: 0.8773585, a: 1}
+  - {r: 1, g: 0.8511839, b: 0.2688679, a: 1}
+  - {r: 0.6823603, g: 0.7735849, b: 0.76679957, a: 1}
+  - {r: 0.509434, g: 0.509434, b: 0.509434, a: 1}
+  - {r: 0.3679245, g: 0.3679245, b: 0.3679245, a: 1}
+  - {r: 0.25943398, g: 0.46721813, b: 1, a: 1}
+  - {r: 0.9056604, g: 0.13521676, b: 0, a: 1}
+  - {r: 0.027417487, g: 0.6320754, b: 0, a: 1}
+  - {r: 0.21226418, g: 0.9761274, b: 1, a: 1}
+  - {r: 0.6741261, g: 0, b: 0.8301887, a: 1}
+  - {r: 0.5675375, g: 0.39489147, b: 0.9622642, a: 1}
+  - {r: 0.9339623, g: 0.6525679, b: 0, a: 1}
+  - {r: 0.49056602, g: 0.28474757, b: 0.20594516, a: 1}
   weaponHandles:
   - {fileID: -695647299148466859, guid: fa3a85f1ddd41414b824e7eb4b765a59, type: 3}
   - {fileID: -478400794987163594, guid: fa3a85f1ddd41414b824e7eb4b765a59, type: 3}
@@ -90,6 +95,11 @@ MonoBehaviour:
   - {r: 0.5188679, g: 0.5188679, b: 0.5188679, a: 1}
   - {r: 0.9433962, g: 0.9433962, b: 0.9433962, a: 1}
   - {r: 0.1981132, g: 0.1981132, b: 0.1981132, a: 1}
+  - {r: 0.7075472, g: 0.5742879, b: 0.010012442, a: 1}
+  - {r: 1, g: 0.9005696, b: 0.07075471, a: 1}
+  - {r: 0.8773585, g: 0.57827085, b: 0.1779548, a: 1}
+  - {r: 0.49907133, g: 0.5849056, b: 0.493859, a: 1}
+  - {r: 0.6226415, g: 0.5774355, b: 0.56096476, a: 1}
   chestArmorOverlayColors:
   - {r: 0.16037738, g: 0.16037738, b: 0.16037738, a: 1}
   - {r: 0.9528302, g: 0.9528302, b: 0.9528302, a: 1}
@@ -103,18 +113,33 @@ MonoBehaviour:
   - {r: 0.13207549, g: 0.13207549, b: 0.13207549, a: 1}
   - {r: 0.4245283, g: 0.23429157, b: 0.09803922, a: 1}
   chestArmorBases:
-  - {fileID: -1112402335522396137, guid: ebb4f7ed48cf6284a8b5463e5948c09e, type: 3}
-  - {fileID: 5550824956012843040, guid: ebb4f7ed48cf6284a8b5463e5948c09e, type: 3}
+  - {fileID: 8495849641563066306, guid: 07254c0ea625ffd4581ef2207f5bec6f, type: 3}
+  - {fileID: -3870516407121212619, guid: 07254c0ea625ffd4581ef2207f5bec6f, type: 3}
+  - {fileID: -9046137695074791760, guid: 07254c0ea625ffd4581ef2207f5bec6f, type: 3}
+  - {fileID: 3044221465601871528, guid: 07254c0ea625ffd4581ef2207f5bec6f, type: 3}
+  - {fileID: -5384746902742611422, guid: 07254c0ea625ffd4581ef2207f5bec6f, type: 3}
+  - {fileID: -3507075878325653771, guid: 07254c0ea625ffd4581ef2207f5bec6f, type: 3}
+  - {fileID: -6568569380501607579, guid: 07254c0ea625ffd4581ef2207f5bec6f, type: 3}
+  - {fileID: -3284410036679380024, guid: 07254c0ea625ffd4581ef2207f5bec6f, type: 3}
+  - {fileID: 7592845949887797369, guid: 07254c0ea625ffd4581ef2207f5bec6f, type: 3}
   chestArmorOverlays:
-  - {fileID: -3616223901197906225, guid: 028dcc74100bc4744a5b898d2949bf57, type: 3}
-  - {fileID: -3760404856413903024, guid: 028dcc74100bc4744a5b898d2949bf57, type: 3}
-  - {fileID: 5392059579658507502, guid: 028dcc74100bc4744a5b898d2949bf57, type: 3}
-  - {fileID: 1912450723320154207, guid: 028dcc74100bc4744a5b898d2949bf57, type: 3}
+  - {fileID: -200400265597668497, guid: 0778ebfef7779fb4b9a10eb8eb768a9e, type: 3}
+  - {fileID: 166937707248178174, guid: 0778ebfef7779fb4b9a10eb8eb768a9e, type: 3}
+  - {fileID: 1698336090296540580, guid: 0778ebfef7779fb4b9a10eb8eb768a9e, type: 3}
+  - {fileID: -891161276838996989, guid: 0778ebfef7779fb4b9a10eb8eb768a9e, type: 3}
+  - {fileID: -6850916521460148925, guid: 0778ebfef7779fb4b9a10eb8eb768a9e, type: 3}
+  - {fileID: 3709347340574388454, guid: 0778ebfef7779fb4b9a10eb8eb768a9e, type: 3}
+  - {fileID: 7711185158121269784, guid: 0778ebfef7779fb4b9a10eb8eb768a9e, type: 3}
+  - {fileID: 502007836864792106, guid: 0778ebfef7779fb4b9a10eb8eb768a9e, type: 3}
+  - {fileID: -910017670694892678, guid: 0778ebfef7779fb4b9a10eb8eb768a9e, type: 3}
   chestArmorBacks:
-  - {fileID: 8722498328274846790, guid: 028dcc74100bc4744a5b898d2949bf57, type: 3}
+  - {fileID: 0}
+  - {fileID: 51834018292283804, guid: 0778ebfef7779fb4b9a10eb8eb768a9e, type: 3}
   chestArmorInGame:
-  - {fileID: 1477287829503362545, guid: ec84030b3667126418cf91336ae266df, type: 3}
-  - {fileID: -1361894916884067870, guid: ec84030b3667126418cf91336ae266df, type: 3}
+  - {fileID: -3714128082659160937, guid: 52ae6e96f45d7be42b81757cd9730160, type: 3}
+  - {fileID: 8155204834074789427, guid: 52ae6e96f45d7be42b81757cd9730160, type: 3}
+  - {fileID: -273545594313350718, guid: 52ae6e96f45d7be42b81757cd9730160, type: 3}
+  - {fileID: -1322606222410573593, guid: 52ae6e96f45d7be42b81757cd9730160, type: 3}
   helmetBaseColors:
   - {r: 0.8490566, g: 0.8490566, b: 0.8490566, a: 1}
   - {r: 0.8113208, g: 0.8113208, b: 0.8113208, a: 1}
@@ -123,20 +148,26 @@ MonoBehaviour:
   - {r: 0.21698111, g: 0.21698111, b: 0.21698111, a: 1}
   helmetPropColor: {r: 1, g: 1, b: 1, a: 1}
   helmetBases:
-  - {fileID: 5478282400592031559, guid: 2897d390fe536624ea4936375c05b069, type: 3}
-  - {fileID: -3938204243445572533, guid: 2897d390fe536624ea4936375c05b069, type: 3}
-  - {fileID: 1705569925001335499, guid: 2897d390fe536624ea4936375c05b069, type: 3}
-  - {fileID: 4983153861927101659, guid: 2897d390fe536624ea4936375c05b069, type: 3}
+  - {fileID: -3431364173336088633, guid: 49f6016fffa381143acb36abe33a6144, type: 3}
+  - {fileID: 8170978870965900058, guid: 49f6016fffa381143acb36abe33a6144, type: 3}
+  - {fileID: -5451455766777276385, guid: 49f6016fffa381143acb36abe33a6144, type: 3}
+  - {fileID: -7602969529414830949, guid: 49f6016fffa381143acb36abe33a6144, type: 3}
+  - {fileID: 2526024220443579430, guid: 49f6016fffa381143acb36abe33a6144, type: 3}
+  - {fileID: -3728199608278558085, guid: 49f6016fffa381143acb36abe33a6144, type: 3}
+  - {fileID: 5463564938100005262, guid: 49f6016fffa381143acb36abe33a6144, type: 3}
+  - {fileID: 5795094990775708613, guid: 49f6016fffa381143acb36abe33a6144, type: 3}
   helmetProps:
-  - {fileID: 2003036926474651344, guid: f47f11ecaaad1dd4e936307bdf777d51, type: 3}
-  - {fileID: -5051647243450162747, guid: f47f11ecaaad1dd4e936307bdf777d51, type: 3}
-  - {fileID: -6628357255282513198, guid: f47f11ecaaad1dd4e936307bdf777d51, type: 3}
+  - {fileID: 0}
+  - {fileID: -7329892136287661235, guid: 2a0eeedc0036e7d4491dc04714b348c1, type: 3}
+  - {fileID: 2364937202756788495, guid: 2a0eeedc0036e7d4491dc04714b348c1, type: 3}
+  - {fileID: -4628828282953314740, guid: 2a0eeedc0036e7d4491dc04714b348c1, type: 3}
   helmetBasesInGame:
-  - {fileID: -6721165401184188268, guid: f454bcb54a0e3194cabb63066b76d5b7, type: 3}
+  - {fileID: 755035517294626047, guid: 2f369a1c2ca610f43abfd326cdec18b8, type: 3}
   helmetPropsInGame:
-  - {fileID: -6503725565346348419, guid: f454bcb54a0e3194cabb63066b76d5b7, type: 3}
-  - {fileID: -5902278125987497403, guid: f454bcb54a0e3194cabb63066b76d5b7, type: 3}
-  - {fileID: -7128643844608218146, guid: f454bcb54a0e3194cabb63066b76d5b7, type: 3}
+  - {fileID: 0}
+  - {fileID: -7919008509186011536, guid: 2f369a1c2ca610f43abfd326cdec18b8, type: 3}
+  - {fileID: -4078228064797761349, guid: 2f369a1c2ca610f43abfd326cdec18b8, type: 3}
+  - {fileID: -1932142813298560827, guid: 2f369a1c2ca610f43abfd326cdec18b8, type: 3}
   leggingBaseColors:
   - {r: 0.8584906, g: 0.8584906, b: 0.8584906, a: 1}
   - {r: 0.7075472, g: 0.7075472, b: 0.7075472, a: 1}
@@ -150,62 +181,83 @@ MonoBehaviour:
   - {r: 0.6037736, g: 0.0768957, b: 0.0768957, a: 1}
   - {r: 0.8207547, g: 0.69054097, b: 0.3213332, a: 1}
   leggingBases:
-  - {fileID: 1337416525602527084, guid: 570db1b95bed2e5428ccd60ef6f367fc, type: 3}
-  - {fileID: 4458628198409967821, guid: 570db1b95bed2e5428ccd60ef6f367fc, type: 3}
-  - {fileID: 2735232617660332362, guid: 570db1b95bed2e5428ccd60ef6f367fc, type: 3}
-  - {fileID: 8693064346957545175, guid: 570db1b95bed2e5428ccd60ef6f367fc, type: 3}
+  - {fileID: 3515396771763726300, guid: 4ad070bd133d61d438da173d61b38f7d, type: 3}
+  - {fileID: -673715974682845441, guid: 4ad070bd133d61d438da173d61b38f7d, type: 3}
+  - {fileID: 4258673365177248671, guid: 4ad070bd133d61d438da173d61b38f7d, type: 3}
+  - {fileID: 1764136046774324577, guid: 4ad070bd133d61d438da173d61b38f7d, type: 3}
+  - {fileID: 8892364338628293806, guid: 4ad070bd133d61d438da173d61b38f7d, type: 3}
+  - {fileID: -7914625005702796342, guid: 4ad070bd133d61d438da173d61b38f7d, type: 3}
   leggingProps:
-  - {fileID: -8155310106204610853, guid: 84d5d2ef723dd8044920cd8b8f413682, type: 3}
-  - {fileID: 7743127740008597037, guid: 84d5d2ef723dd8044920cd8b8f413682, type: 3}
-  - {fileID: 6815826609949884503, guid: 84d5d2ef723dd8044920cd8b8f413682, type: 3}
-  - {fileID: -3887963169369315298, guid: 84d5d2ef723dd8044920cd8b8f413682, type: 3}
+  - {fileID: -2342469222394209760, guid: 987efe8f666aa9f41ba287e71e6a4fc3, type: 3}
+  - {fileID: 8183620012049951175, guid: 987efe8f666aa9f41ba287e71e6a4fc3, type: 3}
+  - {fileID: 4981036548021174077, guid: 987efe8f666aa9f41ba287e71e6a4fc3, type: 3}
+  - {fileID: 1467969455340001850, guid: 987efe8f666aa9f41ba287e71e6a4fc3, type: 3}
   shieldBaseColors:
   - {r: 0.735849, g: 0.735849, b: 0.735849, a: 1}
   - {r: 0.4245283, g: 0.2593444, b: 0.05807228, a: 1}
   - {r: 0.5283019, g: 0.39122885, b: 0.062299743, a: 1}
   - {r: 0.91764706, g: 0.7656432, b: 0.12549019, a: 1}
+  - {r: 0.5566038, g: 0.53987604, b: 0.46996263, a: 1}
+  - {r: 0.5471698, g: 0.51066715, b: 0.498131, a: 1}
+  - {r: 0.8679245, g: 0.8679245, b: 0.8679245, a: 1}
+  - {r: 0.44722322, g: 0.45288372, b: 0.4716981, a: 1}
   shieldPropColors:
   - {r: 0.8207547, g: 0.058072258, b: 0.058072258, a: 1}
   - {r: 0.1509434, g: 0.1502314, b: 0.1502314, a: 1}
   - {r: 0.7764706, g: 0.51010156, b: 0.04313723, a: 1}
   - {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 1}
   shieldBases:
-  - {fileID: -7107877396063496815, guid: e27614b5d7f37c340bcd03d67fa72615, type: 3}
-  - {fileID: -8831429266697625215, guid: e27614b5d7f37c340bcd03d67fa72615, type: 3}
-  - {fileID: -1747013392613954927, guid: e27614b5d7f37c340bcd03d67fa72615, type: 3}
-  - {fileID: -8837807373519825478, guid: e27614b5d7f37c340bcd03d67fa72615, type: 3}
+  - {fileID: 911209907894359069, guid: b5bb47effd05d8e4eb3942f87f441e69, type: 3}
+  - {fileID: 2188368836547555062, guid: b5bb47effd05d8e4eb3942f87f441e69, type: 3}
+  - {fileID: -7887067492687825663, guid: b5bb47effd05d8e4eb3942f87f441e69, type: 3}
+  - {fileID: 6789932156541242814, guid: b5bb47effd05d8e4eb3942f87f441e69, type: 3}
+  - {fileID: -8469660759403606572, guid: b5bb47effd05d8e4eb3942f87f441e69, type: 3}
+  - {fileID: -2984495039757249827, guid: b5bb47effd05d8e4eb3942f87f441e69, type: 3}
+  - {fileID: -4073658422515671407, guid: b5bb47effd05d8e4eb3942f87f441e69, type: 3}
+  - {fileID: 8074182180499086820, guid: b5bb47effd05d8e4eb3942f87f441e69, type: 3}
+  - {fileID: -496555239116848512, guid: b5bb47effd05d8e4eb3942f87f441e69, type: 3}
   shieldProps:
   - {fileID: 880205181687023923, guid: 1d3dc5f5e4103914080d8471e32b7aa9, type: 3}
   - {fileID: 7112706108043005543, guid: 1d3dc5f5e4103914080d8471e32b7aa9, type: 3}
   - {fileID: 3986970833080739715, guid: 1d3dc5f5e4103914080d8471e32b7aa9, type: 3}
   - {fileID: 3347032710275199280, guid: 1d3dc5f5e4103914080d8471e32b7aa9, type: 3}
   shieldInGame:
-  - {fileID: 21300000, guid: 93a06c66ca98565418007f37ecc170de, type: 3}
+  - {fileID: 21300000, guid: 292d0a1ccd8bae341b568d2d1e99160e, type: 3}
   ringBaseColors:
   - {r: 0.7735849, g: 0.7735849, b: 0.7735849, a: 1}
   - {r: 0.7169812, g: 0.6144422, b: 0.39569244, a: 1}
   - {r: 0.6415094, g: 0.6415094, b: 0.6415094, a: 1}
   - {r: 0.9339623, g: 0.7907841, b: 0.074893214, a: 1}
+  - {r: 0.5, g: 0.39954337, b: 0.375, a: 1}
+  - {r: 0.41616234, g: 0.5283019, b: 0.44432524, a: 1}
+  - {r: 0.33962262, g: 0.286691, b: 0.017621929, a: 1}
+  - {r: 0.5188679, g: 0.50156784, b: 0.41362584, a: 1}
   ringJewelColors:
   - {r: 0.04416568, g: 0.7169812, b: 0, a: 1}
   - {r: 0.8207547, g: 0.06581525, b: 0.06581525, a: 1}
   - {r: 0.41176474, g: 0.9004486, b: 1, a: 1}
   - {r: 0.6333992, g: 0.086908154, b: 0.8773585, a: 1}
   ringBases:
-  - {fileID: 322545482968272027, guid: 079b9aa2ff726704280984f51a945705, type: 3}
-  - {fileID: 428320966948510603, guid: 079b9aa2ff726704280984f51a945705, type: 3}
+  - {fileID: 4827370735144380517, guid: c945ad95555187e48aaebacbd390ef48, type: 3}
+  - {fileID: 2281298686737983984, guid: c945ad95555187e48aaebacbd390ef48, type: 3}
   ringSockets:
-  - {fileID: 1906733163665231028, guid: 079b9aa2ff726704280984f51a945705, type: 3}
+  - {fileID: -5366140754176029220, guid: c945ad95555187e48aaebacbd390ef48, type: 3}
   ringJewels:
   - {fileID: 0}
-  - {fileID: 6650434616320487656, guid: 079b9aa2ff726704280984f51a945705, type: 3}
+  - {fileID: 4261250473951333766, guid: c945ad95555187e48aaebacbd390ef48, type: 3}
   bowColors:
   - {r: 0.5471698, g: 0.330347, b: 0.04387683, a: 1}
   - {r: 0.3490566, g: 0.3490566, b: 0.3490566, a: 1}
   - {r: 0.7830189, g: 0.7830189, b: 0.7830189, a: 1}
   - {r: 0.4528302, g: 0.31830958, b: 0.091847636, a: 1}
+  - {r: 0.26415092, g: 0.26415092, b: 0.26415092, a: 1}
+  - {r: 0.7830189, g: 0.5600697, b: 0.003693494, a: 1}
+  - {r: 1, g: 0.9128237, b: 0.21226418, a: 1}
+  - {r: 0.6037736, g: 0.5042877, b: 0.48131007, a: 1}
+  - {r: 0.5188679, g: 0.51863164, b: 0.45278567, a: 1}
+  - {r: 0.4811321, g: 0.24728088, b: 0.18836774, a: 1}
   bowBases:
-  - {fileID: 3941281049051110410, guid: 67c5cedd46f47e64f8b50d6001f1dab6, type: 3}
-  - {fileID: 5489302328335830633, guid: 67c5cedd46f47e64f8b50d6001f1dab6, type: 3}
-  - {fileID: -8559238915597860439, guid: 67c5cedd46f47e64f8b50d6001f1dab6, type: 3}
-  - {fileID: 1574898213684309166, guid: 67c5cedd46f47e64f8b50d6001f1dab6, type: 3}
+  - {fileID: 5103986791118099626, guid: 7ec300f1678cd6b40ac0eaa869e6cf09, type: 3}
+  - {fileID: -2191477379800411434, guid: 7ec300f1678cd6b40ac0eaa869e6cf09, type: 3}
+  - {fileID: 715317130902145233, guid: 7ec300f1678cd6b40ac0eaa869e6cf09, type: 3}
+  - {fileID: -4274273943436650574, guid: 7ec300f1678cd6b40ac0eaa869e6cf09, type: 3}

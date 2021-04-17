@@ -92,10 +92,10 @@ MonoBehaviour:
     - {fileID: 11400000, guid: dff2b6667208edd42bf2b32276f35f87, type: 2}
     - {fileID: 11400000, guid: 9763eccf110203146bf27f34f20cda30, type: 2}
     groundTiles:
-    - {fileID: 11400000, guid: ec4d88ba50a91cb4ab301731a42965ce, type: 2}
-    - {fileID: 11400000, guid: 8d611f3ce7ef16742aa6b102cf8fef44, type: 2}
-    - {fileID: 11400000, guid: 7c2d76eb607d75b46836d3f122c9fbdd, type: 2}
-    - {fileID: 11400000, guid: 5178b084565a25040ac6984e29e2642c, type: 2}
+    - {fileID: 11400000, guid: ce1c86b87893bc74cb4282eb6c62187b, type: 2}
+    - {fileID: 11400000, guid: 6dee763056db19241bfad20501854587, type: 2}
+    - {fileID: 11400000, guid: 308c78bcd7974b64198a115ab338696d, type: 2}
+    - {fileID: 11400000, guid: 0c13543f6f8b9fa48bdfdfd51b876b7d, type: 2}
 --- !u!114 &2913122364275797249
 MonoBehaviour:
   m_ObjectHideFlags: 0

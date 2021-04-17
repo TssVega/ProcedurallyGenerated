@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 [CreateAssetMenu(menuName = "Scriptable Objects/Item Creator")]
 public class ItemCreator : ScriptableObject {
@@ -47,6 +48,10 @@ public class ItemCreator : ScriptableObject {
     // Bow sprites
     public Color[] bowColors;
     public Sprite[] bowBases;
+
+    private readonly int[] metalArmorIndices = new int[] { 0, 3, 6, 8 };
+    private readonly int[] leatherArmorIndices = new int[] { 1, 2, 5 };
+    private readonly int[] clothArmorIndices = new int[] { 4, 7 };
     // Create an item
     public Item CreateItem(string seed) {
         System.Random pseudoRandom = new System.Random(seed.GetHashCode());
@@ -84,7 +89,7 @@ public class ItemCreator : ScriptableObject {
         }
         if(item) {
             item.seed = seed;
-        }        
+        }
         return item;
     }
     // Create a weapon sprite
@@ -144,25 +149,68 @@ public class ItemCreator : ScriptableObject {
         return weapon;
     }
     // Create a chest armor sprite
-    // TODO: Match chest armor sprite and icons to be consistent
     public Armor CreateChestArmor(string seed) {
         System.Random pseudoRandom = new System.Random(seed.GetHashCode());
-        Sprite armorBase = chestArmorBases[pseudoRandom.Next(0, chestArmorBases.Length)];
-        Sprite armorOverlay = chestArmorOverlays[pseudoRandom.Next(0, chestArmorOverlays.Length)];
-        Sprite armorBack = chestArmorBacks[pseudoRandom.Next(0, chestArmorBacks.Length)];
-        Sprite inGameArmor = chestArmorInGame[pseudoRandom.Next(0, chestArmorInGame.Length)];
+        int armorBaseIndex = pseudoRandom.Next(0, chestArmorBases.Length);
+        Sprite armorBase = chestArmorBases[armorBaseIndex];
+        Sprite armorOverlay = null;
+        Sprite armorBack = null;
+        Sprite inGameArmor = null;
+        if(metalArmorIndices.Contains(armorBaseIndex)) {
+            int armorOverlayIndex = pseudoRandom.Next(0, chestArmorOverlays.Length);
+            armorOverlay = chestArmorOverlays[armorOverlayIndex];
+            armorBack = chestArmorBacks[pseudoRandom.Next(0, chestArmorBacks.Length)];
+            if(new int[] { 2, 9 }.Contains(armorOverlayIndex)) {
+                // Small shoulders
+                Debug.Log("Small shoulders");
+                inGameArmor = chestArmorInGame[1];
+            }
+            else if(new int[] { 5, 6, 7, 8 }.Contains(armorOverlayIndex)) {
+                // Big shoulders
+                Debug.Log("Big shoulders");
+                int overlay = pseudoRandom.Next(0, 4);
+                if(overlay == 1) {
+                    overlay = 0;
+                }
+                inGameArmor = chestArmorInGame[overlay];
+            }
+        }
+        else if(leatherArmorIndices.Contains(armorBaseIndex)) {
+            int leatherOverlayIndex = pseudoRandom.Next(0, 4);
+            if(leatherOverlayIndex == 3) {
+                leatherOverlayIndex = 0;
+            }
+            armorOverlay = chestArmorOverlays[leatherOverlayIndex];
+            armorBack = chestArmorBacks[pseudoRandom.Next(0, chestArmorBacks.Length)];
+            inGameArmor = chestArmorInGame[1];
+        }
+        else if(clothArmorIndices.Contains(armorBaseIndex)) {
+            armorBack = chestArmorBacks[pseudoRandom.Next(0, chestArmorBacks.Length)];
+        }
         Color baseColor = chestArmorBaseColors[pseudoRandom.Next(0, chestArmorBaseColors.Length)];
         Color overlayColor = chestArmorOverlayColors[pseudoRandom.Next(0, chestArmorOverlayColors.Length)];
         Color backColor = chestArmorBackColors[pseudoRandom.Next(0, chestArmorBackColors.Length)];
-        //Sprite 
+        // Sprite 
         Armor armor = CreateInstance<Armor>();
         armor.firstIcon = armorBase;
-        armor.secondIcon = armorOverlay;
-        armor.thirdIcon = armorBack;
+        if(armorOverlay) {
+            armor.secondIcon = armorOverlay;
+            armor.secondColor = overlayColor;
+        }
+        else {
+            armor.secondColor = Color.clear;
+        }
+        if(armorBack) {
+            armor.thirdIcon = armorBack;
+            armor.thirdColor = backColor;
+        }
+        else {
+            armor.thirdColor = Color.clear;
+        }
         armor.firstSprite = inGameArmor;
         armor.firstColor = baseColor;
-        armor.secondColor = overlayColor;
-        armor.thirdColor = backColor;
+        
+        
         armor.slot = EquipSlot.Body;
         return armor;
     }
@@ -171,18 +219,22 @@ public class ItemCreator : ScriptableObject {
     public Armor CreateHelmet(string seed) {
         System.Random pseudoRandom = new System.Random(seed.GetHashCode());
         Sprite helmetBase = helmetBases[pseudoRandom.Next(0, helmetBases.Length)];
-        Sprite helmetProp = helmetProps[pseudoRandom.Next(0, helmetProps.Length)];
+        int helmetPropIndex = pseudoRandom.Next(0, helmetProps.Length);
+        Sprite helmetProp = helmetProps[helmetPropIndex];
         Sprite helmetBaseInGame = helmetBasesInGame[pseudoRandom.Next(0, helmetBasesInGame.Length)];
-        Sprite helmetPropInGame = helmetPropsInGame[pseudoRandom.Next(0, helmetPropsInGame.Length)];
+        Sprite helmetPropInGame = helmetPropsInGame[helmetPropIndex];
         Color baseColor = helmetBaseColors[pseudoRandom.Next(0, helmetBaseColors.Length)];
         Color propColor = helmetPropColor;
         Armor helmet = CreateInstance<Armor>();
         helmet.firstIcon = helmetBase;
-        helmet.secondIcon = helmetProp;
-        helmet.firstSprite = helmetBaseInGame;
-        helmet.secondSprite = helmetPropInGame;
         helmet.firstColor = baseColor;
-        helmet.secondColor = propColor;
+        if(helmetProp) {
+            helmet.secondIcon = helmetProp;
+            helmet.secondColor = propColor;
+            helmet.secondSprite = helmetPropInGame;
+        }        
+        helmet.firstSprite = helmetBaseInGame;
+         
         helmet.slot = EquipSlot.Head;
         return helmet;
     }

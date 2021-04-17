@@ -53,4 +53,29 @@ public static class ColorBySkillType {
     public static Color32 GetColorByStat() {
         return Color.white;
     }
+    public static Color32 GetColorByRarity(Rarity rarity) {
+        Color32 color;
+        switch(rarity) {
+            case Rarity.Common:
+                color = Color.white;
+                break;
+            case Rarity.Rare:
+                color = new Color32(0, 229, 6, 255);
+                break;
+            case Rarity.Epic:
+                color = new Color32(202, 0, 229, 255);
+                break;
+            case Rarity.Legendary:
+                color = new Color32(255, 131, 9, 255);
+                break;
+            default:
+                color = Color.white;
+                break;
+        }
+        return color;
+    }
+}
+
+public enum Rarity {
+    Common, Rare, Epic, Legendary
 }

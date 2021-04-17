@@ -21,7 +21,7 @@ public class ChestGeneration : MonoBehaviour {
     public void LoadChests(int slot, string seed) {
         pseudoRandomForChests = new System.Random(seed.GetHashCode());
         int chestCount = pseudoRandomForChests.Next(0, maxChestCount);        
-        int itemCount = pseudoRandomForChests.Next(0, maxItemCountInChest);
+        int itemCount = pseudoRandomForChests.Next(1, maxItemCountInChest);
         if(levelGeneration.layout.worldCoordinates.x == 0 && levelGeneration.layout.worldCoordinates.y == 2) {
             Debug.Log($"Chest count: {chestCount}");
             Debug.Log($"Item count: {itemCount}");
