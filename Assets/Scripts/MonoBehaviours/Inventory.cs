@@ -210,12 +210,14 @@ public class Inventory : MonoBehaviour {
         }
         else if(item is Shield) {
             Shield s = item as Shield;
-            if(CanAddToInventory()) {
-                UnequipItem((int)EquipSlot.LeftHand, GetEmptyInventorySlot());
-            }
-            else {
+            
+            if(!CanAddToInventory()) {
                 return;
-            }
+                //UnequipItem((int)EquipSlot.LeftHand, GetEmptyInventorySlot());
+            }/*
+            else {
+                
+            }*/
             player.SetItem(s);
         }
         else if(item is Ring) {
@@ -320,7 +322,8 @@ public class Inventory : MonoBehaviour {
             quantities[toSlot]++;
             UpdateSpritesOnUnequip(equipment[fromSlot]);
             stats.OnItemUnequip(equipment[fromSlot]);
-            equipment[fromSlot] = null;            
+            equipment[fromSlot] = null;
+            Debug.Log("Unequipping");
         }
         else {
             return;

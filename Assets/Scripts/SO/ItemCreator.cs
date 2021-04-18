@@ -5,43 +5,33 @@ using System.Linq;
 
 [CreateAssetMenu(menuName = "Scriptable Objects/Item Creator")]
 public class ItemCreator : ScriptableObject {
+    // Mine and weapon material colors
+    public Color[] bladeMaterialColors;
+    public Color[] otherMaterialColors;
     // Weapons
-    public Color[] weaponHandleColors;
-    public Color[] weaponGuardColors;
-    public Color[] weaponBladeColors;
     public Sprite[] weaponHandles;
     public Sprite[] weaponGuards;
     public Sprite[] weaponBlades;
     // UI view of chest armor
-    public Color[] chestArmorBaseColors;
-    public Color[] chestArmorOverlayColors;
-    public Color[] chestArmorBackColors;
     public Sprite[] chestArmorBases;
     public Sprite[] chestArmorOverlays;
     public Sprite[] chestArmorBacks;
     // In game sprites of chest armor
     public Sprite[] chestArmorInGame;
     // Helmet sprites
-    public Color[] helmetBaseColors;
     public Color helmetPropColor = Color.white;
     public Sprite[] helmetBases;
     public Sprite[] helmetProps;
     public Sprite[] helmetBasesInGame;
     public Sprite[] helmetPropsInGame;
     // Legging sprites
-    public Color[] leggingBaseColors;
-    public Color[] leggingPropColors;
     public Sprite[] leggingBases;
     public Sprite[] leggingProps;
     // Shield sprites
-    public Color[] shieldBaseColors;
-    public Color[] shieldPropColors;
     public Sprite[] shieldBases;
     public Sprite[] shieldProps;
     public Sprite[] shieldInGame;
     // Ring sprites
-    public Color[] ringBaseColors;
-    public Color[] ringJewelColors;
     public Sprite[] ringBases;
     public Sprite[] ringSockets;
     public Sprite[] ringJewels;
@@ -116,9 +106,9 @@ public class ItemCreator : ScriptableObject {
             Sprite handle = weaponHandles[pseudoRandom.Next(0, weaponHandles.Length)];
             Sprite guard = weaponGuards[pseudoRandom.Next(0, weaponGuards.Length)];
             Sprite blade = weaponBlades[pseudoRandom.Next(0, weaponBlades.Length)];
-            Color handleColor = weaponHandleColors[pseudoRandom.Next(0, weaponHandleColors.Length)];
-            Color guardColor = weaponGuardColors[pseudoRandom.Next(0, weaponGuardColors.Length)];
-            Color bladeColor = weaponBladeColors[pseudoRandom.Next(0, weaponBladeColors.Length)];
+            Color handleColor = bladeMaterialColors[pseudoRandom.Next(0, bladeMaterialColors.Length)];
+            Color guardColor = bladeMaterialColors[pseudoRandom.Next(0, bladeMaterialColors.Length)];
+            Color bladeColor = otherMaterialColors[pseudoRandom.Next(0, otherMaterialColors.Length)];
             weapon.firstSprite = handle;
             weapon.secondSprite = guard;
             weapon.thirdSprite = blade;
@@ -187,9 +177,9 @@ public class ItemCreator : ScriptableObject {
         else if(clothArmorIndices.Contains(armorBaseIndex)) {
             armorBack = chestArmorBacks[pseudoRandom.Next(0, chestArmorBacks.Length)];
         }
-        Color baseColor = chestArmorBaseColors[pseudoRandom.Next(0, chestArmorBaseColors.Length)];
-        Color overlayColor = chestArmorOverlayColors[pseudoRandom.Next(0, chestArmorOverlayColors.Length)];
-        Color backColor = chestArmorBackColors[pseudoRandom.Next(0, chestArmorBackColors.Length)];
+        Color baseColor = bladeMaterialColors[pseudoRandom.Next(0, bladeMaterialColors.Length)];
+        Color overlayColor = bladeMaterialColors[pseudoRandom.Next(0, bladeMaterialColors.Length)];
+        Color backColor = otherMaterialColors[pseudoRandom.Next(0, otherMaterialColors.Length)];
         // Sprite 
         Armor armor = CreateInstance<Armor>();
         armor.firstIcon = armorBase;
@@ -223,7 +213,7 @@ public class ItemCreator : ScriptableObject {
         Sprite helmetProp = helmetProps[helmetPropIndex];
         Sprite helmetBaseInGame = helmetBasesInGame[pseudoRandom.Next(0, helmetBasesInGame.Length)];
         Sprite helmetPropInGame = helmetPropsInGame[helmetPropIndex];
-        Color baseColor = helmetBaseColors[pseudoRandom.Next(0, helmetBaseColors.Length)];
+        Color baseColor = bladeMaterialColors[pseudoRandom.Next(0, bladeMaterialColors.Length)];
         Color propColor = helmetPropColor;
         Armor helmet = CreateInstance<Armor>();
         helmet.firstIcon = helmetBase;
@@ -242,8 +232,8 @@ public class ItemCreator : ScriptableObject {
         System.Random pseudoRandom = new System.Random(seed.GetHashCode());
         Sprite leggingBase = leggingBases[pseudoRandom.Next(0, leggingBases.Length)];
         Sprite leggingProp = leggingProps[pseudoRandom.Next(0, leggingProps.Length)];
-        Color baseColor = leggingBaseColors[pseudoRandom.Next(0, leggingBaseColors.Length)];
-        Color propColor = leggingPropColors[pseudoRandom.Next(0, leggingPropColors.Length)];        
+        Color baseColor = bladeMaterialColors[pseudoRandom.Next(0, bladeMaterialColors.Length)];
+        Color propColor = otherMaterialColors[pseudoRandom.Next(0, otherMaterialColors.Length)];        
         Armor legging = CreateInstance<Armor>();
         legging.firstIcon = leggingBase;
         legging.secondIcon = leggingProp;
@@ -257,8 +247,8 @@ public class ItemCreator : ScriptableObject {
         Sprite shieldBase = shieldBases[pseudoRandom.Next(0, shieldBases.Length)];
         Sprite shieldProp = shieldProps[pseudoRandom.Next(0, shieldProps.Length)];
         Sprite inGame = shieldInGame[pseudoRandom.Next(0, shieldInGame.Length)];
-        Color baseColor = shieldBaseColors[pseudoRandom.Next(0, shieldPropColors.Length)];
-        Color propColor = shieldPropColors[pseudoRandom.Next(0, shieldPropColors.Length)];
+        Color baseColor = bladeMaterialColors[pseudoRandom.Next(0, bladeMaterialColors.Length)];
+        Color propColor = otherMaterialColors[pseudoRandom.Next(0, otherMaterialColors.Length)];
         Shield shield = CreateInstance<Shield>();
         shield.firstIcon = shieldBase;
         shield.secondIcon = shieldProp;
@@ -273,8 +263,8 @@ public class ItemCreator : ScriptableObject {
         Sprite ringBase = ringBases[pseudoRandom.Next(0, ringBases.Length)];
         Sprite ringSocket = ringSockets[pseudoRandom.Next(0, ringSockets.Length)];
         Sprite ringJewel = ringJewels[pseudoRandom.Next(0, ringJewels.Length)];
-        Color baseColor = ringBaseColors[pseudoRandom.Next(0, ringBaseColors.Length)];
-        Color jewelColor = ringJewelColors[pseudoRandom.Next(0, ringJewelColors.Length)];
+        Color baseColor = bladeMaterialColors[pseudoRandom.Next(0, bladeMaterialColors.Length)];
+        Color jewelColor = bladeMaterialColors[pseudoRandom.Next(8, bladeMaterialColors.Length)];
         Ring ring = CreateInstance<Ring>();
         ring.firstIcon = ringBase;
         ring.firstColor = baseColor;
