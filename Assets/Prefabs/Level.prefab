@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2016924447434614447}
   - component: {fileID: 2016924447434614480}
   - component: {fileID: 2913122364275797249}
+  - component: {fileID: 579866985699479157}
   - component: {fileID: 6886192618472798170}
   - component: {fileID: 1440041319163023640}
   - component: {fileID: 4589421620878623544}
@@ -111,6 +112,21 @@ MonoBehaviour:
   chestObject: {fileID: 6891694344508322230, guid: 1ec5bdd2d6fb6d24d921dc424b1045e2,
     type: 3}
   chests: []
+--- !u!114 &579866985699479157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2016924447434614481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cceb43091abe3240b471aa1e5c1f87b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mushroomDatabase: {fileID: 11400000, guid: cd02dd15f0de94643ac6f426f808693a, type: 2}
+  mushroomObject: {fileID: 5036906735598353528, guid: c14e52ac886b56c46b32ce098fe41fb9,
+    type: 3}
 --- !u!61 &6886192618472798170
 BoxCollider2D:
   m_ObjectHideFlags: 0

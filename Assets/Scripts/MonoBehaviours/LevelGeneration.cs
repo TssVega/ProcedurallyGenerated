@@ -27,6 +27,7 @@ public class LevelGeneration : MonoBehaviour {
     // A reference to world generation script
     private WorldGeneration worldGeneration;
     private ChestGeneration chestGeneration;
+    private MushroomGeneration mushroomGeneration;
 
     private List<Vector3Int> wallCoordinates;
     private readonly int torchCount = 10;
@@ -34,6 +35,7 @@ public class LevelGeneration : MonoBehaviour {
     private void Awake() {
         worldGeneration = FindObjectOfType<WorldGeneration>();
         chestGeneration = GetComponent<ChestGeneration>();
+        mushroomGeneration = GetComponent<MushroomGeneration>();
     }
     private void Start() {
         //path = transform.GetChild(0).GetComponent<AstarPath>();

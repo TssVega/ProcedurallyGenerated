@@ -188,6 +188,9 @@ public class Inventory : MonoBehaviour {
         /*if(equipment[(int)item.slot] != null) {
             AddToInventory(equipment[(int)item.slot]);
         }*/
+        if(item.slot == EquipSlot.Consumable) {
+            return;
+        }
         if(item is Weapon) {
             Weapon w = item as Weapon;
             if(w.weaponType != WeaponType.OneHanded) {
@@ -238,12 +241,12 @@ public class Inventory : MonoBehaviour {
         if(!CanAddToInventory()) {
             return;
         }
-        if(item && !item.consumable && !equipment[(int)item.slot]) {
+        if(item && item.slot != EquipSlot.Consumable && !equipment[(int)item.slot]) {
             inventory[slot] = null;
             quantities[slot]--;
             EquipItem(item);            
         }
-        else if(item && !item.consumable && equipment[(int)item.slot]) {
+        else if(item && item.slot != EquipSlot.Consumable && equipment[(int)item.slot]) {
             Item tempItem = equipment[(int)item.slot];
             //equipment[(int)item.slot] = null;
             inventory[slot] = null;

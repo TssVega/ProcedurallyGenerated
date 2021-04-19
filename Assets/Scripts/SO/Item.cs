@@ -37,7 +37,7 @@ using UnityEngine;
 public class Item : ScriptableObject {
 
     public string seed;
-    public int itemSaveIndex;
+    //public int itemSaveIndex;
     public string itemName;
     public Sprite firstSprite;
     public Sprite secondSprite;
@@ -53,7 +53,6 @@ public class Item : ScriptableObject {
     public int diamondCost;
     public int goldCost;
     public int silverCost;
-    public bool consumable;
     public bool stackable;
     //public Enchantment enchantment;
     public int dismantleOutput;
@@ -61,6 +60,7 @@ public class Item : ScriptableObject {
     public bool hasTrail;
     public Vector2 trailPosition = new Vector2(0.4f, 0.4f);
     public Gradient weaponTrailGradient;
+    public bool material = false;
 
     [Header("Main Stats")]
     public int strength;

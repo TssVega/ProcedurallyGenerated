@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e2d8772bdd498d4e9a64e7bb41ce75e, type: 3}
+  m_Name: MushroomDatabase
+  m_EditorClassIdentifier: 
+  mushrooms:
+  - {fileID: 11400000, guid: 9f4331579d008ab479e167b6b46f0ad2, type: 2}
+  - {fileID: 11400000, guid: 16f456e2695420641960be8542dda8a7, type: 2}
+  - {fileID: 11400000, guid: d48e3f08a018da642b4caa4a985586a1, type: 2}
+  - {fileID: 11400000, guid: 0e2442a17cc7b674b808f37481eeaf52, type: 2}
+  - {fileID: 11400000, guid: fb4ecfe3b0b458549ab429cfb6e3f1f4, type: 2}
+  - {fileID: 11400000, guid: 2b3484fd83bd8954f9845ac68aa15d79, type: 2}
+  - {fileID: 11400000, guid: 38f178354ac2a1f4ea4051cefa4e8d8f, type: 2}
+  - {fileID: 11400000, guid: 90a88bae744092148917feb5a9230c91, type: 2}
+  - {fileID: 11400000, guid: eaa9acc2b62a44c4aa0208f66e3c01fc, type: 2}
+  - {fileID: 11400000, guid: c102aec88f51e6a40821b60a0265a06b, type: 2}
+  - {fileID: 11400000, guid: 7ef1b382ef579044cb9234eee0d315fb, type: 2}
+  - {fileID: 11400000, guid: f2b12b7a0712ac244bdc83060dbe3f8f, type: 2}
