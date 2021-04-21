@@ -99,6 +99,7 @@ public class LevelGeneration : MonoBehaviour {
             //StartCoroutine(ScanPath());
         }
         chestGeneration.LoadChests(0, layout.seed);
+        await mushroomGeneration.GenerateMushrooms(0, layout.seed);
     }
     private void GenerateTorches() {
         for(int i = 0; i < torchCount; i++) {
@@ -124,6 +125,7 @@ public class LevelGeneration : MonoBehaviour {
             }
         }
         chestGeneration.ClearChests();
+        mushroomGeneration.ClearMushrooms();
         gameObject.SetActive(false);
     }    
     private int ConvertTileIdToTilesetIndex(int id) {
@@ -192,6 +194,15 @@ public class LevelGeneration : MonoBehaviour {
                     (location.x - layout.width / 2) + layout.worldCoordinates.x * layout.width,
                     (location.y - layout.height / 2) + layout.worldCoordinates.y * layout.height, 0);
         return location;
+    }
+    public bool CheckLocation(int x, int y) {
+        return map[x, y] == 0;
+    }
+    public Vector3Int GetPreciseLocation(int x, int y) {
+        Vector3Int tileCoordinate = new Vector3Int(
+                        (x - layout.width / 2) + layout.worldCoordinates.x * layout.width,
+                        (y - layout.height / 2) + layout.worldCoordinates.y * layout.height, 0);
+        return tileCoordinate;
     }
     public bool IsValidLocation(Vector2Int coordinates) {
         bool valid = false;

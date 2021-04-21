@@ -8,7 +8,6 @@ public class Mushroom : Item {
     public MushroomType mushroomType;
     [Range(1f, 50f)]
     public float mushroomPower;
-    [Range(0f, 1f)] public float abundance;
 
     public void Consume(StatusEffects status) {
         if(mushroomType == MushroomType.Edible) {

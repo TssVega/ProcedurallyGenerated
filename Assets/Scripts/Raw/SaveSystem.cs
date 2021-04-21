@@ -89,18 +89,51 @@ public static class SaveSystem {
         // SaveData _data = new SaveData(data);
         // bin.Serialize(stream, _data);
         // Close the stream
-        Debug.Log("Chest data " + data + " saved to slot " + slot + " successfully at " + Application.persistentDataPath);
+        //Debug.Log("Chest data " + data + " saved to slot " + slot + " successfully at " + Application.persistentDataPath);
         // stream.Close();
     }
     // Load from a slot
     public static ChestData LoadChests(int slot, Vector2Int coordinates) {
         string path = $"{Application.persistentDataPath}/ChestData{slot}_{coordinates.x}x{coordinates.y}y.tss";
         if(File.Exists(path)) {
-            Debug.Log("Deserializing file");
             BinaryFormatter bin = new BinaryFormatter();
             using(FileStream stream = new FileStream(path, FileMode.Open)) {
                 ChestData data = bin.Deserialize(stream) as ChestData;
-                Debug.Log("Deserialized file");
+                return data;
+            }
+            // FileStream stream = new FileStream(path, FileMode.Open);
+            // SaveData data = bin.Deserialize(stream) as SaveData;
+            // Debug.Log("Deserialized file");
+            // stream.Close();
+            // return data;
+        }
+        else {
+            Debug.LogWarning("No file found in path");
+            return null;
+        }
+    }
+    public static void SaveMushrooms(MushroomGeneration data, int slot, Vector2Int coordinates) {
+        // Formatter to convert game data to binary
+        BinaryFormatter bin = new BinaryFormatter();
+        string path = $"{Application.persistentDataPath}/MushroomData{slot}_{coordinates.x}x{coordinates.y}y.tss";
+        using(FileStream stream = new FileStream(path, FileMode.Create)) {
+            MushroomData _data = new MushroomData(data);
+            bin.Serialize(stream, _data);
+        }
+        // FileStream stream = new FileStream(path, FileMode.Create);
+        // Take the data and write it to the file
+        // SaveData _data = new SaveData(data);
+        // bin.Serialize(stream, _data);
+        // Close the stream
+        //Debug.Log("Mushroom data " + data + " saved to slot " + slot + " successfully at " + Application.persistentDataPath);
+        // stream.Close();
+    }
+    public static MushroomData LoadMushrooms(int slot, Vector2Int coordinates) {
+        string path = $"{Application.persistentDataPath}/MushroomData{slot}_{coordinates.x}x{coordinates.y}y.tss";
+        if(File.Exists(path)) {
+            BinaryFormatter bin = new BinaryFormatter();
+            using(FileStream stream = new FileStream(path, FileMode.Open)) {
+                MushroomData data = bin.Deserialize(stream) as MushroomData;
                 return data;
             }
             // FileStream stream = new FileStream(path, FileMode.Open);

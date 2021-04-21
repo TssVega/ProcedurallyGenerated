@@ -39,13 +39,20 @@ public class ItemCreator : ScriptableObject {
     public Color[] bowColors;
     public Sprite[] bowBases;
 
+    public MushroomDatabase mushroomDatabase;
+
     private readonly int[] metalArmorIndices = new int[] { 0, 3, 6, 8 };
     private readonly int[] leatherArmorIndices = new int[] { 1, 2, 5 };
     private readonly int[] clothArmorIndices = new int[] { 4, 7 };
     // Create an item
     public Item CreateItem(string seed) {
         System.Random pseudoRandom = new System.Random(seed.GetHashCode());
-        Item item;        
+        Item item;
+        
+        if(CheckSpecialCase(seed) != null) {
+            item = CheckSpecialCase(seed);
+            return item;
+        }
         int slotIndex = pseudoRandom.Next(0, 6);
         if(slotIndex == 0) {
             Weapon w = CreateWeapon(seed);
@@ -88,7 +95,7 @@ public class ItemCreator : ScriptableObject {
         WeaponType type = WeaponType.OneHanded;
         int estimatedPower = pseudoRandom.Next(0, 100);
         //int index = pseudoRandom.Next(0, 4);
-        int index = 0;  // To try out bows
+        int index = 0;  // Currently only short swords
         if(index == 0) {
             type = WeaponType.OneHanded;
         }
@@ -137,6 +144,52 @@ public class ItemCreator : ScriptableObject {
             weapon.slashDamage = pseudoRandom.Next(0, estimatedPower);
         }
         return weapon;
+    }
+    private Item CheckSpecialCase(string seed) {
+        Item item;
+        switch(seed) {
+            case "destroyingAngel":
+                item = mushroomDatabase.mushrooms[0];
+                break;
+            case "truffle":
+                item = mushroomDatabase.mushrooms[1];
+                break;
+            case "turkeyTail":
+                item = mushroomDatabase.mushrooms[2];
+                break;
+            case "blackTrumpet":
+                item = mushroomDatabase.mushrooms[3];
+                break;
+            case "chanterelle":
+                item = mushroomDatabase.mushrooms[4];
+                break;
+            case "reishi":
+                item = mushroomDatabase.mushrooms[5];
+                break;
+            case "matsutake":
+                item = mushroomDatabase.mushrooms[6];
+                break;
+            case "puffball":
+                item = mushroomDatabase.mushrooms[7];
+                break;
+            case "enoki":
+                item = mushroomDatabase.mushrooms[8];
+                break;
+            case "porcini":
+                item = mushroomDatabase.mushrooms[9];
+                break;
+            case "morel":
+                item = mushroomDatabase.mushrooms[10];
+                break;
+            case "flyAgaric":
+                item = mushroomDatabase.mushrooms[11];
+                break;
+            default:
+                Debug.Log("The item isn't special");
+                item = null;
+                break; 
+        }
+        return item;
     }
     // Create a chest armor sprite
     public Armor CreateChestArmor(string seed) {

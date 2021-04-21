@@ -44,7 +44,7 @@ public class Player : MonoBehaviour {
 
     public Transform testTarget;
 
-    private IInteractable interaction;
+    private List<IInteractable> interactionList;
 
     private UICanvas uiCanvas;
 
@@ -56,9 +56,9 @@ public class Player : MonoBehaviour {
         inventory = GetComponent<Inventory>();
     }
     private void Start() {
+        interactionList = new List<IInteractable>();
         ClearWeapons();
         LoadPlayer();
-        ClearInteraction();
         //SetWeapon(itemCreator.CreateWeaponSprite("tss"));
     }
     /*
@@ -137,6 +137,9 @@ public class Player : MonoBehaviour {
                 else {
                     inventory.equipment[i] = null;
                 }
+            }
+            for(int i = 0; i < data.inventoryQuantities.Length; i++) {
+                inventory.quantities[i] = data.inventoryQuantities[i];
             }
             // Appearance
             skinColorIndex = data.skinColorIndex;
@@ -341,18 +344,37 @@ public class Player : MonoBehaviour {
         this.shield.color = Color.clear;
     }
     public void SetInteraction(IInteractable interactable) {
-        interaction = interactable;
-        uiCanvas.ChangeInteractButton(interactable.UISprite);
+        /*interaction = interactable;
+        uiCanvas.ChangeInteractButton(interactable.UISprite);*/
+        interactionList.Add(interactable);
+        if(interactionList.Count > 0) {
+            uiCanvas.ChangeInteractButton(interactionList[interactionList.Count - 1].UISprite);
+        }
+        else {
+            uiCanvas.ClearInteractButton();
+        }
     }
-    public void ClearInteraction() {
+    public void ClearInteraction(IInteractable interactable) {
+        /*
         interaction = null;
         if(uiCanvas) {
             uiCanvas.ClearInteractButton();
-        }        
+        }        */
+        interactionList.Remove(interactable);
+        if(interactionList.Count > 0) {
+            uiCanvas.ChangeInteractButton(interactionList[interactionList.Count - 1].UISprite);
+        }
+        else {
+            uiCanvas.ClearInteractButton();
+        }
     }
     public void Interact() {
+        /*
         if(interaction != null) {
             interaction.Interact();
+        }*/
+        if(interactionList.Count > 0) {
+            interactionList[interactionList.Count - 1].Interact();
         }
     }
 }

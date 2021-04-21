@@ -259,7 +259,46 @@ public class Inventory : MonoBehaviour {
         }
     }
     public bool AddToInventory(Item item) {
+        bool exists = false;
+        if(item.stackable) {
+            for(int i = 0; i < inventorySize; i++) {
+                if(inventory[i] == item) {
+                    exists = true;
+                    break;
+                }
+            }
+            if(exists) {
+                for(int i = 0; i < inventorySize; i++) {
+                    if(inventory[i] == item) {
+                        quantities[i]++;
+                        UpdateSlot(i);
+                        return true;
+                    }
+                }
+            }
+            else {
+                for(int i = 0; i < inventorySize; i++) {
+                    if(inventory[i] == null) {
+                        inventory[i] = item;
+                        quantities[i]++;
+                        UpdateSlot(i);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
         for(int i = 0; i < inventorySize; i++) {
+            /*
+            if(item.stackable && inventory[i] == item) {
+                inventory[i] = item;
+                quantities[i]++;
+                UpdateSlot(i);
+                return true;
+            }
+            else if(item.stackable ) {
+                continue;
+            }*/
             if(inventory[i] != null) {
                 continue;
             }
@@ -283,7 +322,7 @@ public class Inventory : MonoBehaviour {
         }
         return -1;
     }
-    private bool CanAddToInventory() {
+    public bool CanAddToInventory() {
         for(int i = 0; i < inventorySize; i++) {
             if(inventory[i] != null) {
                 continue;
@@ -300,9 +339,12 @@ public class Inventory : MonoBehaviour {
         }
         if(!inventory[toSlot]) {
             inventory[toSlot] = inventory[fromSlot];
-            quantities[toSlot]++;
+            //quantities[toSlot]++;
             inventory[fromSlot] = null;
-            quantities[fromSlot]--;
+            // Swap quantities
+            int tempQuantity = quantities[toSlot];
+            quantities[toSlot] = quantities[fromSlot];
+            quantities[fromSlot] = tempQuantity;
         }
         else {
             Item tempItem = inventory[toSlot];

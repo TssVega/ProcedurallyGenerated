@@ -21,12 +21,7 @@ public class ChestGeneration : MonoBehaviour {
     public void LoadChests(int slot, string seed) {
         pseudoRandomForChests = new System.Random(seed.GetHashCode());
         int chestCount = pseudoRandomForChests.Next(0, maxChestCount);        
-        int itemCount = pseudoRandomForChests.Next(1, maxItemCountInChest);
-        if(levelGeneration.layout.worldCoordinates.x == 0 && levelGeneration.layout.worldCoordinates.y == 2) {
-            Debug.Log($"Chest count: {chestCount}");
-            Debug.Log($"Item count: {itemCount}");
-            Debug.Log($"Seed: {seed}");
-        }        
+        int itemCount = pseudoRandomForChests.Next(1, maxItemCountInChest);      
         chests = new Chest[chestCount];
         ChestData chestData = SaveSystem.LoadChests(slot, levelGeneration.layout.worldCoordinates);
         // Get the chest content data from file. If there is no data, create a new file

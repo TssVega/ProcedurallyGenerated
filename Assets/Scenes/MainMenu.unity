@@ -1823,8 +1823,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.2
-      minScalar: 0.1
+      scalar: 0
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -5478,7 +5478,7 @@ ParticleSystem:
     shadowBias: 0.5
     worldSpace: 0
     dieWithParticles: 1
-    sizeAffectsWidth: 1
+    sizeAffectsWidth: 0
     sizeAffectsLifetime: 0
     inheritParticleColor: 1
     generateLightingData: 0
@@ -5557,7 +5557,7 @@ ParticleSystem:
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 1
+          value: 0.121622086
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -5567,11 +5567,11 @@ ParticleSystem:
         - serializedVersion: 3
           time: 1
           value: 0
-          inSlope: -2
-          outSlope: -2
+          inSlope: -0.22352074
+          outSlope: -0.22352074
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0
+          inWeight: 0.18137258
           outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
@@ -7234,8 +7234,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.2
-      minScalar: 0.1
+      scalar: 0
+      minScalar: 0
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -10889,7 +10889,7 @@ ParticleSystem:
     shadowBias: 0.5
     worldSpace: 0
     dieWithParticles: 1
-    sizeAffectsWidth: 1
+    sizeAffectsWidth: 0
     sizeAffectsLifetime: 0
     inheritParticleColor: 1
     generateLightingData: 0
@@ -10968,7 +10968,7 @@ ParticleSystem:
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 1
+          value: 0.121622086
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -10978,11 +10978,11 @@ ParticleSystem:
         - serializedVersion: 3
           time: 1
           value: 0
-          inSlope: -2
-          outSlope: -2
+          inSlope: -0.22352074
+          outSlope: -0.22352074
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0
+          inWeight: 0.18137258
           outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2

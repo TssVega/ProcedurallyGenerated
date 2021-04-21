@@ -44,7 +44,7 @@ public class ObjectPooler : MonoBehaviour {
     public GameObject GetPooledObject(string name) {
         if(objectPoolerSet) {
             for(int i = 0; i < pooledObjects.Count; i++) {
-                if(!pooledObjects[i].activeInHierarchy && pooledObjects[i].GetComponent<GetPooled>().gameObject.name.Contains(name)) {
+                if(pooledObjects[i] && !pooledObjects[i].activeInHierarchy && pooledObjects[i].GetComponent<GetPooled>().gameObject.name.Contains(name)) {
                     if(pooledObjects[i].GetComponent<GetPooled>()) {
                         // int index = pooledObjects[i].gameObject.GetComponent<Enemy>().enemy.index;,
                         //Debug.Log("Returning disabled object");

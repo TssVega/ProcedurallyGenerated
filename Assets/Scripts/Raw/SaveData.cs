@@ -75,6 +75,7 @@ public class SaveData {
     // Inventory and equipment
     public string[] inventory;
     public string[] equipment;
+    public int[] inventoryQuantities;
     // Skills
     public int[] acquiredSkills;
     public int[] currentSkills;
@@ -99,6 +100,10 @@ public class SaveData {
             else {
                 equipment[i] = null;
             }
+        }
+        inventoryQuantities = new int[data.inventory.InventorySize];
+        for(int i = 0; i < data.inventory.InventorySize; i++) {
+            inventoryQuantities[i] = data.inventory.quantities[i];
         }
         // Position and world data
         position = new float[3];
