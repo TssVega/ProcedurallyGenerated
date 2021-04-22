@@ -94,6 +94,7 @@ public static class SaveSystem {
     }
     // Load from a slot
     public static ChestData LoadChests(int slot, Vector2Int coordinates) {
+        Debug.Log($"Trying {Application.persistentDataPath}/ChestData{slot}_{coordinates.x}x{coordinates.y}y.tss");
         string path = $"{Application.persistentDataPath}/ChestData{slot}_{coordinates.x}x{coordinates.y}y.tss";
         if(File.Exists(path)) {
             BinaryFormatter bin = new BinaryFormatter();
@@ -129,6 +130,7 @@ public static class SaveSystem {
         // stream.Close();
     }
     public static MushroomData LoadMushrooms(int slot, Vector2Int coordinates) {
+        Debug.Log($"Trying {Application.persistentDataPath}/MushroomData{slot}_{coordinates.x}x{coordinates.y}y.tss");
         string path = $"{Application.persistentDataPath}/MushroomData{slot}_{coordinates.x}x{coordinates.y}y.tss";
         if(File.Exists(path)) {
             BinaryFormatter bin = new BinaryFormatter();

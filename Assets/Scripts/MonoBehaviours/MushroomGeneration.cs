@@ -25,8 +25,15 @@ public class MushroomGeneration : MonoBehaviour {
         mushrooms = new List<GameObject>();
         mushroomValues = new int[levelSize, levelSize];
         mushroomData = SaveSystem.LoadMushrooms(slot, levelGeneration.layout.worldCoordinates);
-        if(mushroomData != null) {
-            mushroomValues = mushroomData.mushroomMap;
+        if(mushroomData != null) {            
+            for(int x = 0; x < levelSize; x++) {
+                for(int y = 0; y < levelSize; y++) {
+                    if(mushroomValues[x, y] >= 0 && levelGeneration.CheckLocation(x, y)) {
+                        mushroomValues[x, y] = mushroomData.mushroomMap[x, y];
+                        PlaceMushroom(x, y, mushroomValues[x, y]);
+                    }
+                }
+            }
         }
         else {
             for(int x = 0; x < levelSize; x++) {

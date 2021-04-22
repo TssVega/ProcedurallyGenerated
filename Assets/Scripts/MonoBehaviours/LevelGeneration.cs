@@ -32,12 +32,15 @@ public class LevelGeneration : MonoBehaviour {
     private List<Vector3Int> wallCoordinates;
     private readonly int torchCount = 10;
 
+    private List<GameObject> torches;
+
     private void Awake() {
         worldGeneration = FindObjectOfType<WorldGeneration>();
         chestGeneration = GetComponent<ChestGeneration>();
         mushroomGeneration = GetComponent<MushroomGeneration>();
     }
     private void Start() {
+        torches = new List<GameObject>();
         //path = transform.GetChild(0).GetComponent<AstarPath>();
         //SetLayout(layout);
     }
@@ -108,6 +111,12 @@ public class LevelGeneration : MonoBehaviour {
             torchClone.transform.position = torchPosition;
             torchClone.transform.rotation = Quaternion.identity;
             torchClone.SetActive(true);
+            torches.Add(torchClone);
+        }
+    }
+    private void ClearTorches() {
+        for(int i = 0; i < torches.Count; i++) {
+            torches[0].SetActive(false);
         }
     }
     private Vector3Int GetRandomWallCoordinates() {
@@ -126,6 +135,7 @@ public class LevelGeneration : MonoBehaviour {
         }
         chestGeneration.ClearChests();
         mushroomGeneration.ClearMushrooms();
+        ClearTorches();
         gameObject.SetActive(false);
     }    
     private int ConvertTileIdToTilesetIndex(int id) {

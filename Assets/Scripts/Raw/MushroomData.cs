@@ -7,9 +7,16 @@ public class MushroomData {
     // -1 is no mushroom and 0-11 are mushroom types
     public int[,] mushroomMap;
 
+    private readonly int levelSize = 64;
+
     public MushroomData(MushroomGeneration data) {
         //mushroomMap = new int[levelSize, levelSize];
-        mushroomMap = data.mushroomValues;
+        mushroomMap = new int[levelSize, levelSize];
+        for(int x = 0; x < levelSize; x++) {
+            for(int y = 0; y < levelSize; y++) {
+                mushroomMap[x, y] = data.mushroomValues[x, y];
+            }
+        }
         /*
         mushroomMap = new int[levelSize, levelSize];
         for(int x = 0; x < levelSize; x++) {

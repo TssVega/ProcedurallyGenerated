@@ -31,10 +31,10 @@ public class MushroomObject : MonoBehaviour, IInteractable {
     }
     public void SetMushroom(Mushroom mushroom) {
         this.mushroom = mushroom;
-        if(mushroom) {
+        if(mushroom && spriteRen) {
             spriteRen.sprite = mushroom.firstSprite;
         }
-        else {
+        else if(spriteRen) {
             spriteRen.sprite = null;
             gameObject.SetActive(false);
         }
