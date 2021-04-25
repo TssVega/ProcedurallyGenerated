@@ -7,6 +7,9 @@ public class MushroomObject : MonoBehaviour, IInteractable {
     private Mushroom mushroom;
     private SpriteRenderer spriteRen;
     private Player player;
+    private Vector2Int mushroomCoordinates;
+    private MushroomGeneration mushroomGeneration;
+
     public Sprite interactImage;
 
     public Sprite UISprite {
@@ -29,13 +32,16 @@ public class MushroomObject : MonoBehaviour, IInteractable {
             collision.GetComponent<Player>().ClearInteraction(this);
         }
     }
-    public void SetMushroom(Mushroom mushroom) {
+    public void SetMushroom(Mushroom mushroom, Vector2Int mushroomCoordinates, MushroomGeneration mushroomGeneration) {
         this.mushroom = mushroom;
         if(mushroom && spriteRen) {
             spriteRen.sprite = mushroom.firstSprite;
+            this.mushroomCoordinates = mushroomCoordinates;
+            this.mushroomGeneration = mushroomGeneration;
         }
         else if(spriteRen) {
             spriteRen.sprite = null;
+            this.mushroomGeneration.TakeMushroom(new Vector2Int(this.mushroomCoordinates.x, this.mushroomCoordinates.y));
             gameObject.SetActive(false);
         }
     }
@@ -47,7 +53,7 @@ public class MushroomObject : MonoBehaviour, IInteractable {
         if(gameObject.activeSelf) {
             if(player.inventory.CanAddToInventory()) {
                 player.inventory.AddToInventory(GetMushroom());
-                SetMushroom(null);
+                SetMushroom(null, new Vector2Int(), null);
             }            
         }        
     }

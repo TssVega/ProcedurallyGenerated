@@ -30,7 +30,9 @@ public class MushroomGeneration : MonoBehaviour {
                 for(int y = 0; y < levelSize; y++) {
                     if(mushroomValues[x, y] >= 0 && levelGeneration.CheckLocation(x, y)) {
                         mushroomValues[x, y] = mushroomData.mushroomMap[x, y];
-                        PlaceMushroom(x, y, mushroomValues[x, y]);
+                        if(mushroomValues[x, y] >= 0) {
+                            PlaceMushroom(x, y, mushroomValues[x, y]);
+                        }                        
                     }
                 }
             }
@@ -53,7 +55,7 @@ public class MushroomGeneration : MonoBehaviour {
         mushroomClone.transform.position = levelGeneration.GetPreciseLocation(x, y);
         mushroomClone.transform.rotation = Quaternion.identity;
         mushrooms.Add(mushroomClone);
-        mushroomClone.GetComponent<MushroomObject>().SetMushroom(mushroomDatabase.mushrooms[mushroomValue]);
+        mushroomClone.GetComponent<MushroomObject>().SetMushroom(mushroomDatabase.mushrooms[mushroomValue], new Vector2Int(x, y), this);
         mushroomClone.SetActive(true);
     }
     public void ClearMushrooms() {
@@ -62,6 +64,9 @@ public class MushroomGeneration : MonoBehaviour {
             mushrooms[i].SetActive(false);
         }
         mushrooms.Clear();
+    }
+    public void TakeMushroom(Vector2Int coordinates) {
+        mushroomValues[coordinates.x, coordinates.y] = -1;
     }
     public void SaveMushrooms(int slot) {
         SaveSystem.SaveMushrooms(this, slot, levelGeneration.layout.worldCoordinates);
