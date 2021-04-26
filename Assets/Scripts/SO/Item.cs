@@ -34,6 +34,7 @@ using UnityEngine;
     * Potions
     *   Potions can only have special effects
  */
+[CreateAssetMenu(menuName = "Items/Item")]
 public class Item : ScriptableObject {
 
     public string seed;
@@ -81,7 +82,7 @@ public class Item : ScriptableObject {
 }
 // Equip slots of items
 public enum EquipSlot {
-    RightHand, LeftHand, Head, Body, Legs, Finger, Consumable
+    RightHand, LeftHand, Head, Body, Legs, Finger, Consumable, Other
 }
 
 public enum AttackType {

@@ -116,7 +116,7 @@ public class LevelGeneration : MonoBehaviour {
     }
     private void ClearTorches() {
         for(int i = 0; i < torches.Count; i++) {
-            torches[0].SetActive(false);
+            torches[i].SetActive(false);
         }
     }
     private Vector3Int GetRandomWallCoordinates() {

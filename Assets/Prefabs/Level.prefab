@@ -125,6 +125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mushroomDatabase: {fileID: 11400000, guid: cd02dd15f0de94643ac6f426f808693a, type: 2}
+  itemDatabase: {fileID: 11400000, guid: 54f63e30eeab869438b4c4e0e1e6351e, type: 2}
   mushroomObject: {fileID: 5036906735598353528, guid: c14e52ac886b56c46b32ce098fe41fb9,
     type: 3}
   mushroom: {fileID: 5036906735598353527, guid: c14e52ac886b56c46b32ce098fe41fb9,

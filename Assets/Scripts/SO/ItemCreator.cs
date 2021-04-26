@@ -40,6 +40,7 @@ public class ItemCreator : ScriptableObject {
     public Sprite[] bowBases;
 
     public MushroomDatabase mushroomDatabase;
+    public ItemDatabase itemDatabase;
 
     private readonly int[] metalArmorIndices = new int[] { 0, 3, 6, 8 };
     private readonly int[] leatherArmorIndices = new int[] { 1, 2, 5 };
@@ -184,8 +185,103 @@ public class ItemCreator : ScriptableObject {
             case "flyAgaric":
                 item = mushroomDatabase.mushrooms[11];
                 break;
+            case "wood":
+                item = itemDatabase.items[0];
+                break;
+            case "copper":
+                item = itemDatabase.items[1];
+                break;
+            case "iron":
+                item = itemDatabase.items[2];
+                break;
+            case "silver":
+                item = itemDatabase.items[3];
+                break;
+            case "gold":
+                item = itemDatabase.items[4];
+                break;
+            case "platinum":
+                item = itemDatabase.items[5];
+                break;
+            case "titanium":
+                item = itemDatabase.items[6];
+                break;
+            case "tungsten":
+                item = itemDatabase.items[7];
+                break;
+            case "sapphire":
+                item = itemDatabase.items[8];
+                break;
+            case "ruby":
+                item = itemDatabase.items[9];
+                break;
+            case "emerald":
+                item = itemDatabase.items[10];
+                break;
+            case "diamond":
+                item = itemDatabase.items[11];
+                break;
+            case "musgravite":
+                item = itemDatabase.items[12];
+                break;
+            case "taaffeite":
+                item = itemDatabase.items[13];
+                break;
+            case "amber":
+                item = itemDatabase.items[14];
+                break;
+            case "leather":
+                item = itemDatabase.items[15];
+                break;
+            case "scales":
+                item = itemDatabase.items[16];
+                break;
+            case "fur":
+                item = itemDatabase.items[17];
+                break;
+            case "eye":
+                item = itemDatabase.items[18];
+                break;
+            case "shell":
+                item = itemDatabase.items[19];
+                break;
+            case "tongue":
+                item = itemDatabase.items[20];
+                break;
+            case "feather":
+                item = itemDatabase.items[21];
+                break;
+            case "web":
+                item = itemDatabase.items[22];
+                break;
+            case "liver":
+                item = itemDatabase.items[23];
+                break;
+            case "heart":
+                item = itemDatabase.items[24];
+                break;
+            case "brain":
+                item = itemDatabase.items[25];
+                break;
+            case "claw":
+                item = itemDatabase.items[26];
+                break;
+            case "fang":
+                item = itemDatabase.items[27];
+                break;
+            case "bone":
+                item = itemDatabase.items[28];
+                break;
+            case "obsidian":
+                item = itemDatabase.items[29];
+                break;
+            case "stone":
+                item = itemDatabase.items[30];
+                break;
+            case "soul":
+                item = itemDatabase.items[31];
+                break;
             default:
-                Debug.Log("The item isn't special");
                 item = null;
                 break; 
         }
