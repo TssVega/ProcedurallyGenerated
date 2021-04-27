@@ -71,7 +71,6 @@ public class MushroomGeneration : MonoBehaviour {
         objectClone.transform.position = levelGeneration.GetPreciseLocation(x, y);
         objectClone.transform.rotation = Quaternion.identity;
         mushrooms.Add(objectClone);
-        Debug.Log(objectValue);
         objectClone.GetComponent<GroundObject>().SetObject(itemDatabase.items[objectValue - 12], new Vector2Int(x, y), this);
         objectClone.SetActive(true);
     }

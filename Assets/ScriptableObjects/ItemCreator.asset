@@ -182,3 +182,4 @@ MonoBehaviour:
   - {fileID: 715317130902145233, guid: 7ec300f1678cd6b40ac0eaa869e6cf09, type: 3}
   - {fileID: -4274273943436650574, guid: 7ec300f1678cd6b40ac0eaa869e6cf09, type: 3}
   mushroomDatabase: {fileID: 11400000, guid: cd02dd15f0de94643ac6f426f808693a, type: 2}
+  itemDatabase: {fileID: 11400000, guid: 54f63e30eeab869438b4c4e0e1e6351e, type: 2}

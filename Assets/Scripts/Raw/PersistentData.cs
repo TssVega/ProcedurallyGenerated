@@ -6,6 +6,7 @@ using System.IO;
 public static class PersistentData {
 
     public static int saveSlot = 1;
+    public static string worldSeed = "Tss";
 
     public static List<string> fileNames;
 

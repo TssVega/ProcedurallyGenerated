@@ -126,4 +126,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bf461b3647ee8d409afd0bcdc0e8abe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactImage: {fileID: 21300000, guid: 3c17d470811cce74f849c404a14fec41, type: 3}
+  interactImage: {fileID: 21300000, guid: df7deee38dcf18f48a99b1e517cd0758, type: 3}

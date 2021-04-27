@@ -34,6 +34,8 @@ public class LevelGeneration : MonoBehaviour {
 
     private List<GameObject> torches;
 
+    private Connections connections;    
+
     private void Awake() {
         worldGeneration = FindObjectOfType<WorldGeneration>();
         chestGeneration = GetComponent<ChestGeneration>();
@@ -61,7 +63,8 @@ public class LevelGeneration : MonoBehaviour {
             path.Scan();
         }
     }*/
-    public async void SetLayout() {
+    public async void SetLayout(Connections connections) {
+        this.connections = connections;
         pseudoRandomForPlants = new System.Random(this.layout.seed.GetHashCode());
         pseudoRandomForWalls = new System.Random(this.layout.seed.GetHashCode());
         pseudoRandomForLevel = new System.Random(this.layout.seed.GetHashCode());
@@ -258,46 +261,66 @@ public class LevelGeneration : MonoBehaviour {
                     map[x, y] = 0;
                     reservedForConnectionsMap[x, y] = 1;
                 }*/
+                // Left
                 if(new int[] { 30, 31, 32, 33 }.Contains(y) &&
                         new int[] { 0, 1, 2, 3 }.Contains(x)) {
-                    if(layout.worldCoordinates.x == 0) {
+                    if(layout.worldCoordinates.x == 0 && !connections.left) {
                         map[x, y] = 1;
                         reservedForConnectionsMap[x, y] = 0;
                     }
-                    else {
+                    else if(!connections.left) {
+                        map[x, y] = 1;
+                        reservedForConnectionsMap[x, y] = 0;
+                    }
+                    else if(connections.left) {
                         map[x, y] = 0;
                         reservedForConnectionsMap[x, y] = 1;
                     }
                 }
+                // Right
                 else if(new int[] { 30, 31, 32, 33 }.Contains(y) &&
                         new int[] { 60, 61, 62, 63 }.Contains(x)) {
-                    if(layout.worldCoordinates.x == layout.worldSize - 1) {
+                    if(layout.worldCoordinates.x == layout.worldSize - 1 && !connections.right) {
                         map[x, y] = 1;
                         reservedForConnectionsMap[x, y] = 0;
                     }
-                    else {
+                    else if(!connections.right) {
+                        map[x, y] = 1;
+                        reservedForConnectionsMap[x, y] = 0;
+                    }
+                    else if(connections.right) {
                         map[x, y] = 0;
                         reservedForConnectionsMap[x, y] = 1;
                     }
                 }
+                // Bottom
                 else if(new int[] { 30, 31, 32, 33 }.Contains(x) &&
                         new int[] { 0, 1, 2, 3 }.Contains(y)) {
-                    if(layout.worldCoordinates.y == 0) {
+                    if(layout.worldCoordinates.y == 0 && !connections.bottom) {
                         map[x, y] = 1;
                         reservedForConnectionsMap[x, y] = 0;
                     }
-                    else {
+                    else if(!connections.bottom) {
+                        map[x, y] = 1;
+                        reservedForConnectionsMap[x, y] = 0;
+                    }
+                    else if(connections.bottom) {
                         map[x, y] = 0;
                         reservedForConnectionsMap[x, y] = 1;
                     }
                 }
+                // Top
                 else if(new int[] { 30, 31, 32, 33 }.Contains(x) &&
                         new int[] { 60, 61, 62, 63 }.Contains(y)) {
-                    if(layout.worldCoordinates.y == layout.worldSize - 1) {
+                    if(layout.worldCoordinates.y == layout.worldSize - 1 && !connections.top) {
                         map[x, y] = 1;
                         reservedForConnectionsMap[x, y] = 0;
                     }
-                    else {
+                    else if(!connections.top) {
+                        map[x, y] = 1;
+                        reservedForConnectionsMap[x, y] = 0;
+                    }
+                    else if(connections.top) {
                         map[x, y] = 0;
                         reservedForConnectionsMap[x, y] = 1;
                     }
@@ -843,4 +866,11 @@ public class LevelGeneration : MonoBehaviour {
             return otherRoom.roomSize.CompareTo(roomSize);
         }
     }
+}
+
+public struct Connections {
+    public bool top;
+    public bool bottom;
+    public bool left;
+    public bool right;
 }

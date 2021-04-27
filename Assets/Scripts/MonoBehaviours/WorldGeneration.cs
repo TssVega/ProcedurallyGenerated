@@ -5,17 +5,17 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine.Tilemaps;
 using System.IO;
+using System;
 
 public class WorldGeneration : MonoBehaviour {
     // Should be an odd number so it can have one center
-    public const int worldSize = 100;
+    public const int worldSize = 128;
     private const int levelSize = 64;
     // Should we use random seed?
     private bool randomSeed = false;
     // Seed for world generation
-    private string worldSeed = "tss";
     // A 2 dimentional map of string seeds
-    private string[,] worldMap = new string[worldSize, worldSize];
+    // private string[,] worldMap = new string[worldSize, worldSize];
     // Pathfinding for entities
     private AstarPath aStarPath;
     // So each world can be same with same seed
@@ -60,9 +60,9 @@ public class WorldGeneration : MonoBehaviour {
         LoadWorldData();
         //world = new WorldData(new string[worldSize, worldSize], new int[] { currentCoordinates.x, currentCoordinates.y});
         if(randomSeed) {
-            worldSeed = Time.time.ToString();
+            PersistentData.worldSeed = Time.time.ToString();
         }
-        pseudoRandomForWorld = new System.Random(worldSeed.GetHashCode());        
+        pseudoRandomForWorld = new System.Random(PersistentData.worldSeed.GetHashCode());        
         GenerateCurrentLevels();
         /*
         for(int x = 0; x < worldSize; x++) {
@@ -109,18 +109,16 @@ public class WorldGeneration : MonoBehaviour {
     }
     public void LoadWorldData() {
         WorldData data = SaveSystem.LoadWorld(PersistentData.saveSlot);
-        Debug.Log($"Current coordinates: {data.currentCoordinates[0]}, {data.currentCoordinates[1]}");
-        Debug.Log($"Last coordinates: {data.lastCoordinates[0]}, {data.lastCoordinates[1]}");
         if(data != null) {
-            world = new WorldData(data.worldData, data.currentCoordinates);
+            world = new WorldData(data.worldData, data.currentCoordinates, data.worldMap);
         }
         else {
-            Debug.Log("Generating new world data");
-            world = new WorldData(new string[worldSize, worldSize], new int[] { 0, 0 }) {                
+            world = new WorldData(new string[worldSize, worldSize], new int[] { 0, 0 }, new int[worldSize, worldSize]) {                
                 lastCoordinates = new int[] { -1, -1 }
             };
         }
     }
+   
     public void ChangeCurrentCoordinates(Vector2Int coordinates) {
         //ChangeLastCoordinates(new Vector2Int(world.currentCoordinates[0], world.currentCoordinates[1]));
         world.currentCoordinates = new int[] { coordinates.x, coordinates.y};
@@ -136,6 +134,9 @@ public class WorldGeneration : MonoBehaviour {
                 if(world.currentCoordinates[0] == world.lastCoordinates[0] && world.currentCoordinates[1] == world.lastCoordinates[1]) {
                     return;
                 }
+                if(CheckBounds(x, y) && world.worldMap[x, y] < 1) {
+                    continue;
+                }
                 if(x == world.currentCoordinates[0] - 1 && y == world.currentCoordinates[1] - 1
                     || x == world.currentCoordinates[0] - 1 && y == world.currentCoordinates[1] + 1
                     || x == world.currentCoordinates[0] + 1 && y == world.currentCoordinates[1] - 1
@@ -147,7 +148,6 @@ public class WorldGeneration : MonoBehaviour {
                     loadingPanel.LoadingLevels();
                 }                
                 if(x == world.currentCoordinates[0] && y == world.currentCoordinates[1]) {
-                    Debug.Log("Rescanning pathfinding...");
                     int levelSize = 64;
                     aStarPath.graphs[0].active.data.gridGraph.center = new Vector3Int(levelSize * x, levelSize * y, 0);
                     StartCoroutine(ScanPath());
@@ -162,7 +162,6 @@ public class WorldGeneration : MonoBehaviour {
                 if(world.worldData[x, y] == null) {
                     //pseudoRandomForWorld = new System.Random(worldSeed.GetHashCode());
                     world.worldData[x, y] = pseudoRandomForWorld.Next(x + 1, y * worldSize + worldSize + 1).ToString();
-                    Debug.Log($"Generating seed for level {x}x, {y}y = {world.worldData[x, y]}");
                 }
                 // Create a level with object pooling
                 GameObject levelClone = ObjectPooler.objectPooler.GetPooledObject(level.name);
@@ -178,8 +177,15 @@ public class WorldGeneration : MonoBehaviour {
                 levelClone.SetActive(true);
                 /*
                 Thread th = new Thread(() => levelGen.SetLayout(this));
-                th.Start();*/                
-                levelGen.SetLayout();
+                th.Start();*/
+                Connections connections = new Connections() {
+                    bottom = CheckBounds(x, y - 1) && world.worldMap[x, y - 1] > 0,
+                    top = CheckBounds(x, y + 1) && world.worldMap[x, y + 1] > 0,
+                    right = CheckBounds(x + 1, y) && world.worldMap[x + 1, y] > 0,
+                    left = CheckBounds(x - 1, y) && world.worldMap[x - 1, y] > 0
+                };
+
+                levelGen.SetLayout(connections);
             }
         }
         // Unload far away levels
@@ -194,6 +200,9 @@ public class WorldGeneration : MonoBehaviour {
             }
         }
     }
+    private bool CheckBounds(int x, int y) {
+        return x >= 0 && y >= 0 && x < worldSize && y < worldSize;
+    }
     private IEnumerator ScanPath() {
         yield return new WaitForSeconds(0.5f);        
         if(aStarPath) {
@@ -201,4 +210,5 @@ public class WorldGeneration : MonoBehaviour {
         }
         loadingPanel.FadeOut();
     }
+    
 }

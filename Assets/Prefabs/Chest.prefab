@@ -96,7 +96,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3088e33213680084d838805db31ae6e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactImage: {fileID: 21300000, guid: 908c22280ef404749a0e32cdea6af3a3, type: 3}
+  interactImage: {fileID: 21300000, guid: cf65811117068e14f920324b5a2b54b2, type: 3}
+  chestContent:
+    items: []
 --- !u!58 &6612045901402957554
 CircleCollider2D:
   m_ObjectHideFlags: 0

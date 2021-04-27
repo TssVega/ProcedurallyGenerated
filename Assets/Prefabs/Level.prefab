@@ -130,6 +130,8 @@ MonoBehaviour:
     type: 3}
   mushroom: {fileID: 5036906735598353527, guid: c14e52ac886b56c46b32ce098fe41fb9,
     type: 3}
+  groundObject: {fileID: 1036120284835274821, guid: 6ff3c878a507ed54fa60a45e894912d1,
+    type: 3}
   mushrooms: []
 --- !u!61 &6886192618472798170
 BoxCollider2D:
