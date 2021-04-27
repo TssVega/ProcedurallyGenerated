@@ -80,6 +80,9 @@ public class WorldGeneration : MonoBehaviour {
     public int WorldSize {
         get => worldSize;
     }
+    public int[,] WorldMap {
+        get => world.worldMap;
+    }
     private void GetAutosaveFiles() {
         List<string> chestFiles = PersistentData.GetAllFilesWithKey($"ChestData{PersistentData.saveSlot}", $"", $"");
         List<string> mushroomFiles = PersistentData.GetAllFilesWithKey($"MushroomData{PersistentData.saveSlot}", $"", $"");

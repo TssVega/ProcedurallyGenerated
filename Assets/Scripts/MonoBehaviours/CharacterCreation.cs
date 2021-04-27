@@ -219,7 +219,7 @@ public class CharacterCreation : MonoBehaviour {
         // Fill the edges of the map with wall tiles
         for(int x = 0; x < worldSize; x++) {
             for(int y = 0; y < worldSize; y++) {
-                world.worldMap[x, y] = pseudoRandom.Next(0, 4);
+                world.worldMap[x, y] = Mathf.Clamp(pseudoRandom.Next(-2, 5), 0, 4);
             }
         }
     }
@@ -228,11 +228,11 @@ public class CharacterCreation : MonoBehaviour {
         for(int x = 0; x < worldSize; x++) {
             for(int y = 0; y < worldSize; y++) {
                 int neighbourWallTiles = GetSurroundingBiomeCount(x, y);
-                if(neighbourWallTiles > 4) {
+                if(neighbourWallTiles > 3) {
                     world.worldMap[x, y] = GetSurroundingBiomeType(x, y);
                     // Get surrounding wall type here
                 }
-                else if(neighbourWallTiles < 4) {
+                else if(neighbourWallTiles < 3) {
                     world.worldMap[x, y] = 0;
                 }
             }
@@ -244,7 +244,8 @@ public class CharacterCreation : MonoBehaviour {
             for(int neighbourY = gridY - 1; neighbourY <= gridY + 1; neighbourY++) {
                 if(IsInMapRange(neighbourX, neighbourY)) {
                     if(neighbourX != gridX || neighbourY != gridY) {                        
-                        biomeCount += world.worldMap[neighbourX, neighbourY];                        
+                        biomeCount += Mathf.Clamp(world.worldMap[neighbourX, neighbourY], 0, 1);
+                        //biomeCount++;
                     }
                 }
                 else {
@@ -256,11 +257,11 @@ public class CharacterCreation : MonoBehaviour {
     }
     private int GetSurroundingBiomeType(int gridX, int gridY) {
         int biomeType = 0;
-        int[] biomeTypeCounters = new int[4];
+        int[] biomeTypeCounters = new int[5];
         for(int neighbourX = gridX - 1; neighbourX <= gridX + 1; neighbourX++) {
             for(int neighbourY = gridY - 1; neighbourY <= gridY + 1; neighbourY++) {
                 if(IsInMapRange(neighbourX, neighbourY)) {
-                    if(neighbourX != gridX || neighbourY != gridY) {
+                    if(neighbourX != gridX || neighbourY != gridY && world.worldMap[neighbourX, neighbourY] != 0) {
                         biomeTypeCounters[world.worldMap[neighbourX, neighbourY]]++;
                     }
                 }
@@ -285,7 +286,7 @@ public class CharacterCreation : MonoBehaviour {
         List<Room> survivingRooms = new List<Room>();
         // Clear unneccessary walls
         foreach(List<Coordinate> wallRegion in wallRegions) {
-            if(wallRegion.Count < 32) {
+            if(wallRegion.Count < 8) {
                 foreach(Coordinate tile in wallRegion) {
                     /*Vector3Int tileCoordinate = new Vector3Int(
                     (tile.tileX - layout.width / 2) + layout.worldCoordinates.x * layout.width,
