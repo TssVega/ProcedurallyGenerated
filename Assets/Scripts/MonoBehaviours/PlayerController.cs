@@ -15,10 +15,9 @@ public class PlayerController : MonoBehaviour {
     public FloatingJoystick joystick;
     private Stats playerStats;
     private StatusEffects statusEffects;
-#if UNITY_EDITOR
     private float horizontalInput = 0f;
     private float verticalInput = 0f;
-#endif
+
     // Assign private values
     private void Awake() {
         /*

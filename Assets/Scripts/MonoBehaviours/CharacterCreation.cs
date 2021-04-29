@@ -126,6 +126,9 @@ public class CharacterCreation : MonoBehaviour {
         world = new WorldData(new string[worldSize, worldSize], new int[] { 0, 0 }, new int[worldSize, worldSize]);
         await GenerateNewWorld();
         SaveSystem.SaveWorld(world, PersistentData.saveSlot);
+        if(!player || !player.skinColor || !player.hairColor || !player.hairStyle) {
+            return;
+        }
         // Appearance
         player.skinColor.color = currentSkinColor;
         player.hairColor.color = currentHairColor;
@@ -206,11 +209,18 @@ public class CharacterCreation : MonoBehaviour {
         }
     }
     private async Task GenerateNewWorld() {
+        int smoothLevel = 4;
         // Generate world map data
         await Task.Run(() => RandomFillWorld());
-        await Task.Run(() => SmoothMap());
-        await Task.Run(() => SmoothMap());
-        await Task.Run(() => ProcessMap());
+        for(int i = 0; i < smoothLevel; i++) {
+            await Task.Run(() => SmoothMap());
+        }
+        for(int i = 0; i < 6; i++) {
+            for(int j = 0; j < 6; j++) {
+                world.worldMap[i, j] = 1;
+            }
+        }        
+        await Task.Run(() => ProcessMap());        
     }
     private void RandomFillWorld() {
         world.worldMap = new int[worldSize, worldSize];
@@ -225,14 +235,17 @@ public class CharacterCreation : MonoBehaviour {
     }
     // Smooth edges and get rid of noise
     private void SmoothMap() {
+
+        int eliminationThreshold = 3;
+
         for(int x = 0; x < worldSize; x++) {
             for(int y = 0; y < worldSize; y++) {
                 int neighbourWallTiles = GetSurroundingBiomeCount(x, y);
-                if(neighbourWallTiles > 3) {
+                if(neighbourWallTiles > eliminationThreshold) {
                     world.worldMap[x, y] = GetSurroundingBiomeType(x, y);
                     // Get surrounding wall type here
                 }
-                else if(neighbourWallTiles < 3) {
+                else if(neighbourWallTiles < eliminationThreshold) {
                     world.worldMap[x, y] = 0;
                 }
             }
@@ -281,12 +294,12 @@ public class CharacterCreation : MonoBehaviour {
     }
     // Process map
     private void ProcessMap() {
-        List<List<Coordinate>> wallRegions = GetRegions(1);
-        List<List<Coordinate>> groundRegions = GetRegions(0);
+        List<List<Coordinate>> wallRegions = GetRegions(0);
+        List<List<Coordinate>> groundRegions = GetRegions(1);
         List<Room> survivingRooms = new List<Room>();
         // Clear unneccessary walls
         foreach(List<Coordinate> wallRegion in wallRegions) {
-            if(wallRegion.Count < 8) {
+            if(wallRegion.Count < 32) {
                 foreach(Coordinate tile in wallRegion) {
                     /*Vector3Int tileCoordinate = new Vector3Int(
                     (tile.tileX - layout.width / 2) + layout.worldCoordinates.x * layout.width,
@@ -391,9 +404,11 @@ public class CharacterCreation : MonoBehaviour {
         Room.ConnectRooms(roomA, roomB);
         // Debug.DrawLine(ConvertToWorldCoordinates(tileA), ConvertToWorldCoordinates(tileB), Color.green, 100);
 
+        int passageRadius = 2;
+
         List<Coordinate> line = GetLine(tileA, tileB);
         foreach(Coordinate c in line) {
-            DrawCircle(c, 3);
+            DrawCircle(c, passageRadius);
         }
     }
     // Circle around the line
@@ -404,7 +419,7 @@ public class CharacterCreation : MonoBehaviour {
                     int realX = center.tileX + x;
                     int realY = center.tileY + y;
                     if(IsInMapRange(realX, realY)) {
-                        world.worldMap[realX, realY] = 0;
+                        world.worldMap[realX, realY] = 1;
                     }
                 }
             }
@@ -540,7 +555,7 @@ public class CharacterCreation : MonoBehaviour {
                     for(int y = tile.tileY - 1; y <= tile.tileY + 1; y++) {
                         if(x == tile.tileX || y == tile.tileY) {
                             try {
-                                if(map[x, y] == 1) {
+                                if(map[x, y] == 0) {
                                     edgeTiles.Add(tile);
                                     break;
                                 }
