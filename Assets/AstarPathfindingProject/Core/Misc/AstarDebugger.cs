@@ -113,7 +113,7 @@ namespace Pathfinding {
 		int maxVecPool = 0;
 		int maxNodePool = 0;
 
-		PathTypeDebug[] debugTypes = new PathTypeDebug[] {
+		PathTypeDebug[] debugTypes = {
 			new PathTypeDebug("ABPath", () => PathPool.GetSize(typeof(ABPath)), () => PathPool.GetTotalCreated(typeof(ABPath)))
 		};
 

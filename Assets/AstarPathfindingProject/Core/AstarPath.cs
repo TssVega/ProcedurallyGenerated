@@ -1555,7 +1555,7 @@ public class AstarPath : VersionedMonoBehaviour {
 	/// </summary>
 	public void Scan (NavGraph graphToScan) {
 		if (graphToScan == null) throw new System.ArgumentNullException();
-		Scan(new NavGraph[] { graphToScan });
+		Scan(new[] { graphToScan });
 	}
 
 	/// <summary>
@@ -1625,7 +1625,7 @@ public class AstarPath : VersionedMonoBehaviour {
 	/// </summary>
 	public IEnumerable<Progress> ScanAsync (NavGraph graphToScan) {
 		if (graphToScan == null) throw new System.ArgumentNullException();
-		return ScanAsync(new NavGraph[] { graphToScan });
+		return ScanAsync(new[] { graphToScan });
 	}
 
 	/// <summary>

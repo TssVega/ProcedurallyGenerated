@@ -6,6 +6,7 @@ using System.Threading;
 using UnityEngine.Tilemaps;
 using System.IO;
 using System;
+using System.Globalization;
 
 public class WorldGeneration : MonoBehaviour {
     // Should be an odd number so it can have one center
@@ -77,12 +78,10 @@ public class WorldGeneration : MonoBehaviour {
             }
         }*/
     }
-    public int WorldSize {
-        get => worldSize;
-    }
-    public int[,] WorldMap {
-        get => world.worldMap;
-    }
+    public int WorldSize => worldSize;
+
+    public int[,] WorldMap => world.worldMap;
+
     private void GetAutosaveFiles() {
         List<string> chestFiles = PersistentData.GetAllFilesWithKey($"ChestData{PersistentData.saveSlot}", $"", $"");
         List<string> mushroomFiles = PersistentData.GetAllFilesWithKey($"MushroomData{PersistentData.saveSlot}", $"", $"");
@@ -116,19 +115,19 @@ public class WorldGeneration : MonoBehaviour {
             world = new WorldData(data.worldData, data.currentCoordinates, data.worldMap);
         }
         else {
-            world = new WorldData(new string[worldSize, worldSize], new int[] { 0, 0 }, new int[worldSize, worldSize]) {                
-                lastCoordinates = new int[] { -1, -1 }
+            world = new WorldData(new string[worldSize, worldSize], new[] { 0, 0 }, new int[worldSize, worldSize]) {                
+                lastCoordinates = new[] { -1, -1 }
             };
         }
     }
    
     public void ChangeCurrentCoordinates(Vector2Int coordinates) {
         //ChangeLastCoordinates(new Vector2Int(world.currentCoordinates[0], world.currentCoordinates[1]));
-        world.currentCoordinates = new int[] { coordinates.x, coordinates.y};
+        world.currentCoordinates = new[] { coordinates.x, coordinates.y};
         GenerateCurrentLevels();
     }
     public void ChangeLastCoordinates(Vector2Int coordinates) {
-        world.lastCoordinates = new int[] { coordinates.x, coordinates.y};
+        world.lastCoordinates = new[] { coordinates.x, coordinates.y};
     }
     // Generate adjacent levels and unload farther ones
     private void GenerateCurrentLevels() {             
@@ -203,7 +202,7 @@ public class WorldGeneration : MonoBehaviour {
             }
         }
     }
-    private bool CheckBounds(int x, int y) {
+    private static bool CheckBounds(int x, int y) {
         return x >= 0 && y >= 0 && x < worldSize && y < worldSize;
     }
     private IEnumerator ScanPath() {

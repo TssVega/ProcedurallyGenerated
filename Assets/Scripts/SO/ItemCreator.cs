@@ -42,9 +42,9 @@ public class ItemCreator : ScriptableObject {
     public MushroomDatabase mushroomDatabase;
     public ItemDatabase itemDatabase;
 
-    private readonly int[] metalArmorIndices = new int[] { 0, 3, 6, 8 };
-    private readonly int[] leatherArmorIndices = new int[] { 1, 2, 5 };
-    private readonly int[] clothArmorIndices = new int[] { 4, 7 };
+    private readonly int[] metalArmorIndices = { 0, 3, 6, 8 };
+    private readonly int[] leatherArmorIndices = { 1, 2, 5 };
+    private readonly int[] clothArmorIndices = { 4, 7 };
     // Create an item
     public Item CreateItem(string seed) {
         System.Random pseudoRandom = new System.Random(seed.GetHashCode());
@@ -55,37 +55,52 @@ public class ItemCreator : ScriptableObject {
             return item;
         }
         int slotIndex = pseudoRandom.Next(0, 6);
-        if(slotIndex == 0) {
-            Weapon w = CreateWeapon(seed);
-            item = w;
+        switch (slotIndex)
+        {
+            case 0:
+            {
+                Weapon w = CreateWeapon(seed);
+                item = w;
+                break;
+            }
+            case 1:
+            {
+                Shield s = CreateShield(seed);
+                item = s;
+                break;
+            }
+            case 2:
+            {
+                // Head armor h
+                Armor h = CreateHelmet(seed);
+                item = h;
+                break;
+            }
+            case 3:
+            {
+                // Chest armor c
+                Armor a = CreateChestArmor(seed);
+                item = a;
+                break;
+            }
+            case 4:
+            {
+                // Leg armor l
+                Armor l = CreateLegging(seed);
+                item = l;
+                break;
+            }
+            case 5:
+            {
+                Ring r = CreateRing(seed);
+                item = r;
+                break;
+            }
+            default:
+                item = null;
+                break;
         }
-        else if(slotIndex == 1) {
-            Shield s = CreateShield(seed);
-            item = s;
-        }
-        else if(slotIndex == 2) {
-            // Head armor h
-            Armor h = CreateHelmet(seed);
-            item = h;
-        }
-        else if(slotIndex == 3) {
-            // Chest armor c
-            Armor a = CreateChestArmor(seed);
-            item = a;
-        }
-        else if(slotIndex == 4) {
-            // Leg armor l
-            Armor l = CreateLegging(seed);
-            item = l;
-        }
-        else if(slotIndex == 5) {
-            Ring r = CreateRing(seed);
-            item = r;
-        }
-        else {
-            item = null;
-        }
-        if(item) {
+        if(item != null) {
             item.seed = seed;
         }
         return item;
@@ -299,14 +314,14 @@ public class ItemCreator : ScriptableObject {
             int armorOverlayIndex = pseudoRandom.Next(0, chestArmorOverlays.Length);
             armorOverlay = chestArmorOverlays[armorOverlayIndex];
             armorBack = chestArmorBacks[pseudoRandom.Next(0, chestArmorBacks.Length)];
-            if(new int[] { 2, 9 }.Contains(armorOverlayIndex)) {
+            if(new[] { 2, 9 }.Contains(armorOverlayIndex)) {
                 // Small shoulders
-                Debug.Log("Small shoulders");
+                //Debug.Log("Small shoulders");
                 inGameArmor = chestArmorInGame[1];
             }
-            else if(new int[] { 5, 6, 7, 8 }.Contains(armorOverlayIndex)) {
+            else if(new[] { 5, 6, 7, 8 }.Contains(armorOverlayIndex)) {
                 // Big shoulders
-                Debug.Log("Big shoulders");
+                //Debug.Log("Big shoulders");
                 int overlay = pseudoRandom.Next(0, 4);
                 if(overlay == 1) {
                     overlay = 0;
@@ -348,8 +363,6 @@ public class ItemCreator : ScriptableObject {
         }
         armor.firstSprite = inGameArmor;
         armor.firstColor = baseColor;
-        
-        
         armor.slot = EquipSlot.Body;
         return armor;
     }
@@ -373,7 +386,6 @@ public class ItemCreator : ScriptableObject {
             helmet.secondSprite = helmetPropInGame;
         }        
         helmet.firstSprite = helmetBaseInGame;
-         
         helmet.slot = EquipSlot.Head;
         return helmet;
     }

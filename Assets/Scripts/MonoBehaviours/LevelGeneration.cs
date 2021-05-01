@@ -7,6 +7,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Threading.Tasks;
+// ReSharper disable All
 
 public class LevelGeneration : MonoBehaviour {
 
@@ -30,7 +31,7 @@ public class LevelGeneration : MonoBehaviour {
     private MushroomGeneration mushroomGeneration;
 
     private List<Vector3Int> wallCoordinates;
-    private readonly int torchCount = 10;
+    private const int torchCount = 15;
 
     private List<GameObject> torches;
 
@@ -65,11 +66,11 @@ public class LevelGeneration : MonoBehaviour {
     }*/
     public async void SetLayout(Connections connections) {
         this.connections = connections;
-        pseudoRandomForPlants = new System.Random(this.layout.seed.GetHashCode());
-        pseudoRandomForWalls = new System.Random(this.layout.seed.GetHashCode());
-        pseudoRandomForLevel = new System.Random(this.layout.seed.GetHashCode());
-        pseudoRandomForGround = new System.Random(this.layout.seed.GetHashCode());
-        pseudoRandomForTorches = new System.Random(this.layout.seed.GetHashCode());
+        pseudoRandomForPlants = new System.Random(layout.seed.GetHashCode());
+        pseudoRandomForWalls = new System.Random(layout.seed.GetHashCode());
+        pseudoRandomForLevel = new System.Random(layout.seed.GetHashCode());
+        pseudoRandomForGround = new System.Random(layout.seed.GetHashCode());
+        pseudoRandomForTorches = new System.Random(layout.seed.GetHashCode());
         if(layout.generateWalls) {
             await GenerateMap();
         }
@@ -87,13 +88,16 @@ public class LevelGeneration : MonoBehaviour {
         map = new int[layout.width, layout.height];
         reservedForConnectionsMap = new int[layout.width, layout.height];
         wallCoordinates = new List<Vector3Int>();
-        await Task.Run(() => RandomFillMap());        
-        for(int i = 0; i < layout.smoothLevel; i++) {
-            await Task.Run(() => SmoothMap());            
+        await Task.Run(RandomFillMap);
+        if(layout.worldCoordinates[0] == 0 && layout.worldCoordinates[1] == 0) {
+            ClearStartPosition();
         }
-        await Task.Run(() => ProcessMap());
+        for(int i = 0; i < layout.smoothLevel; i++) {
+            await Task.Run(SmoothMap);            
+        }
+        await Task.Run(ProcessMap);
         //StartCoroutine(DrawMapCoroutine());
-        SetTiles(await Task.Run(() => DrawMap()));
+        SetTiles(await Task.Run(DrawMap));
         if(layout.marchingSquares) {
             for(int i = 0; i < layout.addSideCount; i++) {
                 AddSides();
@@ -106,6 +110,14 @@ public class LevelGeneration : MonoBehaviour {
         }
         chestGeneration.LoadChests(0, layout.seed);
         await mushroomGeneration.GenerateMushrooms(0, layout.seed);
+    }
+
+    private void ClearStartPosition() {
+        for(int x = layout.width / 2 - 4; x < layout.width / 2 + 4; x++) {
+            for(int y = layout.height / 2 - 4; y < layout.height / 2 + 4; y++) {
+                map[x, y] = 0;
+            }
+        }
     }
     private void GenerateTorches() {
         for(int i = 0; i < torchCount; i++) {
@@ -141,50 +153,50 @@ public class LevelGeneration : MonoBehaviour {
         ClearTorches();
         gameObject.SetActive(false);
     }    
-    private int ConvertTileIdToTilesetIndex(int id) {
-        if(new int[] { 7, 15, 39, 47, 135, 143, 167, 175 }.Contains(id)) {
+    private static int ConvertTileIdToTilesetIndex(int id) {
+        if(new[] { 7, 15, 39, 47, 135, 143, 167, 175 }.Contains(id)) {
             return 0;
         }
-        else if(new int[] { 62, 60, 30, 28, 156, 158, 188, 190 }.Contains(id)) {
+        else if(new[] { 62, 60, 30, 28, 156, 158, 188, 190 }.Contains(id)) {
             return 1;
         }
-        else if(new int[] { 31, 95, 191, 159, 63 }.Contains(id)) {
+        else if(new[] { 31, 95, 191, 159, 63 }.Contains(id)) {
             return 2;
         }
-        else if(new int[] { 112, 114, 120, 122, 240, 242, 248, 250 }.Contains(id)) {
+        else if(new[] { 112, 114, 120, 122, 240, 242, 248, 250 }.Contains(id)) {
             return 3;
         }
-        else if(new int[] { 119 }.Contains(id)) {
+        else if(new[] { 119 }.Contains(id)) {
             return 4;
         }
-        else if(new int[] { 124, 126, 252, 254 }.Contains(id)) {
+        else if(new[] { 124, 126, 252, 254 }.Contains(id)) {
             return 5;
         }
-        else if(new int[] { 127 }.Contains(id)) {
+        else if(new[] { 127 }.Contains(id)) {
             return 6;
         }
-        else if(new int[] { 193, 195, 201, 203, 225, 227, 233, 235 }.Contains(id)) {
+        else if(new[] { 193, 195, 201, 203, 225, 227, 233, 235 }.Contains(id)) {
             return 7;
         }
-        else if(new int[] { 207, 231, 199, 239 }.Contains(id)) {
+        else if(new[] { 207, 231, 199, 239 }.Contains(id)) {
             return 8;
         }
-        else if(new int[] { 221, 215 }.Contains(id)) {
+        else if(new[] { 221, 215 }.Contains(id)) {
             return 9;
         }
-        else if(new int[] { 223 }.Contains(id)) {
+        else if(new[] { 223 }.Contains(id)) {
             return 10;
         }
-        else if(new int[] { 241, 243, 249, 251 }.Contains(id)) {
+        else if(new[] { 241, 243, 249, 251 }.Contains(id)) {
             return 11;
         }
-        else if(new int[] { 247 }.Contains(id)) {
+        else if(new[] { 247 }.Contains(id)) {
             return 12;
         }
-        else if(new int[] { 253 }.Contains(id)) {
+        else if(new[] { 253 }.Contains(id)) {
             return 13;
         }
-        else if(new int[] { 255 }.Contains(id)) {
+        else if(new[] { 255 }.Contains(id)) {
             return 14;
         }
         else {
@@ -218,10 +230,7 @@ public class LevelGeneration : MonoBehaviour {
         return tileCoordinate;
     }
     public bool IsValidLocation(Vector2Int coordinates) {
-        bool valid = false;
-        if(map[coordinates.x, coordinates.y] == 0) {
-            valid = true;
-        }
+        bool valid = map[coordinates.x, coordinates.y] == 0;
         return valid;
     }
     // Fills the background of the level
@@ -262,8 +271,8 @@ public class LevelGeneration : MonoBehaviour {
                     reservedForConnectionsMap[x, y] = 1;
                 }*/
                 // Left
-                if(new int[] { 30, 31, 32, 33 }.Contains(y) &&
-                        new int[] { 0, 1, 2, 3 }.Contains(x)) {
+                if(new[] { 30, 31, 32, 33 }.Contains(y) &&
+                        new[] { 0, 1, 2, 3 }.Contains(x)) {
                     if(layout.worldCoordinates.x == 0 && !connections.left) {
                         map[x, y] = 1;
                         reservedForConnectionsMap[x, y] = 0;
@@ -278,8 +287,8 @@ public class LevelGeneration : MonoBehaviour {
                     }
                 }
                 // Right
-                else if(new int[] { 30, 31, 32, 33 }.Contains(y) &&
-                        new int[] { 60, 61, 62, 63 }.Contains(x)) {
+                else if(new[] { 30, 31, 32, 33 }.Contains(y) &&
+                        new[] { 60, 61, 62, 63 }.Contains(x)) {
                     if(layout.worldCoordinates.x == layout.worldSize - 1 && !connections.right) {
                         map[x, y] = 1;
                         reservedForConnectionsMap[x, y] = 0;
@@ -294,8 +303,8 @@ public class LevelGeneration : MonoBehaviour {
                     }
                 }
                 // Bottom
-                else if(new int[] { 30, 31, 32, 33 }.Contains(x) &&
-                        new int[] { 0, 1, 2, 3 }.Contains(y)) {
+                else if(new[] { 30, 31, 32, 33 }.Contains(x) &&
+                        new[] { 0, 1, 2, 3 }.Contains(y)) {
                     if(layout.worldCoordinates.y == 0 && !connections.bottom) {
                         map[x, y] = 1;
                         reservedForConnectionsMap[x, y] = 0;
@@ -310,8 +319,8 @@ public class LevelGeneration : MonoBehaviour {
                     }
                 }
                 // Top
-                else if(new int[] { 30, 31, 32, 33 }.Contains(x) &&
-                        new int[] { 60, 61, 62, 63 }.Contains(y)) {
+                else if(new[] { 30, 31, 32, 33 }.Contains(x) &&
+                        new[] { 60, 61, 62, 63 }.Contains(y)) {
                     if(layout.worldCoordinates.y == layout.worldSize - 1 && !connections.top) {
                         map[x, y] = 1;
                         reservedForConnectionsMap[x, y] = 0;

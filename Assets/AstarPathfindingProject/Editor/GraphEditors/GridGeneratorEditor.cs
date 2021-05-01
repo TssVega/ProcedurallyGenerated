@@ -538,7 +538,7 @@ namespace Pathfinding {
 			return pivot;
 		}
 
-		static readonly Vector3[] handlePoints = new [] { new Vector3(0.0f, 0, 0.5f), new Vector3(1.0f, 0, 0.5f), new Vector3(0.5f, 0, 0.0f), new Vector3(0.5f, 0, 1.0f) };
+		static readonly Vector3[] handlePoints = { new Vector3(0.0f, 0, 0.5f), new Vector3(1.0f, 0, 0.5f), new Vector3(0.5f, 0, 0.0f), new Vector3(0.5f, 0, 1.0f) };
 
 		public override void OnSceneGUI (NavGraph target) {
 			Event e = Event.current;

@@ -110,7 +110,7 @@ namespace Pathfinding {
 			Highest
 		}
 
-		static readonly int[] iterationsByQuality = new [] { 1, 2, 1, 3 };
+		static readonly int[] iterationsByQuality = { 1, 2, 1, 3 };
 		static List<Vector3> buffer = new List<Vector3>();
 		static float[] DPCosts = new float[16];
 		static int[] DPParents = new int[16];

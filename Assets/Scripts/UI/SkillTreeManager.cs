@@ -29,12 +29,12 @@ public class SkillTreeManager : MonoBehaviour, IDragHandler {
     private Stats playerStats;
     private SkillUser playerSkills;
     private float distance = 150f;  // Distance between slots in pixels
-    private readonly float distanceBetweenTiers = 96f;
+    private const float distanceBetweenTiers = 96f;
     private bool slotsGenerated = false;
-    private readonly int skillPathCount = 12;
+    private const int skillPathCount = 12;
     private Canvas uiCanvas;
-    private readonly float panelLimit = 700f;
-    private readonly int basicSkillCount = 6;
+    private const float panelLimit = 700f;
+    private const int basicSkillCount = 6;
 
     private readonly float[] startDegrees = { 0f, 7.5f, 0f, 3.725f, 3.725f, 3.725f, 0f, 7.5f, 0f };
     private readonly float[] degreeIncrements = { 30f, 15f, 10f, 7.5f, 7.5f, 7.5f, 10f, 15f, 30f };
@@ -71,12 +71,11 @@ public class SkillTreeManager : MonoBehaviour, IDragHandler {
             return;
         }
         PutIcons();
-        int ringCount = 9;
-        float currentAngle;
+        const int ringCount = 9;
         int counter = basicSkillCount;
 
         for(int i = 0; i < ringCount; i++) {
-            currentAngle = startDegrees[i];
+            var currentAngle = startDegrees[i];
             for(int j = 0; j < runtimes[i]; j++) {
                 Vector2 slotPosition = new Vector2(
                     Mathf.Cos(currentAngle * Mathf.Deg2Rad),
@@ -108,8 +107,6 @@ public class SkillTreeManager : MonoBehaviour, IDragHandler {
             }
             distance += distanceBetweenTiers;
         }
-        // TODO: Activate when all skills are in the database
-        //AssignTalentSlots();   
         AssignTalents();
         slotsGenerated = true;
     }

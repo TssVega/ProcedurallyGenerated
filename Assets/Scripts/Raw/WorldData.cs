@@ -13,7 +13,7 @@ public class WorldData {
     public WorldData(string[,] data, int[] current, int[,] worldMap) {
         worldData = data;
         currentCoordinates = current;
-        lastCoordinates = new int[] { -1, -1 };
+        lastCoordinates = new[] { -1, -1 };
         this.worldMap = worldMap;
     }
 }
