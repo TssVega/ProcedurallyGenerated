@@ -10,6 +10,19 @@ public static class PersistentData {
 
     public static List<string> fileNames;
 
+    public static int ThreadCount { get; private set; } = 0;
+
+    public static bool CanSave() {
+        return ThreadCount < 1;
+    }
+
+    public static void AddWorkingThread() {
+        ++ThreadCount;
+    }
+
+    public static void FinishWorkingThread() {
+        --ThreadCount;
+    }
     public static void GetFileNames() {
         fileNames = new List<string>();
         DirectoryInfo dir = new DirectoryInfo(Application.persistentDataPath);

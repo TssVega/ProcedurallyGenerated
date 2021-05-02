@@ -31,7 +31,7 @@ public class LevelGeneration : MonoBehaviour {
     private MushroomGeneration mushroomGeneration;
 
     private List<Vector3Int> wallCoordinates;
-    private const int torchCount = 15;
+    private const int torchCount = 2;
 
     private List<GameObject> torches;
 
@@ -111,7 +111,6 @@ public class LevelGeneration : MonoBehaviour {
         chestGeneration.LoadChests(0, layout.seed);
         await mushroomGeneration.GenerateMushrooms(0, layout.seed);
     }
-
     private void ClearStartPosition() {
         for(int x = layout.width / 2 - 4; x < layout.width / 2 + 4; x++) {
             for(int y = layout.height / 2 - 4; y < layout.height / 2 + 4; y++) {
@@ -241,7 +240,23 @@ public class LevelGeneration : MonoBehaviour {
                     (x - layout.width / 2) + layout.worldCoordinates.x * layout.width,
                     (y - layout.height / 2) + layout.worldCoordinates.y * layout.height, 0);
                 if(worldGeneration.tilemap.GetTile(tileCoordinate) != tileDatabase.wallTiles[tileDatabase.wallTiles.Length - 1]) {
-                    worldGeneration.groundTilemap.SetTile(tileCoordinate, tileDatabase.groundTiles[pseudoRandomForGround.Next(0, tileDatabase.groundTiles.Length)]);
+                    
+                    switch(worldGeneration.WorldMap[layout.worldCoordinates.x, layout.worldCoordinates.y]) {
+                        case 1:
+                            worldGeneration.groundTilemap.SetTile(tileCoordinate, tileDatabase.groundTiles[pseudoRandomForGround.Next(0, tileDatabase.groundTiles.Length)]);
+                            break;
+                        case 2:
+                            worldGeneration.groundTilemap.SetTile(tileCoordinate, tileDatabase.volcanicTiles[pseudoRandomForGround.Next(0, tileDatabase.volcanicTiles.Length)]);
+                            break;
+                        case 3:
+                            worldGeneration.groundTilemap.SetTile(tileCoordinate, tileDatabase.glacialTiles[pseudoRandomForGround.Next(0, tileDatabase.glacialTiles.Length)]);
+                            break;
+                        case 4:
+                            worldGeneration.groundTilemap.SetTile(tileCoordinate, tileDatabase.crystalTiles[pseudoRandomForGround.Next(0, tileDatabase.crystalTiles.Length)]);
+                            break;
+                        default:
+                            break;
+                    }
                 }
                 else {
                     worldGeneration.groundTilemap.SetTile(tileCoordinate, null);

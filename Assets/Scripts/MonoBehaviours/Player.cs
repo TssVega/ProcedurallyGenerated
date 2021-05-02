@@ -85,6 +85,10 @@ public class Player : MonoBehaviour {
         }*/
     }
     public void SavePlayer() {
+        if(!PersistentData.CanSave()) {
+            Debug.LogWarning($"Cannot save right now. Currently working threads: {PersistentData.ThreadCount}");
+            return;
+        }
         SaveSystem.Save(this, PersistentData.saveSlot);
         if(worldGeneration) {
             worldGeneration.SaveWorldData();
@@ -99,6 +103,7 @@ public class Player : MonoBehaviour {
             mushroomGenerators[i].SaveMushrooms(0);
         }
         ReplaceAutosaveFilesWithSlotSpecificOnes();
+        Debug.LogWarning($"Saved successfully");
         /*
         for(int i = 0; i < chestGen.Length; i++) {
             chestGen[i].SaveChests(PersistentData.saveSlot);
@@ -230,7 +235,7 @@ public class Player : MonoBehaviour {
                     skillUser.currentSkills[i] = null;
                 }
             }
-        }        
+        }
     }
     private void SetAppearance() {
         skinColor.color = appearance.skinColors[skinColorIndex];

@@ -7,17 +7,14 @@ public class MushroomGeneration : MonoBehaviour {
 
     public MushroomDatabase mushroomDatabase;
     public ItemDatabase itemDatabase;
-    public GameObject mushroomObject;
     public MushroomData mushroomData;
     public int[,] mushroomValues;
-    public MushroomObject mushroom;
-    public GroundObject groundObject;
     public List<GameObject> mushrooms;
 
     private LevelGeneration levelGeneration;
     private System.Random pseudoRandomForMushrooms;
 
-    private readonly int levelSize = 64;
+    private const int levelSize = 64;
 
     private void Awake() {
         levelGeneration = GetComponent<LevelGeneration>();
@@ -26,11 +23,16 @@ public class MushroomGeneration : MonoBehaviour {
         pseudoRandomForMushrooms = new System.Random(seed.GetHashCode());
         mushrooms = new List<GameObject>();
         mushroomValues = new int[levelSize, levelSize];
+        for(int i = 0; i < levelSize; i++) {
+            for(int j = 0; j < levelSize; j++) {
+                mushroomValues[i, j] = -1;
+            }
+        }
         mushroomData = SaveSystem.LoadMushrooms(slot, levelGeneration.layout.worldCoordinates);
         if(mushroomData != null) {            
             for(int x = 0; x < levelSize; x++) {
                 for(int y = 0; y < levelSize; y++) {
-                    if(mushroomValues[x, y] >= 0 && levelGeneration.CheckLocation(x, y)) {
+                    if(mushroomData.mushroomMap[x, y] >= 0 && levelGeneration.CheckLocation(x, y)) {
                         mushroomValues[x, y] = mushroomData.mushroomMap[x, y];
                         if(mushroomValues[x, y] >= 0 && mushroomValues[x, y] < 12) {
                             PlaceMushroom(x, y, mushroomValues[x, y]);
@@ -46,7 +48,7 @@ public class MushroomGeneration : MonoBehaviour {
             for(int x = 0; x < levelSize; x++) {
                 for(int y = 0; y < levelSize; y++) {
                     if(levelGeneration.CheckLocation(x, y)) {
-                        mushroomValues[x, y] = await Task.Run(() => CalculateMushroomValue());
+                        mushroomValues[x, y] = await Task.Run(CalculateMushroomValue);
                         if(mushroomValues[x, y] >= 0 && mushroomValues[x, y] < 12) {
                             PlaceMushroom(x, y, mushroomValues[x, y]);
                         }
@@ -56,7 +58,8 @@ public class MushroomGeneration : MonoBehaviour {
                     }                                       
                 }
             }
-        }        
+        }
+        PersistentData.FinishWorkingThread();
     }
     private void PlaceMushroom(int x, int y, int mushroomValue) {
         GameObject mushroomClone = ObjectPooler.objectPooler.GetPooledObject("Mushroom");

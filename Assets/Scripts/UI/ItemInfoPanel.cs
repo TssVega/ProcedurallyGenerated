@@ -14,7 +14,9 @@ public class ItemInfoPanel : MonoBehaviour {
         SetStats();
     }
     private void SetStats() {
-        itemName.text = item.itemName;
-        itemName.color = ColorBySkillType.GetColorByRarity(item.rarity);
+        if(item != null) {
+            itemName.text = item.itemName;
+            itemName.color = ColorBySkillType.GetColorByRarity(item.rarity);
+        }
     }
 }

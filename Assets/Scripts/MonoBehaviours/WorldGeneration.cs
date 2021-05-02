@@ -78,6 +78,11 @@ public class WorldGeneration : MonoBehaviour {
             }
         }*/
     }
+
+    private void OnDestroy() {
+        
+    }
+
     public int WorldSize => worldSize;
 
     public int[,] WorldMap => world.worldMap;
@@ -130,7 +135,7 @@ public class WorldGeneration : MonoBehaviour {
         world.lastCoordinates = new[] { coordinates.x, coordinates.y};
     }
     // Generate adjacent levels and unload farther ones
-    private void GenerateCurrentLevels() {             
+    private void GenerateCurrentLevels() {
         for(int x = world.currentCoordinates[0] - 1; x <= world.currentCoordinates[0] + 1; x++) {
             for(int y = world.currentCoordinates[1] - 1; y <= world.currentCoordinates[1] + 1; y++) {                
                 if(world.currentCoordinates[0] == world.lastCoordinates[0] && world.currentCoordinates[1] == world.lastCoordinates[1]) {
@@ -150,7 +155,6 @@ public class WorldGeneration : MonoBehaviour {
                     loadingPanel.LoadingLevels();
                 }                
                 if(x == world.currentCoordinates[0] && y == world.currentCoordinates[1]) {
-                    int levelSize = 64;
                     aStarPath.graphs[0].active.data.gridGraph.center = new Vector3Int(levelSize * x, levelSize * y, 0);
                     StartCoroutine(ScanPath());
                     //ScanPath();
@@ -161,6 +165,7 @@ public class WorldGeneration : MonoBehaviour {
                 if(currentRenderedLevels.Contains(new Vector2Int(x, y))) {
                     continue;                    
                 }
+                PersistentData.AddWorkingThread();
                 if(world.worldData[x, y] == null) {
                     //pseudoRandomForWorld = new System.Random(worldSeed.GetHashCode());
                     world.worldData[x, y] = pseudoRandomForWorld.Next(x + 1, y * worldSize + worldSize + 1).ToString();

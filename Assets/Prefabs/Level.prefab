@@ -20,7 +20,7 @@ GameObject:
   m_TagString: Level
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &2016924447434614447
 Transform:
@@ -93,10 +93,25 @@ MonoBehaviour:
     - {fileID: 11400000, guid: dff2b6667208edd42bf2b32276f35f87, type: 2}
     - {fileID: 11400000, guid: 9763eccf110203146bf27f34f20cda30, type: 2}
     groundTiles:
-    - {fileID: 11400000, guid: ce1c86b87893bc74cb4282eb6c62187b, type: 2}
-    - {fileID: 11400000, guid: 6dee763056db19241bfad20501854587, type: 2}
-    - {fileID: 11400000, guid: 308c78bcd7974b64198a115ab338696d, type: 2}
-    - {fileID: 11400000, guid: 0c13543f6f8b9fa48bdfdfd51b876b7d, type: 2}
+    - {fileID: 11400000, guid: 00e8440d587688a4f969dc5982eeb30e, type: 2}
+    - {fileID: 11400000, guid: 4fea36f9fa319ef4fb5688d7cac15fa3, type: 2}
+    - {fileID: 11400000, guid: df640456d4d6e084a8b01e49d86449a6, type: 2}
+    - {fileID: 11400000, guid: 3da0d7152dd0cfe41b4a7fc39b578b33, type: 2}
+    volcanicTiles:
+    - {fileID: 11400000, guid: f7cd7424d3f5f4a43917f00cc08d08d6, type: 2}
+    - {fileID: 11400000, guid: 4e152485a3d4bdd4bac49e93f4be7776, type: 2}
+    - {fileID: 11400000, guid: 0375b938a361f244c8cc3be0e06a5c5b, type: 2}
+    - {fileID: 11400000, guid: c28ba5d3e836c104cb96f8fe4769c931, type: 2}
+    glacialTiles:
+    - {fileID: 11400000, guid: 2a91a1df9ac924c44a9e833a4f37d652, type: 2}
+    - {fileID: 11400000, guid: 584694b856f0b0f47b8078f80451e831, type: 2}
+    - {fileID: 11400000, guid: 7ff957db564103a44a54e9b66ecd4e03, type: 2}
+    - {fileID: 11400000, guid: ee5490352367d8145989b8dd6f497938, type: 2}
+    crystalTiles:
+    - {fileID: 11400000, guid: 2022807b92f922d43b2d4f315db5931d, type: 2}
+    - {fileID: 11400000, guid: df23bcf016f93ac4490cfe612dfbc81a, type: 2}
+    - {fileID: 11400000, guid: 27cd4228fe86f964b94ae2a4291f39f7, type: 2}
+    - {fileID: 11400000, guid: 2f3f6585c100f234abe9f4989afea4be, type: 2}
 --- !u!114 &2913122364275797249
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126,12 +141,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mushroomDatabase: {fileID: 11400000, guid: cd02dd15f0de94643ac6f426f808693a, type: 2}
   itemDatabase: {fileID: 11400000, guid: 54f63e30eeab869438b4c4e0e1e6351e, type: 2}
-  mushroomObject: {fileID: 5036906735598353528, guid: c14e52ac886b56c46b32ce098fe41fb9,
-    type: 3}
-  mushroom: {fileID: 5036906735598353527, guid: c14e52ac886b56c46b32ce098fe41fb9,
-    type: 3}
-  groundObject: {fileID: 1036120284835274821, guid: 6ff3c878a507ed54fa60a45e894912d1,
-    type: 3}
   mushrooms: []
 --- !u!61 &6886192618472798170
 BoxCollider2D:
