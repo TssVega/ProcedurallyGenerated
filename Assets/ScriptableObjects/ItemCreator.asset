@@ -151,10 +151,10 @@ MonoBehaviour:
   - {fileID: 8074182180499086820, guid: b5bb47effd05d8e4eb3942f87f441e69, type: 3}
   - {fileID: -496555239116848512, guid: b5bb47effd05d8e4eb3942f87f441e69, type: 3}
   shieldProps:
-  - {fileID: 880205181687023923, guid: 1d3dc5f5e4103914080d8471e32b7aa9, type: 3}
-  - {fileID: 7112706108043005543, guid: 1d3dc5f5e4103914080d8471e32b7aa9, type: 3}
-  - {fileID: 3986970833080739715, guid: 1d3dc5f5e4103914080d8471e32b7aa9, type: 3}
-  - {fileID: 3347032710275199280, guid: 1d3dc5f5e4103914080d8471e32b7aa9, type: 3}
+  - {fileID: 880205181687023923, guid: dbdcd728933aec949a470dbbfc80f2ee, type: 3}
+  - {fileID: 7112706108043005543, guid: dbdcd728933aec949a470dbbfc80f2ee, type: 3}
+  - {fileID: 3986970833080739715, guid: dbdcd728933aec949a470dbbfc80f2ee, type: 3}
+  - {fileID: 3347032710275199280, guid: dbdcd728933aec949a470dbbfc80f2ee, type: 3}
   shieldInGame:
   - {fileID: 21300000, guid: 292d0a1ccd8bae341b568d2d1e99160e, type: 3}
   ringBases:
@@ -181,5 +181,24 @@ MonoBehaviour:
   - {fileID: -2191477379800411434, guid: 7ec300f1678cd6b40ac0eaa869e6cf09, type: 3}
   - {fileID: 715317130902145233, guid: 7ec300f1678cd6b40ac0eaa869e6cf09, type: 3}
   - {fileID: -4274273943436650574, guid: 7ec300f1678cd6b40ac0eaa869e6cf09, type: 3}
+  staffHandles:
+  - {fileID: 1283473269395302082, guid: d85b2f049acbbf64897602fa2875ea3b, type: 3}
+  - {fileID: -5782820146048677086, guid: d85b2f049acbbf64897602fa2875ea3b, type: 3}
+  staffProps:
+  - {fileID: -5385460575995826814, guid: d85b2f049acbbf64897602fa2875ea3b, type: 3}
+  - {fileID: 7247140182643335219, guid: d85b2f049acbbf64897602fa2875ea3b, type: 3}
+  staffHeads:
+  - {fileID: -9041509757448501754, guid: d85b2f049acbbf64897602fa2875ea3b, type: 3}
+  - {fileID: 1030319029807916322, guid: d85b2f049acbbf64897602fa2875ea3b, type: 3}
+  - {fileID: 7299858099260157231, guid: d85b2f049acbbf64897602fa2875ea3b, type: 3}
+  - {fileID: -6134919450217716382, guid: d85b2f049acbbf64897602fa2875ea3b, type: 3}
+  - {fileID: -8003361216652221440, guid: d85b2f049acbbf64897602fa2875ea3b, type: 3}
+  - {fileID: -4385954328986836761, guid: d85b2f049acbbf64897602fa2875ea3b, type: 3}
+  - {fileID: -1080678027656222790, guid: d85b2f049acbbf64897602fa2875ea3b, type: 3}
+  - {fileID: 134100814373331125, guid: d85b2f049acbbf64897602fa2875ea3b, type: 3}
+  - {fileID: -2474701605153486612, guid: d85b2f049acbbf64897602fa2875ea3b, type: 3}
+  - {fileID: -204596508574069260, guid: d85b2f049acbbf64897602fa2875ea3b, type: 3}
+  - {fileID: -9050212359795112828, guid: d85b2f049acbbf64897602fa2875ea3b, type: 3}
+  - {fileID: 1530405306034544866, guid: d85b2f049acbbf64897602fa2875ea3b, type: 3}
   mushroomDatabase: {fileID: 11400000, guid: cd02dd15f0de94643ac6f426f808693a, type: 2}
   itemDatabase: {fileID: 11400000, guid: 54f63e30eeab869438b4c4e0e1e6351e, type: 2}

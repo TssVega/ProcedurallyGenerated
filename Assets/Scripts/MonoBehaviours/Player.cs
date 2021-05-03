@@ -256,7 +256,12 @@ public class Player : MonoBehaviour {
             weaponBlade.color = weapon.thirdColor;
         }
         else if(weapon.weaponType == WeaponType.TwoHanded) {
-
+            weaponHandle.sprite = weapon.firstSprite;
+            weaponGuard.sprite = weapon.secondSprite;
+            weaponBlade.sprite = weapon.thirdSprite;
+            weaponHandle.color = weapon.firstColor;
+            weaponGuard.color = weapon.secondColor;
+            weaponBlade.color = weapon.thirdColor;
         }
         else if(weapon.weaponType == WeaponType.Bow) {
             bowFirst.sprite = weapon.firstSprite;

@@ -107,12 +107,12 @@ public class Inventory : MonoBehaviour {
     }    
     public void UpdateSlot(int index) {
         if(inventory[index] != null) {
-            itemImages[index].sprite = inventory[index].firstIcon;
-            itemImages[index].color = inventory[index].firstColor;
-            itemImagesSecondary[index].sprite = inventory[index].secondIcon;
-            itemImagesSecondary[index].color = inventory[index].secondColor;
-            itemImagesTertiary[index].sprite = inventory[index].thirdIcon;
-            itemImagesTertiary[index].color = inventory[index].thirdColor;
+            itemImages[index].sprite = inventory[index].firstIcon ? inventory[index].firstIcon : null;
+            itemImages[index].color = inventory[index].firstColor != null ? inventory[index].firstColor : Color.clear;
+            itemImagesSecondary[index].sprite = inventory[index].secondIcon ? inventory[index].secondIcon : null;
+            itemImagesSecondary[index].color = inventory[index].secondColor != null ? inventory[index].secondColor : Color.clear;
+            itemImagesTertiary[index].sprite = inventory[index].thirdIcon ? inventory[index].thirdIcon : null;
+            itemImagesTertiary[index].color = inventory[index].thirdColor != null ? inventory[index].thirdColor : Color.clear;
             quantityTexts[index].text = quantities[index] > 1 ? quantities[index].ToString() : "";
         }
         else {
@@ -127,12 +127,12 @@ public class Inventory : MonoBehaviour {
     }
     public void UpdateEquipmentSlot(int index) {
         if(equipment[index] != null) {
-            equipmentImages[index].sprite = equipment[index].firstIcon;
-            equipmentImages[index].color = equipment[index].firstColor;
-            equipmentImagesSecondary[index].sprite = equipment[index].secondIcon;
-            equipmentImagesSecondary[index].color = equipment[index].secondColor;
-            equipmentImagesTertiary[index].sprite = equipment[index].thirdIcon;
-            equipmentImagesTertiary[index].color = equipment[index].thirdColor;
+            equipmentImages[index].sprite = equipment[index].firstIcon ? equipment[index].firstIcon : null;
+            equipmentImages[index].color = equipment[index].firstColor != null ? equipment[index].firstColor : Color.clear;
+            equipmentImagesSecondary[index].sprite = equipment[index].secondIcon ? equipment[index].secondIcon : null;
+            equipmentImagesSecondary[index].color = equipment[index].secondColor != null ? equipment[index].secondColor : Color.clear;
+            equipmentImagesTertiary[index].sprite = equipment[index].thirdIcon ? equipment[index].thirdIcon : null;
+            equipmentImagesTertiary[index].color = equipment[index].thirdColor != null ? equipment[index].thirdColor : Color.clear;
         }
         else {
             equipmentImages[index].sprite = null;
@@ -146,12 +146,12 @@ public class Inventory : MonoBehaviour {
     public void SetInventoryImages() {
         for(int i = 0; i < inventorySize; i++) {
             if(inventory[i] != null) {
-                itemImages[i].sprite = inventory[i].firstIcon;
-                itemImages[i].color = inventory[i].firstColor;
-                itemImagesSecondary[i].sprite = inventory[i].secondIcon;
-                itemImagesSecondary[i].color = inventory[i].secondColor;
-                itemImagesTertiary[i].sprite = inventory[i].thirdIcon;
-                itemImagesTertiary[i].color = inventory[i].thirdColor;
+                itemImages[i].sprite = inventory[i].firstIcon ? inventory[i].firstIcon : null;
+                itemImages[i].color = inventory[i].firstColor != null ? inventory[i].firstColor : Color.clear;
+                itemImagesSecondary[i].sprite = inventory[i].secondIcon ? inventory[i].secondIcon : null;
+                itemImagesSecondary[i].color = inventory[i].secondColor != null ? inventory[i].secondColor : Color.clear;
+                itemImagesTertiary[i].sprite = inventory[i].thirdIcon ? inventory[i].thirdIcon : null;
+                itemImagesTertiary[i].color = inventory[i].thirdColor != null ? inventory[i].thirdColor : Color.clear;
                 quantityTexts[i].text = quantities[i] > 1 ? quantities[i].ToString() : "";
             }
             else {
@@ -166,12 +166,12 @@ public class Inventory : MonoBehaviour {
         }
         for(int i = 0; i < equipment.Count; i++) {
             if(equipment[i] != null) {
-                equipmentImages[i].sprite = equipment[i].firstIcon;
-                equipmentImages[i].color = equipment[i].firstColor;
-                equipmentImagesSecondary[i].sprite = equipment[i].secondIcon;
-                equipmentImagesSecondary[i].color = equipment[i].secondColor;
-                equipmentImagesTertiary[i].sprite = equipment[i].thirdIcon;
-                equipmentImagesTertiary[i].color = equipment[i].thirdColor;
+                equipmentImages[i].sprite = equipment[i].firstIcon ? equipment[i].firstIcon : null;
+                equipmentImages[i].color = equipment[i].firstColor != null ? equipment[i].firstColor : Color.clear;
+                equipmentImagesSecondary[i].sprite = equipment[i].secondIcon ? equipment[i].secondIcon : null;
+                equipmentImagesSecondary[i].color = equipment[i].secondColor != null ? equipment[i].secondColor : Color.clear;
+                equipmentImagesTertiary[i].sprite = equipment[i].thirdIcon ? equipment[i].thirdIcon : null;
+                equipmentImagesTertiary[i].color = equipment[i].thirdColor != null ? equipment[i].thirdColor : Color.clear;
             }
             else {
                 equipmentImages[i].sprite = null;
