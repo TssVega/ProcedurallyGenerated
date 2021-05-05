@@ -213,14 +213,10 @@ public class Inventory : MonoBehaviour {
         }
         else if(item is Shield) {
             Shield s = item as Shield;
-            
-            if(!CanAddToInventory()) {
-                return;
-                //UnequipItem((int)EquipSlot.LeftHand, GetEmptyInventorySlot());
-            }/*
-            else {
-                
-            }*/
+            Weapon w = equipment[(int)EquipSlot.RightHand] as Weapon;
+            if(CanAddToInventory() && w.weaponType == WeaponType.TwoHanded) {
+                UnequipItem((int)EquipSlot.RightHand, GetEmptyInventorySlot());
+            }
             player.SetItem(s);
         }
         else if(item is Ring) {

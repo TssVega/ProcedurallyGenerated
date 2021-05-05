@@ -299,24 +299,24 @@ public class CharacterCreation : MonoBehaviour {
         List<Room> survivingRooms = new List<Room>();
         // Clear unneccessary walls
         foreach(List<Coordinate> wallRegion in wallRegions) {
-            if(wallRegion.Count < 32) {
+            if(wallRegion.Count < 24) {
                 foreach(Coordinate tile in wallRegion) {
                     /*Vector3Int tileCoordinate = new Vector3Int(
                     (tile.tileX - layout.width / 2) + layout.worldCoordinates.x * layout.width,
                     (tile.tileY - layout.height / 2) + layout.worldCoordinates.y * layout.height, 0);*/
-                    world.worldMap[tile.tileX, tile.tileY] = 0;
+                    world.worldMap[tile.tileX, tile.tileY] = 1;
                     //worldGeneration.tilemap.SetTile(tileCoordinate, null);
                 }
             }
         }
         // Clear unneccessary rooms
         foreach(List<Coordinate> groundRegion in groundRegions) {
-            if(groundRegion.Count < 32) {
+            if(groundRegion.Count < 24) {
                 foreach(Coordinate tile in groundRegion) {
                     /*Vector3Int tileCoordinate = new Vector3Int(
                     (tile.tileX - layout.width / 2) + layout.worldCoordinates.x * layout.width,
                     (tile.tileY - layout.height / 2) + layout.worldCoordinates.y * layout.height, 0);*/
-                    world.worldMap[tile.tileX, tile.tileY] = 1;
+                    world.worldMap[tile.tileX, tile.tileY] = 0;
                     //worldGeneration.tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[tileDatabase.wallTiles.Length - 1]);
                 }
             }

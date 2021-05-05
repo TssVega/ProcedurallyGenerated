@@ -219,15 +219,19 @@ public class Player : MonoBehaviour {
             stats.bleedThreshold = data.bleedThreshold;
             stats.curseThreshold = data.curseThreshold;
             // Skills
+            skillUser.acquiredSkills = new List<Skill>();
             for(int i = 0; i < data.acquiredSkills.Length; i++) {
                 if(data.acquiredSkills[i] >= 0) {
-                    skillUser.acquiredSkills[i] = skillUser.skillDatabase.skills[data.acquiredSkills[i]];
+                    //Debug.Log($"i = {i}");
+                    //skillUser.acquiredSkills[i] = skillUser.skillDatabase.skills[data.acquiredSkills[i]];
+                    skillUser.acquiredSkills.Add(skillUser.skillDatabase.skills[data.acquiredSkills[i]]);
                 }
                 else {
                     skillUser.acquiredSkills[i] = null;
                 }
             }
-            for(int i = 0; i < 11; i++) {
+            const int maxCurrentSkillCount = 11;
+            for(int i = 0; i < maxCurrentSkillCount; i++) {
                 if(data.currentSkills[i] >= 0) {
                     skillUser.currentSkills[i] = skillUser.skillDatabase.skills[data.currentSkills[i]] as ActiveSkill;
                 }

@@ -6264,7 +6264,7 @@ MonoBehaviour:
   maxHealth: 100
   maxMana: 100
   maxEnergy: 100
-  runSpeed: 15
+  runSpeed: 8
   strength: 10
   agility: 10
   dexterity: 10
@@ -6590,7 +6590,7 @@ MonoBehaviour:
   - {x: -0.14865732, y: 0.1817545, z: 0}
   m_ShapePathHash: 584475405
   m_Mesh: {fileID: 0}
-  m_InstanceId: 101352
+  m_InstanceId: -1192
 --- !u!114 &7430841088790226281
 MonoBehaviour:
   m_ObjectHideFlags: 0
