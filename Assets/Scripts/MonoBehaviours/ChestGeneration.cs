@@ -58,7 +58,7 @@ public class ChestGeneration : MonoBehaviour {
         }
         for(int i = 0; i < count; i++) {
             GameObject chestClone = ObjectPooler.objectPooler.GetPooledObject("Chest");
-            chestClone.transform.position = GetRandomLocationForChest(pseudoRandomForChests, levelGen.layout.height, levelGen);
+            chestClone.transform.position = GetRandomLocationForChest(pseudoRandomForChests, levelGen.layout.levelSize, levelGen);
             chestClone.transform.rotation = Quaternion.identity;
             chestClone.GetComponent<ChestObject>().SetChest(chests[i]);
             chestClone.SetActive(true);
@@ -80,7 +80,7 @@ public class ChestGeneration : MonoBehaviour {
         Vector3Int location = Vector3Int.zero;
         // System.Random pseudoRandomForLevel = new System.Random(seed.GetHashCode());
         while(!valid) {
-            location = new Vector3Int(pseudoRnd.Next(3, 60), pseudoRnd.Next(3, 60), 0);
+            location = new Vector3Int(pseudoRnd.Next(3, levelGen.layout.levelSize - 4), pseudoRnd.Next(3, levelGen.layout.levelSize - 4), 0);
             if(levelGen.IsValidLocation(new Vector2Int(location.x, location.y))) {
                 valid = true;
             }

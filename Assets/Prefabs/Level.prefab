@@ -53,8 +53,7 @@ MonoBehaviour:
     useRandomSeed: 1
     seed: 
     worldCoordinates: {x: 0, y: 0}
-    width: 64
-    height: 64
+    levelSize: 32
     generateWalls: 1
     generateGrass: 0
     grassDensity: 3
@@ -166,7 +165,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 48, y: 48}
+  m_Size: {x: 24, y: 24}
   m_EdgeRadius: 0
 --- !u!114 &1440041319163023640
 MonoBehaviour:

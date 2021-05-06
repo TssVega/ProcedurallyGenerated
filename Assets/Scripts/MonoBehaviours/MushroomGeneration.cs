@@ -14,7 +14,7 @@ public class MushroomGeneration : MonoBehaviour {
     private LevelGeneration levelGeneration;
     private System.Random pseudoRandomForMushrooms;
 
-    private const int levelSize = 64;
+    private const int levelSize = 32;
 
     private void Awake() {
         levelGeneration = GetComponent<LevelGeneration>();

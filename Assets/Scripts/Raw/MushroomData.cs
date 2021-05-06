@@ -7,7 +7,7 @@ public class MushroomData {
     // -1 is no mushroom and 0-11 are mushroom types
     public int[,] mushroomMap;
 
-    private readonly int levelSize = 64;
+    private readonly int levelSize = 32;
 
     public MushroomData(MushroomGeneration data) {
         //mushroomMap = new int[levelSize, levelSize];

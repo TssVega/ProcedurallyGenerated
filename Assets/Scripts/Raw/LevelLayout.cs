@@ -9,8 +9,7 @@ public class LevelLayout {
 
     public Vector2Int worldCoordinates;
 
-    public int width = 64;
-    public int height = 64;
+    public int levelSize = 32;
 
     public bool generateWalls = true;
     public bool generateGrass = true;

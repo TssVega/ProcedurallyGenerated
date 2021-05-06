@@ -85,8 +85,8 @@ public class LevelGeneration : MonoBehaviour {
             debugTilemap = GameObject.FindWithTag("Grid").transform.GetChild(4).GetComponent<Tilemap>();
         }
         */
-        map = new int[layout.width, layout.height];
-        reservedForConnectionsMap = new int[layout.width, layout.height];
+        map = new int[layout.levelSize, layout.levelSize];
+        reservedForConnectionsMap = new int[layout.levelSize, layout.levelSize];
         wallCoordinates = new List<Vector3Int>();
         await Task.Run(RandomFillMap);
         if(layout.worldCoordinates[0] == 0 && layout.worldCoordinates[1] == 0) {
@@ -112,8 +112,8 @@ public class LevelGeneration : MonoBehaviour {
         await mushroomGeneration.GenerateMushrooms(0, layout.seed);
     }
     private void ClearStartPosition() {
-        for(int x = layout.width / 2 - 4; x < layout.width / 2 + 4; x++) {
-            for(int y = layout.height / 2 - 4; y < layout.height / 2 + 4; y++) {
+        for(int x = layout.levelSize / 2 - 4; x < layout.levelSize / 2 + 4; x++) {
+            for(int y = layout.levelSize / 2 - 4; y < layout.levelSize / 2 + 4; y++) {
                 map[x, y] = 0;
             }
         }
@@ -132,17 +132,18 @@ public class LevelGeneration : MonoBehaviour {
         for(int i = 0; i < torches.Count; i++) {
             torches[i].SetActive(false);
         }
+        torches.Clear();
     }
     private Vector3Int GetRandomWallCoordinates() {
         return wallCoordinates[pseudoRandomForTorches.Next(0, wallCoordinates.Count)];
     }
     public void UnloadLevel() {
-        for(int x = 0; x < layout.width; x++) {
-            for(int y = 0; y < layout.height; y++) {
+        for(int x = 0; x < layout.levelSize; x++) {
+            for(int y = 0; y < layout.levelSize; y++) {
                 //map[x, y] = 0;
                 Vector3Int tileCoordinate = new Vector3Int(
-                    (x - layout.width / 2) + layout.worldCoordinates.x * layout.width,
-                    (y - layout.height / 2) + layout.worldCoordinates.y * layout.height, 0);
+                    (x - layout.levelSize / 2) + layout.worldCoordinates.x * layout.levelSize,
+                    (y - layout.levelSize / 2) + layout.worldCoordinates.y * layout.levelSize, 0);
                 worldGeneration.tilemap.SetTile(tileCoordinate, null);
                 worldGeneration.groundTilemap.SetTile(tileCoordinate, null);
             }
@@ -209,14 +210,14 @@ public class LevelGeneration : MonoBehaviour {
         Vector3Int location = Vector3Int.zero;
         // System.Random pseudoRandomForLevel = new System.Random(seed.GetHashCode());
         while(!valid) {
-            location = new Vector3Int(pseudoRandomForLevel.Next(3, 60), pseudoRandomForLevel.Next(3, 60), 0);
+            location = new Vector3Int(pseudoRandomForLevel.Next(3, layout.levelSize - 4), pseudoRandomForLevel.Next(3, layout.levelSize - 4), 0);
             if(map[location.x, location.y] == 0) {
                 valid = true;
             }
         }
         location = new Vector3Int(
-                    (location.x - layout.width / 2) + layout.worldCoordinates.x * layout.width,
-                    (location.y - layout.height / 2) + layout.worldCoordinates.y * layout.height, 0);
+                    (location.x - layout.levelSize / 2) + layout.worldCoordinates.x * layout.levelSize,
+                    (location.y - layout.levelSize / 2) + layout.worldCoordinates.y * layout.levelSize, 0);
         return location;
     }
     public bool CheckLocation(int x, int y) {
@@ -224,8 +225,8 @@ public class LevelGeneration : MonoBehaviour {
     }
     public Vector3Int GetPreciseLocation(int x, int y) {
         Vector3Int tileCoordinate = new Vector3Int(
-                        (x - layout.width / 2) + layout.worldCoordinates.x * layout.width,
-                        (y - layout.height / 2) + layout.worldCoordinates.y * layout.height, 0);
+                        (x - layout.levelSize / 2) + layout.worldCoordinates.x * layout.levelSize,
+                        (y - layout.levelSize / 2) + layout.worldCoordinates.y * layout.levelSize, 0);
         return tileCoordinate;
     }
     public bool IsValidLocation(Vector2Int coordinates) {
@@ -234,11 +235,11 @@ public class LevelGeneration : MonoBehaviour {
     }
     // Fills the background of the level
     private void FillBackground() {
-        for(int x = 0; x < layout.width; x++) {
-            for(int y = 0; y < layout.height; y++) {
+        for(int x = 0; x < layout.levelSize; x++) {
+            for(int y = 0; y < layout.levelSize; y++) {
                 Vector3Int tileCoordinate = new Vector3Int(
-                    (x - layout.width / 2) + layout.worldCoordinates.x * layout.width,
-                    (y - layout.height / 2) + layout.worldCoordinates.y * layout.height, 0);
+                    (x - layout.levelSize / 2) + layout.worldCoordinates.x * layout.levelSize,
+                    (y - layout.levelSize / 2) + layout.worldCoordinates.y * layout.levelSize, 0);
                 if(worldGeneration.tilemap.GetTile(tileCoordinate) != tileDatabase.wallTiles[tileDatabase.wallTiles.Length - 1]) {
                     
                     switch(worldGeneration.WorldMap[layout.worldCoordinates.x, layout.worldCoordinates.y]) {
@@ -272,8 +273,8 @@ public class LevelGeneration : MonoBehaviour {
         // To get the same randomization with the same seed
         System.Random pseudoRandom = new System.Random(layout.seed.GetHashCode());
         // Fill the edges of the map with wall tiles
-        for(int x = 0; x < layout.width; x++) {
-            for(int y = 0; y < layout.height; y++) {
+        for(int x = 0; x < layout.levelSize; x++) {
+            for(int y = 0; y < layout.levelSize; y++) {
                 /*
                 if(new int[] { 30, 31, 32, 33 }.Contains(x) && 
                     new int[] { 0, 1, 2, 3, 63, 62, 61, 60 }.Contains(y) ||
@@ -286,7 +287,9 @@ public class LevelGeneration : MonoBehaviour {
                     reservedForConnectionsMap[x, y] = 1;
                 }*/
                 // Left
-                if(new[] { 30, 31, 32, 33 }.Contains(y) &&
+                int middlePoint = layout.levelSize / 2;
+                int topPoint = layout.levelSize;
+                if(new[] { middlePoint - 2, middlePoint - 1, middlePoint, middlePoint + 1 }.Contains(y) &&
                         new[] { 0, 1, 2, 3 }.Contains(x)) {
                     if(layout.worldCoordinates.x == 0 && !connections.left) {
                         map[x, y] = 1;
@@ -302,8 +305,8 @@ public class LevelGeneration : MonoBehaviour {
                     }
                 }
                 // Right
-                else if(new[] { 30, 31, 32, 33 }.Contains(y) &&
-                        new[] { 60, 61, 62, 63 }.Contains(x)) {
+                else if(new[] { middlePoint - 2, middlePoint - 1, middlePoint, middlePoint + 1 }.Contains(y) &&
+                        new[] { topPoint - 4, topPoint - 3, topPoint - 2, topPoint - 1 }.Contains(x)) {
                     if(layout.worldCoordinates.x == layout.worldSize - 1 && !connections.right) {
                         map[x, y] = 1;
                         reservedForConnectionsMap[x, y] = 0;
@@ -318,7 +321,7 @@ public class LevelGeneration : MonoBehaviour {
                     }
                 }
                 // Bottom
-                else if(new[] { 30, 31, 32, 33 }.Contains(x) &&
+                else if(new[] { middlePoint - 2, middlePoint - 1, middlePoint, middlePoint + 1 }.Contains(x) &&
                         new[] { 0, 1, 2, 3 }.Contains(y)) {
                     if(layout.worldCoordinates.y == 0 && !connections.bottom) {
                         map[x, y] = 1;
@@ -334,8 +337,8 @@ public class LevelGeneration : MonoBehaviour {
                     }
                 }
                 // Top
-                else if(new[] { 30, 31, 32, 33 }.Contains(x) &&
-                        new[] { 60, 61, 62, 63 }.Contains(y)) {
+                else if(new[] { middlePoint - 2, middlePoint - 1, middlePoint, middlePoint + 1 }.Contains(x) &&
+                        new[] { topPoint - 4, topPoint - 3, topPoint - 2, topPoint - 1 }.Contains(y)) {
                     if(layout.worldCoordinates.y == layout.worldSize - 1 && !connections.top) {
                         map[x, y] = 1;
                         reservedForConnectionsMap[x, y] = 0;
@@ -349,7 +352,7 @@ public class LevelGeneration : MonoBehaviour {
                         reservedForConnectionsMap[x, y] = 1;
                     }
                 }
-                else if(x < 5 || x > layout.width - 6 || y < 5 || y > layout.height - 6) {
+                else if(x < 5 || x > layout.levelSize - 6 || y < 5 || y > layout.levelSize - 6) {
                     map[x, y] = 1;
                     reservedForConnectionsMap[x, y] = 0;
                 }
@@ -362,8 +365,8 @@ public class LevelGeneration : MonoBehaviour {
     }
     // Smooth edges and get rid of noise
     private void SmoothMap() {
-        for(int x = 0; x < layout.width; x++) {
-            for(int y = 0; y < layout.height; y++) {
+        for(int x = 0; x < layout.levelSize; x++) {
+            for(int y = 0; y < layout.levelSize; y++) {
                 int neighbourWallTiles = GetSurroundingWallCount(x, y);
                 if(reservedForConnectionsMap[x, y] == 1) {
                     continue;
@@ -379,18 +382,18 @@ public class LevelGeneration : MonoBehaviour {
     }
     // Draw map with sprites
     private TileBase[] DrawMap() {
-        TileBase[] tiles = new TileBase[layout.width * layout.height];
-        //int[] linearMap = new int[layout.width * layout.height];
+        TileBase[] tiles = new TileBase[layout.levelSize * layout.levelSize];
+        //int[] linearMap = new int[layout.levelSize * layout.levelSize];
         int index = 0;
-        //Vector3Int bottomLeft = new Vector3Int((-layout.width / 2) + layout.worldCoordinates.x * layout.width, (-layout.height / 2) + layout.worldCoordinates.y * layout.height, 0);
-        //Vector3Int topRight = new Vector3Int((layout.width-layout.width / 2) + layout.worldCoordinates.x * layout.width, (layout.height-layout.height / 2) + layout.worldCoordinates.y * layout.height, 0);
+        //Vector3Int bottomLeft = new Vector3Int((-layout.levelSize / 2) + layout.worldCoordinates.x * layout.levelSize, (-layout.levelSize / 2) + layout.worldCoordinates.y * layout.levelSize, 0);
+        //Vector3Int topRight = new Vector3Int((layout.levelSize-layout.levelSize / 2) + layout.worldCoordinates.x * layout.levelSize, (layout.levelSize-layout.levelSize / 2) + layout.worldCoordinates.y * layout.levelSize, 0);
         //BoundsInt bounds = new BoundsInt(bottomLeft, topRight);
-        for(int x = 0; x < layout.width; x++) {
-            for(int y = 0; y < layout.height; y++) {
+        for(int x = 0; x < layout.levelSize; x++) {
+            for(int y = 0; y < layout.levelSize; y++) {
                 /*
                 Vector3Int tileCoordinate = new Vector3Int(
-                    (x - layout.width / 2) + layout.worldCoordinates.x * layout.width,
-                    (y - layout.height / 2) + layout.worldCoordinates.y * layout.height, 0);*/
+                    (x - layout.levelSize / 2) + layout.worldCoordinates.x * layout.levelSize,
+                    (y - layout.levelSize / 2) + layout.worldCoordinates.y * layout.levelSize, 0);*/
                 //linearMap[index] = map[x, y];
                 /*
                 if(linearMap[index] == 0) {
@@ -423,11 +426,11 @@ public class LevelGeneration : MonoBehaviour {
     }
     private void SetTiles(TileBase[] tiles) {
         int index = 0;
-        for(int x = 0; x < layout.width; x++) {
-            for(int y = 0; y < layout.height; y++) {
+        for(int x = 0; x < layout.levelSize; x++) {
+            for(int y = 0; y < layout.levelSize; y++) {
                 Vector3Int tileCoordinate = new Vector3Int(
-                    (x - layout.width / 2) + layout.worldCoordinates.x * layout.width,
-                    (y - layout.height / 2) + layout.worldCoordinates.y * layout.height, 0);
+                    (x - layout.levelSize / 2) + layout.worldCoordinates.x * layout.levelSize,
+                    (y - layout.levelSize / 2) + layout.worldCoordinates.y * layout.levelSize, 0);
                 worldGeneration.tilemap.SetTile(tileCoordinate, tiles[index]);
                 index++;
             }
@@ -435,13 +438,13 @@ public class LevelGeneration : MonoBehaviour {
     }
     // Add corner and side tiles
     private void AddSides() {
-        for(int x = 0; x < layout.width; x++) {
-            for(int y = 0; y < layout.height; y++) {
+        for(int x = 0; x < layout.levelSize; x++) {
+            for(int y = 0; y < layout.levelSize; y++) {
                 // Fill corners according to occupied spaces
                 if(map[x, y] == 1 && GetSurroundingWallCount(x, y) < 8) {
                     Vector3Int tileCoordinate = new Vector3Int(
-                    (x - layout.width / 2) + layout.worldCoordinates.x * layout.width,
-                    (y - layout.height / 2) + layout.worldCoordinates.y * layout.height, 0);
+                    (x - layout.levelSize / 2) + layout.worldCoordinates.x * layout.levelSize,
+                    (y - layout.levelSize / 2) + layout.worldCoordinates.y * layout.levelSize, 0);
                     int wallSideId = 0;
                     // Find other walls around the wall
                     try {
@@ -473,49 +476,49 @@ public class LevelGeneration : MonoBehaviour {
                     catch(IndexOutOfRangeException) {
                         // This block is to ignore out of index placements of tiles
                         // Do not touch!
-                        if(y + 1 == 64 && x == 29) {
+                        if(y + 1 == layout.levelSize && x == layout.levelSize / 2 - 3) {
                             // 8
                             int id = 8;
                             worldGeneration.tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[id]);
                         }
-                        else if(y + 1 == 64 && x == 34) {
+                        else if(y + 1 == layout.levelSize && x == layout.levelSize / 2 + 2) {
                             // 5
                             int id = 5;
                             worldGeneration.tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[id]);
                         }
-                        else if(y - 1 == -1 && x == 29) {
+                        else if(y - 1 == -1 && x == layout.levelSize / 2 - 3) {
                             // 8
                             int id = 8;
                             worldGeneration.tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[id]);
                         }
-                        else if(y - 1 == -1 && x == 34) {
+                        else if(y - 1 == -1 && x == layout.levelSize / 2 + 2) {
                             // 5
                             int id = 5;
                             worldGeneration.tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[id]);
                         }
-                        else if(x + 1 == 64 && y == 29) {
+                        else if(x + 1 == layout.levelSize && y == layout.levelSize / 2 - 3) {
                             // 2
                             int id = 2;
                             worldGeneration.tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[id]);
                         }
-                        else if(x + 1 == 64 && y == 34) {
+                        else if(x + 1 == layout.levelSize && y == layout.levelSize / 2 + 2) {
                             // 11
                             int id = 11;
                             worldGeneration.tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[id]);
                         }
-                        else if(x - 1 == -1 && y == 29) {
+                        else if(x - 1 == -1 && y == layout.levelSize / 2 - 3) {
                             // 2
                             int id = 2;
                             worldGeneration.tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[id]);
                         }
-                        else if(x - 1 == -1 && y == 34) {
+                        else if(x - 1 == -1 && y == layout.levelSize / 2 + 2) {
                             // 11
                             int id = 11;
                             worldGeneration.tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[id]);
                         }
                         continue;
                     }
-                    if(x == 0 || x == layout.width - 1 || y == 0 || y == layout.height - 1) {
+                    if(x == 0 || x == layout.levelSize - 1 || y == 0 || y == layout.levelSize - 1) {
                         // tilemap.SetTile(tileCoordinate, wallTiles[15]);
                         worldGeneration.tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[tileDatabase.wallTiles.Length - 1]);
                         // Debug.Log("The tile " + x +", "+ y + " is on the side so it is setting to tile 15");
@@ -584,8 +587,8 @@ public class LevelGeneration : MonoBehaviour {
             if(wallRegion.Count < layout.wallThresholdSize) {
                 foreach(Coordinate tile in wallRegion) {
                     /*Vector3Int tileCoordinate = new Vector3Int(
-                    (tile.tileX - layout.width / 2) + layout.worldCoordinates.x * layout.width,
-                    (tile.tileY - layout.height / 2) + layout.worldCoordinates.y * layout.height, 0);*/
+                    (tile.tileX - layout.levelSize / 2) + layout.worldCoordinates.x * layout.levelSize,
+                    (tile.tileY - layout.levelSize / 2) + layout.worldCoordinates.y * layout.levelSize, 0);*/
                     map[tile.tileX, tile.tileY] = 0;
                     //worldGeneration.tilemap.SetTile(tileCoordinate, null);
                 }
@@ -596,8 +599,8 @@ public class LevelGeneration : MonoBehaviour {
             if(groundRegion.Count < layout.groundThresholdSize) {
                 foreach(Coordinate tile in groundRegion) {
                     /*Vector3Int tileCoordinate = new Vector3Int(
-                    (tile.tileX - layout.width / 2) + layout.worldCoordinates.x * layout.width,
-                    (tile.tileY - layout.height / 2) + layout.worldCoordinates.y * layout.height, 0);*/
+                    (tile.tileX - layout.levelSize / 2) + layout.worldCoordinates.x * layout.levelSize,
+                    (tile.tileY - layout.levelSize / 2) + layout.worldCoordinates.y * layout.levelSize, 0);*/
                     map[tile.tileX, tile.tileY] = 1;
                     //worldGeneration.tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[tileDatabase.wallTiles.Length - 1]);
                 }
@@ -757,7 +760,7 @@ public class LevelGeneration : MonoBehaviour {
     private List<Coordinate> GetRegionTiles(int startX, int startY) {
 
         List<Coordinate> tiles = new List<Coordinate>();
-        int[,] mapFlags = new int[layout.width, layout.height];
+        int[,] mapFlags = new int[layout.levelSize, layout.levelSize];
         int tileType = map[startX, startY];
 
         Queue<Coordinate> queue = new Queue<Coordinate>();
@@ -786,10 +789,10 @@ public class LevelGeneration : MonoBehaviour {
     private List<List<Coordinate>> GetRegions(int tileType) {
 
         List<List<Coordinate>> regions = new List<List<Coordinate>>();
-        int[,] mapFlags = new int[layout.width, layout.height];
+        int[,] mapFlags = new int[layout.levelSize, layout.levelSize];
 
-        for(int x = 0; x < layout.width; x++) {
-            for(int y = 0; y < layout.height; y++) {
+        for(int x = 0; x < layout.levelSize; x++) {
+            for(int y = 0; y < layout.levelSize; y++) {
                 if(mapFlags[x, y] == 0 && map[x, y] == tileType) {
                     List<Coordinate> newRegion = GetRegionTiles(x, y);
                     regions.Add(newRegion);
@@ -805,14 +808,14 @@ public class LevelGeneration : MonoBehaviour {
     }
     // Check if the coordinate is in the range of the specified map range
     private bool IsInMapRange(int x, int y) {
-        return x >= 0 && x < layout.width && y >= 0 && y < layout.height;
+        return x >= 0 && x < layout.levelSize && y >= 0 && y < layout.levelSize;
     }
     // Convert map coordinates to world coordinates
     private Vector3Int ConvertToWorldCoordinates(Coordinate tile) {
-        return new Vector3Int(-layout.width / 2 + tile.tileX, -layout.height / 2 + tile.tileY, 0);
+        return new Vector3Int(-layout.levelSize / 2 + tile.tileX, -layout.levelSize / 2 + tile.tileY, 0);
     }
     private Coordinate ConvertToCoordinates(Vector3Int pos) {
-        return new Coordinate(pos.x + layout.width / 2, pos.y + layout.height / 2);
+        return new Coordinate(pos.x + layout.levelSize / 2, pos.y + layout.levelSize / 2);
     }
     // Struct of a coordinate
     private struct Coordinate {

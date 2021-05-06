@@ -11,7 +11,7 @@ using System.Globalization;
 public class WorldGeneration : MonoBehaviour {
     // Should be an odd number so it can have one center
     public const int worldSize = 128;
-    private const int levelSize = 64;
+    private const int levelSize = 32;
     // Should we use random seed?
     private bool randomSeed = false;
     // Seed for world generation
@@ -77,10 +77,6 @@ public class WorldGeneration : MonoBehaviour {
                 levelGen.SetLayout();
             }
         }*/
-    }
-
-    private void OnDestroy() {
-        
     }
 
     public int WorldSize => worldSize;
@@ -195,12 +191,23 @@ public class WorldGeneration : MonoBehaviour {
                 levelGen.SetLayout(connections);
             }
         }
+        /*
         // Unload far away levels
         for(int i = 0; i < levels.Count; i++) {
             if(levels[i].layout.worldCoordinates.x < world.currentCoordinates[0] - 1 ||
                 levels[i].layout.worldCoordinates.x > world.currentCoordinates[0] + 1 ||
                 levels[i].layout.worldCoordinates.y < world.currentCoordinates[1] - 1 ||
                 levels[i].layout.worldCoordinates.y > world.currentCoordinates[1] + 1) {
+                levels[i].UnloadLevel();
+                levels.RemoveAt(i);
+                currentRenderedLevels.RemoveAt(i);
+            }
+        }*/
+        // Unload far away levels
+        for(int i = 0; i < levels.Count; i++) {
+            int xDifference = Mathf.Abs(levels[i].layout.worldCoordinates.x - world.currentCoordinates[0]);
+            int yDifference = Mathf.Abs(levels[i].layout.worldCoordinates.y - world.currentCoordinates[1]);
+            if(xDifference + yDifference > 1) {
                 levels[i].UnloadLevel();
                 levels.RemoveAt(i);
                 currentRenderedLevels.RemoveAt(i);
