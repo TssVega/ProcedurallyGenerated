@@ -38,7 +38,6 @@ public class Passives : MonoBehaviour {
             reducedDamage = damage / (defender.vitality * 0.3f);
             toughSkinOnline = false;
             toughSkinCounter = toughSkinCooldown;
-            Debug.Log("Tough skin activated");
         }
         else if(skillUser.acquiredSkills.Contains(toughSkin) && !toughSkinOnline) {
             toughSkinCounter = toughSkinCooldown;

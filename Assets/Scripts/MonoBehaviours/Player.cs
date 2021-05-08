@@ -299,7 +299,6 @@ public class Player : MonoBehaviour {
         for(int i = 0; i < tenseBowStrings.Length; i++) {
             tenseBowStrings[i].SetActive(false);
         }
-        Debug.Log("Clearing weapons");
     }
     public void SetItem(Item item) {
         if(item is Armor) {

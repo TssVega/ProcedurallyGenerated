@@ -272,7 +272,6 @@ public class StatusEffects : MonoBehaviour {
         //if(bar) {
          //   bar.UpdateStatus();
         //}
-        Debug.Log($"{gameObject.name} took {damage} damage of {attackType}");
         /*if(enemy && stats.health <= 0f) {
             stats.health = 0;
             enemy.EnemyDie();

@@ -139,7 +139,6 @@ public class SkillTreeManager : MonoBehaviour, IDragHandler {
     private void AssignTalents() {
         for(int i = basicSkillCount; i < skillDatabase.skills.Count; i++) {
             if(skillDatabase.skills[i] && skillDatabase.skills[i].skillIcon) {
-                Debug.Log("Setting skill icon" + skillDatabase.skills[i].skillIcon.name + " of " + talentIcons[i].name);
                 talentIcons[i - basicSkillCount].sprite = skillDatabase.skills[i].skillIcon;
                 talentIcons[i - basicSkillCount].color = ColorBySkillType.GetColorByType(skillDatabase.skills[i].attackType);
             }

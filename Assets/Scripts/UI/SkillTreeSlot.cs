@@ -12,7 +12,6 @@ public class SkillTreeSlot : MonoBehaviour {
         skillTreeManager = FindObjectOfType<SkillTreeManager>();
     }
     public void OpenSlotInfo() {
-        Debug.Log("Called");
         skillTreeManager.OpenSkillInfo(slotIndex);
     }
 }
