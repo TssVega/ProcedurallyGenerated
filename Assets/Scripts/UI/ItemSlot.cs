@@ -40,7 +40,6 @@ public class ItemSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     }
 
     public void OnDrop(PointerEventData eventData) {
-        Debug.Log("On drop called");
         ItemSlot droppedSlot = GetComponent<ItemSlot>();
         EquipmentSlot fromEquipmentSlot = eventData.pointerDrag.GetComponent<EquipmentSlot>();
         ItemSlot fromSlot = eventData.pointerDrag.GetComponent<ItemSlot>();
@@ -59,7 +58,6 @@ public class ItemSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     }
 
     public void OnEndDrag(PointerEventData eventData) {
-        Debug.Log("On end drag called");
         canvasGroup.blocksRaycasts = true;
         selectedItem.Release();
         inventory.SetVisibilityOfInventorySlot(true, slotIndex);

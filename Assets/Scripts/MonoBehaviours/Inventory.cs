@@ -214,7 +214,7 @@ public class Inventory : MonoBehaviour {
         else if(item is Shield) {
             Shield s = item as Shield;
             Weapon w = equipment[(int)EquipSlot.RightHand] as Weapon;
-            if(CanAddToInventory() && w.weaponType == WeaponType.TwoHanded) {
+            if(w != null && CanAddToInventory() && w.weaponType == WeaponType.TwoHanded) {
                 UnequipItem((int)EquipSlot.RightHand, GetEmptyInventorySlot());
             }
             player.SetItem(s);
