@@ -11,8 +11,10 @@ public class OpenItemInfo : MonoBehaviour {
         inventory = FindObjectOfType<Player>().GetComponent<Inventory>();
     }
     public void SetItemInfoPanelFromInventory(int index) {
-        itemInfoPanel.SetItem(inventory.inventory[index]);
-        itemInfoPanel.gameObject.SetActive(true);
+        if(inventory.inventory[index] != null) {
+            itemInfoPanel.SetItem(inventory.inventory[index]);
+            itemInfoPanel.gameObject.SetActive(true);
+        }        
     }
     public void SetItemInfoPanelFromEquipment(int index) {
         itemInfoPanel.SetItem(inventory.equipment[index]);

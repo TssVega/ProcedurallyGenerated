@@ -10,7 +10,13 @@ public class MapPanel : MonoBehaviour {
     private WorldGeneration worldGeneration;
 
     private bool mapSet = false;
+    private Color32 backgroundColor = new Color32(219, 176, 107, 255);
     public Texture2D mapTexture;
+
+    public Color rockyColor;
+    public Color volcanicColor;
+    public Color glacialColor;
+    public Color crystalColor;
 
     private void Awake() {
         //mapTexture = mapImage.mainTexture;
@@ -27,19 +33,19 @@ public class MapPanel : MonoBehaviour {
             for(int y = 0; y < worldSize; y++) {
                 switch(worldMap[x, y]) {
                     case 0:
-                        mapTexture.SetPixel(x, y, Color.black);
+                        mapTexture.SetPixel(x, y, backgroundColor);
                         break;
                     case 1:
-                        mapTexture.SetPixel(x, y, Color.white);
+                        mapTexture.SetPixel(x, y, rockyColor);
                         break;
                     case 2:
-                        mapTexture.SetPixel(x, y, Color.red);
+                        mapTexture.SetPixel(x, y, volcanicColor);
                         break;
                     case 3:
-                        mapTexture.SetPixel(x, y, Color.blue);
+                        mapTexture.SetPixel(x, y, glacialColor);
                         break;
                     case 4:
-                        mapTexture.SetPixel(x, y, Color.magenta);
+                        mapTexture.SetPixel(x, y, crystalColor);
                         break;
                 }
             }
