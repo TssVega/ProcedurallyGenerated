@@ -15,6 +15,8 @@ public class Inventory : MonoBehaviour {
     public GameObject[] itemSlots;
     public GameObject[] equipmentSlots;
     public GameObject selectedItemSlot;
+    public TextMeshProUGUI[] offenceStats;
+    public TextMeshProUGUI[] defenceStats;
     private Image[] itemImages;
     private Image[] itemImagesSecondary;
     private Image[] itemImagesTertiary;
@@ -82,6 +84,34 @@ public class Inventory : MonoBehaviour {
     public int EquipmentSize {
         get => equipmentSize;
     }
+    private void UpdateStats() {
+        offenceStats[0].text = stats.fireDamage.ToString();
+        offenceStats[1].text = stats.iceDamage.ToString();
+        offenceStats[2].text = stats.airDamage.ToString();
+        offenceStats[3].text = stats.earthDamage.ToString();
+        offenceStats[4].text = stats.lightningDamage.ToString();
+        offenceStats[5].text = stats.lightDamage.ToString();
+        offenceStats[6].text = stats.darkDamage.ToString();
+        offenceStats[7].text = stats.bashDamage.ToString();
+        offenceStats[8].text = stats.pierceDamage.ToString();
+        offenceStats[9].text = stats.slashDamage.ToString();
+        offenceStats[10].text = stats.bleedDamage.ToString();
+        offenceStats[11].text = stats.poisonDamage.ToString();
+        offenceStats[12].text = stats.curseDamage.ToString();
+        defenceStats[0].text = stats.fireDefence.ToString();
+        defenceStats[1].text = stats.iceDefence.ToString();
+        defenceStats[2].text = stats.airDefence.ToString();
+        defenceStats[3].text = stats.earthDefence.ToString();
+        defenceStats[4].text = stats.lightningDefence.ToString();
+        defenceStats[5].text = stats.lightDefence.ToString();
+        defenceStats[6].text = stats.darkDefence.ToString();
+        defenceStats[7].text = stats.bashDefence.ToString();
+        defenceStats[8].text = stats.pierceDefence.ToString();
+        defenceStats[9].text = stats.slashDefence.ToString();
+        defenceStats[10].text = stats.bleedDefence.ToString();
+        defenceStats[11].text = stats.poisonDefence.ToString();
+        defenceStats[12].text = stats.curseDefence.ToString();
+    }
     public void SetInventory() {
         itemImages = new Image[inventorySize];
         itemImagesSecondary = new Image[inventorySize];
@@ -95,15 +125,23 @@ public class Inventory : MonoBehaviour {
             itemImages[i] = itemSlots[i].transform.GetChild(1).GetComponent<Image>();
             itemImagesSecondary[i] = itemSlots[i].transform.GetChild(2).GetComponent<Image>();
             itemImagesTertiary[i] = itemSlots[i].transform.GetChild(0).GetComponent<Image>();
+            itemImages[i].color = Color.clear;
+            itemImagesSecondary[i].color = Color.clear;
+            itemImagesTertiary[i].color = Color.clear;
         }
         for(int i = 0; i < equipmentSlots.Length; i++) {
             equipmentImages[i] = equipmentSlots[i].transform.GetChild(1).GetComponent<Image>();
             equipmentImagesSecondary[i] = equipmentSlots[i].transform.GetChild(2).GetComponent<Image>();
             equipmentImagesTertiary[i] = equipmentSlots[i].transform.GetChild(0).GetComponent<Image>();
+            equipmentImages[i].color = Color.clear;
+            equipmentImagesSecondary[i].color = Color.clear;
+            equipmentImagesTertiary[i].color = Color.clear;
         }
         for(int i = 0; i < quantities.Length; i++) {
             quantityTexts[i] = itemSlots[i].transform.GetChild(3).GetComponent<TextMeshProUGUI>();
+            quantityTexts[i].text = "";
         }
+        UpdateStats();
     }    
     public void UpdateSlot(int index) {
         if(inventory[index] != null) {
@@ -224,6 +262,7 @@ public class Inventory : MonoBehaviour {
         }
         equipment[(int)item.slot] = item;
         stats.OnItemEquip(item);
+        UpdateStats();
         UpdateEquipmentSlot((int)item.slot);
     }
     public void EquipItemInSlot(int slot) {
@@ -250,6 +289,7 @@ public class Inventory : MonoBehaviour {
             EquipItem(item);
             AddToInventory(tempItem);
             stats.OnItemUnequip(tempItem);
+            UpdateStats();
             //UnequipItem(slot, GetEmptyInventorySlot());
             UpdateSlot((int)tempItem.slot);
         }
@@ -363,6 +403,7 @@ public class Inventory : MonoBehaviour {
             quantities[toSlot]++;
             UpdateSpritesOnUnequip(equipment[fromSlot]);
             stats.OnItemUnequip(equipment[fromSlot]);
+            UpdateStats();
             equipment[fromSlot] = null;
             Debug.Log("Unequipping");
         }
