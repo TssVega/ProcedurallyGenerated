@@ -15,6 +15,12 @@ public class ItemCreator : ScriptableObject {
     // Axes
     public Sprite[] axeHandles;
     public Sprite[] axeBlades;
+    // Hammers
+    public Sprite[] hammerHandles;
+    public Sprite[] hammerBlades;
+    // Spears
+    public Sprite[] spearHandles;
+    public Sprite[] spearBlades;
     // UI view of chest armor
     public Sprite[] chestArmorBases;
     public Sprite[] chestArmorOverlays;
@@ -45,6 +51,9 @@ public class ItemCreator : ScriptableObject {
     public Sprite[] staffHandles;
     public Sprite[] staffProps;
     public Sprite[] staffHeads;
+    // Unique items
+    public Sprite[] uniqueDaggers;
+    public Sprite[] uniqueSwords;
 
     public MushroomDatabase mushroomDatabase;
     public ItemDatabase itemDatabase;
@@ -52,6 +61,8 @@ public class ItemCreator : ScriptableObject {
     private readonly int[] metalArmorIndices = { 0, 3, 6, 8 };
     private readonly int[] leatherArmorIndices = { 1, 2, 5 };
     private readonly int[] clothArmorIndices = { 4, 7 };
+
+    private const float uniqueRate = 0.5f;
 
     private System.Random pseudoRandom;
 
@@ -68,7 +79,8 @@ public class ItemCreator : ScriptableObject {
         switch (slotIndex)
         {
             case 0: {
-                Weapon w = CreateWeapon(seed);
+                bool unique = pseudoRandom.Next(0, 100) > uniqueRate * 100f;
+                Weapon w = unique ? CreateUniqueWeapon(seed) : CreateWeapon(seed);
                 item = w;
                 break;
             }
@@ -109,39 +121,35 @@ public class ItemCreator : ScriptableObject {
         }
         return item;
     }
-    // Create a weapon sprite
-    public Weapon CreateWeapon(string seed) {
-        int presetIndex = pseudoRandom.Next(0, 2);
-        Debug.Log($"Seed: {seed} Hash code: {seed.GetHashCode()} Index: {presetIndex}");
+    public Weapon CreateUniqueWeapon(string seed) {
+        int presetIndex = 0;    // Currently only swords
         WeaponPreset preset = (WeaponPreset)presetIndex;
         WeaponType type = WeaponType.OneHanded;
-        int estimatedPower = pseudoRandom.Next(0, 100);
-        //int index = 0;  // Currently only short swords
-        switch(presetIndex) {
-            case 0:
-                type = WeaponType.OneHanded;
-                break;                
-            case 1:
-                type = WeaponType.OneHanded;
-                break;
-                /*
-            case 2:
-                type = WeaponType.Bow;
-                break;
-            case 3:
-                type = WeaponType.Dagger;
-                break;*/
-        }
         Weapon weapon = CreateInstance<Weapon>();
         switch(type) {
             case WeaponType.OneHanded: {
                 if(preset == WeaponPreset.Sword) {
+                    Sprite swordSprite = uniqueSwords[pseudoRandom.Next(0, uniqueSwords.Length)];
                     // Swords
-                    Sprite handle = weaponHandles[pseudoRandom.Next(0, weaponHandles.Length)];
-                    Sprite guard = weaponGuards[pseudoRandom.Next(0, weaponGuards.Length)];
-                    Sprite blade = weaponBlades[pseudoRandom.Next(0, weaponBlades.Length)];
+                    weapon.firstSprite = swordSprite;
+                    weapon.secondSprite = null;
+                    weapon.thirdSprite = null;
+                    weapon.firstIcon = swordSprite;
+                    weapon.secondIcon = null;
+                    weapon.thirdIcon = null;
+                    weapon.firstColor = Color.white;
+                    weapon.secondColor = Color.clear;
+                    weapon.thirdColor = Color.clear;
+                    weapon.slot = EquipSlot.RightHand;
+                    weapon.weaponType = WeaponType.OneHanded;
+                }
+                else if(preset == WeaponPreset.Axe) {
+                    // Axes
+                    Sprite handle = axeHandles[pseudoRandom.Next(0, axeHandles.Length)];
+                    Sprite guard = null;
+                    Sprite blade = axeBlades[pseudoRandom.Next(0, axeBlades.Length)];
                     Color handleColor = otherMaterialColors[pseudoRandom.Next(0, otherMaterialColors.Length)];
-                    Color guardColor = bladeMaterialColors[pseudoRandom.Next(0, bladeMaterialColors.Length)];
+                    Color guardColor = Color.clear;
                     Color bladeColor = bladeMaterialColors[pseudoRandom.Next(0, bladeMaterialColors.Length)];
                     weapon.firstSprite = handle;
                     weapon.secondSprite = guard;
@@ -155,11 +163,31 @@ public class ItemCreator : ScriptableObject {
                     weapon.slot = EquipSlot.RightHand;
                     weapon.weaponType = WeaponType.OneHanded;
                 }
-                else if(preset == WeaponPreset.Axe) {
-                    // Axes
-                    Sprite handle = axeHandles[pseudoRandom.Next(0, axeHandles.Length)];
+                else if(preset == WeaponPreset.Hammer) {
+                    // Hammers
+                    Sprite handle = hammerHandles[pseudoRandom.Next(0, hammerHandles.Length)];
                     Sprite guard = null;
-                    Sprite blade = axeBlades[pseudoRandom.Next(0, axeBlades.Length)];
+                    Sprite blade = hammerBlades[pseudoRandom.Next(0, hammerBlades.Length)];
+                    Color handleColor = otherMaterialColors[pseudoRandom.Next(0, otherMaterialColors.Length)];
+                    Color guardColor = Color.clear;
+                    Color bladeColor = bladeMaterialColors[pseudoRandom.Next(0, bladeMaterialColors.Length)];
+                    weapon.firstSprite = handle;
+                    weapon.secondSprite = guard;
+                    weapon.thirdSprite = blade;
+                    weapon.firstIcon = handle;
+                    weapon.secondIcon = guard;
+                    weapon.thirdIcon = blade;
+                    weapon.firstColor = handleColor;
+                    weapon.secondColor = guardColor;
+                    weapon.thirdColor = bladeColor;
+                    weapon.slot = EquipSlot.RightHand;
+                    weapon.weaponType = WeaponType.OneHanded;
+                }
+                else if(preset == WeaponPreset.Spear) {
+                    // Spears
+                    Sprite handle = spearHandles[pseudoRandom.Next(0, spearHandles.Length)];
+                    Sprite guard = null;
+                    Sprite blade = spearBlades[pseudoRandom.Next(0, spearBlades.Length)];
                     Color handleColor = otherMaterialColors[pseudoRandom.Next(0, otherMaterialColors.Length)];
                     Color guardColor = Color.clear;
                     Color bladeColor = bladeMaterialColors[pseudoRandom.Next(0, bladeMaterialColors.Length)];
@@ -205,10 +233,175 @@ public class ItemCreator : ScriptableObject {
                 weapon.firstColor = bowColor;
                 weapon.slot = EquipSlot.RightHand;
                 weapon.weaponType = WeaponType.Bow;
+                break;
+            }
+            case WeaponType.Dagger: {
+
+                break;
+            }
+        }
+        return weapon;
+    }
+    // Create a weapon sprite
+    public Weapon CreateWeapon(string seed) {
+        int presetIndex = pseudoRandom.Next(0, 7);
+        WeaponPreset preset = (WeaponPreset)presetIndex;
+        WeaponType type = WeaponType.OneHanded;
+        int estimatedPower = pseudoRandom.Next(0, 100);
+        //int index = 0;  // Currently only short swords
+        switch(presetIndex) {
+            case 0:
+                type = WeaponType.OneHanded;
+                break;                
+            case 1:
+                type = WeaponType.OneHanded;
+                break;                
+            case 2:
+                type = WeaponType.OneHanded;
+                break;                
+            case 3:
+                type = WeaponType.OneHanded;
+                break;
+            case 4:
+                type = WeaponType.Bow;
+                break;
+            case 5:
+                type = WeaponType.Dagger;
+                break;
+            case 6:
+                type = WeaponType.OneHanded;
+                break;
+        }
+        Weapon weapon = CreateInstance<Weapon>();
+        switch(type) {
+            case WeaponType.OneHanded: {
+                if(preset == WeaponPreset.Sword) {
+                    // Swords
+                    Sprite handle = weaponHandles[pseudoRandom.Next(0, weaponHandles.Length)];
+                    Sprite guard = weaponGuards[pseudoRandom.Next(0, weaponGuards.Length)];
+                    Sprite blade = weaponBlades[pseudoRandom.Next(0, weaponBlades.Length)];
+                    Color handleColor = otherMaterialColors[pseudoRandom.Next(0, otherMaterialColors.Length)];
+                    Color guardColor = bladeMaterialColors[pseudoRandom.Next(0, bladeMaterialColors.Length)];
+                    Color bladeColor = bladeMaterialColors[pseudoRandom.Next(0, bladeMaterialColors.Length)];
+                    weapon.firstSprite = handle;
+                    weapon.secondSprite = guard;
+                    weapon.thirdSprite = blade;
+                    weapon.firstIcon = handle;
+                    weapon.secondIcon = guard;
+                    weapon.thirdIcon = blade;
+                    weapon.firstColor = handleColor;
+                    weapon.secondColor = guardColor;
+                    weapon.thirdColor = bladeColor;
+                    weapon.slot = EquipSlot.RightHand;
+                    weapon.weaponType = WeaponType.OneHanded;
+                }
+                else if(preset == WeaponPreset.Axe) {
+                    // Axes
+                    Sprite handle = axeHandles[pseudoRandom.Next(0, axeHandles.Length)];
+                    Sprite guard = null;
+                    Sprite blade = axeBlades[pseudoRandom.Next(0, axeBlades.Length)];
+                    Color handleColor = otherMaterialColors[pseudoRandom.Next(0, otherMaterialColors.Length)];
+                    Color guardColor = Color.clear;
+                    Color bladeColor = bladeMaterialColors[pseudoRandom.Next(0, bladeMaterialColors.Length)];
+                    weapon.firstSprite = handle;
+                    weapon.secondSprite = guard;
+                    weapon.thirdSprite = blade;
+                    weapon.firstIcon = handle;
+                    weapon.secondIcon = guard;
+                    weapon.thirdIcon = blade;
+                    weapon.firstColor = handleColor;
+                    weapon.secondColor = guardColor;
+                    weapon.thirdColor = bladeColor;
+                    weapon.slot = EquipSlot.RightHand;
+                    weapon.weaponType = WeaponType.OneHanded;
+                }
+                else if(preset == WeaponPreset.Hammer) {
+                    // Hammers
+                    Sprite handle = hammerHandles[pseudoRandom.Next(0, hammerHandles.Length)];
+                    Sprite guard = null;
+                    Sprite blade = hammerBlades[pseudoRandom.Next(0, hammerBlades.Length)];
+                    Color handleColor = otherMaterialColors[pseudoRandom.Next(0, otherMaterialColors.Length)];
+                    Color guardColor = Color.clear;
+                    Color bladeColor = bladeMaterialColors[pseudoRandom.Next(0, bladeMaterialColors.Length)];
+                    weapon.firstSprite = handle;
+                    weapon.secondSprite = guard;
+                    weapon.thirdSprite = blade;
+                    weapon.firstIcon = handle;
+                    weapon.secondIcon = guard;
+                    weapon.thirdIcon = blade;
+                    weapon.firstColor = handleColor;
+                    weapon.secondColor = guardColor;
+                    weapon.thirdColor = bladeColor;
+                    weapon.slot = EquipSlot.RightHand;
+                    weapon.weaponType = WeaponType.OneHanded;
+                }
+                else if(preset == WeaponPreset.Spear) {
+                    // Spears
+                    Sprite handle = spearHandles[pseudoRandom.Next(0, spearHandles.Length)];
+                    Sprite guard = null;
+                    Sprite blade = spearBlades[pseudoRandom.Next(0, spearBlades.Length)];
+                    Color handleColor = otherMaterialColors[pseudoRandom.Next(0, otherMaterialColors.Length)];
+                    Color guardColor = Color.clear;
+                    Color bladeColor = bladeMaterialColors[pseudoRandom.Next(0, bladeMaterialColors.Length)];
+                    weapon.firstSprite = handle;
+                    weapon.secondSprite = guard;
+                    weapon.thirdSprite = blade;
+                    weapon.firstIcon = handle;
+                    weapon.secondIcon = guard;
+                    weapon.thirdIcon = blade;
+                    weapon.firstColor = handleColor;
+                    weapon.secondColor = guardColor;
+                    weapon.thirdColor = bladeColor;
+                    weapon.slot = EquipSlot.RightHand;
+                    weapon.weaponType = WeaponType.OneHanded;
+                }
+                else if(preset == WeaponPreset.Staff) {
+                    // Staff
+                    Sprite staff = staffHandles[pseudoRandom.Next(0, staffHandles.Length)];
+                    Sprite prop = staffProps[pseudoRandom.Next(0, staffProps.Length)];
+                    Sprite head = staffHeads[pseudoRandom.Next(0, staffHeads.Length)];
+                    Color staffColor = otherMaterialColors[pseudoRandom.Next(0, otherMaterialColors.Length)];
+                    Color propColor = bladeMaterialColors[pseudoRandom.Next(0, bladeMaterialColors.Length)];
+                    Color headColor = bladeMaterialColors[pseudoRandom.Next(0, bladeMaterialColors.Length)];
+                    weapon.firstSprite = staff;
+                    weapon.secondSprite = prop;
+                    weapon.thirdSprite = head;
+                    weapon.firstIcon = staff;
+                    weapon.secondIcon = prop;
+                    weapon.thirdIcon = head;
+                    weapon.firstColor = staffColor;
+                    weapon.secondColor = propColor;
+                    weapon.thirdColor = headColor;
+                    weapon.slot = EquipSlot.RightHand;
+                    weapon.weaponType = WeaponType.OneHanded;
+                }
+                break;
+            }
+            case WeaponType.Bow: {
+                Sprite bowBase = bowBases[pseudoRandom.Next(0, bowBases.Length)];
+                Color bowColor = bowColors[pseudoRandom.Next(0, bowColors.Length)];
+                weapon.firstSprite = bowBase;
+                weapon.firstIcon = bowBase;
+                weapon.firstColor = bowColor;
+                weapon.slot = EquipSlot.RightHand;
+                weapon.weaponType = WeaponType.Bow;
                 weapon.bashDamage = pseudoRandom.Next(0, estimatedPower);
                 weapon.pierceDamage = pseudoRandom.Next(0, estimatedPower);
                 weapon.slashDamage = pseudoRandom.Next(0, estimatedPower);
                 break;
+            }
+            case WeaponType.Dagger: {
+                weapon.firstSprite = null;
+                weapon.secondSprite = null;
+                weapon.thirdSprite = null;
+                weapon.firstIcon = null;
+                weapon.secondIcon = null;
+                weapon.thirdIcon = null;
+                weapon.firstColor = Color.clear;
+                weapon.secondColor = Color.clear;
+                weapon.thirdColor = Color.clear;
+                return null;
+                //break;
             }
         }
         return weapon;

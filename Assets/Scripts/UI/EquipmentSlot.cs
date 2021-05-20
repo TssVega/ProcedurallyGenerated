@@ -25,7 +25,6 @@ public class EquipmentSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, 
 
     public void OnBeginDrag(PointerEventData eventData) {
         if(inventory.equipment[slotIndex]) {
-            Debug.Log("On begin drag");
             inventory.SetVisibilityOfEquipmentSlot(false, slotIndex);
             Item item = inventory.equipment[slotIndex];
             selectedItem.SetImages(item.firstIcon, item.secondIcon, item.thirdIcon, item.firstColor, item.secondColor, item.thirdColor);
@@ -35,7 +34,6 @@ public class EquipmentSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, 
     }
 
     public void OnDrag(PointerEventData eventData) {
-        Debug.Log("On drag");
         selectedItem.rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
     }
 

@@ -295,6 +295,9 @@ public class Inventory : MonoBehaviour {
         }
     }
     public bool AddToInventory(Item item) {
+        if(!item) {
+            return false;
+        }
         bool exists = false;
         if(item.stackable) {
             for(int i = 0; i < inventorySize; i++) {
