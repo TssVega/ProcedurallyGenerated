@@ -12,8 +12,6 @@ public class WorldGeneration : MonoBehaviour {
     // Should be an odd number so it can have one center
     public const int worldSize = 128;
     private const int levelSize = 32;
-    // Should we use random seed?
-    private bool randomSeed = false;
     // Seed for world generation
     // A 2 dimentional map of string seeds
     // private string[,] worldMap = new string[worldSize, worldSize];
@@ -60,10 +58,7 @@ public class WorldGeneration : MonoBehaviour {
         tilemap.ClearAllTiles();
         LoadWorldData();
         //world = new WorldData(new string[worldSize, worldSize], new int[] { currentCoordinates.x, currentCoordinates.y});
-        if(randomSeed) {
-            PersistentData.worldSeed = Time.time.ToString();
-        }
-        pseudoRandomForWorld = new System.Random(PersistentData.worldSeed.GetHashCode());        
+        pseudoRandomForWorld = new System.Random(WorldSeed.GetHashCode());        
         GenerateCurrentLevels();
         /*
         for(int x = 0; x < worldSize; x++) {
@@ -82,6 +77,8 @@ public class WorldGeneration : MonoBehaviour {
     public int WorldSize => worldSize;
 
     public int[,] WorldMap => world.worldMap;
+
+    public string WorldSeed => world.seed;
 
     private void GetAutosaveFiles() {
         List<string> chestFiles = PersistentData.GetAllFilesWithKey($"ChestData{PersistentData.saveSlot}", $"", $"");
@@ -113,10 +110,11 @@ public class WorldGeneration : MonoBehaviour {
     public void LoadWorldData() {
         WorldData data = SaveSystem.LoadWorld(PersistentData.saveSlot);
         if(data != null) {
-            world = new WorldData(data.worldData, data.currentCoordinates, data.worldMap);
+            world = new WorldData(data.worldData, data.currentCoordinates, data.worldMap, data.seed);
         }
         else {
-            world = new WorldData(new string[worldSize, worldSize], new[] { 0, 0 }, new int[worldSize, worldSize]) {                
+            world = new WorldData(new string[worldSize, worldSize], new[] { 0, 0 }, new int[worldSize, worldSize],
+                UnityEngine.Random.Range(0, 99999999).ToString()) {                
                 lastCoordinates = new[] { -1, -1 }
             };
         }

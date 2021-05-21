@@ -9,11 +9,13 @@ public class WorldData {
     public string[,] worldData;
     public int[] currentCoordinates;
     public int[] lastCoordinates;
+    public string seed;
 
-    public WorldData(string[,] data, int[] current, int[,] worldMap) {
+    public WorldData(string[,] data, int[] current, int[,] worldMap, string seed) {
         worldData = data;
         currentCoordinates = current;
         lastCoordinates = new[] { -1, -1 };
         this.worldMap = worldMap;
+        this.seed = seed;
     }
 }

@@ -62,7 +62,7 @@ public class ItemCreator : ScriptableObject {
     private readonly int[] leatherArmorIndices = { 1, 2, 5 };
     private readonly int[] clothArmorIndices = { 4, 7 };
 
-    private const float uniqueRate = 0.5f;
+    private const int uniqueRate = 2;   // uniqueRate / 100 chance of getting a unique item
 
     private System.Random pseudoRandom;
 
@@ -70,45 +70,49 @@ public class ItemCreator : ScriptableObject {
     public Item CreateItem(string seed) {
         pseudoRandom = new System.Random(seed.GetHashCode());
         Item item;
-        
+        ItemMaterial mat = GetItemMaterial();
         if(CheckSpecialCase(seed) != null) {
             item = CheckSpecialCase(seed);
             return item;
         }
         int slotIndex = pseudoRandom.Next(0, 6);
+        // To ensure you don't get weapons out of fabric
+        if((int)mat > 15 && slotIndex == 0) {
+            slotIndex = pseudoRandom.Next(1, 6);
+        }
         switch (slotIndex)
         {
             case 0: {
-                bool unique = pseudoRandom.Next(0, 100) > uniqueRate * 100f;
-                Weapon w = unique ? CreateUniqueWeapon(seed) : CreateWeapon(seed);
+                bool unique = pseudoRandom.Next(1, 101) <= uniqueRate;
+                Weapon w = unique ? CreateUniqueWeapon() : CreateWeapon(mat);
                 item = w;
                 break;
             }
             case 1: {
-                Shield s = CreateShield(seed);
+                Shield s = CreateShield(mat);
                 item = s;
                 break;
             }
             case 2: {
                 // Head armor h
-                Armor h = CreateHelmet(seed);
+                Armor h = CreateHelmet(mat);
                 item = h;
                 break;
             }
             case 3: {
                 // Chest armor c
-                Armor a = CreateChestArmor(seed);
+                Armor a = CreateChestArmor(mat);
                 item = a;
                 break;
             }
             case 4: {
                 // Leg armor l
-                Armor l = CreateLegging(seed);
+                Armor l = CreateLegging(mat);
                 item = l;
                 break;
             }
             case 5: {
-                Ring r = CreateRing(seed);
+                Ring r = CreateRing(mat);
                 item = r;
                 break;
             }
@@ -118,10 +122,115 @@ public class ItemCreator : ScriptableObject {
         }
         if(item != null) {
             item.seed = seed;
+            item.itemMaterial = mat;
         }
         return item;
     }
-    public Weapon CreateUniqueWeapon(string seed) {
+    private ItemMaterial GetItemMaterial() {
+        ItemMaterial newMaterial;
+        int result = RollDice(3, 16);
+        switch(result) {
+            case 3:
+                newMaterial = ItemMaterial.Diamond;
+                break;
+            case 4:
+                newMaterial = ItemMaterial.Ruby;
+                break;
+            case 5:
+                newMaterial = ItemMaterial.Musgravite;
+                break;
+            case 6:
+                newMaterial = ItemMaterial.Amber;
+                break;
+            case 7:
+                newMaterial = ItemMaterial.Sapphire;
+                break;
+            case 8:
+                newMaterial = ItemMaterial.Tungsten;
+                break;
+            case 9:
+                newMaterial = ItemMaterial.Titanium;
+                break;
+            case 10:
+                newMaterial = ItemMaterial.Platinum;
+                break;
+            case 11:
+                newMaterial = ItemMaterial.Scale;
+                break;
+            case 21:
+            case 13:
+            case 14:
+                newMaterial = ItemMaterial.Fur;
+                break;
+            case 15:
+            case 16:
+            case 17:
+                newMaterial = ItemMaterial.Silk;
+                break;
+            case 18:
+            case 19:
+            case 20:
+                newMaterial = ItemMaterial.Leather;
+                break;
+            case 12:
+                newMaterial = ItemMaterial.Gold;
+                break;
+            case 22:
+                newMaterial = ItemMaterial.Silver;
+                break;
+            case 23:
+            case 24:
+            case 25:
+            case 26:
+            case 27:
+                newMaterial = ItemMaterial.Iron;
+                break;
+            case 28:
+            case 29:
+            case 30:
+            case 31:
+            case 32:
+                newMaterial = ItemMaterial.Copper;
+                break;
+            case 33:
+            case 34:
+            case 35:
+            case 36:
+            case 37:
+            case 38:
+            case 39:
+            case 40:
+            case 41:
+            case 42:
+            case 43:
+            case 44:
+            case 45:
+            case 46:
+            case 47:
+                newMaterial = ItemMaterial.Wood;
+                break;
+            case 48:
+            case 49:
+            case 50:
+            case 51:
+                newMaterial = ItemMaterial.Wool;
+                break;
+            case 52:
+                newMaterial = ItemMaterial.Taaffeite;
+                break;
+            case 53:
+                newMaterial = ItemMaterial.Emerald;
+                break;
+            case 54:
+                newMaterial = ItemMaterial.Bone;
+                break;
+            default:
+                newMaterial = ItemMaterial.Iron;
+                break;
+        }
+        return newMaterial;
+    }
+    public Weapon CreateUniqueWeapon() {
         int presetIndex = 0;    // Currently only swords
         WeaponPreset preset = (WeaponPreset)presetIndex;
         WeaponType type = WeaponType.OneHanded;
@@ -243,11 +352,10 @@ public class ItemCreator : ScriptableObject {
         return weapon;
     }
     // Create a weapon sprite
-    public Weapon CreateWeapon(string seed) {
+    public Weapon CreateWeapon(ItemMaterial mat) {
         int presetIndex = pseudoRandom.Next(0, 7);
         WeaponPreset preset = (WeaponPreset)presetIndex;
-        WeaponType type = WeaponType.OneHanded;
-        int estimatedPower = pseudoRandom.Next(0, 100);
+        WeaponType type = WeaponType.OneHanded;        
         //int index = 0;  // Currently only short swords
         switch(presetIndex) {
             case 0:
@@ -273,6 +381,7 @@ public class ItemCreator : ScriptableObject {
                 break;
         }
         Weapon weapon = CreateInstance<Weapon>();
+        weapon.itemName += $"{mat}";
         switch(type) {
             case WeaponType.OneHanded: {
                 if(preset == WeaponPreset.Sword) {
@@ -282,7 +391,7 @@ public class ItemCreator : ScriptableObject {
                     Sprite blade = weaponBlades[pseudoRandom.Next(0, weaponBlades.Length)];
                     Color handleColor = otherMaterialColors[pseudoRandom.Next(0, otherMaterialColors.Length)];
                     Color guardColor = bladeMaterialColors[pseudoRandom.Next(0, bladeMaterialColors.Length)];
-                    Color bladeColor = bladeMaterialColors[pseudoRandom.Next(0, bladeMaterialColors.Length)];
+                    Color bladeColor = bladeMaterialColors[(int)mat];
                     weapon.firstSprite = handle;
                     weapon.secondSprite = guard;
                     weapon.thirdSprite = blade;
@@ -294,6 +403,7 @@ public class ItemCreator : ScriptableObject {
                     weapon.thirdColor = bladeColor;
                     weapon.slot = EquipSlot.RightHand;
                     weapon.weaponType = WeaponType.OneHanded;
+                    weapon.itemName += " Sword";
                 }
                 else if(preset == WeaponPreset.Axe) {
                     // Axes
@@ -302,7 +412,7 @@ public class ItemCreator : ScriptableObject {
                     Sprite blade = axeBlades[pseudoRandom.Next(0, axeBlades.Length)];
                     Color handleColor = otherMaterialColors[pseudoRandom.Next(0, otherMaterialColors.Length)];
                     Color guardColor = Color.clear;
-                    Color bladeColor = bladeMaterialColors[pseudoRandom.Next(0, bladeMaterialColors.Length)];
+                    Color bladeColor = bladeMaterialColors[(int)mat];
                     weapon.firstSprite = handle;
                     weapon.secondSprite = guard;
                     weapon.thirdSprite = blade;
@@ -314,6 +424,7 @@ public class ItemCreator : ScriptableObject {
                     weapon.thirdColor = bladeColor;
                     weapon.slot = EquipSlot.RightHand;
                     weapon.weaponType = WeaponType.OneHanded;
+                    weapon.itemName += " Axe";
                 }
                 else if(preset == WeaponPreset.Hammer) {
                     // Hammers
@@ -322,7 +433,7 @@ public class ItemCreator : ScriptableObject {
                     Sprite blade = hammerBlades[pseudoRandom.Next(0, hammerBlades.Length)];
                     Color handleColor = otherMaterialColors[pseudoRandom.Next(0, otherMaterialColors.Length)];
                     Color guardColor = Color.clear;
-                    Color bladeColor = bladeMaterialColors[pseudoRandom.Next(0, bladeMaterialColors.Length)];
+                    Color bladeColor = bladeMaterialColors[(int)mat];
                     weapon.firstSprite = handle;
                     weapon.secondSprite = guard;
                     weapon.thirdSprite = blade;
@@ -334,6 +445,7 @@ public class ItemCreator : ScriptableObject {
                     weapon.thirdColor = bladeColor;
                     weapon.slot = EquipSlot.RightHand;
                     weapon.weaponType = WeaponType.OneHanded;
+                    weapon.itemName += " Hammer";
                 }
                 else if(preset == WeaponPreset.Spear) {
                     // Spears
@@ -342,7 +454,7 @@ public class ItemCreator : ScriptableObject {
                     Sprite blade = spearBlades[pseudoRandom.Next(0, spearBlades.Length)];
                     Color handleColor = otherMaterialColors[pseudoRandom.Next(0, otherMaterialColors.Length)];
                     Color guardColor = Color.clear;
-                    Color bladeColor = bladeMaterialColors[pseudoRandom.Next(0, bladeMaterialColors.Length)];
+                    Color bladeColor = bladeMaterialColors[(int)mat];
                     weapon.firstSprite = handle;
                     weapon.secondSprite = guard;
                     weapon.thirdSprite = blade;
@@ -354,6 +466,7 @@ public class ItemCreator : ScriptableObject {
                     weapon.thirdColor = bladeColor;
                     weapon.slot = EquipSlot.RightHand;
                     weapon.weaponType = WeaponType.OneHanded;
+                    weapon.itemName += " Spear";
                 }
                 else if(preset == WeaponPreset.Staff) {
                     // Staff
@@ -362,7 +475,7 @@ public class ItemCreator : ScriptableObject {
                     Sprite head = staffHeads[pseudoRandom.Next(0, staffHeads.Length)];
                     Color staffColor = otherMaterialColors[pseudoRandom.Next(0, otherMaterialColors.Length)];
                     Color propColor = bladeMaterialColors[pseudoRandom.Next(0, bladeMaterialColors.Length)];
-                    Color headColor = bladeMaterialColors[pseudoRandom.Next(0, bladeMaterialColors.Length)];
+                    Color headColor = bladeMaterialColors[(int)mat];
                     weapon.firstSprite = staff;
                     weapon.secondSprite = prop;
                     weapon.thirdSprite = head;
@@ -374,20 +487,19 @@ public class ItemCreator : ScriptableObject {
                     weapon.thirdColor = headColor;
                     weapon.slot = EquipSlot.RightHand;
                     weapon.weaponType = WeaponType.OneHanded;
+                    weapon.itemName += " Staff";
                 }
                 break;
             }
             case WeaponType.Bow: {
                 Sprite bowBase = bowBases[pseudoRandom.Next(0, bowBases.Length)];
-                Color bowColor = bowColors[pseudoRandom.Next(0, bowColors.Length)];
+                Color bowColor = bladeMaterialColors[(int)mat];
                 weapon.firstSprite = bowBase;
                 weapon.firstIcon = bowBase;
                 weapon.firstColor = bowColor;
                 weapon.slot = EquipSlot.RightHand;
                 weapon.weaponType = WeaponType.Bow;
-                weapon.bashDamage = pseudoRandom.Next(0, estimatedPower);
-                weapon.pierceDamage = pseudoRandom.Next(0, estimatedPower);
-                weapon.slashDamage = pseudoRandom.Next(0, estimatedPower);
+                weapon.itemName += " Bow";
                 break;
             }
             case WeaponType.Dagger: {
@@ -548,8 +660,7 @@ public class ItemCreator : ScriptableObject {
         return item;
     }
     // Create a chest armor sprite
-    public Armor CreateChestArmor(string seed) {
-        System.Random pseudoRandom = new System.Random(seed.GetHashCode());
+    public Armor CreateChestArmor(ItemMaterial mat) {
         int armorBaseIndex = pseudoRandom.Next(0, chestArmorBases.Length);
         Sprite armorBase = chestArmorBases[armorBaseIndex];
         Sprite armorOverlay = null;
@@ -586,11 +697,12 @@ public class ItemCreator : ScriptableObject {
         else if(clothArmorIndices.Contains(armorBaseIndex)) {
             armorBack = chestArmorBacks[pseudoRandom.Next(0, chestArmorBacks.Length)];
         }
-        Color baseColor = bladeMaterialColors[pseudoRandom.Next(0, bladeMaterialColors.Length)];
+        Color baseColor = bladeMaterialColors[(int)mat];
         Color overlayColor = bladeMaterialColors[pseudoRandom.Next(0, bladeMaterialColors.Length)];
         Color backColor = otherMaterialColors[pseudoRandom.Next(0, otherMaterialColors.Length)];
         // Sprite 
         Armor armor = CreateInstance<Armor>();
+        armor.itemName += $"{mat} Armor";
         armor.firstIcon = armorBase;
         if(armorOverlay) {
             armor.secondIcon = armorOverlay;
@@ -612,16 +724,16 @@ public class ItemCreator : ScriptableObject {
         return armor;
     }
     // Create a helmet sprite
-    public Armor CreateHelmet(string seed) {
-        System.Random pseudoRandom = new System.Random(seed.GetHashCode());
+    public Armor CreateHelmet(ItemMaterial mat) {
         Sprite helmetBase = helmetBases[pseudoRandom.Next(0, helmetBases.Length)];
         int helmetPropIndex = pseudoRandom.Next(0, helmetProps.Length);
         Sprite helmetProp = helmetProps[helmetPropIndex];
         Sprite helmetBaseInGame = helmetBasesInGame[pseudoRandom.Next(0, helmetBasesInGame.Length)];
         Sprite helmetPropInGame = helmetPropsInGame[helmetPropIndex];
-        Color baseColor = bladeMaterialColors[pseudoRandom.Next(0, bladeMaterialColors.Length)];
+        Color baseColor = bladeMaterialColors[(int)mat];
         Color propColor = helmetPropColor;
         Armor helmet = CreateInstance<Armor>();
+        helmet.itemName += $"{mat} Helmet";
         helmet.firstIcon = helmetBase;
         helmet.firstColor = baseColor;
         if(helmetProp) {
@@ -633,13 +745,13 @@ public class ItemCreator : ScriptableObject {
         helmet.slot = EquipSlot.Head;
         return helmet;
     }
-    public Armor CreateLegging(string seed) {
-        System.Random pseudoRandom = new System.Random(seed.GetHashCode());
+    public Armor CreateLegging(ItemMaterial mat) {
         Sprite leggingBase = leggingBases[pseudoRandom.Next(0, leggingBases.Length)];
         Sprite leggingProp = leggingProps[pseudoRandom.Next(0, leggingProps.Length)];
-        Color baseColor = bladeMaterialColors[pseudoRandom.Next(0, bladeMaterialColors.Length)];
+        Color baseColor = bladeMaterialColors[(int)mat];
         Color propColor = otherMaterialColors[pseudoRandom.Next(0, otherMaterialColors.Length)];        
         Armor legging = CreateInstance<Armor>();
+        legging.itemName += $"{mat} Leggings";
         legging.firstIcon = leggingBase;
         legging.secondIcon = leggingProp;
         legging.firstColor = baseColor;
@@ -647,14 +759,14 @@ public class ItemCreator : ScriptableObject {
         legging.slot = EquipSlot.Legs;
         return legging;
     }
-    public Shield CreateShield(string seed) {
-        System.Random pseudoRandom = new System.Random(seed.GetHashCode());
+    public Shield CreateShield(ItemMaterial mat) {
         Sprite shieldBase = shieldBases[pseudoRandom.Next(0, shieldBases.Length)];
         Sprite shieldProp = shieldProps[pseudoRandom.Next(0, shieldProps.Length)];
         Sprite inGame = shieldInGame[pseudoRandom.Next(0, shieldInGame.Length)];
-        Color baseColor = bladeMaterialColors[pseudoRandom.Next(0, bladeMaterialColors.Length)];
+        Color baseColor = bladeMaterialColors[(int)mat];
         Color propColor = otherMaterialColors[pseudoRandom.Next(0, otherMaterialColors.Length)];
         Shield shield = CreateInstance<Shield>();
+        shield.itemName += $"{mat} Shield";
         shield.firstIcon = shieldBase;
         shield.secondIcon = shieldProp;
         shield.firstSprite = inGame;
@@ -664,14 +776,14 @@ public class ItemCreator : ScriptableObject {
         shield.slot = EquipSlot.LeftHand;
         return shield;
     }
-    public Ring CreateRing(string seed) {
-        System.Random pseudoRandom = new System.Random(seed.GetHashCode());
+    public Ring CreateRing(ItemMaterial mat) {
         Sprite ringBase = ringBases[pseudoRandom.Next(0, ringBases.Length)];
         Sprite ringSocket = ringSockets[pseudoRandom.Next(0, ringSockets.Length)];
         Sprite ringJewel = ringJewels[pseudoRandom.Next(0, ringJewels.Length)];
         Color baseColor = bladeMaterialColors[pseudoRandom.Next(0, bladeMaterialColors.Length)];
-        Color jewelColor = bladeMaterialColors[pseudoRandom.Next(8, bladeMaterialColors.Length)];
+        Color jewelColor = bladeMaterialColors[(int)mat];
         Ring ring = CreateInstance<Ring>();
+        ring.itemName += $"{mat} Ring";
         ring.firstIcon = ringBase;
         ring.firstColor = baseColor;
         if(ringJewel != null) {
@@ -683,8 +795,22 @@ public class ItemCreator : ScriptableObject {
         ring.slot = EquipSlot.Finger;
         return ring;
     }
+    private int RollDice(int diceCount, int diceMax) {
+        int diceRollTotal = 0;
+        // Roll 5d20
+        for(int i = 0; i < diceCount; i++) {
+            int dieResult = pseudoRandom.Next(1, diceMax + 1);
+            diceRollTotal += dieResult;
+        }
+        return diceRollTotal;
+    }
 }
 
 public enum WeaponPreset {
     Sword, Axe, Hammer, Spear, Bow, Dagger, Staff, Tome
+}
+
+public enum ItemMaterial {
+    Wood, Copper, Iron, Silver, Gold, Platinum, Titanium, Tungsten, Sapphire,
+    Ruby, Emerald, Diamond, Musgravite, Taaffeite, Amber, Bone, Wool, Fur, Silk, Leather, Scale
 }

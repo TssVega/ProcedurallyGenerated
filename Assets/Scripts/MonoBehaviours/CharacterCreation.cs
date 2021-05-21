@@ -123,7 +123,7 @@ public class CharacterCreation : MonoBehaviour {
     }
     private async Task SetNewGameData() {
         // World data
-        world = new WorldData(new string[worldSize, worldSize], new[] { 0, 0 }, new int[worldSize, worldSize]);
+        world = new WorldData(new string[worldSize, worldSize], new[] { 0, 0 }, new int[worldSize, worldSize], UnityEngine.Random.Range(0, 99999999).ToString());
         await GenerateNewWorld();
         SaveSystem.SaveWorld(world, PersistentData.saveSlot);
         if(!player || !player.skinColor || !player.hairColor || !player.hairStyle) {
@@ -225,7 +225,7 @@ public class CharacterCreation : MonoBehaviour {
     private void RandomFillWorld() {
         world.worldMap = new int[worldSize, worldSize];
         // To get the same randomization with the same seed
-        System.Random pseudoRandom = new System.Random(PersistentData.worldSeed.GetHashCode());
+        System.Random pseudoRandom = new System.Random(world.seed.GetHashCode());
         // Fill the edges of the map with wall tiles
         for(int x = 0; x < worldSize; x++) {
             for(int y = 0; y < worldSize; y++) {

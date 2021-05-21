@@ -13,9 +13,11 @@ public class ChestGeneration : MonoBehaviour {
     private readonly int maxItemCountInChest = 16;
 
     private LevelGeneration levelGeneration;
+    private WorldGeneration worldGeneration;
 
     private void Awake() {
         levelGeneration = GetComponent<LevelGeneration>();
+        worldGeneration = FindObjectOfType<WorldGeneration>();
     }
     // Load chest data from binary file
     public void LoadChests(int slot, string seed) {
@@ -46,11 +48,29 @@ public class ChestGeneration : MonoBehaviour {
                     items = new string[itemCount]
                 };
                 for(int j = 0; j < itemCount; j++) {
-                    chests[i].items[j] = Random.Range(0, 99999999).ToString();
+                    //chests[i].items[j] = Random.Range(0, 99999999).ToString();
+                    string xWorld = GetNumberWithZeroesInIgsignificantBits(levelGeneration.layout.worldCoordinates.x);
+                    string yWorld = GetNumberWithZeroesInIgsignificantBits(levelGeneration.layout.worldCoordinates.y);
+                    string chestIndex = GetNumberWithZeroesInIgsignificantBits(i);
+                    string itemIndex = GetNumberWithZeroesInIgsignificantBits(j);
+                    chests[i].items[j] = $"{worldGeneration.WorldSeed}{xWorld}{yWorld}{chestIndex}{itemIndex}";
                 }
             }
         }
         PutChests(chestCount, levelGeneration);
+    }
+    private string GetNumberWithZeroesInIgsignificantBits(int value) {
+        string newValue;
+        if(value / 100 > 1) {
+            newValue = value.ToString();
+        }
+        else if(value / 10 > 1) {
+            newValue = $"0{value}";
+        }
+        else {
+            newValue = $"00{value}";
+        }
+        return newValue;
     }
     public void PutChests(int count, LevelGeneration levelGen) {
         if(count < 1) {

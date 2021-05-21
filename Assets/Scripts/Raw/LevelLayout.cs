@@ -38,9 +38,9 @@ public class LevelLayout {
     // Testing fix side count variable
     public int fixSideCount = 2;
     // Any wall region smaller than this int will get removed
-    public int wallThresholdSize = 16;
+    public int wallThresholdSize = 12;
     // Any ground region smaller than this int will get filled
-    public int groundThresholdSize = 0;
+    public int groundThresholdSize = 8;
     // Connect seperate rooms?
     public bool connectRooms = true;
     // Use the marching squares algorithm to place sprites to neccessary places

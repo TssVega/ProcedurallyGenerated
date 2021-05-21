@@ -62,6 +62,7 @@ public class Item : ScriptableObject {
     public Vector2 trailPosition = new Vector2(0.4f, 0.4f);
     public Gradient weaponTrailGradient;
     public bool material = false;
+    public ItemMaterial itemMaterial;
 
     [Header("Main Stats")]
     public int strength;

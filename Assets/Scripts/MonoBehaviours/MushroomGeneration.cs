@@ -91,7 +91,7 @@ public class MushroomGeneration : MonoBehaviour {
         SaveSystem.SaveMushrooms(this, slot, levelGeneration.layout.worldCoordinates);
     }
     private int CalculateMushroomValue() {
-        int diceRollTotal = Roll5d20();
+        int diceRollTotal = RollDice(5, 20);
         int mushroomValue;
         switch(diceRollTotal) {
             case 97:
@@ -212,11 +212,11 @@ public class MushroomGeneration : MonoBehaviour {
         }
         return mushroomValue;
     }    
-    private int Roll5d20() {
+    private int RollDice(int diceCount, int diceMax) {
         int diceRollTotal = 0;
         // Roll 5d20
-        for(int i = 0; i < 5; i++) {
-            int dieResult = pseudoRandomForMushrooms.Next(1, 21);
+        for(int i = 0; i < diceCount; i++) {
+            int dieResult = pseudoRandomForMushrooms.Next(1, diceMax + 1);
             diceRollTotal += dieResult;
         }
         return diceRollTotal;
