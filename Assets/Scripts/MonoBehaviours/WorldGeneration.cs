@@ -171,7 +171,10 @@ public class WorldGeneration : MonoBehaviour {
                 LevelGeneration levelGen = levelClone.GetComponent<LevelGeneration>();
                 levels.Add(levelGen);
                 currentRenderedLevels.Add(new Vector2Int(x, y));
-                levelGen.layout = new LevelLayout(world.worldData[x, y]) {
+                string xCoord = GetNumberWithZeroesInIgsignificantBits(x);
+                string yCoord = GetNumberWithZeroesInIgsignificantBits(y);
+                string levelSeed = $"{WorldSeed}{xCoord}{yCoord}";
+                levelGen.layout = new LevelLayout(levelSeed) {
                     worldCoordinates = new Vector2Int(x, y),
                     worldSize = worldSize
                 };
@@ -211,6 +214,19 @@ public class WorldGeneration : MonoBehaviour {
                 currentRenderedLevels.RemoveAt(i);
             }
         }
+    }
+    private string GetNumberWithZeroesInIgsignificantBits(int value) {
+        string newValue;
+        if((float)value / 100f > 1f) {
+            newValue = value.ToString();
+        }
+        else if((float)value / 10f > 1f) {
+            newValue = $"0{value}";
+        }
+        else {
+            newValue = $"00{value}";
+        }
+        return newValue;
     }
     private static bool CheckBounds(int x, int y) {
         return x >= 0 && y >= 0 && x < worldSize && y < worldSize;
