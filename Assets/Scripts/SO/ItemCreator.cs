@@ -62,7 +62,48 @@ public class ItemCreator : ScriptableObject {
     private readonly int[] leatherArmorIndices = { 1, 2, 5 };
     private readonly int[] clothArmorIndices = { 4, 7 };
 
+    private readonly int[][] diceRolls = new int[][] {
+        new int[] { 1, 1, 1, 7, 6, 5, 9, 2, 3, 4, 0, 0, 0 },
+        new int[] { 3, 5, 2, 1, 3, 6, 7, 7, 4, 1, 1, 0, 1 },
+        new int[] { 6, 5, 6, 4, 5, 2, 3, 1, 2, 3, 4, 3, 2 },
+        new int[] { 6, 7, 6, 2, 2, 1, 5, 1, 3, 2, 3, 1, 2 },
+        new int[] { 7, 7, 7, 3, 4, 3, 2, 3, 1, 2, 5, 6, 1 },
+        new int[] { 7, 5, 8, 1, 1, 2, 4, 2, 2, 1, 4, 2, 1 },
+        new int[] { 6, 9, 6, 4, 4, 3, 2, 7, 3, 3, 4, 4, 2 },
+        new int[] { 5, 6, 6, 3, 4, 3, 1, 0, 3, 2, 5, 3, 3 },
+        new int[] { 9, 6, 6, 3, 3, 2, 3, 3, 2, 1, 3, 4, 3 },
+        new int[] { 6, 5, 4, 2, 3, 4, 4, 1, 4, 4, 5, 5, 4 },
+        new int[] { 6, 6, 9, 4, 4, 3, 2, 2, 1, 2, 2, 3, 2 },
+        new int[] { 4, 4, 4, 6, 5, 4, 4, 5, 0, 6, 4, 4, 6 },
+        new int[] { 8, 9, 9, 3, 4, 3, 2, 6, 2, 3, 6, 4, 3 },
+        new int[] { 8, 9, 9, 4, 2, 3, 1, 3, 6, 5, 6, 1, 3 },
+        new int[] { 10, 6, 7, 2, 1, 2, 6, 1, 4, 3, 4, 2, 4 },
+        new int[] { 10, 7, 8, 6, 4, 1, 5, 7, 2, 1, 7, 1, 5 },
+        new int[] { 4, 3, 2, 1, 9, 3, 4, 2, 3, 4, 1, 1, 2 },
+        new int[] { 4, 5, 4, 7, 6, 3, 3, 2, 1, 1, 2, 2, 2 },
+        new int[] { 4, 5, 3, 9, 1, 3, 2, 2, 3, 4, 4, 2, 3 },
+        new int[] { 4, 6, 5, 8, 5, 4, 1, 4, 2, 3, 5, 2, 4 },
+        new int[] { 5, 3, 4, 3, 3, 2, 9, 5, 3, 4, 1, 5, 2 },
+        new int[] { 3, 4, 6, 2, 3, 3, 8, 2, 3, 3, 2, 4, 4 },
+        new int[] { 6, 7, 5, 5, 5, 10, 6, 7, 6, 1, 4, 3, 4 },
+        new int[] { 7, 8, 7, 3, 4, 10, 6, 6, 3, 1, 3, 4, 7 },
+        new int[] { 4, 5, 4, 2, 2, 1, 2, 4, 1, 9, 2, 2, 3 },
+        new int[] { 5, 4, 5, 2, 3, 4, 3, 3, 3, 9, 3, 2, 8 },
+        new int[] { 3, 4, 3, 3, 3, 3, 3, 9, 3, 4, 3, 1, 2 },
+        new int[] { 6, 3, 4, 1, 2, 3, 1, 9, 4, 3, 4, 3, 3 },
+        new int[] { 2, 1, 2, 4, 3, 4, 4, 3, 9, 2, 1, 2, 1 },
+        new int[] { 3, 4, 3, 4, 3, 4, 4, 3, 9, 1, 2, 1, 4 },
+        new int[] { 2, 6, 7, 2, 3, 3, 6, 2, 3, 7, 5, 4, 9 },
+        new int[] { 5, 4, 5, 4, 4, 3, 5, 4, 4, 6, 1, 1, 9 },
+        new int[] { 1, 3, 2, 2, 4, 4, 8, 7, 1, 2, 9, 4, 2 },
+        new int[] { 4, 5, 5, 3, 9, 5, 7, 4, 3, 3, 4, 4, 3 },
+        new int[] { 3, 3, 2, 2, 4, 6, 6, 6, 6, 5, 5, 5, 6 },
+        new int[] { 4, 4, 3, 1, 3, 7, 4, 2, 4, 3, 2, 9, 4 },
+        new int[] { 6, 6, 6, 4, 4, 3, 5, 5, 5, 5, 3, 4, 4 }
+    };
+
     private const int uniqueRate = 2;   // uniqueRate / 100 chance of getting a unique item
+    private const int dieCapacity = 10;
 
     private System.Random pseudoRandom;
 
@@ -76,12 +117,11 @@ public class ItemCreator : ScriptableObject {
             return item;
         }
         int slotIndex = pseudoRandom.Next(0, 6);
-        // To ensure you don't get weapons out of fabric
+        // To ensure you don't get weapons and rings out of fabric
         if((int)mat > 15 && slotIndex == 0) {
-            slotIndex = pseudoRandom.Next(1, 6);
+            slotIndex = pseudoRandom.Next(1, 5);
         }
-        switch (slotIndex)
-        {
+        switch(slotIndex) {
             case 0: {
                 bool unique = pseudoRandom.Next(1, 101) <= uniqueRate;
                 Weapon w = unique ? CreateUniqueWeapon() : CreateWeapon(mat);
@@ -123,6 +163,7 @@ public class ItemCreator : ScriptableObject {
         if(item != null) {
             item.seed = seed;
             item.itemMaterial = mat;
+            SetStats(item);
         }
         return item;
     }
@@ -355,18 +396,18 @@ public class ItemCreator : ScriptableObject {
     public Weapon CreateWeapon(ItemMaterial mat) {
         int presetIndex = pseudoRandom.Next(0, 7);
         WeaponPreset preset = (WeaponPreset)presetIndex;
-        WeaponType type = WeaponType.OneHanded;        
+        WeaponType type = WeaponType.OneHanded;
         //int index = 0;  // Currently only short swords
         switch(presetIndex) {
             case 0:
                 type = WeaponType.OneHanded;
-                break;                
+                break;
             case 1:
                 type = WeaponType.OneHanded;
-                break;                
+                break;
             case 2:
                 type = WeaponType.OneHanded;
-                break;                
+                break;
             case 3:
                 type = WeaponType.OneHanded;
                 break;
@@ -655,7 +696,7 @@ public class ItemCreator : ScriptableObject {
                 break;
             default:
                 item = null;
-                break; 
+                break;
         }
         return item;
     }
@@ -740,7 +781,7 @@ public class ItemCreator : ScriptableObject {
             helmet.secondIcon = helmetProp;
             helmet.secondColor = propColor;
             helmet.secondSprite = helmetPropInGame;
-        }        
+        }
         helmet.firstSprite = helmetBaseInGame;
         helmet.slot = EquipSlot.Head;
         return helmet;
@@ -749,7 +790,7 @@ public class ItemCreator : ScriptableObject {
         Sprite leggingBase = leggingBases[pseudoRandom.Next(0, leggingBases.Length)];
         Sprite leggingProp = leggingProps[pseudoRandom.Next(0, leggingProps.Length)];
         Color baseColor = bladeMaterialColors[(int)mat];
-        Color propColor = otherMaterialColors[pseudoRandom.Next(0, otherMaterialColors.Length)];        
+        Color propColor = otherMaterialColors[pseudoRandom.Next(0, otherMaterialColors.Length)];
         Armor legging = CreateInstance<Armor>();
         legging.itemName += $"{mat} Leggings";
         legging.firstIcon = leggingBase;
@@ -791,7 +832,7 @@ public class ItemCreator : ScriptableObject {
             ring.thirdIcon = ringJewel;
             ring.secondColor = baseColor;
             ring.thirdColor = jewelColor;
-        }              
+        }
         ring.slot = EquipSlot.Finger;
         return ring;
     }
@@ -803,6 +844,89 @@ public class ItemCreator : ScriptableObject {
             diceRollTotal += dieResult;
         }
         return diceRollTotal;
+    }
+    private void SetStats(Item item) {
+        int matIndex = (int)item.itemMaterial * 2;
+        if(matIndex > 30) {
+            int excess = matIndex % 30;
+            excess /= 2;
+            matIndex = 29 + excess;
+        }
+        int index = 0;
+        if(item is Weapon w) {
+            w.bashDamage = RollDice(diceRolls[matIndex][index++], dieCapacity);
+            w.pierceDamage = RollDice(diceRolls[matIndex][index++], dieCapacity);
+            w.slashDamage = RollDice(diceRolls[matIndex][index++], dieCapacity);
+            w.fireDamage = RollDice(diceRolls[matIndex][index++], dieCapacity);
+            w.iceDamage = RollDice(diceRolls[matIndex][index++], dieCapacity);
+            w.airDamage = RollDice(diceRolls[matIndex][index++], dieCapacity);
+            w.earthDamage = RollDice(diceRolls[matIndex][index++], dieCapacity);
+            w.lightningDamage = RollDice(diceRolls[matIndex][index++], dieCapacity);
+            w.lightDamage = RollDice(diceRolls[matIndex][index++], dieCapacity);
+            w.darkDamage = RollDice(diceRolls[matIndex][index++], dieCapacity);
+            w.bleedDamage = RollDice(diceRolls[matIndex][index++], dieCapacity);
+            w.poisonDamage = RollDice(diceRolls[matIndex][index++], dieCapacity);
+            w.curseDamage = RollDice(diceRolls[matIndex][index++], dieCapacity);
+        }
+        else if(item is Armor a) {
+            a.bashDefence = RollDice(diceRolls[matIndex + 1][index++], dieCapacity);
+            a.pierceDefence = RollDice(diceRolls[matIndex + 1][index++], dieCapacity);
+            a.slashDefence = RollDice(diceRolls[matIndex + 1][index++], dieCapacity);
+            a.fireDefence = RollDice(diceRolls[matIndex + 1][index++], dieCapacity);
+            a.iceDefence = RollDice(diceRolls[matIndex + 1][index++], dieCapacity);
+            a.airDefence = RollDice(diceRolls[matIndex + 1][index++], dieCapacity);
+            a.earthDefence = RollDice(diceRolls[matIndex + 1][index++], dieCapacity);
+            a.lightningDefence = RollDice(diceRolls[matIndex + 1][index++], dieCapacity);
+            a.lightDefence = RollDice(diceRolls[matIndex + 1][index++], dieCapacity);
+            a.darkDefence = RollDice(diceRolls[matIndex + 1][index++], dieCapacity);
+            a.bleedDefence = RollDice(diceRolls[matIndex + 1][index++], dieCapacity);
+            a.poisonDefence = RollDice(diceRolls[matIndex + 1][index++], dieCapacity);
+            a.curseDefence = RollDice(diceRolls[matIndex + 1][index++], dieCapacity);
+        }
+        else if(item is Shield s) {
+            s.bashDefence = RollDice(diceRolls[matIndex + 1][index++], dieCapacity);
+            s.pierceDefence = RollDice(diceRolls[matIndex + 1][index++], dieCapacity);
+            s.slashDefence = RollDice(diceRolls[matIndex + 1][index++], dieCapacity);
+            s.fireDefence = RollDice(diceRolls[matIndex + 1][index++], dieCapacity);
+            s.iceDefence = RollDice(diceRolls[matIndex + 1][index++], dieCapacity);
+            s.airDefence = RollDice(diceRolls[matIndex + 1][index++], dieCapacity);
+            s.earthDefence = RollDice(diceRolls[matIndex + 1][index++], dieCapacity);
+            s.lightningDefence = RollDice(diceRolls[matIndex + 1][index++], dieCapacity);
+            s.lightDefence = RollDice(diceRolls[matIndex + 1][index++], dieCapacity);
+            s.darkDefence = RollDice(diceRolls[matIndex + 1][index++], dieCapacity);
+            s.bleedDefence = RollDice(diceRolls[matIndex + 1][index++], dieCapacity);
+            s.poisonDefence = RollDice(diceRolls[matIndex + 1][index++], dieCapacity);
+            s.curseDefence = RollDice(diceRolls[matIndex + 1][index++], dieCapacity);
+        }
+        else if(item is Ring r) {
+            r.bashDamage = RollDice(diceRolls[matIndex][index++], dieCapacity);
+            r.pierceDamage = RollDice(diceRolls[matIndex][index++], dieCapacity);
+            r.slashDamage = RollDice(diceRolls[matIndex][index++], dieCapacity);
+            r.fireDamage = RollDice(diceRolls[matIndex][index++], dieCapacity);
+            r.iceDamage = RollDice(diceRolls[matIndex][index++], dieCapacity);
+            r.airDamage = RollDice(diceRolls[matIndex][index++], dieCapacity);
+            r.earthDamage = RollDice(diceRolls[matIndex][index++], dieCapacity);
+            r.lightningDamage = RollDice(diceRolls[matIndex][index++], dieCapacity);
+            r.lightDamage = RollDice(diceRolls[matIndex][index++], dieCapacity);
+            r.darkDamage = RollDice(diceRolls[matIndex][index++], dieCapacity);
+            r.bleedDamage = RollDice(diceRolls[matIndex][index++], dieCapacity);
+            r.poisonDamage = RollDice(diceRolls[matIndex][index++], dieCapacity);
+            r.curseDamage = RollDice(diceRolls[matIndex][index++], dieCapacity);
+            index = 0;
+            r.bashDefence = RollDice(diceRolls[matIndex + 1][index++], dieCapacity);
+            r.pierceDefence = RollDice(diceRolls[matIndex + 1][index++], dieCapacity);
+            r.slashDefence = RollDice(diceRolls[matIndex + 1][index++], dieCapacity);
+            r.fireDefence = RollDice(diceRolls[matIndex + 1][index++], dieCapacity);
+            r.iceDefence = RollDice(diceRolls[matIndex + 1][index++], dieCapacity);
+            r.airDefence = RollDice(diceRolls[matIndex + 1][index++], dieCapacity);
+            r.earthDefence = RollDice(diceRolls[matIndex + 1][index++], dieCapacity);
+            r.lightningDefence = RollDice(diceRolls[matIndex + 1][index++], dieCapacity);
+            r.lightDefence = RollDice(diceRolls[matIndex + 1][index++], dieCapacity);
+            r.darkDefence = RollDice(diceRolls[matIndex + 1][index++], dieCapacity);
+            r.bleedDefence = RollDice(diceRolls[matIndex + 1][index++], dieCapacity);
+            r.poisonDefence = RollDice(diceRolls[matIndex + 1][index++], dieCapacity);
+            r.curseDefence = RollDice(diceRolls[matIndex + 1][index++], dieCapacity);
+        }
     }
 }
 
