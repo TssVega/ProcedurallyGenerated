@@ -242,6 +242,7 @@ SpriteAtlas:
     - {fileID: 7112706108043005543, guid: dbdcd728933aec949a470dbbfc80f2ee, type: 3}
     - {fileID: 3986970833080739715, guid: dbdcd728933aec949a470dbbfc80f2ee, type: 3}
     - {fileID: 3347032710275199280, guid: dbdcd728933aec949a470dbbfc80f2ee, type: 3}
+    - {fileID: 21300000, guid: 09c85fcd91a9bbf4ca5f67c52426794a, type: 3}
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
@@ -374,6 +375,7 @@ SpriteAtlas:
   - {fileID: 3515396771763726300, guid: 4ad070bd133d61d438da173d61b38f7d, type: 3}
   - {fileID: 1764136046774324577, guid: 4ad070bd133d61d438da173d61b38f7d, type: 3}
   - {fileID: 4258673365177248671, guid: 4ad070bd133d61d438da173d61b38f7d, type: 3}
+  - {fileID: 21300000, guid: 09c85fcd91a9bbf4ca5f67c52426794a, type: 3}
   - {fileID: -1415692907101100273, guid: 4059720e17306864d869fc46bbbafc24, type: 3}
   - {fileID: 2943869875037312548, guid: 4059720e17306864d869fc46bbbafc24, type: 3}
   - {fileID: 3163493501168186480, guid: 4059720e17306864d869fc46bbbafc24, type: 3}
@@ -575,6 +577,7 @@ SpriteAtlas:
   - PantBasesOutlined_0
   - PantBasesOutlined_3
   - PantBasesOutlined_2
+  - Coal
   - CaveWalls_2
   - CaveWalls_3
   - CaveWalls_0

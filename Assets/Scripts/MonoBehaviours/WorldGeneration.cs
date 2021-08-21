@@ -32,6 +32,8 @@ public class WorldGeneration : MonoBehaviour {
 
     private WorldData world;
 
+    public MapPanel mapPanel;
+
     private void Awake() {
         player = FindObjectOfType<Player>();
         levels = new List<LevelGeneration>();
@@ -80,6 +82,8 @@ public class WorldGeneration : MonoBehaviour {
 
     public string WorldSeed => world.seed;
 
+    public int[,] ExplorationData => world.explorationData;
+
     private void GetAutosaveFiles() {
         List<string> chestFiles = PersistentData.GetAllFilesWithKey($"ChestData{PersistentData.saveSlot}", $"", $"");
         List<string> mushroomFiles = PersistentData.GetAllFilesWithKey($"MushroomData{PersistentData.saveSlot}", $"", $"");
@@ -110,11 +114,11 @@ public class WorldGeneration : MonoBehaviour {
     public void LoadWorldData() {
         WorldData data = SaveSystem.LoadWorld(PersistentData.saveSlot);
         if(data != null) {
-            world = new WorldData(data.worldData, data.currentCoordinates, data.worldMap, data.seed);
+            world = new WorldData(data.worldData, data.currentCoordinates, data.worldMap, data.seed, data.explorationData);
         }
         else {
             world = new WorldData(new string[worldSize, worldSize], new[] { 0, 0 }, new int[worldSize, worldSize],
-                UnityEngine.Random.Range(0, 99999999).ToString()) {                
+                UnityEngine.Random.Range(0, 99999999).ToString(), new int[worldSize, worldSize]) {                
                 lastCoordinates = new[] { -1, -1 }
             };
         }
@@ -149,6 +153,7 @@ public class WorldGeneration : MonoBehaviour {
                     loadingPanel.LoadingLevels();
                 }                
                 if(x == world.currentCoordinates[0] && y == world.currentCoordinates[1]) {
+                    mapPanel.SetCursor(new Vector2Int(x, y));
                     aStarPath.graphs[0].active.data.gridGraph.center = new Vector3Int(levelSize * x, levelSize * y, 0);
                     StartCoroutine(ScanPath());
                     //ScanPath();
@@ -179,6 +184,10 @@ public class WorldGeneration : MonoBehaviour {
                     worldSize = worldSize
                 };
                 levelClone.SetActive(true);
+                if(world.explorationData[x, y] == 0) {
+                    world.explorationData[x, y] = 1;
+                    mapPanel.NewExploration(new Vector2Int(x, y), WorldMap);
+                }                
                 /*
                 Thread th = new Thread(() => levelGen.SetLayout(this));
                 th.Start();*/

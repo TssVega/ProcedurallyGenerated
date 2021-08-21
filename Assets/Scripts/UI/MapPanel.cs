@@ -17,10 +17,17 @@ public class MapPanel : MonoBehaviour {
     public Color volcanicColor;
     public Color glacialColor;
     public Color crystalColor;
+    public Color coveredColor;
+
+    public Image cursor;
 
     private void Awake() {
         //mapTexture = mapImage.mainTexture;
         worldGeneration = FindObjectOfType<WorldGeneration>();
+    }
+    public void SetCursor(Vector2Int coordinates) {
+        Vector3 screenPosition = new Vector3(coordinates.x * 2 - 127, coordinates.y * 2 - 127, 0);
+        cursor.rectTransform.anchoredPosition = screenPosition;
     }
     public void Set() {
         if(!mapSet) {
@@ -28,9 +35,33 @@ public class MapPanel : MonoBehaviour {
             SetMap(worldGeneration.WorldMap);
         }        
     }
+    public void NewExploration(Vector2Int coordinates, int[,] worldMap) {
+        switch(worldMap[coordinates.x, coordinates.y]) {
+            case 0:
+                mapTexture.SetPixel(coordinates.x, coordinates.y, backgroundColor);
+                break;
+            case 1:
+                mapTexture.SetPixel(coordinates.x, coordinates.y, rockyColor);
+                break;
+            case 2:
+                mapTexture.SetPixel(coordinates.x, coordinates.y, volcanicColor);
+                break;
+            case 3:
+                mapTexture.SetPixel(coordinates.x, coordinates.y, glacialColor);
+                break;
+            case 4:
+                mapTexture.SetPixel(coordinates.x, coordinates.y, crystalColor);
+                break;
+        }
+        mapTexture.Apply();
+    }
     private void SetMap(int[,] worldMap) {
         for(int x = 0; x < worldSize; x++) {
             for(int y = 0; y < worldSize; y++) {
+                if(worldGeneration.ExplorationData[x, y] != 1) {
+                    mapTexture.SetPixel(x, y, coveredColor);
+                    continue;
+                }
                 switch(worldMap[x, y]) {
                     case 0:
                         mapTexture.SetPixel(x, y, backgroundColor);
@@ -51,30 +82,5 @@ public class MapPanel : MonoBehaviour {
             }
         }
         mapTexture.Apply();
-        /*
-        for(int x = 0; x < worldSize; x++) {
-            for(int y = 0; y < worldSize; y++) {
-                GameObject mapIcon = ObjectPooler.objectPooler.GetPooledObject("MapIcon");
-                mapIcon.transform.SetParent(transform);
-                mapIcon.SetActive(true);
-                switch(worldMap[x, y]) {
-                    case 0:
-                        mapIcon.GetComponent<Image>().color = Color.black;
-                        break;
-                    case 1:
-                        mapIcon.GetComponent<Image>().color = Color.white;
-                        break;
-                    case 2:
-                        mapIcon.GetComponent<Image>().color = Color.red;
-                        break;
-                    case 3:
-                        mapIcon.GetComponent<Image>().color = Color.blue;
-                        break;
-                    case 4:
-                        mapIcon.GetComponent<Image>().color = Color.magenta;
-                        break;
-                }
-            }
-        }*/
     }
 }

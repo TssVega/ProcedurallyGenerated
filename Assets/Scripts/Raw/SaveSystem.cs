@@ -46,7 +46,7 @@ public static class SaveSystem {
         BinaryFormatter bin = new BinaryFormatter();
         string path = $"{Application.persistentDataPath}/WorldData{slot}.tss";
         using(FileStream stream = new FileStream(path, FileMode.Create)) {
-            WorldData _data = new WorldData(data.worldData, data.currentCoordinates, data.worldMap, data.seed);
+            WorldData _data = new WorldData(data.worldData, data.currentCoordinates, data.worldMap, data.seed, data.explorationData);
             bin.Serialize(stream, _data);
         }
         // FileStream stream = new FileStream(path, FileMode.Create);

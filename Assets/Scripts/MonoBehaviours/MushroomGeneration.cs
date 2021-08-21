@@ -50,12 +50,13 @@ public class MushroomGeneration : MonoBehaviour {
                 bool valid = false;
                 while(!valid) {
                     // pseudoRandomForMushrooms.Next(3, levelGeneration.layout.levelSize - 4)
-                    randomLocation = new Vector3Int(Random.Range(3, levelGeneration.layout.levelSize - 4), Random.Range(3, levelGeneration.layout.levelSize - 4), 0);
+                    randomLocation = new Vector3Int(pseudoRandomForMushrooms.Next(3, levelGeneration.layout.levelSize - 4), pseudoRandomForMushrooms.Next(3, levelGeneration.layout.levelSize - 4), 0);
                     if(levelGeneration.CheckLocation(randomLocation.x, randomLocation.y) && !levelGeneration.occupiedCoordinates.Contains(randomLocation)) {
                         valid = true;
                     }
                 }
                 levelGeneration.occupiedCoordinates.Add(randomLocation);
+                Debug.Log($"Occupied coordinates count: {levelGeneration.occupiedCoordinates.Count}");
                 mushroomValues[randomLocation.x, randomLocation.y] = await Task.Run(CalculateMushroomValue);
                 if(mushroomValues[randomLocation.x, randomLocation.y] >= 0 && mushroomValues[randomLocation.x, randomLocation.y] < 12) {
                     PlaceMushroom(randomLocation.x, randomLocation.y, mushroomValues[randomLocation.x, randomLocation.y]);
@@ -98,49 +99,49 @@ public class MushroomGeneration : MonoBehaviour {
         SaveSystem.SaveMushrooms(this, slot, levelGeneration.layout.worldCoordinates);
     }
     private int CalculateMushroomCount() {
-        return RollDice(25, 10);
+        return Mathf.Clamp(RollDice(2, 6) - 6, 1, 6);
     }
     private int CalculateMushroomValue() {
-        int diceRollTotal = RollDice(5, 20);
+        int diceRollTotal = RollDice(6, 6);
         int mushroomValue;
         switch(diceRollTotal) {
-            case 97:
+            case 34:
                 // Matsutake mushroom
                 mushroomValue = 6;
                 break;
-            case 95:
+            case 33:
                 // Morel mushroom
                 mushroomValue = 10;
                 break;
-            case 93:
+            case 32:
                 // Black trumpet mushroom
                 mushroomValue = 3;
                 break;
-            case 90:
+            case 29:
                 // Truffle mushroom
                 mushroomValue = 1;
                 break;
-            case 91:
+            case 30:
                 // Reishi mushroom
                 mushroomValue = 5;
                 break;
-            case 88:
+            case 28:
                 // Chanterelle mushroom
                 mushroomValue = 4;
                 break;
-            case 86:
+            case 27:
                 // Fly agaric mushroom
                 mushroomValue = 11;
                 break;
-            case 84:
+            case 26:
                 // Turkey tail mushroom
                 mushroomValue = 2;
                 break;
-            case 83:
+            case 25:
                 // Destroying angel mushroom
                 mushroomValue = 0;
                 break;
-            case 22:
+            case 20:
                 // Porcini mushroom
                 mushroomValue = 9;
                 break;
@@ -148,31 +149,32 @@ public class MushroomGeneration : MonoBehaviour {
                 // Enoki mushroom
                 mushroomValue = 8;
                 break;
-            case 82:
+            case 24:
                 // Puffball mushroom
                 mushroomValue = 7;
                 break;
             case 21:
+            case 18:
                 // Wood
                 mushroomValue = 12;
                 break;
-            case 19:
+            case 17:
                 // Copper
                 mushroomValue = 13;
                 break;
-            case 18:
+            case 16:
                 // Iron
                 mushroomValue = 14;
                 break;
-            case 16:
+            case 15:
                 // Silver
                 mushroomValue = 15;
                 break;
-            case 11:
+            case 12:
                 // Gold
                 mushroomValue = 16;
                 break;
-            case 10:
+            case 11:
                 // Platinum
                 mushroomValue = 17;
                 break;
@@ -184,37 +186,42 @@ public class MushroomGeneration : MonoBehaviour {
                 // Tungsten
                 mushroomValue = 19;
                 break;
-            case 9:
+            case 10:
                 // Sapphire
-                mushroomValue = 18;
-                break;
-            case 6:
-                // Ruby
-                mushroomValue = 19;
-                break;
-            case 8:
-                // Emerald
                 mushroomValue = 20;
                 break;
-            case 5:
-                // Diamond
+            case 7:
+                // Ruby
                 mushroomValue = 21;
                 break;
-            case 7:
-                // Musgravite
+            case 9:
+                // Emerald
                 mushroomValue = 22;
                 break;
-            case 99:
-                // Taaffeite
+            case 6:
+                // Diamond
                 mushroomValue = 23;
                 break;
-            case 92:
-                // Amber
+            case 8:
+                // Musgravite
                 mushroomValue = 24;
                 break;
-            case 69:
+            case 35:
+            case 36:
+                // Taaffeite
+                mushroomValue = 25;
+                break;
+            case 31:
+                // Amber
+                mushroomValue = 26;
+                break;
+            case 19:
                 // Stone
                 mushroomValue = 42;
+                break;
+            case 22:
+                // Coal
+                mushroomValue = 44;
                 break;
             default:
                 mushroomValue = -1;

@@ -23,7 +23,7 @@ public class ChestGeneration : MonoBehaviour {
     public void LoadChests(int slot, string seed) {
         pseudoRandomForChests = new System.Random(seed.GetHashCode());
         int chestCount = pseudoRandomForChests.Next(0, maxChestCount) / 5;        
-        int itemCount = pseudoRandomForChests.Next(1, maxItemCountInChest);      
+        int itemCount = Mathf.Clamp(RollDice(8, 6) - 32, 1, maxItemCountInChest);      
         chests = new Chest[chestCount];
         ChestData chestData = SaveSystem.LoadChests(slot, levelGeneration.layout.worldCoordinates);
         // Get the chest content data from file. If there is no data, create a new file
@@ -101,7 +101,7 @@ public class ChestGeneration : MonoBehaviour {
         Vector3Int location = Vector3Int.zero;
         // System.Random pseudoRandomForLevel = new System.Random(seed.GetHashCode());
         while(!valid) {
-            location = new Vector3Int(Random.Range(3, levelGeneration.layout.levelSize - 4), Random.Range(3, levelGeneration.layout.levelSize - 4), 0);
+            location = new Vector3Int(pseudoRnd.Next(3, levelGeneration.layout.levelSize - 4), pseudoRnd.Next(3, levelGeneration.layout.levelSize - 4), 0);
             if(levelGen.CheckLocation(location.x, location.y) && !levelGeneration.occupiedCoordinates.Contains(location)) {
                 valid = true;
             }
@@ -111,5 +111,14 @@ public class ChestGeneration : MonoBehaviour {
                     (location.x - mapSize / 2) + levelGen.layout.worldCoordinates.x * mapSize,
                     (location.y - mapSize / 2) + levelGen.layout.worldCoordinates.y * mapSize, 0);
         return location;
+    }
+    private int RollDice(int diceCount, int diceMax) {
+        int diceRollTotal = 0;
+        // Roll 5d20
+        for(int i = 0; i < diceCount; i++) {
+            int dieResult = pseudoRandomForChests.Next(1, diceMax + 1);
+            diceRollTotal += dieResult;
+        }
+        return diceRollTotal;
     }
 }

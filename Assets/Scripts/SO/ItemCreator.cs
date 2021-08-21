@@ -694,6 +694,9 @@ public class ItemCreator : ScriptableObject {
             case "soul":
                 item = itemDatabase.items[31];
                 break;
+            case "coal":
+                item = itemDatabase.items[32];
+                break;
             default:
                 item = null;
                 break;
@@ -936,5 +939,5 @@ public enum WeaponPreset {
 
 public enum ItemMaterial {
     Wood, Copper, Iron, Silver, Gold, Platinum, Titanium, Tungsten, Sapphire,
-    Ruby, Emerald, Diamond, Musgravite, Taaffeite, Amber, Bone, Wool, Fur, Silk, Leather, Scale
+    Ruby, Emerald, Diamond, Musgravite, Taaffeite, Amber, Bone, Wool, Fur, Silk, Leather, Scale, Coal
 }
