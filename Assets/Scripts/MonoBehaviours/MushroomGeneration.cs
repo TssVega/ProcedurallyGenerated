@@ -49,7 +49,8 @@ public class MushroomGeneration : MonoBehaviour {
                 Vector3Int randomLocation = Vector3Int.zero;
                 bool valid = false;
                 while(!valid) {
-                    randomLocation = new Vector3Int(pseudoRandomForMushrooms.Next(3, levelGeneration.layout.levelSize - 4), pseudoRandomForMushrooms.Next(3, levelGeneration.layout.levelSize - 4), 0);
+                    // pseudoRandomForMushrooms.Next(3, levelGeneration.layout.levelSize - 4)
+                    randomLocation = new Vector3Int(Random.Range(3, levelGeneration.layout.levelSize - 4), Random.Range(3, levelGeneration.layout.levelSize - 4), 0);
                     if(levelGeneration.CheckLocation(randomLocation.x, randomLocation.y) && !levelGeneration.occupiedCoordinates.Contains(randomLocation)) {
                         valid = true;
                     }

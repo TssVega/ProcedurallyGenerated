@@ -9,7 +9,7 @@ public class ChestGeneration : MonoBehaviour {
 
     private List<ChestObject> chestObjects = new List<ChestObject>();
     private System.Random pseudoRandomForChests;
-    private readonly int maxChestCount = 5;
+    private readonly int maxChestCount = 6;
     private readonly int maxItemCountInChest = 16;
 
     private LevelGeneration levelGeneration;
@@ -22,7 +22,7 @@ public class ChestGeneration : MonoBehaviour {
     // Load chest data from binary file
     public void LoadChests(int slot, string seed) {
         pseudoRandomForChests = new System.Random(seed.GetHashCode());
-        int chestCount = pseudoRandomForChests.Next(0, maxChestCount) / 4;        
+        int chestCount = pseudoRandomForChests.Next(0, maxChestCount) / 5;        
         int itemCount = pseudoRandomForChests.Next(1, maxItemCountInChest);      
         chests = new Chest[chestCount];
         ChestData chestData = SaveSystem.LoadChests(slot, levelGeneration.layout.worldCoordinates);
@@ -101,11 +101,12 @@ public class ChestGeneration : MonoBehaviour {
         Vector3Int location = Vector3Int.zero;
         // System.Random pseudoRandomForLevel = new System.Random(seed.GetHashCode());
         while(!valid) {
-            location = new Vector3Int(pseudoRnd.Next(3, levelGen.layout.levelSize - 4), pseudoRnd.Next(3, levelGen.layout.levelSize - 4), 0);
-            if(levelGen.IsValidLocation(new Vector2Int(location.x, location.y)) && !levelGeneration.occupiedCoordinates.Contains(location)) {
+            location = new Vector3Int(Random.Range(3, levelGeneration.layout.levelSize - 4), Random.Range(3, levelGeneration.layout.levelSize - 4), 0);
+            if(levelGen.CheckLocation(location.x, location.y) && !levelGeneration.occupiedCoordinates.Contains(location)) {
                 valid = true;
             }
         }
+        levelGeneration.occupiedCoordinates.Add(location);
         location = new Vector3Int(
                     (location.x - mapSize / 2) + levelGen.layout.worldCoordinates.x * mapSize,
                     (location.y - mapSize / 2) + levelGen.layout.worldCoordinates.y * mapSize, 0);
