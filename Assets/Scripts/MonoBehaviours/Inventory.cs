@@ -45,6 +45,7 @@ public class Inventory : MonoBehaviour {
         }        
     }
     private void Start() {
+        UpdateStats();
         // Crate example weapon
         /*
         Weapon exampleItem = player.itemCreator.CreateWeapon("testWeapon");
@@ -85,6 +86,9 @@ public class Inventory : MonoBehaviour {
         get => equipmentSize;
     }
     private void UpdateStats() {
+        if(offenceStats.Length <= 0) {
+            return;
+        }
         offenceStats[0].text = stats.fireDamage.ToString();
         offenceStats[1].text = stats.iceDamage.ToString();
         offenceStats[2].text = stats.airDamage.ToString();

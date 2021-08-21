@@ -22,7 +22,7 @@ public class ChestGeneration : MonoBehaviour {
     // Load chest data from binary file
     public void LoadChests(int slot, string seed) {
         pseudoRandomForChests = new System.Random(seed.GetHashCode());
-        int chestCount = pseudoRandomForChests.Next(0, maxChestCount);        
+        int chestCount = pseudoRandomForChests.Next(0, maxChestCount) / 4;        
         int itemCount = pseudoRandomForChests.Next(1, maxItemCountInChest);      
         chests = new Chest[chestCount];
         ChestData chestData = SaveSystem.LoadChests(slot, levelGeneration.layout.worldCoordinates);
@@ -61,10 +61,10 @@ public class ChestGeneration : MonoBehaviour {
     }
     private string GetNumberWithZeroesInIgsignificantBits(int value) {
         string newValue;
-        if(value / 100 > 1) {
+        if(value / 100 >= 1) {
             newValue = value.ToString();
         }
-        else if(value / 10 > 1) {
+        else if(value / 10 >= 1) {
             newValue = $"0{value}";
         }
         else {
@@ -91,6 +91,7 @@ public class ChestGeneration : MonoBehaviour {
             chestObjects[i].gameObject.SetActive(false);
         }
         chestObjects.Clear();
+        levelGeneration.occupiedCoordinates.Clear();
     }
     public void SaveChests(int slot) {
         SaveSystem.SaveChests(this, slot, levelGeneration.layout.worldCoordinates);
@@ -101,7 +102,7 @@ public class ChestGeneration : MonoBehaviour {
         // System.Random pseudoRandomForLevel = new System.Random(seed.GetHashCode());
         while(!valid) {
             location = new Vector3Int(pseudoRnd.Next(3, levelGen.layout.levelSize - 4), pseudoRnd.Next(3, levelGen.layout.levelSize - 4), 0);
-            if(levelGen.IsValidLocation(new Vector2Int(location.x, location.y))) {
+            if(levelGen.IsValidLocation(new Vector2Int(location.x, location.y)) && !levelGeneration.occupiedCoordinates.Contains(location)) {
                 valid = true;
             }
         }

@@ -17,7 +17,9 @@ public class OpenItemInfo : MonoBehaviour {
         }        
     }
     public void SetItemInfoPanelFromEquipment(int index) {
-        itemInfoPanel.SetItem(inventory.equipment[index]);
-        itemInfoPanel.gameObject.SetActive(true);
+        if(inventory.equipment[index]) {
+            itemInfoPanel.SetItem(inventory.equipment[index]);
+            itemInfoPanel.gameObject.SetActive(true);
+        }        
     }
 }

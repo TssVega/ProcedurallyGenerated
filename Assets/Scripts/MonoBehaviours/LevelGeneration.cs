@@ -35,7 +35,9 @@ public class LevelGeneration : MonoBehaviour {
 
     private List<GameObject> torches;
 
-    private Connections connections;    
+    private Connections connections;
+
+    public List<Vector3Int> occupiedCoordinates;
 
     private void Awake() {
         worldGeneration = FindObjectOfType<WorldGeneration>();
@@ -44,6 +46,7 @@ public class LevelGeneration : MonoBehaviour {
     }
     private void Start() {
         torches = new List<GameObject>();
+        occupiedCoordinates = new List<Vector3Int>();
         //path = transform.GetChild(0).GetComponent<AstarPath>();
         //SetLayout(layout);
     }
@@ -430,7 +433,7 @@ public class LevelGeneration : MonoBehaviour {
             for(int y = 0; y < layout.levelSize; y++) {
                 Vector3Int tileCoordinate = new Vector3Int(
                     (x - layout.levelSize / 2) + layout.worldCoordinates.x * layout.levelSize,
-                    (y - layout.levelSize / 2) + layout.worldCoordinates.y * layout.levelSize, 0);
+                    (y - layout.levelSize / 2) + layout.worldCoordinates.y * layout.levelSize, 0);                
                 worldGeneration.tilemap.SetTile(tileCoordinate, tiles[index]);
                 index++;
             }

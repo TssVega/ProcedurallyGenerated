@@ -45,19 +45,24 @@ public class MushroomGeneration : MonoBehaviour {
             }
         }
         else {
-            for(int x = 0; x < levelSize; x++) {
-                for(int y = 0; y < levelSize; y++) {
-                    if(levelGeneration.CheckLocation(x, y)) {
-                        mushroomValues[x, y] = await Task.Run(CalculateMushroomValue);
-                        if(mushroomValues[x, y] >= 0 && mushroomValues[x, y] < 12) {
-                            PlaceMushroom(x, y, mushroomValues[x, y]);
-                        }
-                        else if(mushroomValues[x, y] > 0) {
-                            PlaceObject(x, y, mushroomValues[x, y]);
-                        }
-                    }                                       
+            for(int i = 0; i < CalculateMushroomCount(); i++) {
+                Vector3Int randomLocation = Vector3Int.zero;
+                bool valid = false;
+                while(!valid) {
+                    randomLocation = new Vector3Int(pseudoRandomForMushrooms.Next(3, levelGeneration.layout.levelSize - 4), pseudoRandomForMushrooms.Next(3, levelGeneration.layout.levelSize - 4), 0);
+                    if(levelGeneration.CheckLocation(randomLocation.x, randomLocation.y) && !levelGeneration.occupiedCoordinates.Contains(randomLocation)) {
+                        valid = true;
+                    }
                 }
-            }
+                levelGeneration.occupiedCoordinates.Add(randomLocation);
+                mushroomValues[randomLocation.x, randomLocation.y] = await Task.Run(CalculateMushroomValue);
+                if(mushroomValues[randomLocation.x, randomLocation.y] >= 0 && mushroomValues[randomLocation.x, randomLocation.y] < 12) {
+                    PlaceMushroom(randomLocation.x, randomLocation.y, mushroomValues[randomLocation.x, randomLocation.y]);
+                }
+                else if(mushroomValues[randomLocation.x, randomLocation.y] > 0) {
+                    PlaceObject(randomLocation.x, randomLocation.y, mushroomValues[randomLocation.x, randomLocation.y]);
+                }
+            }            
         }
         PersistentData.FinishWorkingThread();
     }
@@ -83,12 +88,16 @@ public class MushroomGeneration : MonoBehaviour {
             mushrooms[i].SetActive(false);
         }
         mushrooms.Clear();
+        levelGeneration.occupiedCoordinates.Clear();
     }
     public void TakeMushroom(Vector2Int coordinates) {
         mushroomValues[coordinates.x, coordinates.y] = -1;
     }
     public void SaveMushrooms(int slot) {
         SaveSystem.SaveMushrooms(this, slot, levelGeneration.layout.worldCoordinates);
+    }
+    private int CalculateMushroomCount() {
+        return RollDice(25, 10);
     }
     private int CalculateMushroomValue() {
         int diceRollTotal = RollDice(5, 20);
