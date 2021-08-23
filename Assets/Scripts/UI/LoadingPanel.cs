@@ -67,6 +67,7 @@ public class LoadingPanel : MonoBehaviour {
             while(panel.color.a < 1) {
                 newAlpha = panel.color.a + 0.01f;
                 panel.color = new Color(panel.color.r, panel.color.g, panel.color.b, newAlpha);
+                loadingTip.color = new Color(loadingTip.color.r, loadingTip.color.g, loadingTip.color.b, newAlpha);
                 yield return null;
             }
             gameObject.SetActive(false);
@@ -75,6 +76,7 @@ public class LoadingPanel : MonoBehaviour {
             while(panel.color.a > 0) {
                 newAlpha = panel.color.a - 0.01f;
                 panel.color = new Color(panel.color.r, panel.color.g, panel.color.b, newAlpha);
+                loadingTip.color = new Color(loadingTip.color.r, loadingTip.color.g, loadingTip.color.b, newAlpha);
                 yield return null;
             }
             gameObject.SetActive(false);

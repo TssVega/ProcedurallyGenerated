@@ -13,6 +13,12 @@ public class ProjectileSkill : ActiveSkill {
             targetStatus.TakeDamage(
                 projectileData.damageRate * DamageFromDamageType.GetDamage(attackType, attackerStats),
                 attackType, this, attackerStats.status);
+            if(projectileData.stunDuration > 0) {
+                targetStatus.StartStun(projectileData.stunDuration);
+            }
+            if(projectileData.immobilizeDuration > 0) {
+                targetStatus.StartStun(projectileData.immobilizeDuration);
+            }
         }
     }
 }

@@ -14,16 +14,26 @@ public class SkillUser : MonoBehaviour {
     private StatusEffects statusEffects;
     public Animator animator;
     private Player player;
+    private Enemy enemy;
     private Inventory inventory;
 
     private void Awake() {
-        skillCooldowns = new List<float>();
-        for(int i = 0; i < skillDatabase.skills.Count; i++) {
-            skillCooldowns.Add(0f);
-        }
-        stats = GetComponent<Stats>();
-        statusEffects = GetComponent<StatusEffects>();
         player = GetComponent<Player>();
+        enemy = GetComponent<Enemy>();
+        skillCooldowns = new List<float>();
+        if(player) {
+            for(int i = 0; i < skillDatabase.skills.Count; i++) {
+                skillCooldowns.Add(0f);
+            }
+        }
+        if(enemy) {
+            for(int i = 0; i < skillDatabase.enemySkills.Count; i++) {
+                skillCooldowns.Add(0f);
+            }
+        }
+        animator = GetComponent<Animator>();
+        stats = GetComponent<Stats>();
+        statusEffects = GetComponent<StatusEffects>();        
         inventory = GetComponent<Inventory>();
     }
     private void Update() {

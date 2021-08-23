@@ -6,7 +6,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using System.Threading.Tasks;
+using System.Threading;
 // ReSharper disable All
 
 public class LevelGeneration : MonoBehaviour {
@@ -43,12 +43,8 @@ public class LevelGeneration : MonoBehaviour {
         worldGeneration = FindObjectOfType<WorldGeneration>();
         chestGeneration = GetComponent<ChestGeneration>();
         mushroomGeneration = GetComponent<MushroomGeneration>();
-    }
-    private void Start() {
         torches = new List<GameObject>();
         occupiedCoordinates = new List<Vector3Int>();
-        //path = transform.GetChild(0).GetComponent<AstarPath>();
-        //SetLayout(layout);
     }
     private void OnTriggerEnter2D(Collider2D collision) {
         if(collision.CompareTag("Player")) {
@@ -67,7 +63,7 @@ public class LevelGeneration : MonoBehaviour {
             path.Scan();
         }
     }*/
-    public async void SetLayout(Connections connections) {
+    public void SetLayout(Connections connections) {
         this.connections = connections;
         pseudoRandomForPlants = new System.Random(layout.seed.GetHashCode());
         pseudoRandomForWalls = new System.Random(layout.seed.GetHashCode());
@@ -75,11 +71,11 @@ public class LevelGeneration : MonoBehaviour {
         pseudoRandomForGround = new System.Random(layout.seed.GetHashCode());
         pseudoRandomForTorches = new System.Random(layout.seed.GetHashCode());
         if(layout.generateWalls) {
-            await GenerateMap();
+            GenerateMap();
         }
     }
     // Generate random map
-    private async Task GenerateMap() {
+    private void GenerateMap() {
         /*
         if(!plantTilemap) {
             plantTilemap = GameObject.FindWithTag("Grid").transform.GetChild(3).GetComponent<Tilemap>();
@@ -91,16 +87,20 @@ public class LevelGeneration : MonoBehaviour {
         map = new int[layout.levelSize, layout.levelSize];
         reservedForConnectionsMap = new int[layout.levelSize, layout.levelSize];
         wallCoordinates = new List<Vector3Int>();
-        await Task.Run(RandomFillMap);
+        //await Task.Run(RandomFillMap);
+        RandomFillMap();
         if(layout.worldCoordinates[0] == 0 && layout.worldCoordinates[1] == 0) {
             ClearStartPosition();
         }
         for(int i = 0; i < layout.smoothLevel; i++) {
-            await Task.Run(SmoothMap);            
+            //await Task.Run(SmoothMap);       
+            SmoothMap();
         }
-        await Task.Run(ProcessMap);
+        //await Task.Run(ProcessMap);
+        ProcessMap();
         //StartCoroutine(DrawMapCoroutine());
-        SetTiles(await Task.Run(DrawMap));
+        TileBase[] tileBase = DrawMap();    
+        SetTiles(tileBase);
         if(layout.marchingSquares) {
             for(int i = 0; i < layout.addSideCount; i++) {
                 AddSides();
@@ -112,7 +112,9 @@ public class LevelGeneration : MonoBehaviour {
             //StartCoroutine(ScanPath());
         }
         chestGeneration.LoadChests(0, layout.seed);
-        await mushroomGeneration.GenerateMushrooms(0, layout.seed);
+        mushroomGeneration.GenerateMushrooms(0, layout.seed);
+        //mushroomGeneration.GenerateMushrooms(0, layout.seed);
+        
     }
     private void ClearStartPosition() {
         for(int x = layout.levelSize / 2 - 4; x < layout.levelSize / 2 + 4; x++) {
@@ -428,16 +430,40 @@ public class LevelGeneration : MonoBehaviour {
         //worldGeneration.tilemap.SetTilesBlock(bounds, tiles);
     }
     private void SetTiles(TileBase[] tiles) {
+        /*
+        var thread = new Thread(() => {
+            // example: expensive computation of camera position
+
+            Dispatcher.InvokeAsync(() => {
+                // I'm in the main thread
+                //Camera.main.transform.position = position;
+                int index = 0;
+                for(int x = 0; x < layout.levelSize; x++) {
+                    for(int y = 0; y < layout.levelSize; y++) {
+                        Vector3Int tileCoordinate = new Vector3Int(
+                            (x - layout.levelSize / 2) + layout.worldCoordinates.x * layout.levelSize,
+                            (y - layout.levelSize / 2) + layout.worldCoordinates.y * layout.levelSize, 0);
+
+                        worldGeneration.tilemap.SetTile(tileCoordinate, tiles[index]);
+                        index++;
+                    }
+                }
+            });
+        });
+        thread.Start();
+        thread.Join();
+        */        
         int index = 0;
         for(int x = 0; x < layout.levelSize; x++) {
             for(int y = 0; y < layout.levelSize; y++) {
                 Vector3Int tileCoordinate = new Vector3Int(
                     (x - layout.levelSize / 2) + layout.worldCoordinates.x * layout.levelSize,
-                    (y - layout.levelSize / 2) + layout.worldCoordinates.y * layout.levelSize, 0);                
+                    (y - layout.levelSize / 2) + layout.worldCoordinates.y * layout.levelSize, 0);
+
                 worldGeneration.tilemap.SetTile(tileCoordinate, tiles[index]);
                 index++;
             }
-        }
+        }        
     }
     // Add corner and side tiles
     private void AddSides() {

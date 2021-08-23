@@ -19,7 +19,7 @@ public class MushroomGeneration : MonoBehaviour {
     private void Awake() {
         levelGeneration = GetComponent<LevelGeneration>();
     }
-    public async Task GenerateMushrooms(int slot, string seed) {
+    public void GenerateMushrooms(int slot, string seed) {
         pseudoRandomForMushrooms = new System.Random(seed.GetHashCode());
         mushrooms = new List<GameObject>();
         mushroomValues = new int[levelSize, levelSize];
@@ -56,8 +56,7 @@ public class MushroomGeneration : MonoBehaviour {
                     }
                 }
                 levelGeneration.occupiedCoordinates.Add(randomLocation);
-                Debug.Log($"Occupied coordinates count: {levelGeneration.occupiedCoordinates.Count}");
-                mushroomValues[randomLocation.x, randomLocation.y] = await Task.Run(CalculateMushroomValue);
+                mushroomValues[randomLocation.x, randomLocation.y] = CalculateMushroomValue();
                 if(mushroomValues[randomLocation.x, randomLocation.y] >= 0 && mushroomValues[randomLocation.x, randomLocation.y] < 12) {
                     PlaceMushroom(randomLocation.x, randomLocation.y, mushroomValues[randomLocation.x, randomLocation.y]);
                 }

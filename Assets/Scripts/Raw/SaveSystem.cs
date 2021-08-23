@@ -37,7 +37,6 @@ public static class SaveSystem {
             // return data;
         }
         else {
-            Debug.LogWarning("No file found in path");
             return null;
         }
     }
@@ -72,7 +71,6 @@ public static class SaveSystem {
             // return data;
         }
         else {
-            Debug.LogWarning("No file found in path");
             return null;
         }
     }
@@ -108,7 +106,6 @@ public static class SaveSystem {
             // return data;
         }
         else {
-            Debug.LogWarning("No file found in path");
             return null;
         }
     }
@@ -143,7 +140,6 @@ public static class SaveSystem {
             // return data;
         }
         else {
-            Debug.LogWarning("No file found in path");
             return null;
         }
     }

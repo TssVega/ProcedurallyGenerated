@@ -146,7 +146,7 @@ public class Player : MonoBehaviour {
                 else {
                     inventory.equipment[i] = null;
                 }
-            }
+            }            
             for(int i = 0; i < data.inventoryQuantities.Length; i++) {
                 inventory.quantities[i] = data.inventoryQuantities[i];
             }
@@ -240,6 +240,7 @@ public class Player : MonoBehaviour {
                 }
             }
         }
+        inventory.UpdateStats();
     }
     private void SetAppearance() {
         skinColor.color = appearance.skinColors[skinColorIndex];

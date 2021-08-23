@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Pathfinding;
 
 [RequireComponent(typeof(Stats))]
 public class StatusEffects : MonoBehaviour {
 
     private Player player;
     //private Enemy enemy;
+    private AIPath aiPath;
     private Stats stats;
     private Passives passives;
     //private StatusBar bar;
@@ -92,6 +94,7 @@ public class StatusEffects : MonoBehaviour {
     public Transform parryTransform;
 
     private void OnEnable() {
+        aiPath = GetComponent<AIPath>();
         player = GetComponent<Player>();
         //enemy = GetComponent<Enemy>();
         stats = GetComponent<Stats>();
@@ -303,6 +306,16 @@ public class StatusEffects : MonoBehaviour {
     private void ToggleCrowdControl() {
         //enemy.enemyDetection.CheckFollowStatus();
     }
+    private void InterruptEnemyAI() {
+        if(aiPath) {
+            aiPath.canMove = false;
+        }        
+    }
+    private void CommenceEnemyAI() {
+        if(aiPath) {
+            aiPath.canMove = true;
+        }
+    }
     public void StartChanelling(float duration) {
         if(gameObject.activeInHierarchy) {
             chanellingCounter = StartCoroutine(Chanelling(duration));
@@ -313,11 +326,14 @@ public class StatusEffects : MonoBehaviour {
             StopCoroutine(chanellingCounter);
         }
         chanelling = false;
+        CommenceEnemyAI();
     }
     private IEnumerator Chanelling(float duration) {
+        InterruptEnemyAI();
         chanelling = true;
         yield return new WaitForSeconds(duration);
         chanelling = false;
+        CommenceEnemyAI();
     }
     // Add lightningStacks
     public void AddLightningStacks(int amount, float damage, float duration, Skill skill, StatusEffects attacker) {
@@ -657,17 +673,20 @@ public class StatusEffects : MonoBehaviour {
     public void StopStun() {
         stunned = false;
         StopCoroutine(stunCounter);
+        CommenceEnemyAI();
     }
     // Makes target unable to attack and move for a couple of seconds
     private IEnumerator Stun(float duration) {
         // Stun here
         stunned = true;
+        InterruptEnemyAI();
         /*
         if(enemy)
             ToggleCrowdControl();*/
         yield return new WaitForSeconds(duration);
         // Return to normal here
         stunned = false;
+        CommenceEnemyAI();
         /*if(enemy)
             ToggleCrowdControl();*/
     }
@@ -682,13 +701,16 @@ public class StatusEffects : MonoBehaviour {
     public void StopImmobilize() {
         StopCoroutine(immobilizeCounter);
         immobilized = false;
+        CommenceEnemyAI();
     }
     private IEnumerator Immobilize(float duration) {
         immobilized = true;
+        InterruptEnemyAI();
         /*if(enemy)
             ToggleCrowdControl();*/
         yield return new WaitForSeconds(duration);
         immobilized = false;
+        CommenceEnemyAI();
         /*if(enemy)
             ToggleCrowdControl();*/
     }
@@ -747,6 +769,9 @@ public class StatusEffects : MonoBehaviour {
         chilled = false;
         stats.runSpeed = originalSpeed;
         StopCoroutine(chillCounter);
+        if(aiPath) {
+            aiPath.maxSpeed = aiPath.GetComponent<EnemyAI>().speed;
+        }
     }
     // Chill effect stops burn
     private IEnumerator Chill(float duration, float slowRate) {
@@ -758,6 +783,9 @@ public class StatusEffects : MonoBehaviour {
             StopBurn();
         }
         stats.runSpeed *= 1 - slowRate;
+        if(aiPath) {
+            aiPath.maxSpeed *= 1 - slowRate;
+        }
         /*
         if(enemy)
             enemy.enemyDetection.aiPath.maxSpeed *= 1 - slowRate;
@@ -766,6 +794,9 @@ public class StatusEffects : MonoBehaviour {
         yield return new WaitForSeconds(duration);
         chilled = false;
         stats.runSpeed = originalSpeed;
+        if(aiPath) {
+            aiPath.maxSpeed = aiPath.GetComponent<EnemyAI>().speed;
+        }
         /*
         if(enemy)
             enemy.enemyDetection.aiPath.maxSpeed = originalSpeed;

@@ -10,7 +10,7 @@ public static class RelativePosition {
         direction.Normalize();
         float dotProduct = Vector3.Dot(direction, defender.up);
         if(dotProduct < -0.7) {
-            return Relative.Behind;
+            return Relative.Behind;            
         }
         else if(dotProduct > 0.5) {
             return Relative.FacingEachOther;

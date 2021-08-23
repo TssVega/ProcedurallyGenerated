@@ -85,7 +85,7 @@ public class Inventory : MonoBehaviour {
     public int EquipmentSize {
         get => equipmentSize;
     }
-    private void UpdateStats() {
+    public void UpdateStats() {
         if(offenceStats.Length <= 0) {
             return;
         }

@@ -197,7 +197,6 @@ public class WorldGeneration : MonoBehaviour {
                     right = CheckBounds(x + 1, y) && world.worldMap[x + 1, y] > 0,
                     left = CheckBounds(x - 1, y) && world.worldMap[x - 1, y] > 0
                 };
-
                 levelGen.SetLayout(connections);
             }
         }

@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06483e1273c0bf64e9475d86de85f9d9, type: 3}
+  m_Name: SpiderWeb
+  m_EditorClassIdentifier: 
+  skillIndex: 0
+  skillName: Nope Web
+  skillDescription: The silky web of Nopes
+  skillIcon: {fileID: 0}
+  interruptable: 0
+  attackType: 10
+  skillPointsNeeded: 0
+  manaCost: 0
+  focusedSkill: 1
+  channelingTime: 1
+  castTime: 0
+  cooldown: 12
+  channelingParticleNames:
+  - NopeWebChanneling
+  castingParticleNames: []
+  particleNames:
+  - NopeWeb
+  channelingAnimationName: 
+  castingAnimationName: 
+  projectileData:
+    team: 1
+    arrowSkill: 0
+    damageRate: 0.2
+    rotationSpeed: 0
+    projectileSpeed: 8
+    hitTime: 0
+    lifetime: 3
+    stunDuration: 3
+    immobilizeDuration: 0

@@ -834,7 +834,7 @@ public class AstarPath : VersionedMonoBehaviour {
 			} else if (path.error) {
 				Debug.LogWarning(debug);
 			} else {
-				Debug.Log(debug);
+				//Debug.Log(debug);
 			}
 		}
 	}
@@ -1774,10 +1774,10 @@ public class AstarPath : VersionedMonoBehaviour {
 		lastScanTime = (float)watch.Elapsed.TotalSeconds;
 
 		System.GC.Collect();
-
+		/*
 		if (logPathResults != PathLog.None && logPathResults != PathLog.OnlyErrors) {
 			Debug.Log("Scanning - Process took "+(lastScanTime*1000).ToString("0")+" ms to complete");
-		}
+		}*/
 	}
 
 	IEnumerable<Progress> ScanGraph (NavGraph graph) {

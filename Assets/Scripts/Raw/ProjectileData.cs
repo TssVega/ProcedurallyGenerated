@@ -12,4 +12,7 @@ public class ProjectileData {
     public float projectileSpeed;
     public float hitTime;
     public float lifetime;
+    public float stunDuration;
+    public float immobilizeDuration;
+    public bool penetrates;
 }
