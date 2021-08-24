@@ -43,8 +43,7 @@ public class Projectile : MonoBehaviour {
     }
     public void SetProjectile(ProjectileSkill skill, Stats attackerStats) {
         projectileSkill = skill;
-        projectileData = skill.projectileData;
-        countdown = projectileData.lifetime;
+        projectileData = skill.projectileData;        
         this.attackerStats = attackerStats;
     }
     public void StartProjectile(Transform target) {
@@ -56,7 +55,8 @@ public class Projectile : MonoBehaviour {
             rb2d.velocity = transform.up * projectileData.projectileSpeed;
         }
     }
-    public void StartProjectile(Vector2 movementVector) {        
-        projectileVector = movementVector;
+    public void StartProjectile(Vector2 movementVector) {
+        countdown = projectileData.lifetime;
+        projectileVector = movementVector;             
     }
 }

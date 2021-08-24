@@ -261,7 +261,9 @@ public class StatusEffects : MonoBehaviour {
                 break;
             default: break;
         }
+        Debug.Log($"Incoming damage: {damage}");
         damage = Mathf.Clamp(damage, 0f, stats.maxDamageTimesHealth * stats.maxHealth);
+        Debug.Log($"{damage} damage taken");
         stats.health -= damage;
         //statusParticles.StartHitParticles();
         /*if(enemy && enemy.gameObject.activeInHierarchy) {
@@ -326,14 +328,11 @@ public class StatusEffects : MonoBehaviour {
             StopCoroutine(chanellingCounter);
         }
         chanelling = false;
-        CommenceEnemyAI();
     }
     private IEnumerator Chanelling(float duration) {
-        InterruptEnemyAI();
         chanelling = true;
         yield return new WaitForSeconds(duration);
         chanelling = false;
-        CommenceEnemyAI();
     }
     // Add lightningStacks
     public void AddLightningStacks(int amount, float damage, float duration, Skill skill, StatusEffects attacker) {

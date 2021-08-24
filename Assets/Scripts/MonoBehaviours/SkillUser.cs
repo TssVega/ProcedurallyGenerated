@@ -31,7 +31,6 @@ public class SkillUser : MonoBehaviour {
                 skillCooldowns.Add(0f);
             }
         }
-        animator = GetComponent<Animator>();
         stats = GetComponent<Stats>();
         statusEffects = GetComponent<StatusEffects>();        
         inventory = GetComponent<Inventory>();
@@ -69,7 +68,7 @@ public class SkillUser : MonoBehaviour {
         if(skill.skillIndex >= 0 && skillCooldowns[skill.skillIndex] > 0f) {
             return;
         }
-        if(statusEffects.chanelling || statusEffects.stunned) {
+        if(statusEffects.chanelling || statusEffects.stunned || statusEffects.immobilized) {
             return;
         }
         if(!statusEffects.CanUseMana(skill.manaCost)) {
@@ -125,16 +124,16 @@ public class SkillUser : MonoBehaviour {
             }
         }
         if(proj.focusedSkill) {
-            statusEffects.StartImmobilize(proj.channelingTime);
+            statusEffects.StartImmobilize(proj.channelingTime + proj.castTime);
         }
         // Set projectile game object
         skillCooldowns[proj.skillIndex] = proj.cooldown;
-        GameObject projectile = ObjectPooler.objectPooler.GetPooledObject("Projectile");
+               
         // Set channelling particles
         List<GameObject> channelingParticles = new List<GameObject>();
         for(int i = 0; i < proj.channelingParticleNames.Length; i++) {
             channelingParticles.Add(ObjectPooler.objectPooler.GetPooledObject(proj.channelingParticleNames[i]));
-            channelingParticles[i].transform.parent = projectile.transform;
+            channelingParticles[i].transform.parent = transform;
             channelingParticles[i].transform.position = transform.position;
             channelingParticles[i].transform.rotation = Quaternion.identity;
             channelingParticles[i].SetActive(true);
@@ -148,7 +147,7 @@ public class SkillUser : MonoBehaviour {
         List<GameObject> castingParticles = new List<GameObject>();
         for(int i = 0; i < proj.castingParticleNames.Length; i++) {
             castingParticles.Add(ObjectPooler.objectPooler.GetPooledObject(proj.castingParticleNames[i]));
-            castingParticles[i].transform.parent = projectile.transform;
+            castingParticles[i].transform.parent = transform;
             castingParticles[i].transform.position = transform.position;
             castingParticles[i].transform.rotation = Quaternion.identity;
             castingParticles[i].SetActive(true);
@@ -156,30 +155,52 @@ public class SkillUser : MonoBehaviour {
                 castingParticles[i].GetComponent<ParticleSystem>().Play();
             }
         }
-        // Set projectile game object        
-        projectile.GetComponent<Projectile>().SetProjectile(proj, stats);
-        projectile.transform.position = projectileExitPos.position;
-        projectile.transform.rotation = Quaternion.identity;        
-        projectile.SetActive(true);
-        projectile.GetComponent<Projectile>().StartProjectile((projectileExitPos.position - transform.position).normalized);
-        PlayAnimation(proj.castingAnimationName);        
-        // Set projectile particles
-        List<GameObject> particles = new List<GameObject>();
-        for(int i = 0; i < proj.particleNames.Length; i++) {
-            particles.Add(ObjectPooler.objectPooler.GetPooledObject(proj.particleNames[i]));
-            particles[i].transform.parent = projectile.transform;
-            if(particles[i].GetComponent<TrailRenderer>()) {
-                particles[i].GetComponent<TrailRenderer>().emitting = false;
+        // Set projectile game object
+        for(int i = 0; i < proj.projectileData.projectileCount; i++) {
+                        
+        }        
+        if(proj.projectileData.homing) {
+            // TODO: Find target to set projectile
+            // projectile.GetComponent<Projectile>().SetProjectile();
+        }
+        GameObject[] projectiles = new GameObject[proj.projectileData.projectileCount];
+        for(int i = 0; i < proj.projectileData.projectileCount; i++) {
+            projectiles[i] = ObjectPooler.objectPooler.GetPooledObject("Projectile");
+            // Set the vector
+            Vector2 vect = (projectileExitPos.position - transform.position).normalized;
+            // Get the angle to rotate
+            float angle = -proj.projectileData.angleDifference * proj.projectileData.projectileCount / 2 +  i * proj.projectileData.angleDifference + (proj.projectileData.angleDifference / 2);
+            // Rotate the vector
+            // x2=cosβx1−sinβy1
+            // y2=sinβx1+cosβy1
+            vect = new Vector2(Mathf.Cos(Mathf.Deg2Rad * angle) * vect.x - Mathf.Sin(Mathf.Deg2Rad * angle) * vect.y, Mathf.Sin(Mathf.Deg2Rad * angle) * vect.x + Mathf.Cos(Mathf.Deg2Rad * angle) * vect.y);
+            // Start the projectile
+            projectiles[i].GetComponent<Projectile>().SetProjectile(proj, stats);
+            projectiles[i].transform.position = projectileExitPos.position;
+            projectiles[i].transform.rotation = Quaternion.identity;
+            projectiles[i].GetComponent<Projectile>().StartProjectile(vect);
+            projectiles[i].SetActive(true);
+            PlayAnimation(proj.castingAnimationName);
+            // Set projectile particles
+            List<GameObject> particles = new List<GameObject>();
+            for(int j = 0; j < proj.particleNames.Length; j++) {
+                particles.Add(ObjectPooler.objectPooler.GetPooledObject(proj.particleNames[j]));
+                particles[j].transform.parent = projectiles[i].transform;
+                if(particles[j].GetComponent<TrailRenderer>()) {
+                    particles[j].GetComponent<TrailRenderer>().emitting = false;
+                }
+                particles[j].transform.position = projectiles[i].transform.position;
+                particles[j].transform.rotation = Quaternion.identity;
+                particles[j].SetActive(true);
+                if(particles[j].GetComponent<TrailRenderer>()) {
+                    particles[j].GetComponent<TrailRenderer>().emitting = true;
+                }
+                if(particles[j].GetComponent<ParticleSystem>()) {
+                    particles[j].GetComponent<ParticleSystem>().Play();
+                }
             }
-            particles[i].transform.position = projectile.transform.position;
-            particles[i].transform.rotation = Quaternion.identity;
-            particles[i].SetActive(true);
-            if(particles[i].GetComponent<TrailRenderer>()) {
-                particles[i].GetComponent<TrailRenderer>().emitting = true;
-            }
-            if(particles[i].GetComponent<ParticleSystem>()) {
-                particles[i].GetComponent<ParticleSystem>().Play();
-            }            
+            // Wait for next projectile
+            yield return new WaitForSeconds(proj.projectileData.timeDifference);
         }
         yield return new WaitForSeconds(proj.castTime);
         StopAnimation();
@@ -188,7 +209,7 @@ public class SkillUser : MonoBehaviour {
         // Set status effects
         statusEffects.StartChanelling(buff.channelingTime);
         if(buff.focusedSkill) {
-            statusEffects.StartImmobilize(buff.channelingTime);
+            statusEffects.StartImmobilize(buff.channelingTime + buff.castTime);
         }
         // Set buffer game object
         skillCooldowns[buff.skillIndex] = buff.cooldown;
@@ -244,6 +265,9 @@ public class SkillUser : MonoBehaviour {
     }
     private IEnumerator StartDash(DashSkill dash) {
         statusEffects.StartChanelling(dash.channelingTime);
+        if(dash.focusedSkill) {
+            statusEffects.StartImmobilize(dash.channelingTime + dash.castTime);
+        }
         skillCooldowns[dash.skillIndex] = dash.cooldown;
         // Set channelling particles
         List<GameObject> channelingParticles = new List<GameObject>();
@@ -284,7 +308,7 @@ public class SkillUser : MonoBehaviour {
     private IEnumerator StartAreaSkill(AreaSkill area) {
         statusEffects.StartChanelling(area.channelingTime);
         if(area.focusedSkill) {
-            statusEffects.StartImmobilize(area.channelingTime);
+            statusEffects.StartImmobilize(area.channelingTime + area.castTime);
         }
         skillCooldowns[area.skillIndex] = area.cooldown;
         // Set channelling particles
@@ -328,7 +352,7 @@ public class SkillUser : MonoBehaviour {
     private IEnumerator StartBlockSkill(BlockSkill block) {
         statusEffects.StartChanelling(block.channelingTime);
         if(block.focusedSkill) {
-            statusEffects.StartImmobilize(block.channelingTime);
+            statusEffects.StartImmobilize(block.channelingTime + block.castTime);
         }
         skillCooldowns[block.skillIndex] = block.cooldown;
         // Set channelling particles

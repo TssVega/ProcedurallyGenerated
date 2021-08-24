@@ -17,47 +17,54 @@ public class EnemyAI : MonoBehaviour {
     public float timeBetweenSkills = 0.5f;
     [HideInInspector] public float speed = 3f;
 
-    private List<int> activeSkillIndices;
+    private bool moving = false;
+    private bool roaming = false;
 
     private void Awake() {
         skillUser = GetComponent<SkillUser>();
         enemyAnimator = GetComponent<Animator>();
         destinationSetter = GetComponent<AIDestinationSetter>();
         aiPath = GetComponent<AIPath>();
-        activeSkillIndices = new List<int>();
         speed = aiPath.maxSpeed;
     }
     private void OnEnable() {
+        moving = false;
+        roaming = false;
         startingPosition = transform.position;
-        GetActiveSkills();
         StartCoroutine(Roam());
     }
     private void OnDisable() {
         StopAllCoroutines();        
     }
     private void Update() {
-        enemyAnimator.SetFloat("Speed", aiPath.reachedDestination || !aiPath.canMove ? 0f : 1f);
-    }
-    private void GetActiveSkills() {
-        for(int i = 0; i < skillUser.acquiredSkills.Count; i++) {
-            if(skillUser.acquiredSkills[i] is ActiveSkill) {
-                activeSkillIndices.Add(i);
-            }
+        if(roaming && !aiPath.reachedDestination) {
+            moving = true;
         }
+        else if(!roaming && destinationSetter.target && !aiPath.reachedDestination) {
+            moving = true;
+        }
+        else {
+            moving = false;
+        }
+        enemyAnimator.SetFloat("Speed", aiPath.canMove && moving ? 1f : 0f);
     }
     private IEnumerator Roam() {
         yield return new WaitForSeconds(Random.Range(roamTime, roamTime * 2));
         if(!destinationSetter.target) {
+            roaming = true;
             aiPath.destination = GetRoamingPosition();
-        }        
+        }
+        else {
+            roaming = false;
+        }
         StartCoroutine(Roam());
     }
     public void Enrage() {
         StartCoroutine(UseRandomSkill());
     }
-    private IEnumerator UseRandomSkill() {
-        yield return new WaitForSeconds(timeBetweenSkills);
-        ActiveSkill activeSkill = skillUser.acquiredSkills[activeSkillIndices[Random.Range(0, activeSkillIndices.Count)]] as ActiveSkill;
+    private IEnumerator UseRandomSkill() {        
+        yield return new WaitForSeconds(Random.Range(timeBetweenSkills, timeBetweenSkills * 2));
+        ActiveSkill activeSkill = skillUser.currentSkills[Random.Range(0, skillUser.currentSkills.Count)];
         skillUser.UseSkill(activeSkill);
         if(destinationSetter.target != null) {
             StartCoroutine(UseRandomSkill());

@@ -15,4 +15,8 @@ public class ProjectileData {
     public float stunDuration;
     public float immobilizeDuration;
     public bool penetrates;
+    public int projectileCount = 1;
+    public float angleDifference;
+    public float timeDifference = 0.5f;
+    public bool homing;
 }

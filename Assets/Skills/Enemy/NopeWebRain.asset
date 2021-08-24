@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 06483e1273c0bf64e9475d86de85f9d9, type: 3}
-  m_Name: SpiderWeb
+  m_Name: NopeWebRain
   m_EditorClassIdentifier: 
-  skillIndex: 0
-  skillName: Nope Web
-  skillDescription: The silky web of Nopes
+  skillIndex: 1
+  skillName: Nope Web Rain
+  skillDescription: That spider is really angry
   skillIcon: {fileID: 0}
-  interruptable: 0
+  interruptable: 1
   attackType: 10
   skillPointsNeeded: 0
   manaCost: 0
   focusedSkill: 1
   channelingTime: 1
-  castTime: 0.3
-  cooldown: 9
+  castTime: 2
+  cooldown: 20
   channelingParticleNames:
   - NopeWebChanneling
   castingParticleNames: []
@@ -42,7 +42,7 @@ MonoBehaviour:
     stunDuration: 3
     immobilizeDuration: 0
     penetrates: 0
-    projectileCount: 3
-    angleDifference: 0
-    timeDifference: 0.1
+    projectileCount: 10
+    angleDifference: 10
+    timeDifference: 0.2
     homing: 0
