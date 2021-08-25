@@ -20,8 +20,16 @@ public class FieldOfView : MonoBehaviour {
     private AIDestinationSetter destinationSetter;
     private Stats stats;
     private EnemyAI enemyAI;
+    private float distanceToEnemy;
 
+    public float GetDistanceToEnemy() {
+        return distanceToEnemy;
+    }
+    public void SetDistanceToEnemy(float distance) {
+        distanceToEnemy = distance;
+    }
     private void Awake() {
+        SetDistanceToEnemy(9999f);
         enemyAI = GetComponent<EnemyAI>();
         destinationSetter = GetComponent<AIDestinationSetter>();
         stats = GetComponent<Stats>();
@@ -57,7 +65,11 @@ public class FieldOfView : MonoBehaviour {
         }
         destinationSetter.target = closest;
         if(destinationSetter.target) {
-            enemyAI.Enrage(); 
+            SetDistanceToEnemy(leastDistance);
+            enemyAI.Enrage();
+        }
+        else {
+            SetDistanceToEnemy(9999f);
         }
     }
     //Finds targets inside field of view not blocked by walls

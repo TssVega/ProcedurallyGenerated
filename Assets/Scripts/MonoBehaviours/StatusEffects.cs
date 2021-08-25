@@ -9,6 +9,7 @@ public class StatusEffects : MonoBehaviour {
     private Player player;
     //private Enemy enemy;
     private AIPath aiPath;
+    public DeathPanel deathPanel;
     private Stats stats;
     private Passives passives;
     //private StatusBar bar;
@@ -177,6 +178,9 @@ public class StatusEffects : MonoBehaviour {
     }
     public void TakeDamage(float amount, AttackType attackType, Skill skill, StatusEffects attacker) {
         float damage = 0f;
+        if(!stats.living) {
+            return;
+        }
         if(stats) {
             damage = CalculateDamage.Calculate(amount, attackType, stats);
         }
@@ -265,6 +269,9 @@ public class StatusEffects : MonoBehaviour {
         damage = Mathf.Clamp(damage, 0f, stats.maxDamageTimesHealth * stats.maxHealth);
         Debug.Log($"{damage} damage taken");
         stats.health -= damage;
+        if(stats.health <= 0f) {
+            Die();
+        }
         //statusParticles.StartHitParticles();
         /*if(enemy && enemy.gameObject.activeInHierarchy) {
             if(!locatingTargetRunning) {
@@ -281,6 +288,12 @@ public class StatusEffects : MonoBehaviour {
             stats.health = 0;
             enemy.EnemyDie();
         }*/
+    }
+    private void Die() {
+        if(player && deathPanel) {
+            deathPanel.gameObject.SetActive(true);
+        }
+        stats.Die();
     }
     private void InstantiateDamageTakenParticles(string name) {
         GameObject damageTakenParticles = ObjectPooler.objectPooler.GetPooledObject(name);

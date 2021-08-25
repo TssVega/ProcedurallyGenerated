@@ -24,6 +24,7 @@ MonoBehaviour:
   channelingTime: 1
   castTime: 2
   cooldown: 20
+  aiRange: 10
   channelingParticleNames:
   - NopeWebChanneling
   castingParticleNames: []
@@ -31,6 +32,7 @@ MonoBehaviour:
   - NopeWeb
   channelingAnimationName: 
   castingAnimationName: 
+  idleAnimationName: SpiderIdle
   projectileData:
     team: 1
     arrowSkill: 0

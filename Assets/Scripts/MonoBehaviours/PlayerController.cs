@@ -100,7 +100,9 @@ public class PlayerController : MonoBehaviour {
                 rb2D.angularVelocity = 0;
             }*/
             // If there is an input
-
+            if(!playerStats.living) {
+                return;
+            }
             if(joystick && joystickInput.sqrMagnitude > 0.01f &&
                 (!statusEffects.chanelling
                  && !statusEffects.stunned

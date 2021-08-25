@@ -26,3 +26,4 @@ MonoBehaviour:
   enemySkills:
   - {fileID: 11400000, guid: 6319b07559cc0a442aeb41d70126ed5d, type: 2}
   - {fileID: 11400000, guid: 1eda581d62f761e41b0a10b94499693d, type: 2}
+  - {fileID: 11400000, guid: a1b92fe7688df3a418a6ae909bab17ca, type: 2}

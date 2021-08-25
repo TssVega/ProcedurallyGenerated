@@ -65,6 +65,9 @@ public class SkillUser : MonoBehaviour {
         }
     }
     public void UseSkill(ActiveSkill skill) {
+        if(!stats.living) {
+            return;
+        }
         if(skill.skillIndex >= 0 && skillCooldowns[skill.skillIndex] > 0f) {
             return;
         }
@@ -203,7 +206,7 @@ public class SkillUser : MonoBehaviour {
             yield return new WaitForSeconds(proj.projectileData.timeDifference);
         }
         yield return new WaitForSeconds(proj.castTime);
-        StopAnimation();
+        StopAnimation(proj);
     }
     private IEnumerator Buff(BuffSkill buff) {
         // Set status effects
@@ -254,7 +257,7 @@ public class SkillUser : MonoBehaviour {
             particles[i].SetActive(true);
             particles[i].GetComponent<ParticleSystem>().Play();
         }        
-        StopAnimation();
+        StopAnimation(buff);
     }
     private IEnumerator StartSkillSequence(SkillSequence seq) {
         skillCooldowns[seq.skillIndex] = seq.cooldown;
@@ -303,7 +306,7 @@ public class SkillUser : MonoBehaviour {
             particles[i].SetActive(true);
             particles[i].GetComponent<ParticleSystem>().Play();
         }        
-        StopAnimation();
+        StopAnimation(dash);
     }
     private IEnumerator StartAreaSkill(AreaSkill area) {
         statusEffects.StartChanelling(area.channelingTime);
@@ -347,7 +350,7 @@ public class SkillUser : MonoBehaviour {
             particles[i].SetActive(true);
             particles[i].GetComponent<ParticleSystem>().Play();
         }                
-        StopAnimation();
+        StopAnimation(area);
     }
     private IEnumerator StartBlockSkill(BlockSkill block) {
         statusEffects.StartChanelling(block.channelingTime);
@@ -389,15 +392,17 @@ public class SkillUser : MonoBehaviour {
             particles[i].SetActive(true);
             particles[i].GetComponent<ParticleSystem>().Play();
         }
-        StopAnimation();
+        StopAnimation(block);
     }
     private void PlayAnimation(string animationName) {
         if(!string.IsNullOrEmpty(animationName)) {
             animator.SetTrigger(animationName);
         }        
     }
-    private void StopAnimation() {
-        animator.SetTrigger("Idle");
+    private void StopAnimation(ActiveSkill activeSkill) {
+        if(!string.IsNullOrEmpty(activeSkill.idleAnimationName)) {
+            animator.SetTrigger(activeSkill.idleAnimationName);
+        }        
     }
     private void CountCooldowns() {
         for(int i = 0; i < skillCooldowns.Count; i++) {

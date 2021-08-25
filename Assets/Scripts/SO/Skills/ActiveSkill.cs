@@ -9,11 +9,13 @@ public class ActiveSkill : Skill {
     public float channelingTime;
     public float castTime;
     public float cooldown;
+    public float aiRange;
     public string[] channelingParticleNames;
     public string[] castingParticleNames;
     public string[] particleNames;
     public string channelingAnimationName;
     public string castingAnimationName;
+    public string idleAnimationName;
 
     public virtual void Launch(Stats stats) {
     

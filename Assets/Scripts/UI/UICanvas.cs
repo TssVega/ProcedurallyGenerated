@@ -12,10 +12,12 @@ public class UICanvas : MonoBehaviour {
     public GameObject chestPanel;
     public GameObject skillInfoPanel;
     public GameObject mapPanel;
+    public GameObject deathPanel;
     public Image interactImage;
     public SelectedItem selectedItem;
 
     private void Start() {
+        deathPanel.SetActive(false);
         loadingPanel.SetActive(true);
         playerUI.SetActive(true);
         skillTreeUI.SetActive(false);

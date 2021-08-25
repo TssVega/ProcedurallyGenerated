@@ -9,6 +9,8 @@ public class EnemyAI : MonoBehaviour {
     private AIPath aiPath;
     private Animator enemyAnimator;
     private SkillUser skillUser;
+    private FieldOfView fov;
+    private Stats stats;
 
     private Vector3 startingPosition;
 
@@ -21,6 +23,8 @@ public class EnemyAI : MonoBehaviour {
     private bool roaming = false;
 
     private void Awake() {
+        stats = GetComponent<Stats>();
+        fov = GetComponent<FieldOfView>();
         skillUser = GetComponent<SkillUser>();
         enemyAnimator = GetComponent<Animator>();
         destinationSetter = GetComponent<AIDestinationSetter>();
@@ -31,12 +35,16 @@ public class EnemyAI : MonoBehaviour {
         moving = false;
         roaming = false;
         startingPosition = transform.position;
+        aiPath.canMove = true;
         StartCoroutine(Roam());
     }
     private void OnDisable() {
         StopAllCoroutines();        
     }
     private void Update() {
+        if(!stats.living) {
+            aiPath.canMove = false;
+        }
         if(roaming && !aiPath.reachedDestination) {
             moving = true;
         }
@@ -46,7 +54,13 @@ public class EnemyAI : MonoBehaviour {
         else {
             moving = false;
         }
-        enemyAnimator.SetFloat("Speed", aiPath.canMove && moving ? 1f : 0f);
+        if(aiPath.canMove && moving) {
+            enemyAnimator.SetTrigger("Walk");
+        }
+        else {
+            enemyAnimator.SetTrigger("SpiderIdle");
+        }
+        
     }
     private IEnumerator Roam() {
         yield return new WaitForSeconds(Random.Range(roamTime, roamTime * 2));
@@ -64,11 +78,21 @@ public class EnemyAI : MonoBehaviour {
     }
     private IEnumerator UseRandomSkill() {        
         yield return new WaitForSeconds(Random.Range(timeBetweenSkills, timeBetweenSkills * 2));
-        ActiveSkill activeSkill = skillUser.currentSkills[Random.Range(0, skillUser.currentSkills.Count)];
-        skillUser.UseSkill(activeSkill);
-        if(destinationSetter.target != null) {
-            StartCoroutine(UseRandomSkill());
-        }        
+        if(stats.living) {
+            List<int> availableIndices = new List<int>();
+            for(int i = 0; i < skillUser.currentSkills.Count; i++) {
+                if(skillUser.currentSkills[i].aiRange > fov.GetDistanceToEnemy() && skillUser.skillCooldowns[i] <= 0f) {
+                    availableIndices.Add(i);
+                }
+            }
+            if(availableIndices.Count > 0) {
+                ActiveSkill activeSkill = skillUser.currentSkills[availableIndices[Random.Range(0, availableIndices.Count)]];
+                skillUser.UseSkill(activeSkill);
+            }
+            if(destinationSetter.target != null) {
+                StartCoroutine(UseRandomSkill());
+            }
+        }              
     }
     private Vector3 GetRoamingPosition() {
         return startingPosition + GetRandomDirection() * Random.Range(roamRange, roamRange * 2);

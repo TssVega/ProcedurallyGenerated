@@ -67,12 +67,20 @@ public class Stats : MonoBehaviour {
     public int bleedThreshold;
     public int curseThreshold;
 
-    public StatusEffects status;
-    
+    public bool living;
+
+    public StatusEffects status;    
 
     private void Awake() {
         //int skillCooldownsSize = FindObjectOfType<GameMaster>().talentDatabase.talents.Length;
         status = GetComponent<StatusEffects>();
+    }
+    private void OnEnable() {
+        living = true;
+    }
+    public void Die() {
+        gameObject.SetActive(false);
+        living = false;
     }
     public void OnItemEquip(Item item) {
         if(item is Weapon weap) {

@@ -6072,7 +6072,7 @@ GameObject:
   - component: {fileID: 7401711136557819561}
   - component: {fileID: 7430841088790226280}
   - component: {fileID: 7430841088790226281}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -6312,6 +6312,7 @@ MonoBehaviour:
   poisonThreshold: 100
   bleedThreshold: 100
   curseThreshold: 100
+  living: 0
   status: {fileID: 0}
 --- !u!114 &7430841088790226279
 MonoBehaviour:
@@ -6518,6 +6519,34 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   selectedItemSlot: {fileID: 0}
+  offenceStats:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  defenceStats:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &846367717328815083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6530,6 +6559,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bde332c1a9495294daf47a94f1ff2362, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deathPanel: {fileID: 0}
   stunned: 0
   frostbitten: 0
   airborne: 0
@@ -6590,7 +6620,7 @@ MonoBehaviour:
   - {x: -0.14865732, y: 0.1817545, z: 0}
   m_ShapePathHash: 584475405
   m_Mesh: {fileID: 0}
-  m_InstanceId: -1192
+  m_InstanceId: -1234
 --- !u!114 &7430841088790226281
 MonoBehaviour:
   m_ObjectHideFlags: 0
