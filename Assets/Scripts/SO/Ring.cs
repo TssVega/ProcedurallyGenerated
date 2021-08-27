@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "Items/Ring")]
 public class Ring : Item {
 
     // Damages

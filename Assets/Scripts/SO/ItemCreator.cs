@@ -51,12 +51,10 @@ public class ItemCreator : ScriptableObject {
     public Sprite[] staffHandles;
     public Sprite[] staffProps;
     public Sprite[] staffHeads;
-    // Unique items
-    public Sprite[] uniqueDaggers;
-    public Sprite[] uniqueSwords;
 
     public MushroomDatabase mushroomDatabase;
     public ItemDatabase itemDatabase;
+    public UniqueItemDatabase uniqueItemDatabase;
 
     private readonly int[] metalArmorIndices = { 0, 3, 6, 8 };
     private readonly int[] leatherArmorIndices = { 1, 2, 5 };
@@ -117,14 +115,17 @@ public class ItemCreator : ScriptableObject {
             return item;
         }
         int slotIndex = pseudoRandom.Next(0, 6);
+        bool unique = pseudoRandom.Next(1, 101) <= uniqueRate;
+        if(unique) {
+            return CreateUniqueItem();
+        }
         // To ensure you don't get weapons and rings out of fabric
-        if((int)mat > 15 && slotIndex == 0) {
-            slotIndex = pseudoRandom.Next(1, 5);
+        while((int)mat > 15 && (slotIndex == 0 || slotIndex == 5)) {
+            mat = GetItemMaterial();
         }
         switch(slotIndex) {
-            case 0: {
-                bool unique = pseudoRandom.Next(1, 101) <= uniqueRate;
-                Weapon w = unique ? CreateUniqueWeapon() : CreateWeapon(mat);
+            case 0: {                
+                Weapon w = CreateWeapon(mat);
                 item = w;
                 break;
             }
@@ -271,126 +272,13 @@ public class ItemCreator : ScriptableObject {
         }
         return newMaterial;
     }
-    public Weapon CreateUniqueWeapon() {
-        int presetIndex = 0;    // Currently only swords
-        WeaponPreset preset = (WeaponPreset)presetIndex;
-        WeaponType type = WeaponType.OneHanded;
-        Weapon weapon = CreateInstance<Weapon>();
-        switch(type) {
-            case WeaponType.OneHanded: {
-                if(preset == WeaponPreset.Sword) {
-                    Sprite swordSprite = uniqueSwords[pseudoRandom.Next(0, uniqueSwords.Length)];
-                    // Swords
-                    weapon.firstSprite = swordSprite;
-                    weapon.secondSprite = null;
-                    weapon.thirdSprite = null;
-                    weapon.firstIcon = swordSprite;
-                    weapon.secondIcon = null;
-                    weapon.thirdIcon = null;
-                    weapon.firstColor = Color.white;
-                    weapon.secondColor = Color.clear;
-                    weapon.thirdColor = Color.clear;
-                    weapon.slot = EquipSlot.RightHand;
-                    weapon.weaponType = WeaponType.OneHanded;
-                }
-                else if(preset == WeaponPreset.Axe) {
-                    // Axes
-                    Sprite handle = axeHandles[pseudoRandom.Next(0, axeHandles.Length)];
-                    Sprite guard = null;
-                    Sprite blade = axeBlades[pseudoRandom.Next(0, axeBlades.Length)];
-                    Color handleColor = otherMaterialColors[pseudoRandom.Next(0, otherMaterialColors.Length)];
-                    Color guardColor = Color.clear;
-                    Color bladeColor = bladeMaterialColors[pseudoRandom.Next(0, bladeMaterialColors.Length)];
-                    weapon.firstSprite = handle;
-                    weapon.secondSprite = guard;
-                    weapon.thirdSprite = blade;
-                    weapon.firstIcon = handle;
-                    weapon.secondIcon = guard;
-                    weapon.thirdIcon = blade;
-                    weapon.firstColor = handleColor;
-                    weapon.secondColor = guardColor;
-                    weapon.thirdColor = bladeColor;
-                    weapon.slot = EquipSlot.RightHand;
-                    weapon.weaponType = WeaponType.OneHanded;
-                }
-                else if(preset == WeaponPreset.Hammer) {
-                    // Hammers
-                    Sprite handle = hammerHandles[pseudoRandom.Next(0, hammerHandles.Length)];
-                    Sprite guard = null;
-                    Sprite blade = hammerBlades[pseudoRandom.Next(0, hammerBlades.Length)];
-                    Color handleColor = otherMaterialColors[pseudoRandom.Next(0, otherMaterialColors.Length)];
-                    Color guardColor = Color.clear;
-                    Color bladeColor = bladeMaterialColors[pseudoRandom.Next(0, bladeMaterialColors.Length)];
-                    weapon.firstSprite = handle;
-                    weapon.secondSprite = guard;
-                    weapon.thirdSprite = blade;
-                    weapon.firstIcon = handle;
-                    weapon.secondIcon = guard;
-                    weapon.thirdIcon = blade;
-                    weapon.firstColor = handleColor;
-                    weapon.secondColor = guardColor;
-                    weapon.thirdColor = bladeColor;
-                    weapon.slot = EquipSlot.RightHand;
-                    weapon.weaponType = WeaponType.OneHanded;
-                }
-                else if(preset == WeaponPreset.Spear) {
-                    // Spears
-                    Sprite handle = spearHandles[pseudoRandom.Next(0, spearHandles.Length)];
-                    Sprite guard = null;
-                    Sprite blade = spearBlades[pseudoRandom.Next(0, spearBlades.Length)];
-                    Color handleColor = otherMaterialColors[pseudoRandom.Next(0, otherMaterialColors.Length)];
-                    Color guardColor = Color.clear;
-                    Color bladeColor = bladeMaterialColors[pseudoRandom.Next(0, bladeMaterialColors.Length)];
-                    weapon.firstSprite = handle;
-                    weapon.secondSprite = guard;
-                    weapon.thirdSprite = blade;
-                    weapon.firstIcon = handle;
-                    weapon.secondIcon = guard;
-                    weapon.thirdIcon = blade;
-                    weapon.firstColor = handleColor;
-                    weapon.secondColor = guardColor;
-                    weapon.thirdColor = bladeColor;
-                    weapon.slot = EquipSlot.RightHand;
-                    weapon.weaponType = WeaponType.OneHanded;
-                }
-                break;
-            }
-            case WeaponType.TwoHanded:
-                // Staff
-                Sprite staff = staffHandles[pseudoRandom.Next(0, staffHandles.Length)];
-                Sprite prop = staffProps[pseudoRandom.Next(0, staffProps.Length)];
-                Sprite head = staffHeads[pseudoRandom.Next(0, staffHeads.Length)];
-                Color staffColor = otherMaterialColors[pseudoRandom.Next(0, otherMaterialColors.Length)];
-                Color propColor = bladeMaterialColors[pseudoRandom.Next(0, bladeMaterialColors.Length)];
-                Color headColor = bladeMaterialColors[pseudoRandom.Next(0, bladeMaterialColors.Length)];
-                weapon.firstSprite = staff;
-                weapon.secondSprite = prop;
-                weapon.thirdSprite = head;
-                weapon.firstIcon = staff;
-                weapon.secondIcon = prop;
-                weapon.thirdIcon = head;
-                weapon.firstColor = staffColor;
-                weapon.secondColor = propColor;
-                weapon.thirdColor = headColor;
-                weapon.slot = EquipSlot.RightHand;
-                weapon.weaponType = WeaponType.TwoHanded;
-                break;
-            case WeaponType.Bow: {
-                Sprite bowBase = bowBases[pseudoRandom.Next(0, bowBases.Length)];
-                Color bowColor = bowColors[pseudoRandom.Next(0, bowColors.Length)];
-                weapon.firstSprite = bowBase;
-                weapon.firstIcon = bowBase;
-                weapon.firstColor = bowColor;
-                weapon.slot = EquipSlot.RightHand;
-                weapon.weaponType = WeaponType.Bow;
-                break;
-            }
-            case WeaponType.Dagger: {
-
-                break;
-            }
-        }
-        return weapon;
+    public Item CreateUniqueItem() {
+        Item item = uniqueItemDatabase.uniqueItems[Random.Range(0, uniqueItemDatabase.uniqueItems.Count)];
+        string itemName = LocalizationManager.localization.GetText(item.seed);
+        if(itemName != null) {
+            item.itemName = itemName;
+        }        
+        return item;
     }
     // Create a weapon sprite
     public Weapon CreateWeapon(ItemMaterial mat) {
@@ -422,7 +310,8 @@ public class ItemCreator : ScriptableObject {
                 break;
         }
         Weapon weapon = CreateInstance<Weapon>();
-        weapon.itemName += $"{mat}";
+        weapon.itemName += LocalizationManager.localization.GetText($"{mat}");
+        weapon.preset = preset;
         switch(type) {
             case WeaponType.OneHanded: {
                 if(preset == WeaponPreset.Sword) {
@@ -444,7 +333,7 @@ public class ItemCreator : ScriptableObject {
                     weapon.thirdColor = bladeColor;
                     weapon.slot = EquipSlot.RightHand;
                     weapon.weaponType = WeaponType.OneHanded;
-                    weapon.itemName += " Sword";
+                    weapon.itemName += $" {LocalizationManager.localization.GetText("Sword")}";
                 }
                 else if(preset == WeaponPreset.Axe) {
                     // Axes
@@ -465,7 +354,7 @@ public class ItemCreator : ScriptableObject {
                     weapon.thirdColor = bladeColor;
                     weapon.slot = EquipSlot.RightHand;
                     weapon.weaponType = WeaponType.OneHanded;
-                    weapon.itemName += " Axe";
+                    weapon.itemName += $" {LocalizationManager.localization.GetText("Axe")}";
                 }
                 else if(preset == WeaponPreset.Hammer) {
                     // Hammers
@@ -486,7 +375,7 @@ public class ItemCreator : ScriptableObject {
                     weapon.thirdColor = bladeColor;
                     weapon.slot = EquipSlot.RightHand;
                     weapon.weaponType = WeaponType.OneHanded;
-                    weapon.itemName += " Hammer";
+                    weapon.itemName += $" {LocalizationManager.localization.GetText("Hammer")}";
                 }
                 else if(preset == WeaponPreset.Spear) {
                     // Spears
@@ -507,7 +396,7 @@ public class ItemCreator : ScriptableObject {
                     weapon.thirdColor = bladeColor;
                     weapon.slot = EquipSlot.RightHand;
                     weapon.weaponType = WeaponType.OneHanded;
-                    weapon.itemName += " Spear";
+                    weapon.itemName += $" {LocalizationManager.localization.GetText("Spear")}";
                 }
                 else if(preset == WeaponPreset.Staff) {
                     // Staff
@@ -528,7 +417,7 @@ public class ItemCreator : ScriptableObject {
                     weapon.thirdColor = headColor;
                     weapon.slot = EquipSlot.RightHand;
                     weapon.weaponType = WeaponType.OneHanded;
-                    weapon.itemName += " Staff";
+                    weapon.itemName += $" {LocalizationManager.localization.GetText("Staff")}";
                 }
                 break;
             }
@@ -540,7 +429,7 @@ public class ItemCreator : ScriptableObject {
                 weapon.firstColor = bowColor;
                 weapon.slot = EquipSlot.RightHand;
                 weapon.weaponType = WeaponType.Bow;
-                weapon.itemName += " Bow";
+                weapon.itemName += $" {LocalizationManager.localization.GetText("Bow")}";
                 break;
             }
             case WeaponType.Dagger: {
@@ -553,6 +442,7 @@ public class ItemCreator : ScriptableObject {
                 weapon.firstColor = Color.clear;
                 weapon.secondColor = Color.clear;
                 weapon.thirdColor = Color.clear;
+                // weapon.itemName += $" {LocalizationManager.localization.GetText("Dagger")}";
                 return null;
                 //break;
             }
@@ -560,148 +450,22 @@ public class ItemCreator : ScriptableObject {
         return weapon;
     }
     private Item CheckSpecialCase(string seed) {
-        Item item;
-        switch(seed) {
-            case "destroyingAngel":
-                item = mushroomDatabase.mushrooms[0];
-                break;
-            case "truffle":
-                item = mushroomDatabase.mushrooms[1];
-                break;
-            case "turkeyTail":
-                item = mushroomDatabase.mushrooms[2];
-                break;
-            case "blackTrumpet":
-                item = mushroomDatabase.mushrooms[3];
-                break;
-            case "chanterelle":
-                item = mushroomDatabase.mushrooms[4];
-                break;
-            case "reishi":
-                item = mushroomDatabase.mushrooms[5];
-                break;
-            case "matsutake":
-                item = mushroomDatabase.mushrooms[6];
-                break;
-            case "puffball":
-                item = mushroomDatabase.mushrooms[7];
-                break;
-            case "enoki":
-                item = mushroomDatabase.mushrooms[8];
-                break;
-            case "porcini":
-                item = mushroomDatabase.mushrooms[9];
-                break;
-            case "morel":
-                item = mushroomDatabase.mushrooms[10];
-                break;
-            case "flyAgaric":
-                item = mushroomDatabase.mushrooms[11];
-                break;
-            case "wood":
-                item = itemDatabase.items[0];
-                break;
-            case "copper":
-                item = itemDatabase.items[1];
-                break;
-            case "iron":
-                item = itemDatabase.items[2];
-                break;
-            case "silver":
-                item = itemDatabase.items[3];
-                break;
-            case "gold":
-                item = itemDatabase.items[4];
-                break;
-            case "platinum":
-                item = itemDatabase.items[5];
-                break;
-            case "titanium":
-                item = itemDatabase.items[6];
-                break;
-            case "tungsten":
-                item = itemDatabase.items[7];
-                break;
-            case "sapphire":
-                item = itemDatabase.items[8];
-                break;
-            case "ruby":
-                item = itemDatabase.items[9];
-                break;
-            case "emerald":
-                item = itemDatabase.items[10];
-                break;
-            case "diamond":
-                item = itemDatabase.items[11];
-                break;
-            case "musgravite":
-                item = itemDatabase.items[12];
-                break;
-            case "taaffeite":
-                item = itemDatabase.items[13];
-                break;
-            case "amber":
-                item = itemDatabase.items[14];
-                break;
-            case "leather":
-                item = itemDatabase.items[15];
-                break;
-            case "scales":
-                item = itemDatabase.items[16];
-                break;
-            case "fur":
-                item = itemDatabase.items[17];
-                break;
-            case "eye":
-                item = itemDatabase.items[18];
-                break;
-            case "shell":
-                item = itemDatabase.items[19];
-                break;
-            case "tongue":
-                item = itemDatabase.items[20];
-                break;
-            case "feather":
-                item = itemDatabase.items[21];
-                break;
-            case "web":
-                item = itemDatabase.items[22];
-                break;
-            case "liver":
-                item = itemDatabase.items[23];
-                break;
-            case "heart":
-                item = itemDatabase.items[24];
-                break;
-            case "brain":
-                item = itemDatabase.items[25];
-                break;
-            case "claw":
-                item = itemDatabase.items[26];
-                break;
-            case "fang":
-                item = itemDatabase.items[27];
-                break;
-            case "bone":
-                item = itemDatabase.items[28];
-                break;
-            case "obsidian":
-                item = itemDatabase.items[29];
-                break;
-            case "stone":
-                item = itemDatabase.items[30];
-                break;
-            case "soul":
-                item = itemDatabase.items[31];
-                break;
-            case "coal":
-                item = itemDatabase.items[32];
-                break;
-            default:
-                item = null;
-                break;
+        for(int i = 0; i < mushroomDatabase.mushrooms.Count; i++) {
+            if(seed == mushroomDatabase.mushrooms[i].seed) {
+                return mushroomDatabase.mushrooms[i];
+            }
         }
-        return item;
+        for(int i = 0; i < uniqueItemDatabase.uniqueItems.Count; i++) {
+            if(seed == uniqueItemDatabase.uniqueItems[i].seed) {
+                return uniqueItemDatabase.uniqueItems[i];
+            }
+        }
+        for(int i = 0; i < itemDatabase.items.Count; i++) {
+            if(seed == itemDatabase.items[i].seed) {
+                return itemDatabase.items[i];
+            }
+        }
+        return null;
     }
     // Create a chest armor sprite
     public Armor CreateChestArmor(ItemMaterial mat) {
@@ -746,7 +510,8 @@ public class ItemCreator : ScriptableObject {
         Color backColor = otherMaterialColors[pseudoRandom.Next(0, otherMaterialColors.Length)];
         // Sprite 
         Armor armor = CreateInstance<Armor>();
-        armor.itemName += $"{mat} Armor";
+        armor.itemMaterial = mat;
+        armor.itemName += $"{LocalizationManager.localization.GetText($"{armor.itemMaterial}")} {LocalizationManager.localization.GetText("Armor")}";
         armor.firstIcon = armorBase;
         if(armorOverlay) {
             armor.secondIcon = armorOverlay;
@@ -777,7 +542,8 @@ public class ItemCreator : ScriptableObject {
         Color baseColor = bladeMaterialColors[(int)mat];
         Color propColor = helmetPropColor;
         Armor helmet = CreateInstance<Armor>();
-        helmet.itemName += $"{mat} Helmet";
+
+        helmet.itemName += $"{LocalizationManager.localization.GetText($"{helmet.itemMaterial}")} {LocalizationManager.localization.GetText("Helmet")}";
         helmet.firstIcon = helmetBase;
         helmet.firstColor = baseColor;
         if(helmetProp) {
@@ -795,7 +561,7 @@ public class ItemCreator : ScriptableObject {
         Color baseColor = bladeMaterialColors[(int)mat];
         Color propColor = otherMaterialColors[pseudoRandom.Next(0, otherMaterialColors.Length)];
         Armor legging = CreateInstance<Armor>();
-        legging.itemName += $"{mat} Leggings";
+        legging.itemName += $"{LocalizationManager.localization.GetText($"{legging.itemMaterial}")} {LocalizationManager.localization.GetText("Leggings")}";
         legging.firstIcon = leggingBase;
         legging.secondIcon = leggingProp;
         legging.firstColor = baseColor;
@@ -810,7 +576,7 @@ public class ItemCreator : ScriptableObject {
         Color baseColor = bladeMaterialColors[(int)mat];
         Color propColor = otherMaterialColors[pseudoRandom.Next(0, otherMaterialColors.Length)];
         Shield shield = CreateInstance<Shield>();
-        shield.itemName += $"{mat} Shield";
+        shield.itemName += $"{LocalizationManager.localization.GetText($"{shield.itemMaterial}")} {LocalizationManager.localization.GetText("Shield")}";
         shield.firstIcon = shieldBase;
         shield.secondIcon = shieldProp;
         shield.firstSprite = inGame;
@@ -827,7 +593,7 @@ public class ItemCreator : ScriptableObject {
         Color baseColor = bladeMaterialColors[pseudoRandom.Next(0, bladeMaterialColors.Length)];
         Color jewelColor = bladeMaterialColors[(int)mat];
         Ring ring = CreateInstance<Ring>();
-        ring.itemName += $"{mat} Ring";
+        ring.itemName += $"{LocalizationManager.localization.GetText($"{ring.itemMaterial}")} {LocalizationManager.localization.GetText("Ring")}";
         ring.firstIcon = ringBase;
         ring.firstColor = baseColor;
         if(ringJewel != null) {
@@ -850,6 +616,7 @@ public class ItemCreator : ScriptableObject {
     }
     private void SetStats(Item item) {
         int matIndex = (int)item.itemMaterial * 2;
+        // Wtf?
         if(matIndex > 30) {
             int excess = matIndex % 30;
             excess /= 2;
@@ -870,6 +637,124 @@ public class ItemCreator : ScriptableObject {
             w.bleedDamage = RollDice(diceRolls[matIndex][index++], dieCapacity);
             w.poisonDamage = RollDice(diceRolls[matIndex][index++], dieCapacity);
             w.curseDamage = RollDice(diceRolls[matIndex][index++], dieCapacity);
+            switch(w.preset) {
+                case WeaponPreset.Sword:
+                    w.fireDamage *= 0.4f;
+                    w.iceDamage *= 0.4f;
+                    w.airDamage *= 0.4f;
+                    w.earthDamage *= 0.4f;
+                    w.lightningDamage *= 0.4f;
+                    w.lightDamage *= 0.6f;
+                    w.darkDamage *= 0.6f;
+                    w.poisonDamage *= 0.5f;
+                    w.curseDamage *= 0.4f;
+                    break;
+                case WeaponPreset.Axe:
+                    w.bashDamage *= 0.6f;
+                    w.pierceDamage *= 0.6f;
+                    w.slashDamage *= 1.5f;
+                    w.fireDamage *= 0.3f;
+                    w.iceDamage *= 0.3f;
+                    w.airDamage *= 0.3f;
+                    w.earthDamage *= 0.3f;
+                    w.lightningDamage *= 0.3f;
+                    w.lightDamage *= 0.4f;
+                    w.darkDamage *= 0.4f;
+                    w.poisonDamage *= 0.4f;
+                    w.bleedDamage *= 0.9f;
+                    w.curseDamage *= 0.3f;
+                    break;
+                case WeaponPreset.Hammer:
+                    w.bashDamage *= 1.9f;
+                    w.pierceDamage *= 0.4f;
+                    w.slashDamage *= 0.4f;
+                    w.fireDamage *= 0.3f;
+                    w.iceDamage *= 0.3f;
+                    w.airDamage *= 0.3f;
+                    w.earthDamage *= 0.3f;
+                    w.lightningDamage *= 0.3f;
+                    w.lightDamage *= 0.3f;
+                    w.darkDamage *= 0.3f;
+                    w.poisonDamage *= 0.2f;
+                    w.bleedDamage *= 0.5f;
+                    w.curseDamage *= 0.1f;
+                    break;
+                case WeaponPreset.Spear:
+                    w.bashDamage *= 0.5f;
+                    w.pierceDamage *= 1.6f;
+                    w.slashDamage *= 0.5f;
+                    w.fireDamage *= 0.3f;
+                    w.iceDamage *= 0.3f;
+                    w.airDamage *= 0.3f;
+                    w.earthDamage *= 0.3f;
+                    w.lightningDamage *= 0.3f;
+                    w.lightDamage *= 0.4f;
+                    w.darkDamage *= 0.4f;
+                    w.poisonDamage *= 0.2f;
+                    w.bleedDamage *= 0.5f;
+                    w.curseDamage *= 0.3f;
+                    break;
+                case WeaponPreset.Bow:
+                    w.bashDamage *= 0.1f;
+                    w.pierceDamage *= 1.3f;
+                    w.slashDamage *= 0.1f;
+                    w.fireDamage *= 0.5f;
+                    w.iceDamage *= 0.5f;
+                    w.airDamage *= 0.5f;
+                    w.earthDamage *= 0.5f;
+                    w.lightningDamage *= 0.5f;
+                    w.lightDamage *= 0.5f;
+                    w.darkDamage *= 0.5f;
+                    w.poisonDamage *= 0.5f;
+                    w.bleedDamage *= 0.5f;
+                    w.curseDamage *= 0.5f;
+                    break;
+                case WeaponPreset.Dagger:
+                    w.bashDamage *= 0.1f;
+                    w.pierceDamage *= 1.2f;
+                    w.slashDamage *= 1.2f;
+                    w.fireDamage *= 0.3f;
+                    w.iceDamage *= 0.3f;
+                    w.airDamage *= 0.3f;
+                    w.earthDamage *= 0.3f;
+                    w.lightningDamage *= 0.3f;
+                    w.lightDamage *= 0.4f;
+                    w.darkDamage *= 0.4f;
+                    w.poisonDamage *= 1.1f;
+                    w.bleedDamage *= 0.8f;
+                    w.curseDamage *= 0.1f;
+                    break;
+                case WeaponPreset.Staff:
+                    w.bashDamage *= 0.3f;
+                    w.pierceDamage *= 0.2f;
+                    w.slashDamage *= 0.2f;
+                    w.fireDamage *= 1.2f;
+                    w.iceDamage *= 1.2f;
+                    w.airDamage *= 1.2f;
+                    w.earthDamage *= 1.2f;
+                    w.lightningDamage *= 0.5f;
+                    w.lightDamage *= 0.6f;
+                    w.darkDamage *= 0.6f;
+                    w.poisonDamage *= 0.1f;
+                    w.bleedDamage *= 0.1f;
+                    w.curseDamage *= 0.8f;
+                    break;
+                case WeaponPreset.Tome:
+                    w.bashDamage *= 0.1f;
+                    w.pierceDamage *= 0.1f;
+                    w.slashDamage *= 0.1f;
+                    w.fireDamage *= 0.6f;
+                    w.iceDamage *= 0.6f;
+                    w.airDamage *= 0.6f;
+                    w.earthDamage *= 0.6f;
+                    w.lightningDamage *= 1.3f;
+                    w.lightDamage *= 1.3f;
+                    w.darkDamage *= 1.3f;
+                    w.poisonDamage *= 0.1f;
+                    w.bleedDamage *= 0.1f;
+                    w.curseDamage *= 1.5f;
+                    break;
+            }
         }
         else if(item is Armor a) {
             a.bashDefence = RollDice(diceRolls[matIndex + 1][index++], dieCapacity);

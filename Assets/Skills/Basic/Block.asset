@@ -19,16 +19,19 @@ MonoBehaviour:
   skillIcon: {fileID: -8764487522292916938, guid: 7851403918e7b7d488e90e9b350976de,
     type: 3}
   interruptable: 1
+  attackType: 13
+  skillPointsNeeded: 0
   manaCost: 0
   focusedSkill: 0
   channelingTime: 0
   castTime: 0.2
   cooldown: 0.2
+  aiRange: 0
   channelingParticleNames: []
   castingParticleNames: []
   particleNames: []
   channelingAnimationName: 
   castingAnimationName: 
-  attackType: 13
+  idleAnimationName: Idle
   blockData:
     blockType: 0

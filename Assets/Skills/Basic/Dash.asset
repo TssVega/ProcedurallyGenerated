@@ -17,16 +17,19 @@ MonoBehaviour:
   skillDescription: Leap forward for a small distance
   skillIcon: {fileID: 21300000, guid: 0cd69803be151954091f386d0478f2a1, type: 3}
   interruptable: 0
+  attackType: 13
+  skillPointsNeeded: 0
   manaCost: 0
   focusedSkill: 0
   channelingTime: 0
   castTime: 0
   cooldown: 1
+  aiRange: 0
   channelingParticleNames: []
   castingParticleNames: []
   particleNames: []
   channelingAnimationName: 
   castingAnimationName: 
-  attackType: 13
+  idleAnimationName: Idle
   dashData:
     dashMultiplier: 4

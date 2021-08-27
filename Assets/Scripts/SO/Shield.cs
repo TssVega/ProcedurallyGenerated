@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "Items/Shield")]
 public class Shield : Item {
 
     public float parryDuration = 0.5f;

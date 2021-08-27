@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class LocalizationManager : MonoBehaviour {
 
+    public static LocalizationManager localization;
+
     private Dictionary<string, string> texts;
     [SerializeField]
     private string DEFAULT_LANGUAGE = "English";
@@ -16,7 +18,11 @@ public class LocalizationManager : MonoBehaviour {
     public delegate void LanguageChangedEventHandler();
     public event LanguageChangedEventHandler LanguageChanged;
 
+    public MushroomDatabase mushroomDatabase;
+    public ItemDatabase itemDatabase;
+
     private void Awake() {
+        localization = this;
         // Load user preferences, if any:
         if(PlayerPrefs.HasKey("LAST_LANGUAGE")) {
             string newLang = PlayerPrefs.GetString("LAST_LANGUAGE");
@@ -32,6 +38,18 @@ public class LocalizationManager : MonoBehaviour {
         else {
             // If not, we use defaults.
             SetLocalization(DEFAULT_LANGUAGE);
+        }
+    }
+    private void Start() {
+        if(mushroomDatabase) {
+            for(int i = 0; i < mushroomDatabase.mushrooms.Count; i++) {
+                mushroomDatabase.mushrooms[i].itemName = GetText(mushroomDatabase.mushrooms[i].seed);
+            }
+        }
+        if(itemDatabase) {
+            for(int i = 0; i < itemDatabase.items.Count; i++) {
+                itemDatabase.items[i].itemName = GetText(itemDatabase.items[i].seed);
+            }
         }
     }
     public string GetLanguage() {

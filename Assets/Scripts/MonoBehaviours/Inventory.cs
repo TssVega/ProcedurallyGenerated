@@ -86,7 +86,7 @@ public class Inventory : MonoBehaviour {
         get => equipmentSize;
     }
     public void UpdateStats() {
-        if(offenceStats.Length <= 0) {
+        if(offenceStats.Length <= 0 || offenceStats[0] == null) {
             return;
         }
         offenceStats[0].text = stats.fireDamage.ToString();

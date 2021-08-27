@@ -139,18 +139,27 @@ public class WorldGeneration : MonoBehaviour {
                 if(world.currentCoordinates[0] == world.lastCoordinates[0] && world.currentCoordinates[1] == world.lastCoordinates[1]) {
                     return;
                 }
+                if(CheckBounds(x, y)) {
+                    if(world.explorationData[x, y] == 0) {
+                        world.explorationData[x, y] = 1;
+                        mapPanel.NewExploration(new Vector2Int(x, y), WorldMap);
+                    }
+                }
                 if(CheckBounds(x, y) && world.worldMap[x, y] < 1) {
                     continue;
                 }
-                if(x == world.currentCoordinates[0] - 1 && y == world.currentCoordinates[1] - 1
-                    || x == world.currentCoordinates[0] - 1 && y == world.currentCoordinates[1] + 1
-                    || x == world.currentCoordinates[0] + 1 && y == world.currentCoordinates[1] - 1
-                    || x == world.currentCoordinates[0] + 1 && y == world.currentCoordinates[1] + 1) {
+                if((x == world.currentCoordinates[0] - 1 && y == world.currentCoordinates[1] - 1)
+                    || (x == world.currentCoordinates[0] - 1 && y == world.currentCoordinates[1] + 1)
+                    || (x == world.currentCoordinates[0] + 1 && y == world.currentCoordinates[1] - 1)
+                    || (x == world.currentCoordinates[0] + 1 && y == world.currentCoordinates[1] + 1)) {
                     continue;
                 }
                 if(!loadingPanel.gameObject.activeInHierarchy) {
                     loadingPanel.gameObject.SetActive(true);
                     loadingPanel.LoadingLevels();
+                }
+                if(!CheckBounds(x, y)) {
+                    continue;
                 }                
                 if(x == world.currentCoordinates[0] && y == world.currentCoordinates[1]) {
                     mapPanel.SetCursor(new Vector2Int(x, y));
@@ -158,12 +167,9 @@ public class WorldGeneration : MonoBehaviour {
                     StartCoroutine(ScanPath());
                     //ScanPath();
                 }
-                if(x < 0 || y < 0 || x > worldSize - 1 || y > worldSize - 1) {
-                    continue;
-                }
                 if(currentRenderedLevels.Contains(new Vector2Int(x, y))) {
                     continue;                    
-                }
+                }                
                 PersistentData.AddWorkingThread();
                 if(world.worldData[x, y] == null) {
                     //pseudoRandomForWorld = new System.Random(worldSeed.GetHashCode());
@@ -183,11 +189,7 @@ public class WorldGeneration : MonoBehaviour {
                     worldCoordinates = new Vector2Int(x, y),
                     worldSize = worldSize
                 };
-                levelClone.SetActive(true);
-                if(world.explorationData[x, y] == 0) {
-                    world.explorationData[x, y] = 1;
-                    mapPanel.NewExploration(new Vector2Int(x, y), WorldMap);
-                }                
+                levelClone.SetActive(true);                              
                 /*
                 Thread th = new Thread(() => levelGen.SetLayout(this));
                 th.Start();*/
@@ -242,7 +244,7 @@ public class WorldGeneration : MonoBehaviour {
     private IEnumerator ScanPath() {
         yield return new WaitForSeconds(0.5f);        
         if(aStarPath) {
-            aStarPath.Scan();
+            aStarPath.Scan(aStarPath.graphs[0]);
         }
         loadingPanel.FadeOut();
     }

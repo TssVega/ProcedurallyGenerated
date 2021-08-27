@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "Items/Weapon")]
 public class Weapon : Item {
 
     public WeaponType weaponType;
+    public WeaponPreset preset;
     // Damages
     public float bashDamage;
     public float pierceDamage;

@@ -16,17 +16,21 @@ MonoBehaviour:
   skillName: bash
   skillDescription: 
   skillIcon: {fileID: 0}
+  interruptable: 0
+  attackType: 2
+  skillPointsNeeded: 0
   manaCost: 0
   focusedSkill: 0
   channelingTime: 0.33
-  castTime: 0
+  castTime: 0.2
   cooldown: 0
+  aiRange: 0
   channelingParticleNames: []
   castingParticleNames: []
   particleNames: []
   channelingAnimationName: Bash
   castingAnimationName: 
-  attackType: 2
+  idleAnimationName: Idle
   damageRate: 0
   duration: 0
   totalHits: 1

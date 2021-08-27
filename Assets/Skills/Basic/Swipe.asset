@@ -18,18 +18,21 @@ MonoBehaviour:
 
 '
   skillIcon: {fileID: 0}
-  acquired: 0
+  interruptable: 0
+  attackType: 0
+  skillPointsNeeded: 0
   manaCost: 0
   focusedSkill: 0
   channelingTime: 0.1
-  castTime: 0
+  castTime: 0.2
   cooldown: 0
+  aiRange: 0
   channelingParticleNames: []
   castingParticleNames: []
   particleNames: []
   channelingAnimationName: Swipe
   castingAnimationName: 
-  attackType: 0
+  idleAnimationName: Idle
   damageRate: 0.5
   duration: 0
   totalHits: 1

@@ -18,18 +18,21 @@ MonoBehaviour:
   skillIcon: {fileID: -670977565870606260, guid: 7851403918e7b7d488e90e9b350976de,
     type: 3}
   interruptable: 0
+  attackType: 1
+  skillPointsNeeded: 0
   manaCost: 0
   focusedSkill: 0
   channelingTime: 0
   castTime: 0
   cooldown: 0.7
+  aiRange: 0
   channelingParticleNames: []
   castingParticleNames: []
   particleNames:
   - Arrow
   channelingAnimationName: 
   castingAnimationName: 
-  attackType: 1
+  idleAnimationName: Idle
   projectileData:
     team: 0
     arrowSkill: 1
@@ -38,3 +41,10 @@ MonoBehaviour:
     projectileSpeed: 25
     hitTime: 0
     lifetime: 1
+    stunDuration: 0
+    immobilizeDuration: 0
+    penetrates: 0
+    projectileCount: 1
+    angleDifference: 0
+    timeDifference: 0.5
+    homing: 0

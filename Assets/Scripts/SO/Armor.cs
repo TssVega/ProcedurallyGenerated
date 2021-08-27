@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "Items/Armor")]
 public class Armor : Item {
     // Defences
     public float bashDefence;

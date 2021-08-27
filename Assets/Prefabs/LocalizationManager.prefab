@@ -44,3 +44,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DEFAULT_LANGUAGE: English
+  mushroomDatabase: {fileID: 11400000, guid: cd02dd15f0de94643ac6f426f808693a, type: 2}
+  itemDatabase: {fileID: 11400000, guid: 54f63e30eeab869438b4c4e0e1e6351e, type: 2}
