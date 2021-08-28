@@ -23,9 +23,6 @@ public class Sound {
 
     private AudioSource audioSource;
 
-    private bool currentVolumeSet = false;
-    private bool currentPitchSet = false;
-
     // Set the audio source
     public void SetSource(AudioSource _source) {
         _source.loop = looping;
@@ -33,11 +30,10 @@ public class Sound {
         audioSource.clip = audioClip;
     }
 
-    private void ChangeVolume() {
+    public void ChangeVolume() {
         // If the current values are not the default values, set them
-        if(currentVolume != volume && !currentVolumeSet) {
+        if(currentVolume != volume) {
             currentVolume = volume;
-            currentVolumeSet = true;
         }
         // Randomize current value
         currentVolume =
@@ -50,13 +46,13 @@ public class Sound {
         if(currentVolume < volume - volumeRandomness && randomizeVolume) {
             currentVolume = volume - volumeRandomness;
         }
+        audioSource.volume = currentVolume;
     }
 
-    private void ChangePitch() {
+    public void ChangePitch() {
         // If the current values are not the default values, set them
-        if(currentPitch != pitch && !currentPitchSet) {
+        if(currentPitch != pitch) {
             currentPitch = pitch;
-            currentPitchSet = true;
         }
         // Randomize current value
         currentPitch =
