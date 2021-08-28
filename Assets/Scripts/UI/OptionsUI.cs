@@ -94,7 +94,9 @@ public class OptionsUI : MonoBehaviour {
         else {
             AudioSystem.audioManager.mute = true;
             muteTick.SetActive(true);
-            AudioSystem.audioManager.sounds[2].Stop();
+            for(int i = 0; i < AudioSystem.audioManager.sounds.Length; i++) {
+                AudioSystem.audioManager.sounds[i].Stop();
+            }            
         }
         musicSlider.value = musicValue;
         fxSlider.value = fxValue;

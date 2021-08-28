@@ -120,7 +120,7 @@ public class ItemCreator : ScriptableObject {
             return CreateUniqueItem();
         }
         // To ensure you don't get weapons and rings out of fabric
-        while((int)mat > 15 && (slotIndex == 0 || slotIndex == 5)) {
+        while((int)mat > 15 && (slotIndex == 0 || slotIndex == 5 || slotIndex == 1)) {
             mat = GetItemMaterial();
         }
         switch(slotIndex) {
@@ -310,6 +310,7 @@ public class ItemCreator : ScriptableObject {
                 break;
         }
         Weapon weapon = CreateInstance<Weapon>();
+        weapon.itemMaterial = mat;
         weapon.itemName += LocalizationManager.localization.GetText($"{mat}");
         weapon.preset = preset;
         switch(type) {
@@ -542,7 +543,7 @@ public class ItemCreator : ScriptableObject {
         Color baseColor = bladeMaterialColors[(int)mat];
         Color propColor = helmetPropColor;
         Armor helmet = CreateInstance<Armor>();
-
+        helmet.itemMaterial = mat;
         helmet.itemName += $"{LocalizationManager.localization.GetText($"{helmet.itemMaterial}")} {LocalizationManager.localization.GetText("Helmet")}";
         helmet.firstIcon = helmetBase;
         helmet.firstColor = baseColor;
@@ -561,6 +562,7 @@ public class ItemCreator : ScriptableObject {
         Color baseColor = bladeMaterialColors[(int)mat];
         Color propColor = otherMaterialColors[pseudoRandom.Next(0, otherMaterialColors.Length)];
         Armor legging = CreateInstance<Armor>();
+        legging.itemMaterial = mat;
         legging.itemName += $"{LocalizationManager.localization.GetText($"{legging.itemMaterial}")} {LocalizationManager.localization.GetText("Leggings")}";
         legging.firstIcon = leggingBase;
         legging.secondIcon = leggingProp;
@@ -576,6 +578,7 @@ public class ItemCreator : ScriptableObject {
         Color baseColor = bladeMaterialColors[(int)mat];
         Color propColor = otherMaterialColors[pseudoRandom.Next(0, otherMaterialColors.Length)];
         Shield shield = CreateInstance<Shield>();
+        shield.itemMaterial = mat;
         shield.itemName += $"{LocalizationManager.localization.GetText($"{shield.itemMaterial}")} {LocalizationManager.localization.GetText("Shield")}";
         shield.firstIcon = shieldBase;
         shield.secondIcon = shieldProp;
@@ -593,6 +596,7 @@ public class ItemCreator : ScriptableObject {
         Color baseColor = bladeMaterialColors[pseudoRandom.Next(0, bladeMaterialColors.Length)];
         Color jewelColor = bladeMaterialColors[(int)mat];
         Ring ring = CreateInstance<Ring>();
+        ring.itemMaterial = mat;
         ring.itemName += $"{LocalizationManager.localization.GetText($"{ring.itemMaterial}")} {LocalizationManager.localization.GetText("Ring")}";
         ring.firstIcon = ringBase;
         ring.firstColor = baseColor;

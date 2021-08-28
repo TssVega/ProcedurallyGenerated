@@ -10,6 +10,9 @@ public class MainMenu : MonoBehaviour {
     public TextMeshProUGUI playText;
     public TextMeshProUGUI loadText;
     public TextMeshProUGUI optionsText;
+    public TextMeshProUGUI muteText;
+    public TextMeshProUGUI musicText;
+    public TextMeshProUGUI soundFXText;
 
     public void OnEnable() {
         RefreshTexts();
@@ -18,6 +21,9 @@ public class MainMenu : MonoBehaviour {
         playText.text = localizationManager.GetText("play");
         loadText.text = localizationManager.GetText("load");
         optionsText.text = localizationManager.GetText("options");
+        muteText.text = localizationManager.GetText("mute");
+        musicText.text = localizationManager.GetText("music");
+        soundFXText.text = localizationManager.GetText("soundFX");
     }
     public void StartNewGame(int slot) {
         PersistentData.saveSlot = slot;

@@ -21,6 +21,11 @@ public class EnemyAI : MonoBehaviour {
 
     private bool moving = false;
     private bool roaming = false;
+    public bool hostile = false;            // Will it attack enemies on sight?
+    public bool willDefendItself = true;    // Will this entity defend itself if it gets attacked?
+
+    public string walkAnimationName;
+    public string idleAnimationName;
 
     private void Awake() {
         stats = GetComponent<Stats>();
@@ -55,10 +60,14 @@ public class EnemyAI : MonoBehaviour {
             moving = false;
         }
         if(aiPath.canMove && moving) {
-            enemyAnimator.SetTrigger("Walk");
+            if(!string.IsNullOrEmpty(walkAnimationName)) {
+                enemyAnimator.SetTrigger(walkAnimationName);
+            }
         }
         else {
-            enemyAnimator.SetTrigger("SpiderIdle");
+            if(!string.IsNullOrEmpty(idleAnimationName)) {
+                enemyAnimator.SetTrigger(idleAnimationName);
+            }            
         }
         
     }
@@ -74,7 +83,15 @@ public class EnemyAI : MonoBehaviour {
         StartCoroutine(Roam());
     }
     public void Enrage() {
-        StartCoroutine(UseRandomSkill());
+        if(willDefendItself && hostile) {
+            StartCoroutine(UseRandomSkill());
+        }
+        else {
+            Flee();
+        }
+    }
+    private void Flee() {
+        // Escape from the attacker
     }
     private IEnumerator UseRandomSkill() {        
         yield return new WaitForSeconds(Random.Range(timeBetweenSkills, timeBetweenSkills * 2));

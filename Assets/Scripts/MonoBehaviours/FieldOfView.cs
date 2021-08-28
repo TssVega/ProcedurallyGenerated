@@ -63,7 +63,9 @@ public class FieldOfView : MonoBehaviour {
                 closest = visibleTargets[i];
             }
         }
-        destinationSetter.target = closest;
+        if(enemyAI.hostile) {
+            destinationSetter.target = closest;
+        }        
         if(destinationSetter.target) {
             SetDistanceToEnemy(leastDistance);
             enemyAI.Enrage();

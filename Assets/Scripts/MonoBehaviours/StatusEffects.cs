@@ -9,6 +9,7 @@ public class StatusEffects : MonoBehaviour {
     private Player player;
     //private Enemy enemy;
     private AIPath aiPath;
+    private EnemyAI enemyAI;
     public DeathPanel deathPanel;
     private Stats stats;
     private Passives passives;
@@ -96,6 +97,7 @@ public class StatusEffects : MonoBehaviour {
 
     private void OnEnable() {
         aiPath = GetComponent<AIPath>();
+        enemyAI = GetComponent<EnemyAI>();
         player = GetComponent<Player>();
         //enemy = GetComponent<Enemy>();
         stats = GetComponent<Stats>();
@@ -265,10 +267,11 @@ public class StatusEffects : MonoBehaviour {
                 break;
             default: break;
         }
-        Debug.Log($"Incoming damage: {damage}");
         damage = Mathf.Clamp(damage, 0f, stats.maxDamageTimesHealth * stats.maxHealth);
-        Debug.Log($"{damage} damage taken");
         stats.health -= damage;
+        if(enemyAI) {
+            enemyAI.hostile = true;
+        }
         if(stats.health <= 0f) {
             Die();
         }

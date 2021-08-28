@@ -25,6 +25,9 @@ public class Inventory : MonoBehaviour {
     private Image[] equipmentImagesTertiary;
     private TextMeshProUGUI[] quantityTexts;
 
+    private Image[] itemFrames;
+    private Image[] equipmentFrames;
+
     private Player player;
     private Stats stats;
 
@@ -145,6 +148,14 @@ public class Inventory : MonoBehaviour {
             quantityTexts[i] = itemSlots[i].transform.GetChild(3).GetComponent<TextMeshProUGUI>();
             quantityTexts[i].text = "";
         }
+        itemFrames = new Image[inventory.Count];
+        for(int i = 0; i < itemFrames.Length; i++) {
+            itemFrames[i] = itemSlots[i].transform.GetChild(4).GetComponent<Image>();
+        }
+        equipmentFrames = new Image[equipment.Count];
+        for(int i = 0; i < equipmentFrames.Length; i++) {
+            equipmentFrames[i] = equipmentSlots[i].transform.GetChild(3).GetComponent<Image>();
+        }
         UpdateStats();
     }    
     public void UpdateSlot(int index) {
@@ -156,6 +167,7 @@ public class Inventory : MonoBehaviour {
             itemImagesTertiary[index].sprite = inventory[index].thirdIcon ? inventory[index].thirdIcon : null;
             itemImagesTertiary[index].color = inventory[index].thirdColor != null ? inventory[index].thirdColor : Color.clear;
             quantityTexts[index].text = quantities[index] > 1 ? quantities[index].ToString() : "";
+            itemFrames[index].color = ColorBySkillType.GetColorByRarity(inventory[index].rarity);
         }
         else {
             itemImages[index].sprite = null;
@@ -165,6 +177,7 @@ public class Inventory : MonoBehaviour {
             itemImagesTertiary[index].sprite = null;
             itemImagesTertiary[index].color = Color.clear;
             quantityTexts[index].text = "";
+            itemFrames[index].color = Color.clear;
         }
     }
     public void UpdateEquipmentSlot(int index) {
@@ -175,6 +188,7 @@ public class Inventory : MonoBehaviour {
             equipmentImagesSecondary[index].color = equipment[index].secondColor != null ? equipment[index].secondColor : Color.clear;
             equipmentImagesTertiary[index].sprite = equipment[index].thirdIcon ? equipment[index].thirdIcon : null;
             equipmentImagesTertiary[index].color = equipment[index].thirdColor != null ? equipment[index].thirdColor : Color.clear;
+            equipmentFrames[index].color = ColorBySkillType.GetColorByRarity(equipment[index].rarity);
         }
         else {
             equipmentImages[index].sprite = null;
@@ -183,6 +197,7 @@ public class Inventory : MonoBehaviour {
             equipmentImagesSecondary[index].color = Color.clear;
             equipmentImagesTertiary[index].sprite = null;
             equipmentImagesTertiary[index].color = Color.clear;
+            equipmentFrames[index].color = Color.clear;
         }
     }
     public void SetInventoryImages() {
@@ -195,6 +210,7 @@ public class Inventory : MonoBehaviour {
                 itemImagesTertiary[i].sprite = inventory[i].thirdIcon ? inventory[i].thirdIcon : null;
                 itemImagesTertiary[i].color = inventory[i].thirdColor != null ? inventory[i].thirdColor : Color.clear;
                 quantityTexts[i].text = quantities[i] > 1 ? quantities[i].ToString() : "";
+                itemFrames[i].color = ColorBySkillType.GetColorByRarity(inventory[i].rarity);
             }
             else {
                 itemImages[i].sprite = null;
@@ -204,6 +220,7 @@ public class Inventory : MonoBehaviour {
                 itemImagesTertiary[i].sprite = null;
                 itemImagesTertiary[i].color = Color.clear;
                 quantityTexts[i].text = "";
+                itemFrames[i].color = Color.clear;
             }
         }
         for(int i = 0; i < equipment.Count; i++) {
@@ -214,6 +231,7 @@ public class Inventory : MonoBehaviour {
                 equipmentImagesSecondary[i].color = equipment[i].secondColor != null ? equipment[i].secondColor : Color.clear;
                 equipmentImagesTertiary[i].sprite = equipment[i].thirdIcon ? equipment[i].thirdIcon : null;
                 equipmentImagesTertiary[i].color = equipment[i].thirdColor != null ? equipment[i].thirdColor : Color.clear;
+                equipmentFrames[i].color = ColorBySkillType.GetColorByRarity(equipment[i].rarity);
             }
             else {
                 equipmentImages[i].sprite = null;
@@ -222,6 +240,7 @@ public class Inventory : MonoBehaviour {
                 equipmentImagesSecondary[i].color = Color.clear;
                 equipmentImagesTertiary[i].sprite = null;
                 equipmentImagesTertiary[i].color = Color.clear;
+                equipmentFrames[i].color = Color.clear;
             }
         }
     }
