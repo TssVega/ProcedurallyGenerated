@@ -62,6 +62,8 @@ public class OptionsUI : MonoBehaviour {
 
         if(!PlayerPrefs.HasKey("lock")) {
             lockValue = 1;
+            PlayerPrefs.SetInt("lock", 1);
+            PlayerPrefs.Save();
         }
         lockValue = lockValue == 1 ? 0 : 1;
         PlayerPrefs.SetInt("lock", lockValue);
