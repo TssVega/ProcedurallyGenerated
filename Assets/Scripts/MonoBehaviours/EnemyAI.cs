@@ -53,7 +53,7 @@ public class EnemyAI : MonoBehaviour {
         if(roaming && !aiPath.reachedDestination) {
             moving = true;
         }
-        else if(!roaming && destinationSetter.target && !aiPath.reachedDestination) {
+        else if(destinationSetter.target && !aiPath.reachedDestination) {
             moving = true;
         }
         else {

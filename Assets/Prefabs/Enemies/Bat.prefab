@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1553987816437929315}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.25, z: 0}
+  m_LocalPosition: {x: 0, y: 0.061, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1553987817055992801}
@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   team: 2
-  health: 100
+  health: 20
   mana: 100
   energy: 100
   maxHealth: 100
@@ -116,22 +116,22 @@ MonoBehaviour:
   earthDamage: 10
   lightDamage: 10
   darkDamage: 10
-  poisonDamage: 10
+  poisonDamage: 30
   bleedDamage: 10
   curseDamage: 10
-  bashDefence: 10
-  pierceDefence: 10
-  slashDefence: 10
-  fireDefence: 10
-  iceDefence: 10
-  lightningDefence: 10
-  airDefence: 10
-  earthDefence: 10
-  lightDefence: 10
-  darkDefence: 10
-  poisonDefence: 10
-  bleedDefence: 10
-  curseDefence: 10
+  bashDefence: 50
+  pierceDefence: 40
+  slashDefence: 30
+  fireDefence: 20
+  iceDefence: 80
+  lightningDefence: 20
+  airDefence: 100
+  earthDefence: 60
+  lightDefence: 150
+  darkDefence: 100
+  poisonDefence: 60
+  bleedDefence: 50
+  curseDefence: 80
   statPoints: 10
   maxDamageTimesHealth: 2
   parryDuration: 0.1
@@ -160,6 +160,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathPanel: {fileID: 0}
+  statusUI: {fileID: 0}
+  hitWarning: {fileID: 0}
   stunned: 0
   frostbitten: 0
   airborne: 0

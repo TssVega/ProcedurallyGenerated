@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2681193755022411943}
   - component: {fileID: -9041505774591085982}
   m_Layer: 0
-  m_Name: NopeWeb
+  m_Name: NopeWebProj
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -27,7 +27,7 @@ public class Projectile : MonoBehaviour {
         if(collision.GetComponent<Stats>() && projectileData.team != collision.GetComponent<Stats>().team  ) {
             projectileSkill.Activate(collision.GetComponent<StatusEffects>(), attackerStats);
             if(!projectileData.penetrates) {
-                gameObject.SetActive(false);
+                EndProjectile();
             }
         }        
     }

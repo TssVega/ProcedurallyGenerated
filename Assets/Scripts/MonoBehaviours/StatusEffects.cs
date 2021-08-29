@@ -11,6 +11,8 @@ public class StatusEffects : MonoBehaviour {
     private AIPath aiPath;
     private EnemyAI enemyAI;
     public DeathPanel deathPanel;
+    public StatusUI statusUI;
+    public HitWarning hitWarning;
     private Stats stats;
     private Passives passives;
     //private StatusBar bar;
@@ -108,6 +110,11 @@ public class StatusEffects : MonoBehaviour {
         //bar = GetComponent<StatusBar>();
         originalSpeed = stats.runSpeed;
         DefaultStatusValues();
+        if(statusUI) {
+            statusUI.UpdateHealth(stats.health / stats.maxHealth, stats.health);
+            statusUI.UpdateMana(stats.mana / stats.maxMana, stats.mana);
+            statusUI.UpdateEnergy(stats.energy / stats.maxEnergy, stats.energy);
+        }
     }
     // Stop all effect counters and reset values on disable
     private void OnDisable() {
@@ -165,15 +172,24 @@ public class StatusEffects : MonoBehaviour {
         //if(player && player.playerStatus) {
         //    player.playerStatus.OnStatusChange(PlayerStatus.Health);
         //}
+        if(statusUI) {
+            statusUI.UpdateHealth(stats.health / stats.maxHealth, stats.health);
+        }
     }
     public void UseMana(float amount) {
         stats.mana -= amount;
         //if(player) {
         //    player.PlayerConsumeMana(amount);
         //}
+        if(statusUI) {
+            statusUI.UpdateMana(stats.mana / stats.maxMana, stats.mana);
+        }
     }
     public void GiveMana(float amount) {
         stats.mana += amount;
+        if(statusUI) {
+            statusUI.UpdateMana(stats.mana / stats.maxMana, stats.mana);
+        }
     }
     public bool CanUseMana(float amount) {
         return stats.mana >= amount;
@@ -271,6 +287,12 @@ public class StatusEffects : MonoBehaviour {
         stats.health -= damage;
         if(enemyAI) {
             enemyAI.hostile = true;
+        }
+        if(statusUI) {
+            statusUI.UpdateHealth(stats.health / stats.maxHealth, stats.health);
+        }
+        if(hitWarning) {
+            hitWarning.Hit();
         }
         if(stats.health <= 0f) {
             Die();

@@ -36,17 +36,37 @@ public class FieldOfView : MonoBehaviour {
     }
 
     void Start() {
-        StartCoroutine(FindTargetWithDelay());
+        StartCoroutine(FindTargetWithDelay());    
     }
 
     IEnumerator FindTargetWithDelay() {
         while(true) {
             yield return new WaitForSeconds(delay);
             FindVisibleTargets();
-            ChaseClosestTarget();
+            if(enemyAI) {
+                ChaseClosestTarget();
+            }
+            
         }
     }
-
+    public Transform GetClosestTarget() {
+        Transform closest = null;
+        float leastDistance = 9999f;
+        for(int i = 0; i < visibleTargets.Count; i++) {
+            Stats stats = visibleTargets[i].GetComponent<Stats>();
+            if(stats && (stats.team == this.stats.team || this.stats == stats)) {
+                continue;
+            }
+            if(visibleTargets[i] == transform) {
+                continue;
+            }
+            if(Vector3.Distance(transform.position, visibleTargets[i].position) < leastDistance) {
+                leastDistance = Vector3.Distance(transform.position, visibleTargets[i].position);
+                closest = visibleTargets[i];
+            }
+        }
+        return closest;
+    }
     private void ChaseClosestTarget() {
         Transform closest = null;
         float leastDistance = 9999f;
@@ -63,14 +83,14 @@ public class FieldOfView : MonoBehaviour {
                 closest = visibleTargets[i];
             }
         }
-        if(enemyAI.hostile) {
+        if(enemyAI && enemyAI.hostile) {
             destinationSetter.target = closest;
         }        
-        if(destinationSetter.target) {
+        if(destinationSetter && destinationSetter.target) {
             SetDistanceToEnemy(leastDistance);
             enemyAI.Enrage();
         }
-        else {
+        else if(destinationSetter) {
             SetDistanceToEnemy(9999f);
         }
     }

@@ -12,6 +12,7 @@ public class OptionsUI : MonoBehaviour {
     public GameObject ukActive;
     public TextMeshProUGUI languageText;
 
+    public GameObject autoLockTick;
     public GameObject muteTick;
     public Slider fxSlider;
     public Slider musicSlider;
@@ -22,6 +23,7 @@ public class OptionsUI : MonoBehaviour {
     }
     private void OnEnable() {
         LoadSoundOptions();
+        LoadLockOptions();
         UpdateLanguageHighlighters(localizationManager.GetLanguage());
     }
     private void RefreshTexts() {
@@ -55,6 +57,22 @@ public class OptionsUI : MonoBehaviour {
         PlayerPrefs.SetFloat("music", musicSlider.value);
         PlayerPrefs.Save();
     }
+    public void ToggleLock() {
+        int lockValue = PlayerPrefs.GetInt("lock");
+
+        if(!PlayerPrefs.HasKey("lock")) {
+            lockValue = 1;
+        }
+        lockValue = lockValue == 1 ? 0 : 1;
+        PlayerPrefs.SetInt("lock", lockValue);
+        if(lockValue == 1) {
+            autoLockTick.SetActive(true);
+        }
+        else {
+            autoLockTick.SetActive(false);
+        }
+        PlayerPrefs.Save();
+    }
     public void Mute() {
         AudioSystem.audioManager.mute = !AudioSystem.audioManager.mute;        
         if(AudioSystem.audioManager.mute) {
@@ -71,6 +89,19 @@ public class OptionsUI : MonoBehaviour {
             AudioSystem.audioManager.PlaySound("menuTheme");
         }
         PlayerPrefs.Save();
+    }
+    private void LoadLockOptions() {
+        int lockValue = PlayerPrefs.GetInt("lock");
+
+        if(!PlayerPrefs.HasKey("lock")) {
+            lockValue = 1;
+        }
+        if(lockValue == 1) {
+            autoLockTick.SetActive(true);
+        }
+        else {
+            autoLockTick.SetActive(false);
+        }
     }
     public void LoadSoundOptions() {
         float fxValue = PlayerPrefs.GetFloat("fx");

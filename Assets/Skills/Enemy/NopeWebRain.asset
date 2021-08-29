@@ -29,7 +29,7 @@ MonoBehaviour:
   - NopeWebChanneling
   castingParticleNames: []
   particleNames:
-  - NopeWeb
+  - NopeWebProj
   channelingAnimationName: 
   castingAnimationName: 
   idleAnimationName: SpiderIdle

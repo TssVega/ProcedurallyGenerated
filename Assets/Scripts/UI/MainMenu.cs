@@ -13,6 +13,7 @@ public class MainMenu : MonoBehaviour {
     public TextMeshProUGUI muteText;
     public TextMeshProUGUI musicText;
     public TextMeshProUGUI soundFXText;
+    public TextMeshProUGUI autoLockText;
 
     public void OnEnable() {
         RefreshTexts();
@@ -24,6 +25,7 @@ public class MainMenu : MonoBehaviour {
         muteText.text = localizationManager.GetText("mute");
         musicText.text = localizationManager.GetText("music");
         soundFXText.text = localizationManager.GetText("soundFX");
+        autoLockText.text = localizationManager.GetText("autoLock");
     }
     public void StartNewGame(int slot) {
         PersistentData.saveSlot = slot;

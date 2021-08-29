@@ -160,6 +160,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathPanel: {fileID: 0}
+  statusUI: {fileID: 0}
+  hitWarning: {fileID: 0}
   stunned: 0
   frostbitten: 0
   airborne: 0
@@ -325,8 +327,8 @@ MonoBehaviour:
   speed: 3
   hostile: 1
   willDefendItself: 1
-  walkAnimationName: SpiderIdle
-  idleAnimationName: Walk
+  walkAnimationName: Walk
+  idleAnimationName: SpiderIdle
 --- !u!114 &7357263703601316313
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -6072,6 +6072,7 @@ GameObject:
   - component: {fileID: 7401711136557819561}
   - component: {fileID: 7430841088790226280}
   - component: {fileID: 7430841088790226281}
+  - component: {fileID: 8926205551779905318}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -6117,7 +6118,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lockedOn: 1
+  nearestEnemy: {fileID: 0}
   joystick: {fileID: 0}
+  lockUI: {fileID: 0}
 --- !u!212 &7430841090308141595
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6264,7 +6267,7 @@ MonoBehaviour:
   maxHealth: 100
   maxMana: 100
   maxEnergy: 100
-  runSpeed: 8
+  runSpeed: 6
   strength: 10
   agility: 10
   dexterity: 10
@@ -6560,6 +6563,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathPanel: {fileID: 0}
+  statusUI: {fileID: 0}
+  hitWarning: {fileID: 0}
   stunned: 0
   frostbitten: 0
   airborne: 0
@@ -6620,7 +6625,7 @@ MonoBehaviour:
   - {x: -0.14865732, y: 0.1817545, z: 0}
   m_ShapePathHash: 584475405
   m_Mesh: {fileID: 0}
-  m_InstanceId: -1234
+  m_InstanceId: -223550
 --- !u!114 &7430841088790226281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6662,6 +6667,27 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!114 &8926205551779905318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7430841090308141598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 803d666ecb078c1419f4153205ae72aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewRadius: 10
+  viewAngle: 360
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 512
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 256
+  visibleTargets: []
 --- !u!1 &7431417711832503863
 GameObject:
   m_ObjectHideFlags: 0

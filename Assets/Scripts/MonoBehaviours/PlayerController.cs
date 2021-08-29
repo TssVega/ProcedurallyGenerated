@@ -6,17 +6,21 @@ public class PlayerController : MonoBehaviour {
 
     private Rigidbody2D rb2D;
     private Vector2 joystickInput;
-    //private Joystick joystick;
     public bool lockedOn;
-    //public Enemy nearestEnemy;
-    //private Enemy[] nearbyEnemies;
-    //private Player player;
-    //private StatusEffects statusFx;
+    public Transform nearestEnemy;
     public FloatingJoystick joystick;
     private Stats playerStats;
     private StatusEffects statusEffects;
     private float horizontalInput = 0f;
     private float verticalInput = 0f;
+
+    private const float autoLockSearchInterval = 0.5f;
+
+    private FieldOfView fov;
+
+    private bool autoLock;
+
+    public LockUI lockUI;
 
     // Assign private values
     private void Awake() {
@@ -27,11 +31,18 @@ public class PlayerController : MonoBehaviour {
         if(FindObjectOfType<UICanvas>()) {
             joystick = FindObjectOfType<UICanvas>().playerUI.GetComponent<UIPlayerStatus>().joystick;
         }*/
+        autoLock = PlayerPrefs.GetInt("lock") == 1;
+        fov = GetComponent<FieldOfView>();
         playerStats = FindObjectOfType<Player>().GetComponent<Stats>();
-        statusEffects = GetComponent<StatusEffects>();
-        lockedOn = false;
+        statusEffects = GetComponent<StatusEffects>();        
         rb2D = GetComponent<Rigidbody2D>();
         joystickInput = Vector2.zero;
+    }
+    private void OnEnable() {
+        lockedOn = false;
+        if(autoLock) {
+            StartCoroutine(AutoLock());
+        }        
     }
     // Get input
     private void Update() {
@@ -46,27 +57,34 @@ public class PlayerController : MonoBehaviour {
         }
         */
     }
-    /*
+    private IEnumerator AutoLock() {
+        while(true) {
+            yield return new WaitForSeconds(autoLockSearchInterval);
+            if(fov.visibleTargets.Count > 0) {
+                nearestEnemy = fov.GetClosestTarget();
+                if(nearestEnemy) {
+                    lockedOn = true;
+                }
+            }
+            else {
+                lockedOn = false;
+            }
+        }        
+    }
     // Unlock if the player is locked and lock to the nearest enemy if there is one
     public void ToggleLock() {
         if(lockedOn) {
             lockedOn = false;
         }
         else {
-            float shortestLength = 1000;
-            nearbyEnemies = FindObjectsOfType<Enemy>();
-            if(nearbyEnemies.Length > 0) {
-                for(int i = 0; i < nearbyEnemies.Length; i++) {
-                    if(shortestLength > (nearbyEnemies[i].transform.position - transform.position).sqrMagnitude) {
-                        shortestLength = (nearbyEnemies[i].transform.position - transform.position).sqrMagnitude;
-                        nearestEnemy = nearbyEnemies[i];
-                    }
-                }
-                if(nearestEnemy)
+            if(fov.visibleTargets.Count > 0) {
+                nearestEnemy = fov.GetClosestTarget();
+                if(nearestEnemy) {
                     lockedOn = true;
+                }                    
             }
         }
-    }*/
+    }
     private void GetInput() {
         // Input
         if(joystick) {
@@ -75,15 +93,14 @@ public class PlayerController : MonoBehaviour {
         else {
             joystick = FindObjectOfType<FloatingJoystick>();
         }
-        /*
+        
         // Check if there is a nearest enemy
         if(!nearestEnemy || !nearestEnemy.gameObject.activeSelf) {
             lockedOn = false;
-            LockUI lockUI = FindObjectOfType<LockUI>();
             if(lockUI) {
                 lockUI.CheckLock();
             }
-        }*/
+        }
 #if UNITY_EDITOR
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
@@ -91,18 +108,18 @@ public class PlayerController : MonoBehaviour {
     }
     // Move player and face the direction of movement
     private void PlayerMove() {
-        if(/*!(statusFx.stunned || statusFx.immobilized || statusFx.chanelling)*/true) {
+        if(!playerStats.living) {
+            return;
+        }
+        if(!(statusEffects.stunned || statusEffects.immobilized || statusEffects.chanelling)) {
             // Look at the locked enemy
-            /*if(lockedOn && nearestEnemy) {
+            if(lockedOn && nearestEnemy) {
                 transform.eulerAngles = new Vector3(
                         0, 0, Vector3.SignedAngle(
                             Vector3.up, nearestEnemy.transform.position - transform.position, Vector3.forward));
                 rb2D.angularVelocity = 0;
-            }*/
-            // If there is an input
-            if(!playerStats.living) {
-                return;
             }
+            // If there is an input            
             if(joystick && joystickInput.sqrMagnitude > 0.01f &&
                 (!statusEffects.chanelling
                  && !statusEffects.stunned
