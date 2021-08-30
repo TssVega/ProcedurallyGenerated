@@ -17,6 +17,10 @@ public class LockUI : MonoBehaviour {
         lockText.text = LocalizationManager.localization.GetText("unlocked");
         playerMovement = FindObjectOfType<PlayerController>();
     }
+    public void SetUIVisibility(bool visible) {
+        lockUI.gameObject.SetActive(visible);
+        lockText.gameObject.SetActive(visible);
+    }
     public void CheckLock() {
         if(playerMovement && !playerMovement.lockedOn) {
             lockUI.color = Color.green;

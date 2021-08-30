@@ -26,10 +26,10 @@ MonoBehaviour:
   cooldown: 0
   aiRange: 0
   channelingParticleNames: []
-  castingParticleNames: []
   particleNames: []
   channelingAnimationName: 
   castingAnimationName: 
   idleAnimationName: 
   dashData:
     dashMultiplier: 0.5
+    dashDuration: 0.1

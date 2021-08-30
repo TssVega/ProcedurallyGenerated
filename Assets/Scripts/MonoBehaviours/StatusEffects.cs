@@ -97,6 +97,8 @@ public class StatusEffects : MonoBehaviour {
     public Transform forwardShieldTransform;
     public Transform parryTransform;
 
+    private GameObject stunParticles;
+
     private void OnEnable() {
         aiPath = GetComponent<AIPath>();
         enemyAI = GetComponent<EnemyAI>();
@@ -709,6 +711,7 @@ public class StatusEffects : MonoBehaviour {
     }
     public void StopStun() {
         stunned = false;
+        stunParticles.SetActive(false);
         StopCoroutine(stunCounter);
         CommenceEnemyAI();
     }
@@ -716,6 +719,12 @@ public class StatusEffects : MonoBehaviour {
     private IEnumerator Stun(float duration) {
         // Stun here
         stunned = true;
+        stunParticles = ObjectPooler.objectPooler.GetPooledObject("StunParticles");
+        stunParticles.GetComponent<Particles>().duration = duration;
+        stunParticles.transform.parent = transform;
+        stunParticles.transform.position = transform.position;
+        stunParticles.transform.rotation = transform.rotation;
+        stunParticles.SetActive(true);
         InterruptEnemyAI();
         /*
         if(enemy)

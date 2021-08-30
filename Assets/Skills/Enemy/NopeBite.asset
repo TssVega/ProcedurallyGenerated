@@ -24,9 +24,8 @@ MonoBehaviour:
   channelingTime: 0.5
   castTime: 1
   cooldown: 4
-  aiRange: 1.5
+  aiRange: 1.2
   channelingParticleNames: []
-  castingParticleNames: []
   particleNames: []
   channelingAnimationName: Bite
   castingAnimationName: 

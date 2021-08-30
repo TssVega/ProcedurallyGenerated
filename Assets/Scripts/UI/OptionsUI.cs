@@ -112,12 +112,18 @@ public class OptionsUI : MonoBehaviour {
 
         if(!PlayerPrefs.HasKey("fx")) {
             fxValue = 1f;
+            PlayerPrefs.SetFloat("fx", 1f);
+            PlayerPrefs.Save();
         }
         if(!PlayerPrefs.HasKey("music")) {
             musicValue = 1f;
+            PlayerPrefs.SetFloat("music", 1f);
+            PlayerPrefs.Save();
         }
         if(!PlayerPrefs.HasKey("mute")) {
             muteValue = 0;
+            PlayerPrefs.SetInt("mute", 0);
+            PlayerPrefs.Save();
         }
 
         if(muteValue == 0) {

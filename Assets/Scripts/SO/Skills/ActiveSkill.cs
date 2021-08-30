@@ -11,7 +11,6 @@ public class ActiveSkill : Skill {
     public float cooldown;
     public float aiRange;
     public string[] channelingParticleNames;
-    public string[] castingParticleNames;
     public string[] particleNames;
     public string channelingAnimationName;
     public string castingAnimationName;

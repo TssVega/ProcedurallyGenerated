@@ -6,4 +6,5 @@ using UnityEngine;
 public class DashData {
 
     public float dashMultiplier;
+    public float dashDuration;
 }

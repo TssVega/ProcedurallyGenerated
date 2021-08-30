@@ -27,7 +27,8 @@ MonoBehaviour:
   castTime: 0.2
   cooldown: 0
   aiRange: 0
-  channelingParticleNames: []
+  channelingParticleNames:
+  - SwipeAttack
   castingParticleNames: []
   particleNames: []
   channelingAnimationName: Swipe

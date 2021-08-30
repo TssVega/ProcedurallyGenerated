@@ -41,8 +41,9 @@ public class PlayerController : MonoBehaviour {
     private void OnEnable() {
         lockedOn = false;
         if(autoLock) {
-            StartCoroutine(AutoLock());
-        }        
+            StartCoroutine(AutoLock());            
+        }
+        StartCoroutine(CheckLockUI());
     }
     // Get input
     private void Update() {
@@ -85,6 +86,15 @@ public class PlayerController : MonoBehaviour {
             }
         }
     }
+    private IEnumerator CheckLockUI() {
+        while(true) {
+            lockUI.SetUIVisibility(fov.visibleTargets.Count > 0);
+            if(lockUI) {
+                lockUI.CheckLock();
+            }
+            yield return new WaitForSeconds(1f);            
+        }        
+    }
     private void GetInput() {
         // Input
         if(joystick) {
@@ -96,11 +106,9 @@ public class PlayerController : MonoBehaviour {
         
         // Check if there is a nearest enemy
         if(!nearestEnemy || !nearestEnemy.gameObject.activeSelf) {
-            lockedOn = false;
-            if(lockUI) {
-                lockUI.CheckLock();
-            }
+            lockedOn = false;            
         }
+        
 #if UNITY_EDITOR
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
