@@ -8,6 +8,7 @@ public class LevelLayout {
     public string seed;
 
     public Vector2Int worldCoordinates;
+    public int biomeIndex = 0;
 
     public int levelSize = 32;
 

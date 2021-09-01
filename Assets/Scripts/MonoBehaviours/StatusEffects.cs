@@ -289,6 +289,7 @@ public class StatusEffects : MonoBehaviour {
         stats.health -= damage;
         if(enemyAI) {
             enemyAI.hostile = true;
+            enemyAI.transform.eulerAngles = new Vector3(0, 0, Vector3.SignedAngle(Vector3.up, attacker.transform.position - transform.position, Vector3.forward));
         }
         if(statusUI) {
             statusUI.UpdateHealth(stats.health / stats.maxHealth, stats.health);
@@ -319,6 +320,9 @@ public class StatusEffects : MonoBehaviour {
     private void Die() {
         if(player && deathPanel) {
             deathPanel.gameObject.SetActive(true);
+        }
+        if(enemyAI) {
+            Spawner.spawner.RemoveEntity(gameObject);
         }
         stats.Die();
     }

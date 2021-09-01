@@ -12,8 +12,6 @@ public class EnemyAI : MonoBehaviour {
     private FieldOfView fov;
     private Stats stats;
 
-    private Vector3 startingPosition;
-
     public float roamTime = 3f;
     public float roamRange = 5f;
     public float timeBetweenSkills = 0.5f;
@@ -27,20 +25,22 @@ public class EnemyAI : MonoBehaviour {
     public string walkAnimationName;
     public string idleAnimationName;
 
+    public LevelGeneration level;
+
     private void Awake() {
         stats = GetComponent<Stats>();
         fov = GetComponent<FieldOfView>();
         skillUser = GetComponent<SkillUser>();
         enemyAnimator = GetComponent<Animator>();
         destinationSetter = GetComponent<AIDestinationSetter>();
-        aiPath = GetComponent<AIPath>();
-        speed = aiPath.maxSpeed;
+        aiPath = GetComponent<AIPath>();        
     }
     private void OnEnable() {
         moving = false;
         roaming = false;
-        startingPosition = transform.position;
         aiPath.canMove = true;
+        speed = aiPath.maxSpeed;
+        aiPath.destination = transform.position;
         StartCoroutine(Roam());
     }
     private void OnDisable() {
@@ -75,12 +75,17 @@ public class EnemyAI : MonoBehaviour {
         yield return new WaitForSeconds(Random.Range(roamTime, roamTime * 2));
         if(!destinationSetter.target) {
             roaming = true;
-            aiPath.destination = GetRoamingPosition();
+            if(level) {
+                aiPath.destination = GetRoamingPosition();
+            }            
         }
         else {
             roaming = false;
         }
         StartCoroutine(Roam());
+    }
+    public void SetLevel(LevelGeneration level) {
+        this.level = level;
     }
     public void Enrage() {
         if(willDefendItself && hostile) {
@@ -112,7 +117,7 @@ public class EnemyAI : MonoBehaviour {
         }              
     }
     private Vector3 GetRoamingPosition() {
-        return startingPosition + GetRandomDirection() * Random.Range(roamRange, roamRange * 2);
+        return level.GetRandomLocation();
     }
     private Vector3 GetRandomDirection() {
         return new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;

@@ -31,7 +31,7 @@ public class LevelGeneration : MonoBehaviour {
     private MushroomGeneration mushroomGeneration;
 
     private List<Vector3Int> wallCoordinates;
-    private const int torchCount = 2;
+    private const int torchCount = 1;
 
     private List<GameObject> torches;
 
@@ -503,8 +503,6 @@ public class LevelGeneration : MonoBehaviour {
                         }
                     }
                     catch(IndexOutOfRangeException) {
-                        // This block is to ignore out of index placements of tiles
-                        // Do not touch!
                         if(y + 1 == layout.levelSize && x == layout.levelSize / 2 - 3) {
                             // 8
                             int id = 8;

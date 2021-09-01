@@ -160,8 +160,8 @@ public class WorldGeneration : MonoBehaviour {
                 }
                 if(!CheckBounds(x, y)) {
                     continue;
-                }                
-                if(x == world.currentCoordinates[0] && y == world.currentCoordinates[1]) {
+                }
+                if(x == world.currentCoordinates[0] && y == world.currentCoordinates[1]) {                    
                     mapPanel.SetCursor(new Vector2Int(x, y));
                     aStarPath.graphs[0].active.data.gridGraph.center = new Vector3Int(levelSize * x, levelSize * y, 0);
                     StartCoroutine(ScanPath());
@@ -181,13 +181,20 @@ public class WorldGeneration : MonoBehaviour {
                 levelClone.transform.rotation = Quaternion.identity;
                 LevelGeneration levelGen = levelClone.GetComponent<LevelGeneration>();
                 levels.Add(levelGen);
+                if(x != world.currentCoordinates[0] || y != world.currentCoordinates[1]) {
+                    Spawner.spawner.AddSideLevel(levelGen);
+                }
+                else if(x == world.currentCoordinates[0] && y == world.currentCoordinates[1]) {
+                    Spawner.spawner.RemoveSideLevel(levelGen);
+                }
                 currentRenderedLevels.Add(new Vector2Int(x, y));
                 string xCoord = GetNumberWithZeroesInIgsignificantBits(x);
                 string yCoord = GetNumberWithZeroesInIgsignificantBits(y);
                 string levelSeed = $"{WorldSeed}{xCoord}{yCoord}";
                 levelGen.layout = new LevelLayout(levelSeed) {
                     worldCoordinates = new Vector2Int(x, y),
-                    worldSize = worldSize
+                    worldSize = worldSize,
+                    biomeIndex = WorldMap[x, y]                    
                 };
                 levelClone.SetActive(true);                              
                 /*
@@ -220,8 +227,9 @@ public class WorldGeneration : MonoBehaviour {
             int yDifference = Mathf.Abs(levels[i].layout.worldCoordinates.y - world.currentCoordinates[1]);
             if(xDifference + yDifference > 1) {
                 levels[i].UnloadLevel();
+                Spawner.spawner.RemoveSideLevel(levels[i]);
                 levels.RemoveAt(i);
-                currentRenderedLevels.RemoveAt(i);
+                currentRenderedLevels.RemoveAt(i);                
             }
         }
     }
