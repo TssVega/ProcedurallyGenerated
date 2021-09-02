@@ -111,6 +111,9 @@ public class StatusEffects : MonoBehaviour {
         //}
         //bar = GetComponent<StatusBar>();
         originalSpeed = stats.runSpeed;
+        if(enemyAI) {
+            enemyAI.speed = originalSpeed;
+        }        
         DefaultStatusValues();
         if(statusUI) {
             statusUI.UpdateHealth(stats.health / stats.maxHealth, stats.health);
@@ -355,6 +358,7 @@ public class StatusEffects : MonoBehaviour {
     private void InterruptEnemyAI() {
         if(aiPath) {
             aiPath.canMove = false;
+            aiPath.destination = aiPath.transform.position;
         }        
     }
     private void CommenceEnemyAI() {

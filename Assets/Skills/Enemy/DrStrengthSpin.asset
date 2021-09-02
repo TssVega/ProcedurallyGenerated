@@ -10,30 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 93330a1eca1b3204e8a2a27076590790, type: 3}
-  m_Name: Swipe
+  m_Name: DrStrengthSpin
   m_EditorClassIdentifier: 
-  skillIndex: 0
-  skillName: swipe
-  skillDescription: 'Swipe
-
-'
+  skillIndex: 7
+  skillName: Dr. Strength Spin
+  skillDescription: 
   skillIcon: {fileID: 0}
   interruptable: 0
-  attackType: 0
+  attackType: 2
   skillPointsNeeded: 0
   manaCost: 0
-  focusedSkill: 0
-  channelingTime: 0.1
-  castTime: 0.2
-  cooldown: 0
-  aiRange: 0
+  focusedSkill: 1
+  channelingTime: 0.5
+  castTime: 1
+  cooldown: 5
+  aiRange: 1.5
   channelingParticleNames:
-  - SwipeAttack
+  - DrStrengthSpinParticles
   particleNames: []
-  channelingAnimationName: Swipe
-  castingAnimationName: 
-  idleAnimationName: Idle
-  damageRate: 0.5
-  duration: 0.1
-  hitbox: {fileID: 6890043100139161156, guid: 3ec92c4a7cc49364da510a88805e9d5e, type: 3}
+  channelingAnimationName: DrStrengthSpinChanneling
+  castingAnimationName: DrStrengthSpin
+  idleAnimationName: DrStrengthIdle
+  damageRate: 0.2
+  duration: 1
+  hitbox: {fileID: 6890043100139161156, guid: 4eff8b76ff273334cb6417e331857d2c, type: 3}
   warn: 0
+  push: 1

@@ -27,14 +27,11 @@ MonoBehaviour:
   aiRange: 0
   channelingParticleNames:
   - BashAttack
-  castingParticleNames: []
   particleNames: []
   channelingAnimationName: Bash
   castingAnimationName: 
   idleAnimationName: Idle
-  damageRate: 0
-  duration: 0
-  totalHits: 1
-  movementSpeed: 0
-  movementVector: {x: 0, y: 0}
+  damageRate: 0.7
+  duration: 0.1
   hitbox: {fileID: 6890043100139161156, guid: 9b6fa8579b551ca4bad10ad5efe0d696, type: 3}
+  warn: 0

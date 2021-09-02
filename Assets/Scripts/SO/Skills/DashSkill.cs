@@ -7,6 +7,8 @@ public class DashSkill : ActiveSkill {
 
     public DashData dashData;
 
+    private const float dashMultiplier = 0.1f;
+
     public override void Launch(StatusEffects status, Stats stats) {
         Move(status.GetComponent<Rigidbody2D>(), stats);
     }
@@ -14,7 +16,7 @@ public class DashSkill : ActiveSkill {
         Rigidbody2D rb2d = dasher.GetComponent<Rigidbody2D>();
         if(rb2d) {
             // Debug.Log("Dashing by " + dasher.transform.up.normalized * dasherStats.agility * dashData.dashMultiplier);
-            rb2d.velocity = dasher.transform.up.normalized * dasherStats.agility * dashData.dashMultiplier;
+            rb2d.velocity = dasher.transform.up.normalized * dasherStats.agility * dashData.dashMultiplier * dashMultiplier;
         }
     }
 }

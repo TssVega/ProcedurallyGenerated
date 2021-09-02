@@ -305,7 +305,7 @@ public class SkillUser : MonoBehaviour {
         PlayAnimation(area.castingAnimationName);
         if(area.hitbox) {
             area.Launch(stats);
-        }
+        }        
         yield return new WaitForSeconds(area.castTime);
         List<GameObject> particles = new List<GameObject>();
         for(int i = 0; i < area.particleNames.Length; i++) {
@@ -317,7 +317,7 @@ public class SkillUser : MonoBehaviour {
             particles[i].transform.rotation = transform.rotation;
             particles[i].SetActive(true);
             particles[i].GetComponent<ParticleSystem>().Play();
-        }                
+        }
         StopAnimation(area);
     }
     private IEnumerator StartBlockSkill(BlockSkill block) {

@@ -10,30 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 93330a1eca1b3204e8a2a27076590790, type: 3}
-  m_Name: Swipe
+  m_Name: DrStrengthSlam
   m_EditorClassIdentifier: 
-  skillIndex: 0
-  skillName: swipe
-  skillDescription: 'Swipe
-
-'
+  skillIndex: 5
+  skillName: Dr. Strength Slam
+  skillDescription: 
   skillIcon: {fileID: 0}
   interruptable: 0
-  attackType: 0
+  attackType: 2
   skillPointsNeeded: 0
   manaCost: 0
-  focusedSkill: 0
-  channelingTime: 0.1
-  castTime: 0.2
-  cooldown: 0
-  aiRange: 0
+  focusedSkill: 1
+  channelingTime: 1
+  castTime: 0.5
+  cooldown: 5
+  aiRange: 1
   channelingParticleNames:
-  - SwipeAttack
+  - DrStrengthSlamParticles
   particleNames: []
-  channelingAnimationName: Swipe
+  channelingAnimationName: DrStrengthSlam
   castingAnimationName: 
-  idleAnimationName: Idle
-  damageRate: 0.5
+  idleAnimationName: DrStrengthIdle
+  damageRate: 0.4
   duration: 0.1
-  hitbox: {fileID: 6890043100139161156, guid: 3ec92c4a7cc49364da510a88805e9d5e, type: 3}
+  hitbox: {fileID: 6890043100139161156, guid: 9b6fa8579b551ca4bad10ad5efe0d696, type: 3}
   warn: 0
+  push: 1

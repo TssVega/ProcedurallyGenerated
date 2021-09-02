@@ -7,7 +7,6 @@ public class Hitbox : MonoBehaviour {
     private int team;
     private AreaSkill skill;
     private Stats attackerStats;
-    private readonly float time = 0.1f;
     private float timer;
 
     public void SetTeam(int team) {
@@ -15,12 +14,10 @@ public class Hitbox : MonoBehaviour {
     }
     public void SetSkill(AreaSkill skill) {
         this.skill = skill;
+        timer = skill.duration;
     }
     public void SetAttackerStats(Stats attackerStats) {
         this.attackerStats = attackerStats;
-    }
-    private void OnEnable() {
-        timer = time;
     }
     private void Update() {
         if(timer > 0f) {
@@ -30,7 +27,7 @@ public class Hitbox : MonoBehaviour {
             }
         }
     }
-    private void OnTriggerEnter2D(Collider2D collision) {
+    private void OnTriggerEnter2D(Collider2D collision) {        
         Stats collisionStats = collision.GetComponent<Stats>();
         StatusEffects collisionStatus = collision.GetComponent<StatusEffects>();
         if(collisionStats && collisionStats.team != team) {

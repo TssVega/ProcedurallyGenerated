@@ -27,14 +27,11 @@ MonoBehaviour:
   aiRange: 0
   channelingParticleNames:
   - ThrustAttack
-  castingParticleNames: []
   particleNames: []
   channelingAnimationName: Thrust
   castingAnimationName: 
   idleAnimationName: Idle
   damageRate: 0.5
-  duration: 0
-  totalHits: 1
-  movementSpeed: 0
-  movementVector: {x: 0, y: 0}
+  duration: 0.1
   hitbox: {fileID: 6890043100139161156, guid: e15f05b17f5d7fb47b4d0a415a1d0f5f, type: 3}
+  warn: 0

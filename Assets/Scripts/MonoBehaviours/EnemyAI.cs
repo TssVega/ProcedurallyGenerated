@@ -13,7 +13,6 @@ public class EnemyAI : MonoBehaviour {
     private Stats stats;
 
     public float roamTime = 3f;
-    public float roamRange = 5f;
     public float timeBetweenSkills = 0.5f;
     [HideInInspector] public float speed = 3f;
 
@@ -82,7 +81,9 @@ public class EnemyAI : MonoBehaviour {
         else {
             roaming = false;
         }
-        StartCoroutine(Roam());
+        if(stats.living) {
+            StartCoroutine(Roam());
+        }        
     }
     public void SetLevel(LevelGeneration level) {
         this.level = level;

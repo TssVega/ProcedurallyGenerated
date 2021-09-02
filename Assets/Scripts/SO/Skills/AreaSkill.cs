@@ -7,10 +7,11 @@ public class AreaSkill : ActiveSkill {
 
     public float damageRate;
     public float duration;
-    public float totalHits;
-    public float movementSpeed;
-    public Vector2 movementVector;
     public GameObject hitbox;
+    public bool warn = false;
+    [Tooltip("Negative values pull and positive values push back")]
+    [Range(-10, 10)]
+    public float push = 0;
     
     public override void Activate(StatusEffects targetStatus, Stats attackerStats) {
         /*GameObject clone = ObjectPooler.objectPooler.GetPooledObject(hitbox.name);
@@ -19,6 +20,7 @@ public class AreaSkill : ActiveSkill {
         clone.SetActive(true);*/
         targetStatus.TakeDamage(DamageFromDamageType.GetDamage(attackType, attackerStats)
             * damageRate, attackType, this, attackerStats.status);
+        targetStatus.StartAirPush(push, attackerStats.transform);
     }
     public override void Launch(Stats attackerStats) {
         GameObject hitboxObject = ObjectPooler.objectPooler.GetPooledObject(hitbox.name);
