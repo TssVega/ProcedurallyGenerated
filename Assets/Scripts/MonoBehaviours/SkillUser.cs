@@ -368,7 +368,7 @@ public class SkillUser : MonoBehaviour {
     private void CountCooldowns() {
         for(int i = 0; i < skillCooldowns.Count; i++) {
             if(skillCooldowns[i] <= 0) {
-                continue;                
+                continue;
             }
             if(skillCooldowns[i] > 0) {
                 skillCooldowns[i] -= Time.deltaTime;

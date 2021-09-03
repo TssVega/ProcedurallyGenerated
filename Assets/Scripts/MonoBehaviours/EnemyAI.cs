@@ -18,7 +18,8 @@ public class EnemyAI : MonoBehaviour {
 
     private bool moving = false;
     private bool roaming = false;
-    public bool hostile = false;            // Will it attack enemies on sight?
+    public bool hostility = false;          // Will it attack enemies on sight?
+    public bool hostile = false;            // Current hostility status
     public bool willDefendItself = true;    // Will this entity defend itself if it gets attacked?
 
     public string walkAnimationName;
@@ -40,6 +41,8 @@ public class EnemyAI : MonoBehaviour {
         aiPath.canMove = true;
         speed = aiPath.maxSpeed;
         aiPath.destination = transform.position;
+        destinationSetter.target = null;
+        hostile = hostility;
         StartCoroutine(Roam());
     }
     private void OnDisable() {

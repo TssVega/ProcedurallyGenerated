@@ -28,7 +28,6 @@ MonoBehaviour:
   cooldown: 2
   aiRange: 5
   channelingParticleNames: []
-  castingParticleNames: []
   particleNames:
   - BatPoison
   channelingAnimationName: 
@@ -49,3 +48,22 @@ MonoBehaviour:
     angleDifference: 90
     timeDifference: 0
     homing: 0
+    push: 0
+    poisonStacks: 35
+    poisonDuration: 25
+    bloodStacks: 0
+    bleedDuration: 0
+    curseStacks: 0
+    curseDuration: 0
+    fireStacks: 0
+    fireDuration: 0
+    iceStacks: 0
+    iceDuration: 0
+    iceDamageMultiplier: 1
+    lightningStacks: 0
+    shockDuration: 0
+    earthStacks: 0
+    earthenDuration: 0
+    earthenHeal: 0
+    lightStacks: 0
+    litDuration: 0

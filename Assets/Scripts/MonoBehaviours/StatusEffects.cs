@@ -15,6 +15,7 @@ public class StatusEffects : MonoBehaviour {
     public HitWarning hitWarning;
     private Stats stats;
     private Passives passives;
+    private Rigidbody2D rb2d;
     //private StatusBar bar;
     //public StatusParticles statusParticles;
     // Coroutines
@@ -63,6 +64,7 @@ public class StatusEffects : MonoBehaviour {
     public bool chanelling = false;
     public bool blocking = false;
     public bool parrying = false;
+    // Stacks
     [Header("Status Effect Counters")]
     private int lightningStacks = 0;
     private bool lightningStacksCounterRunning = false;
@@ -106,6 +108,7 @@ public class StatusEffects : MonoBehaviour {
         //enemy = GetComponent<Enemy>();
         stats = GetComponent<Stats>();
         passives = GetComponent<Passives>();
+        rb2d = GetComponent<Rigidbody2D>();
         //if(enemy) {
         //    stats.walkSpeed = enemy.enemy.speed;
         //}
@@ -171,6 +174,9 @@ public class StatusEffects : MonoBehaviour {
         chanelling = false;
         blocking = false;
         parrying = false;
+        if(stunParticles && stunParticles.activeInHierarchy) {
+            stunParticles.SetActive(false);
+        }        
     }
     public void Heal(float amount) {
         stats.health += Mathf.Clamp(amount, 0, stats.maxHealth - stats.health);
@@ -290,6 +296,7 @@ public class StatusEffects : MonoBehaviour {
         }
         damage = Mathf.Clamp(damage, 0f, stats.maxDamageTimesHealth * stats.maxHealth);
         stats.health -= damage;
+        GenerateBloodParticles();
         if(enemyAI) {
             enemyAI.hostile = true;
             enemyAI.transform.eulerAngles = new Vector3(0, 0, Vector3.SignedAngle(Vector3.up, attacker.transform.position - transform.position, Vector3.forward));
@@ -320,9 +327,16 @@ public class StatusEffects : MonoBehaviour {
             enemy.EnemyDie();
         }*/
     }
+    private void GenerateBloodParticles() {
+        GameObject blood = ObjectPooler.objectPooler.GetPooledObject("BloodTrails");
+        blood.transform.position = transform.position;
+        blood.transform.rotation = Quaternion.identity;
+        blood.SetActive(true);
+    }
     private void Die() {
         if(player && deathPanel) {
             deathPanel.gameObject.SetActive(true);
+            deathPanel.DeathPanelInit();
         }
         if(enemyAI) {
             Spawner.spawner.RemoveEntity(gameObject);
@@ -579,12 +593,12 @@ public class StatusEffects : MonoBehaviour {
         poisoned = false;
     }
     private IEnumerator Poison(float duration, float damage, float periodTimeDecrease, Skill skill, StatusEffects attacker) {
-        float period = 10f;
+        float period = 1f;
         bool done = false;
         poisoned = true;
         while(!done) {
             yield return new WaitForSeconds(period);
-            TakeDamage(damage, AttackType.Poison, skill, attacker);
+            TakeDamage(damage / duration, AttackType.Poison, skill, attacker);
             duration -= period;
             period = period <= 1 ? 1 : period -= periodTimeDecrease;
             if(duration <= 0) {
@@ -601,8 +615,8 @@ public class StatusEffects : MonoBehaviour {
     public void CheckBleedStacks(float duration, float damage, Skill skill, StatusEffects attacker) {
         if(bleedStacks >= stats.bleedThreshold) {
             bleedStacks = 0;
-            float bleedDamageIncrease = damage / 4f;
-            // Increase bleed damage by damage / 4 per tick
+            float bleedDamageIncrease = damage * 0.2f;
+            // Increase bleed damage by damage / 5 per tick
             StartBleed(duration, damage, bleedDamageIncrease, skill, attacker);
         }
         else if(bleedStacks > 0) {
@@ -638,12 +652,12 @@ public class StatusEffects : MonoBehaviour {
         bleeding = false;
     }
     public IEnumerator Bleed(float duration, float damage, float damageIncrease, Skill skill, StatusEffects attacker) {
-        float period = 5f;
+        float period = 0.5f;
         bool done = false;
         bleeding = true;
         while(!done) {
             yield return new WaitForSeconds(period);
-            TakeDamage(damage, AttackType.Bleed, skill, attacker);
+            TakeDamage(damage / duration, AttackType.Bleed, skill, attacker);
             duration -= period;
             damage += damageIncrease;
             if(duration <= 0) {
@@ -701,7 +715,7 @@ public class StatusEffects : MonoBehaviour {
         cursed = true;
         while(!done) {
             yield return new WaitForSeconds(period);
-            TakeDamage(damage, AttackType.Curse, skill, attacker);
+            TakeDamage(damage / duration, AttackType.Curse, skill, attacker);
             duration -= period;
             if(duration <= 0) {
                 done = true;
@@ -903,6 +917,7 @@ public class StatusEffects : MonoBehaviour {
         immobilized = false;
     }
     private IEnumerator AirPush(float pushDistance, Transform attackerPosition) {
+        /*
         float currentTime = 0;
         const float speedMultiplier = 4;
         Vector2 startPos = transform.position;
@@ -915,6 +930,11 @@ public class StatusEffects : MonoBehaviour {
             currentTime += Time.deltaTime;
             yield return null;
         }
+        immobilized = false;*/
+        float multiplier = 100f;
+        immobilized = true;
+        rb2d.AddForce((transform.position - attackerPosition.position).normalized * pushDistance * multiplier);
+        yield return new WaitForSeconds(1f);
         immobilized = false;
     }
     public void StartTimeBomb(float seconds, float damage, AttackType attackType, Skill skill, StatusEffects attacker) {

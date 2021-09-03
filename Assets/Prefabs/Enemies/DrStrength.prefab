@@ -372,6 +372,7 @@ MonoBehaviour:
   roamTime: 10
   timeBetweenSkills: 2
   speed: 3
+  hostility: 1
   hostile: 1
   willDefendItself: 1
   walkAnimationName: DrStrengthWalk

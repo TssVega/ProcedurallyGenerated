@@ -35,4 +35,24 @@ MonoBehaviour:
   duration: 1
   hitbox: {fileID: 6890043100139161156, guid: 4eff8b76ff273334cb6417e331857d2c, type: 3}
   warn: 0
-  push: 1
+  stunDuration: 0
+  immobilizeDuration: 0
+  push: 2
+  poisonStacks: 0
+  poisonDuration: 0
+  bloodStacks: 0
+  bleedDuration: 0
+  curseStacks: 0
+  curseDuration: 0
+  fireStacks: 0
+  fireDuration: 0
+  iceStacks: 0
+  iceDuration: 0
+  iceDamageMultiplier: 1
+  lightningStacks: 0
+  shockDuration: 0
+  earthStacks: 0
+  earthenDuration: 0
+  earthenHeal: 0
+  lightStacks: 0
+  litDuration: 0

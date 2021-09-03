@@ -19,4 +19,25 @@ public class ProjectileData {
     public float angleDifference;
     public float timeDifference = 0.5f;
     public bool homing;
+    [Range(-10f, 10f)]
+    public float push;
+    [Header("Stacks")]
+    public int poisonStacks = 0;
+    public float poisonDuration = 0f;
+    public int bloodStacks = 0;
+    public float bleedDuration = 0f;
+    public int curseStacks = 0;
+    public float curseDuration = 0f;
+    public int fireStacks = 0;
+    public float fireDuration = 0f;
+    public int iceStacks = 0;
+    public float iceDuration = 0f;
+    public float iceDamageMultiplier = 1f;
+    public int lightningStacks = 0;
+    public float shockDuration = 0f;
+    public int earthStacks = 0;
+    public float earthenDuration = 0f;
+    public float earthenHeal = 0f;
+    public int lightStacks = 0;
+    public float litDuration = 0f;
 }
