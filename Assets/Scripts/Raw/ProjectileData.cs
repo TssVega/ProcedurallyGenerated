@@ -10,7 +10,7 @@ public class ProjectileData {
     public float damageRate;
     public float rotationSpeed;
     public float projectileSpeed;
-    public float hitTime;
+    public float radius;
     public float lifetime;
     public float stunDuration;
     public float immobilizeDuration;

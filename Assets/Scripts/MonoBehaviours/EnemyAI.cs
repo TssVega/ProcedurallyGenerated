@@ -18,6 +18,7 @@ public class EnemyAI : MonoBehaviour {
 
     private bool moving = false;
     private bool roaming = false;
+    public bool attacked = false;
     public bool hostility = false;          // Will it attack enemies on sight?
     public bool hostile = false;            // Current hostility status
     public bool willDefendItself = true;    // Will this entity defend itself if it gets attacked?

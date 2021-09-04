@@ -27,7 +27,6 @@ MonoBehaviour:
   aiRange: 10
   channelingParticleNames:
   - NopeWebChanneling
-  castingParticleNames: []
   particleNames:
   - NopeWebProj
   channelingAnimationName: 
@@ -39,7 +38,7 @@ MonoBehaviour:
     damageRate: 0.2
     rotationSpeed: 0
     projectileSpeed: 8
-    hitTime: 0
+    radius: 0.3
     lifetime: 3
     stunDuration: 3
     immobilizeDuration: 0
@@ -48,3 +47,22 @@ MonoBehaviour:
     angleDifference: 0
     timeDifference: 0.1
     homing: 0
+    push: 0
+    poisonStacks: 0
+    poisonDuration: 0
+    bloodStacks: 0
+    bleedDuration: 0
+    curseStacks: 0
+    curseDuration: 0
+    fireStacks: 0
+    fireDuration: 0
+    iceStacks: 0
+    iceDuration: 0
+    iceDamageMultiplier: 1
+    lightningStacks: 0
+    shockDuration: 0
+    earthStacks: 0
+    earthenDuration: 0
+    earthenHeal: 0
+    lightStacks: 0
+    litDuration: 0

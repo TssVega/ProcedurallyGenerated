@@ -200,9 +200,11 @@ MonoBehaviour:
   acquiredSkills:
   - {fileID: 11400000, guid: a5ce0667f44c24149af4d76f83c9a84e, type: 2}
   - {fileID: 11400000, guid: 7cf044ae07f492d47be41ff3c7faec19, type: 2}
+  - {fileID: 11400000, guid: a9299a9165bfa664c868a506182a5982, type: 2}
   currentSkills:
   - {fileID: 11400000, guid: a5ce0667f44c24149af4d76f83c9a84e, type: 2}
   - {fileID: 11400000, guid: 7cf044ae07f492d47be41ff3c7faec19, type: 2}
+  - {fileID: 11400000, guid: a9299a9165bfa664c868a506182a5982, type: 2}
   skillCooldowns: []
   projectileExitPos: {fileID: 1553987816437929316}
   animator: {fileID: 1553987817055991836}
@@ -322,6 +324,7 @@ MonoBehaviour:
   roamTime: 3
   timeBetweenSkills: 1
   speed: 3
+  hostility: 0
   hostile: 0
   willDefendItself: 1
   walkAnimationName: Fly

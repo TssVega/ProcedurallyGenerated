@@ -15,14 +15,14 @@ public class StatusUI : MonoBehaviour {
 
     public void UpdateHealth(float rate, float amount) {
         healthBar.fillAmount = rate;
-        healthText.text = amount.ToString();
+        healthText.text = ((int)amount).ToString();
     }
     public void UpdateMana(float rate, float amount) {
         manaBar.fillAmount = rate;
-        manaText.text = amount.ToString();
+        manaText.text = ((int)amount).ToString();
     }
     public void UpdateEnergy(float rate, float amount) {
         energyBar.fillAmount = rate;
-        energyText.text = amount.ToString();
+        energyText.text = ((int)amount).ToString();
     }
 }

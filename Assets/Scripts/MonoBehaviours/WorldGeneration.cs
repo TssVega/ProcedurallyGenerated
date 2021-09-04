@@ -128,6 +128,7 @@ public class WorldGeneration : MonoBehaviour {
         //ChangeLastCoordinates(new Vector2Int(world.currentCoordinates[0], world.currentCoordinates[1]));
         world.currentCoordinates = new[] { coordinates.x, coordinates.y};
         GenerateCurrentLevels();
+        SetSideLevels();
     }
     public void ChangeLastCoordinates(Vector2Int coordinates) {
         world.lastCoordinates = new[] { coordinates.x, coordinates.y};
@@ -181,12 +182,13 @@ public class WorldGeneration : MonoBehaviour {
                 levelClone.transform.rotation = Quaternion.identity;
                 LevelGeneration levelGen = levelClone.GetComponent<LevelGeneration>();
                 levels.Add(levelGen);
+                /*
                 if(x != world.currentCoordinates[0] || y != world.currentCoordinates[1]) {
                     Spawner.spawner.AddSideLevel(levelGen);
                 }
                 else if(x == world.currentCoordinates[0] && y == world.currentCoordinates[1]) {
                     Spawner.spawner.RemoveSideLevel(levelGen);
-                }
+                }*/
                 currentRenderedLevels.Add(new Vector2Int(x, y));
                 string xCoord = GetNumberWithZeroesInIgsignificantBits(x);
                 string yCoord = GetNumberWithZeroesInIgsignificantBits(y);
@@ -230,6 +232,14 @@ public class WorldGeneration : MonoBehaviour {
                 Spawner.spawner.RemoveSideLevel(levels[i]);
                 levels.RemoveAt(i);
                 currentRenderedLevels.RemoveAt(i);                
+            }
+        }
+    }
+    private void SetSideLevels() {
+        Spawner.spawner.ClearSideLevels();
+        for(int i = 0; i < levels.Count; i++) {
+            if(world.currentCoordinates[0] != levels[i].layout.worldCoordinates.x || world.currentCoordinates[1] != levels[i].layout.worldCoordinates.y) {
+                Spawner.spawner.AddSideLevel(levels[i]);
             }
         }
     }

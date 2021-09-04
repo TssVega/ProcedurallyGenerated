@@ -297,9 +297,12 @@ public class StatusEffects : MonoBehaviour {
         damage = Mathf.Clamp(damage, 0f, stats.maxDamageTimesHealth * stats.maxHealth);
         stats.health -= damage;
         GenerateBloodParticles();
-        if(enemyAI) {
+        if(enemyAI && enemyAI.willDefendItself) {            
+            if(!stunned && !chanelling && !immobilized && !enemyAI.attacked) {
+                enemyAI.transform.eulerAngles = new Vector3(0, 0, Vector3.SignedAngle(Vector3.up, attacker.transform.position - transform.position, Vector3.forward));
+            }
             enemyAI.hostile = true;
-            enemyAI.transform.eulerAngles = new Vector3(0, 0, Vector3.SignedAngle(Vector3.up, attacker.transform.position - transform.position, Vector3.forward));
+            enemyAI.attacked = true;
         }
         if(statusUI) {
             statusUI.UpdateHealth(stats.health / stats.maxHealth, stats.health);

@@ -16,10 +16,12 @@ public class SkillUser : MonoBehaviour {
     private Player player;
     private Enemy enemy;
     private Inventory inventory;
+    private FieldOfView fov;
 
     private void Awake() {
         player = GetComponent<Player>();
         enemy = GetComponent<Enemy>();
+        fov = GetComponent<FieldOfView>();
         skillCooldowns = new List<float>();
         if(player) {
             for(int i = 0; i < skillDatabase.skills.Count; i++) {
@@ -168,6 +170,7 @@ public class SkillUser : MonoBehaviour {
             vect = new Vector2(Mathf.Cos(Mathf.Deg2Rad * angle) * vect.x - Mathf.Sin(Mathf.Deg2Rad * angle) * vect.y, Mathf.Sin(Mathf.Deg2Rad * angle) * vect.x + Mathf.Cos(Mathf.Deg2Rad * angle) * vect.y);
             // Start the projectile
             projectiles[i].GetComponent<Projectile>().SetProjectile(proj, stats);
+            projectiles[i].GetComponent<Projectile>().StartProjectile(fov.GetClosestTarget());
             projectiles[i].transform.position = projectileExitPos.position;
             projectiles[i].transform.rotation = transform.rotation;
             projectiles[i].GetComponent<Projectile>().StartProjectile(vect);

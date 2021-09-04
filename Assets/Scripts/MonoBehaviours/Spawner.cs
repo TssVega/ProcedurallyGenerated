@@ -46,6 +46,9 @@ public class Spawner : MonoBehaviour {
             }
         }
     }
+    public void ClearSideLevels() {
+        sideLevels.Clear();
+    }
     public void RemoveEntity(GameObject entity) {
         entities.Remove(entity);
         density--;

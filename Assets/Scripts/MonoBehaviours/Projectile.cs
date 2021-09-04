@@ -10,9 +10,12 @@ public class Projectile : MonoBehaviour {
     private Vector3 projectileVector;
     private float countdown;
     private Stats attackerStats;
+    private Transform target;
+    private CircleCollider2D circleCollider2D;
 
     private void Awake() {
         rb2d = GetComponent<Rigidbody2D>();
+        circleCollider2D = GetComponent<CircleCollider2D>();
     }
     private void Update() {
         countdown -= Time.deltaTime;
@@ -21,7 +24,16 @@ public class Projectile : MonoBehaviour {
         }
     }
     private void FixedUpdate() {
-        gameObject.transform.position += projectileVector * projectileData.projectileSpeed * Time.fixedDeltaTime;
+        if(projectileData.homing && target) {
+            Vector3 direction = target.position - transform.position;
+            direction.Normalize();
+            float rotateAmount = Vector3.Cross(direction, transform.up).z;
+            rb2d.angularVelocity = -rotateAmount * projectileData.rotationSpeed;
+            rb2d.velocity = transform.up * projectileData.projectileSpeed;
+        }
+        else {
+            gameObject.transform.position += projectileVector * projectileData.projectileSpeed * Time.fixedDeltaTime;
+        }        
     }
     private void OnTriggerEnter2D(Collider2D collision) {
         if(collision.GetComponent<Stats>() && projectileData.team != collision.GetComponent<Stats>().team  ) {
@@ -39,20 +51,18 @@ public class Projectile : MonoBehaviour {
             transform.GetChild(i).gameObject.SetActive(false);
         }
         transform.DetachChildren();
+        target = null;
         gameObject.SetActive(false);
     }
     public void SetProjectile(ProjectileSkill skill, Stats attackerStats) {
         projectileSkill = skill;
         projectileData = skill.projectileData;        
         this.attackerStats = attackerStats;
+        circleCollider2D.radius = projectileData.radius;
     }
     public void StartProjectile(Transform target) {
         if(target) {
-            Vector3 direction = target.position - transform.position;
-            direction.Normalize();
-            float rotateAmount = Vector3.Cross(direction, transform.up).z;
-            rb2d.angularVelocity = -rotateAmount * projectileData.rotationSpeed;
-            rb2d.velocity = transform.up * projectileData.projectileSpeed;
+            this.target = target;
         }
     }
     public void StartProjectile(Vector2 movementVector) {

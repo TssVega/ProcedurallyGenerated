@@ -39,7 +39,7 @@ MonoBehaviour:
     damageRate: 0.3
     rotationSpeed: 0
     projectileSpeed: 4
-    hitTime: 1
+    radius: 0.1
     lifetime: 2
     stunDuration: 0
     immobilizeDuration: 0

@@ -10,46 +10,45 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 06483e1273c0bf64e9475d86de85f9d9, type: 3}
-  m_Name: NopeWebRain
+  m_Name: BatPoisonHoming
   m_EditorClassIdentifier: 
-  skillIndex: 1
-  skillName: Nope Web Rain
-  skillDescription: That spider is really angry
+  skillIndex: 0
+  skillName: 
+  skillDescription: 
   skillIcon: {fileID: 0}
-  interruptable: 1
+  interruptable: 0
   attackType: 10
   skillPointsNeeded: 0
   manaCost: 0
-  focusedSkill: 1
-  channelingTime: 1
-  castTime: 2
-  cooldown: 20
-  aiRange: 10
-  channelingParticleNames:
-  - NopeWebChanneling
+  focusedSkill: 0
+  channelingTime: 0.2
+  castTime: 0.2
+  cooldown: 5
+  aiRange: 6
+  channelingParticleNames: []
   particleNames:
-  - NopeWebProj
+  - BatPoison
   channelingAnimationName: 
   castingAnimationName: 
-  idleAnimationName: SpiderIdle
+  idleAnimationName: 
   projectileData:
-    team: 1
+    team: 2
     arrowSkill: 0
-    damageRate: 0.2
-    rotationSpeed: 0
-    projectileSpeed: 8
-    radius: 0.3
-    lifetime: 3
-    stunDuration: 3
+    damageRate: 0.5
+    rotationSpeed: 200
+    projectileSpeed: 3
+    radius: 0.1
+    lifetime: 6
+    stunDuration: 0
     immobilizeDuration: 0
     penetrates: 0
-    projectileCount: 10
-    angleDifference: 10
-    timeDifference: 0.2
-    homing: 0
+    projectileCount: 1
+    angleDifference: 0
+    timeDifference: 0.5
+    homing: 1
     push: 0
-    poisonStacks: 0
-    poisonDuration: 0
+    poisonStacks: 50
+    poisonDuration: 25
     bloodStacks: 0
     bleedDuration: 0
     curseStacks: 0

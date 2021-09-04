@@ -92,7 +92,6 @@ public class Inventory : MonoBehaviour {
         if(offenceStats.Length <= 0 || offenceStats[0] == null) {
             return;
         }
-        Debug.Log($"stats: {stats}");
         offenceStats[0].text = stats.fireDamage.ToString();
         offenceStats[1].text = stats.iceDamage.ToString();
         offenceStats[2].text = stats.airDamage.ToString();
