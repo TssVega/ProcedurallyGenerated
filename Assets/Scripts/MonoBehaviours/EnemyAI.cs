@@ -44,6 +44,7 @@ public class EnemyAI : MonoBehaviour {
         aiPath.destination = transform.position;
         destinationSetter.target = null;
         hostile = hostility;
+        attacked = false;
         StartCoroutine(Roam());
     }
     private void OnDisable() {
