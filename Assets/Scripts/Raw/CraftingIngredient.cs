@@ -5,6 +5,6 @@ using UnityEngine;
 [System.Serializable]
 public class CraftingIngredient {
 
-    int amount;
-    Item item;
+    public int amount;
+    public Item item;
 }
