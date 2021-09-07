@@ -40,7 +40,8 @@ public class EnemyAI : MonoBehaviour {
         moving = false;
         roaming = false;
         aiPath.canMove = true;
-        speed = aiPath.maxSpeed;
+        speed = stats.runSpeed;
+        aiPath.maxSpeed = speed;
         aiPath.destination = transform.position;
         destinationSetter.target = null;
         hostile = hostility;

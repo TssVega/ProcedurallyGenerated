@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06483e1273c0bf64e9475d86de85f9d9, type: 3}
+  m_Name: AzochFireball
+  m_EditorClassIdentifier: 
+  skillIndex: 0
+  skillName: AzochFireball
+  skillDescription: 
+  skillIcon: {fileID: 0}
+  interruptable: 0
+  attackType: 3
+  skillPointsNeeded: 0
+  manaCost: 0
+  focusedSkill: 1
+  channelingTime: 0.75
+  castTime: 0.5
+  cooldown: 4
+  aiRange: 7
+  channelingParticleNames:
+  - AzochChannelingParticles
+  particleNames:
+  - AzochFire
+  channelingAnimationName: 
+  castingAnimationName: 
+  idleAnimationName: 
+  projectileData:
+    team: 3
+    arrowSkill: 0
+    damageRate: 0.5
+    rotationSpeed: 0
+    projectileSpeed: 6
+    radius: 0.3
+    lifetime: 3
+    stunDuration: 0
+    immobilizeDuration: 0
+    penetrates: 0
+    projectileCount: 1
+    angleDifference: 0
+    timeDifference: 0.5
+    homing: 0
+    push: 0
+    poisonStacks: 0
+    poisonDuration: 0
+    bloodStacks: 0
+    bleedDuration: 0
+    curseStacks: 0
+    curseDuration: 0
+    fireStacks: 30
+    fireDuration: 10
+    iceStacks: 0
+    iceDuration: 0
+    iceDamageMultiplier: 1
+    lightningStacks: 0
+    shockDuration: 0
+    earthStacks: 0
+    earthenDuration: 0
+    earthenHeal: 0
+    lightStacks: 0
+    litDuration: 0

@@ -375,7 +375,7 @@ public class SkillUser : MonoBehaviour {
             }
             if(skillCooldowns[i] > 0) {
                 skillCooldowns[i] -= Time.deltaTime;
-                if(skillDatabase.skills[i] is ProjectileSkill proj && skillCooldowns[i] <= 0) {
+                if(player && skillDatabase.skills[i] is ProjectileSkill proj && skillCooldowns[i] <= 0) {
                     if(proj.projectileData.arrowSkill && player) {
                         for(int j = 0; j < player.tenseBowStrings.Length; j++) {
                             player.tenseBowStrings[j].SetActive(true);
