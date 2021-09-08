@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Pathfinding;
 
 public class SkillUser : MonoBehaviour {
 
@@ -16,11 +17,13 @@ public class SkillUser : MonoBehaviour {
     private Player player;
     private Enemy enemy;
     private Inventory inventory;
+    private AIDestinationSetter destinationSetter;
     private FieldOfView fov;
 
     private void Awake() {
         player = GetComponent<Player>();
         enemy = GetComponent<Enemy>();
+        destinationSetter = GetComponent<AIDestinationSetter>();
         fov = GetComponent<FieldOfView>();
         skillCooldowns = new List<float>();
         if(player) {
@@ -168,12 +171,19 @@ public class SkillUser : MonoBehaviour {
             // x2 = cosβ * x1 − sinβ * y1
             // y2 = sinβ * x1 + cosβ * y1
             vect = new Vector2(Mathf.Cos(Mathf.Deg2Rad * angle) * vect.x - Mathf.Sin(Mathf.Deg2Rad * angle) * vect.y, Mathf.Sin(Mathf.Deg2Rad * angle) * vect.x + Mathf.Cos(Mathf.Deg2Rad * angle) * vect.y);
-            // Start the projectile
-            projectiles[i].GetComponent<Projectile>().SetProjectile(proj, stats);
-            projectiles[i].GetComponent<Projectile>().StartProjectile(fov.GetClosestTarget());
+            // Start the projectile            
             projectiles[i].transform.position = projectileExitPos.position;
             projectiles[i].transform.rotation = transform.rotation;
-            projectiles[i].GetComponent<Projectile>().StartProjectile(vect);
+            Transform target = null;
+            if(destinationSetter) {
+                target = destinationSetter.target;
+            }
+            else if(fov && proj.projectileData.homing) {
+                target = fov.GetClosestTarget();
+            }
+            projectiles[i].GetComponent<Projectile>().SetProjectile(proj, stats);
+            projectiles[i].GetComponent<Projectile>().StartProjectile(vect, target);
+            //projectiles[i].GetComponent<Projectile>().StartProjectile(vect);
             projectiles[i].SetActive(true);
             PlayAnimation(proj.castingAnimationName);
             // Set projectile particles

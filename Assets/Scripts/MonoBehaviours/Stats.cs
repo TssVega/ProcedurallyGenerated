@@ -77,6 +77,7 @@ public class Stats : MonoBehaviour {
     }
     private void OnEnable() {
         living = true;
+        health = maxHealth;
     }
     public void Die() {
         gameObject.SetActive(false);

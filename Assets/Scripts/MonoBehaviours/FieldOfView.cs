@@ -82,7 +82,7 @@ public class FieldOfView : MonoBehaviour {
                 closest = visibleTargets[i];
             }
         }
-        if(enemyAI && enemyAI.hostile) {
+        if(enemyAI && enemyAI.hostile && closest) {
             destinationSetter.target = closest;
         }        
         if(destinationSetter && destinationSetter.target) {

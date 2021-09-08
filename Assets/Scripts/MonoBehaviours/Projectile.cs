@@ -11,11 +11,19 @@ public class Projectile : MonoBehaviour {
     private float countdown;
     private Stats attackerStats;
     private Transform target;
+    private Transform targetToSet;
     private CircleCollider2D circleCollider2D;
+
+    private const float setTargetDelay = 0.5f;
 
     private void Awake() {
         rb2d = GetComponent<Rigidbody2D>();
         circleCollider2D = GetComponent<CircleCollider2D>();
+    }
+    private void OnEnable() {
+        if(targetToSet) {
+            StartCoroutine(SetTargetDelayed(targetToSet));
+        }
     }
     private void Update() {
         countdown -= Time.deltaTime;
@@ -60,13 +68,13 @@ public class Projectile : MonoBehaviour {
         this.attackerStats = attackerStats;
         circleCollider2D.radius = projectileData.radius;
     }
-    public void StartProjectile(Transform target) {
-        if(target) {
-            this.target = target;
-        }
-    }
-    public void StartProjectile(Vector2 movementVector) {
+    public void StartProjectile(Vector2 movementVector, Transform target) {
         countdown = projectileData.lifetime;
-        projectileVector = movementVector;             
+        projectileVector = movementVector;
+        targetToSet = target;
+    }
+    public IEnumerator SetTargetDelayed(Transform target) {
+        yield return new WaitForSeconds(setTargetDelay);
+        this.target = target;
     }
 }

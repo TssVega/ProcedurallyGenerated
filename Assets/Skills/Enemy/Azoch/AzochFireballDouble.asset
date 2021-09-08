@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06483e1273c0bf64e9475d86de85f9d9, type: 3}
   m_Name: AzochFireballDouble
   m_EditorClassIdentifier: 
-  skillIndex: 0
+  skillIndex: 10
   skillName: AzochFireballDouble
   skillDescription: 
   skillIcon: {fileID: 0}
@@ -37,7 +37,7 @@ MonoBehaviour:
     arrowSkill: 0
     damageRate: 0.5
     rotationSpeed: 0
-    projectileSpeed: 6
+    projectileSpeed: 7
     radius: 0.3
     lifetime: 3
     stunDuration: 0
