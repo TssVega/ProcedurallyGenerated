@@ -40,6 +40,7 @@ public class Item : ScriptableObject {
     public string seed;
     //public int itemSaveIndex;
     public string itemName;
+    public string descriptionID;
     public Sprite firstSprite;
     public Sprite secondSprite;
     public Sprite thirdSprite;

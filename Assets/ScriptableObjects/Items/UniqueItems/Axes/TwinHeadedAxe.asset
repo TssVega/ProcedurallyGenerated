@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seed: twinHeadedAxe
   itemName: twinHeadedAxe
+  descriptionID: 
   firstSprite: {fileID: -8693673775987371603, guid: 11db60c2e82d51f4b9605a5a16f749fe,
     type: 3}
   secondSprite: {fileID: 0}

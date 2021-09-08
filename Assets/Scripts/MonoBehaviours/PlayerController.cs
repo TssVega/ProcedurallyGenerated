@@ -88,7 +88,9 @@ public class PlayerController : MonoBehaviour {
     }
     private IEnumerator CheckLockUI() {
         while(true) {
-            lockUI.SetUIVisibility(fov.visibleTargets.Count > 0);
+            if(lockUI) {
+                lockUI.SetUIVisibility(fov.visibleTargets.Count > 0);
+            }            
             if(lockUI && LocalizationManager.localization) {
                 lockUI.CheckLock();
             }
