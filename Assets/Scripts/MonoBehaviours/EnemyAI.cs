@@ -14,6 +14,7 @@ public class EnemyAI : MonoBehaviour {
 
     public float roamTime = 3f;
     public float timeBetweenSkills = 0.5f;
+    public float rotationTime = 1.5f;
     [HideInInspector] public float speed = 3f;
 
     private bool moving = false;
@@ -46,7 +47,9 @@ public class EnemyAI : MonoBehaviour {
         destinationSetter.target = null;
         hostile = hostility;
         attacked = false;
+        aiPath.enableRotation = true;
         StartCoroutine(Roam());
+        StartCoroutine(RotateTowardsPlayer());
     }
     private void OnDisable() {
         StopAllCoroutines();        
@@ -58,8 +61,11 @@ public class EnemyAI : MonoBehaviour {
         if(roaming && !aiPath.reachedDestination) {
             moving = true;
         }
-        else if(destinationSetter.target && !aiPath.reachedDestination) {
-            moving = true;
+        else if(destinationSetter.target) {
+            // transform.rotation = Quaternion.Slerp(transform.rotation, destinationSetter.target.rotation, Mathf.Clamp(1f - aiPath.rotationSpeed / 360f, 0f, 1f));            
+            if(!aiPath.reachedDestination) {
+                moving = true;
+            }            
         }
         else {
             moving = false;
@@ -75,6 +81,26 @@ public class EnemyAI : MonoBehaviour {
             }            
         }
         
+    }
+    private IEnumerator RotateTowardsPlayer() {
+
+        float progress = 0f;
+        float speed = aiPath.rotationSpeed / 360f;
+
+        while(progress < 1f && destinationSetter.target && !stats.status.stunned && !stats.status.chanelling && !stats.status.immobilized) {
+            Vector3 targetRotation = new Vector3(
+            0, 0, Vector3.SignedAngle(
+                Vector3.up, destinationSetter.target.transform.position - transform.position, Vector3.forward));
+            Quaternion lookOnLook = Quaternion.Euler(targetRotation);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookOnLook, progress);
+            progress += Time.deltaTime * speed;
+
+            if(progress <= 1f) {
+                yield return null;
+            }
+        }
+        yield return new WaitForSeconds(rotationTime);
+        StartCoroutine(RotateTowardsPlayer());
     }
     private IEnumerator Roam() {
         yield return new WaitForSeconds(Random.Range(roamTime, roamTime * 2));
@@ -96,6 +122,7 @@ public class EnemyAI : MonoBehaviour {
     }
     public void Enrage() {
         if(willDefendItself && hostile) {
+            aiPath.enableRotation = false;
             StartCoroutine(UseRandomSkill());
         }
         else {

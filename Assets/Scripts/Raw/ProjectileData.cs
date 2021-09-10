@@ -7,6 +7,10 @@ public class ProjectileData {
 
     public int team;
     public bool arrowSkill;     // Arrow skills can only be used with bows
+    [Range(0f, 1f)]
+    public float lightIntensity = 0f;
+    public float lightRadius = 1f;
+    public Color lightColor;
     public float damageRate;
     public float rotationSpeed;
     public float projectileSpeed;

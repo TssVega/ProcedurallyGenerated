@@ -105,5 +105,17 @@
 "reishi":"Reishi",
 "truffle":"Truffle",
 "turkeyTail":"Turkey Tail",
-"vial":"Vial"
+"vial":"Vial",
+"blackTrumpetDesc":"A black mushroom, shaped like a trumpet. It can be eaten raw or used to make physical defence potions.",
+"chanterelleDesc":"A tasty, yellow mushroom. It can be eaten raw or be used to make magical defence potions.",
+"destroyingAngelDesc":"A bitter, poisonous mushroom. It can be eaten raw or used to make poisonous potions.",
+"enokiDesc":"A common mushroom used for cooking. It can be eaten raw or cooked for better taste. It is used as an ingredient in some potions.",
+"flyAgaricDesc":"A red mushroom with white spots. It is extremely poisonous. It can be eaten raw or be used to make poisonous potions.",
+"matsutakeDesc":"Very rare mushroom. It can be eaten raw or be used to make physical power potions.",
+"morelDesc":"A rare mushroom. It can be eaten raw or be used to make agility potions.",
+"porciniDesc":"A common mushroom used for cooking. It can be eaten raw or cooked for better taste. It is used as an ingredient in some potions.",
+"puffballDesc":"A common mushroom used for cooking. It can be eaten raw of cooked for better taste. It is used as an ingredient in some potions.",
+"reishiDesc":"A rare mushroom with healing powers. It can be eaten raw or be used to make greater healing potions.",
+"truffleDesc":"A rare and expensive mushroom. It can be eaten raw or be used to make magic damage potions.",
+"turkeyTailDesc":"A common mushroom used for healing. It can be eaten raw or used to make healing potions."
 }

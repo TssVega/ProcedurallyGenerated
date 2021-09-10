@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seed: morel
   itemName: Morel
+  descriptionID: matsutakeDesc
   firstSprite: {fileID: -6601640576500483663, guid: bb32c47e1f2ac5e45a6f0562a80ec6d2,
     type: 3}
   secondSprite: {fileID: 0}
@@ -65,6 +66,7 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   material: 1
+  itemMaterial: 0
   strength: 0
   agility: 0
   dexterity: 0
@@ -75,4 +77,3 @@ MonoBehaviour:
   charisma: 0
   mushroomType: 0
   mushroomPower: 30
-  abundance: 0.05

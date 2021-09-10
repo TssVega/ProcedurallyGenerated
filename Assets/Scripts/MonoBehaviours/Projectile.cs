@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 
 public class Projectile : MonoBehaviour {
 
@@ -13,12 +14,14 @@ public class Projectile : MonoBehaviour {
     private Transform target;
     private Transform targetToSet;
     private CircleCollider2D circleCollider2D;
+    private Light2D light2D;
 
-    private const float setTargetDelay = 0.5f;
+    private const float setTargetDelay = 0.75f;
 
     private void Awake() {
         rb2d = GetComponent<Rigidbody2D>();
         circleCollider2D = GetComponent<CircleCollider2D>();
+        light2D = GetComponent<Light2D>();
     }
     private void OnEnable() {
         if(targetToSet) {
@@ -67,6 +70,9 @@ public class Projectile : MonoBehaviour {
         projectileData = skill.projectileData;        
         this.attackerStats = attackerStats;
         circleCollider2D.radius = projectileData.radius;
+        light2D.color = skill.projectileData.lightColor;
+        light2D.intensity = skill.projectileData.lightIntensity;
+        light2D.pointLightOuterRadius = skill.projectileData.lightRadius;
     }
     public void StartProjectile(Vector2 movementVector, Transform target) {
         countdown = projectileData.lifetime;

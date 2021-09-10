@@ -34,6 +34,9 @@ MonoBehaviour:
   projectileData:
     team: 2
     arrowSkill: 0
+    lightIntensity: 0.3
+    lightRadius: 0.5
+    lightColor: {r: 0, g: 1, b: 0.1764706, a: 0}
     damageRate: 0.5
     rotationSpeed: 200
     projectileSpeed: 3
