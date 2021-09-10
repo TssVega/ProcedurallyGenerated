@@ -298,6 +298,9 @@ public class SkillUser : MonoBehaviour {
     }
     private IEnumerator StartAreaSkill(AreaSkill area) {
         statusEffects.StartChanelling(area.channelingTime);
+        if(area.warn) {
+            ShowWarning(area);
+        }        
         if(area.focusedSkill) {
             statusEffects.StartImmobilize(area.channelingTime + area.castTime);
         }
@@ -395,5 +398,15 @@ public class SkillUser : MonoBehaviour {
                 }
             }            
         }        
+    }
+    private void ShowWarning(AreaSkill area) {
+        if(area.hitboxWarning) {
+            GameObject hitboxWarning = ObjectPooler.objectPooler.GetPooledObject(area.hitboxWarning.name);            
+            hitboxWarning.transform.position = transform.position;
+            hitboxWarning.transform.rotation = transform.rotation;
+            hitboxWarning.transform.parent = transform;
+            hitboxWarning.SetActive(true);
+            hitboxWarning.GetComponent<HitboxWarning>().SetWarning(area.channelingTime, area.hitboxWarningScale);
+        }
     }
 }

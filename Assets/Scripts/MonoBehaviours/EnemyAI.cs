@@ -12,6 +12,8 @@ public class EnemyAI : MonoBehaviour {
     private FieldOfView fov;
     private Stats stats;
 
+    private Rigidbody2D rb2D;
+
     public float roamTime = 3f;
     public float timeBetweenSkills = 0.5f;
     public float rotationTime = 1.5f;
@@ -19,6 +21,7 @@ public class EnemyAI : MonoBehaviour {
 
     private bool moving = false;
     private bool roaming = false;
+    private bool rotating = false;
     public bool attacked = false;
     public bool hostility = false;          // Will it attack enemies on sight?
     public bool hostile = false;            // Current hostility status
@@ -30,6 +33,7 @@ public class EnemyAI : MonoBehaviour {
     public LevelGeneration level;
 
     private void Awake() {
+        rb2D = GetComponent<Rigidbody2D>();
         stats = GetComponent<Stats>();
         fov = GetComponent<FieldOfView>();
         skillUser = GetComponent<SkillUser>();
@@ -48,6 +52,7 @@ public class EnemyAI : MonoBehaviour {
         hostile = hostility;
         attacked = false;
         aiPath.enableRotation = true;
+        rotating = false;
         StartCoroutine(Roam());
         StartCoroutine(RotateTowardsPlayer());
     }
@@ -55,17 +60,19 @@ public class EnemyAI : MonoBehaviour {
         StopAllCoroutines();        
     }
     private void Update() {
-        if(!stats.living) {
+        if(!stats.living || rotating) {
             aiPath.canMove = false;
+        }
+        if(!rotating) {
+            transform.eulerAngles = new Vector3(
+                            0, 0, Vector3.SignedAngle(Vector3.up, transform.up, Vector3.forward));
+            rb2D.angularVelocity = 0;
         }
         if(roaming && !aiPath.reachedDestination) {
             moving = true;
         }
-        else if(destinationSetter.target) {
-            // transform.rotation = Quaternion.Slerp(transform.rotation, destinationSetter.target.rotation, Mathf.Clamp(1f - aiPath.rotationSpeed / 360f, 0f, 1f));            
-            if(!aiPath.reachedDestination) {
-                moving = true;
-            }            
+        else if(destinationSetter.target && !aiPath.reachedDestination) {
+            moving = true;
         }
         else {
             moving = false;
@@ -79,8 +86,7 @@ public class EnemyAI : MonoBehaviour {
             if(!string.IsNullOrEmpty(idleAnimationName)) {
                 enemyAnimator.SetTrigger(idleAnimationName);
             }            
-        }
-        
+        }        
     }
     private IEnumerator RotateTowardsPlayer() {
 
@@ -93,12 +99,13 @@ public class EnemyAI : MonoBehaviour {
                 Vector3.up, destinationSetter.target.transform.position - transform.position, Vector3.forward));
             Quaternion lookOnLook = Quaternion.Euler(targetRotation);
             transform.rotation = Quaternion.Slerp(transform.rotation, lookOnLook, progress);
+            rotating = true;
             progress += Time.deltaTime * speed;
-
             if(progress <= 1f) {
                 yield return null;
             }
         }
+        rotating = false;
         yield return new WaitForSeconds(rotationTime);
         StartCoroutine(RotateTowardsPlayer());
     }

@@ -23,7 +23,7 @@ MonoBehaviour:
   focusedSkill: 1
   channelingTime: 0.75
   castTime: 0.5
-  cooldown: 8
+  cooldown: 12
   aiRange: 7
   channelingParticleNames:
   - AzochChannelingParticles

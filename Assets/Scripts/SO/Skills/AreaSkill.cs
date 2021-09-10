@@ -9,6 +9,9 @@ public class AreaSkill : ActiveSkill {
     public float duration;
     public GameObject hitbox;
     public bool warn = false;
+    public GameObject hitboxWarning;
+    [Tooltip("Diameter length")]
+    public float hitboxWarningScale = 1f;
     public float stunDuration = 0f;
     public float immobilizeDuration = 0f;
     [Tooltip("Negative values pull and positive values push back")]
