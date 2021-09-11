@@ -28,7 +28,7 @@ MonoBehaviour:
   channelingParticleNames:
   - AzochChannelingDarkness
   particleNames:
-  - AzochDarkness
+  - AzochDarknessProjParticles
   channelingAnimationName: 
   castingAnimationName: 
   idleAnimationName: 

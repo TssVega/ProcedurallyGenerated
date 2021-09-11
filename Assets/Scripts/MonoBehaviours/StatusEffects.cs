@@ -214,7 +214,7 @@ public class StatusEffects : MonoBehaviour {
             damage = CalculateDamage.Calculate(amount, attackType, stats);
         }
         if(passives) {
-            damage = passives.OnHitTaken(amount, attackType, stats);
+            damage = passives.OnHitTaken(damage, attackType, stats);
         }
         if(parrying && skill.interruptable) {
             damage = 0f;

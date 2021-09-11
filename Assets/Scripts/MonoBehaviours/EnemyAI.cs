@@ -11,6 +11,7 @@ public class EnemyAI : MonoBehaviour {
     private SkillUser skillUser;
     private FieldOfView fov;
     private Stats stats;
+    private StatusEffects status;
 
     private Rigidbody2D rb2D;
 
@@ -33,6 +34,7 @@ public class EnemyAI : MonoBehaviour {
     public LevelGeneration level;
 
     private void Awake() {
+        status = GetComponent<StatusEffects>();
         rb2D = GetComponent<Rigidbody2D>();
         stats = GetComponent<Stats>();
         fov = GetComponent<FieldOfView>();
@@ -63,10 +65,15 @@ public class EnemyAI : MonoBehaviour {
         if(!stats.living || rotating) {
             aiPath.canMove = false;
         }
-        if(!rotating) {
-            transform.eulerAngles = new Vector3(
-                            0, 0, Vector3.SignedAngle(Vector3.up, transform.up, Vector3.forward));
-            rb2D.angularVelocity = 0;
+        if(!rotating && !status.stunned && !status.immobilized && !status.chanelling) {
+            aiPath.canMove = true;
+            //transform.LookAt(destinationSetter.target, Vector3.forward);
+            Vector3 lookingDirection = aiPath.desiredVelocity;
+            if(lookingDirection.magnitude > 0.1f) {
+                transform.eulerAngles = new Vector3(0, 0, Vector3.SignedAngle(Vector3.up, lookingDirection.normalized, Vector3.forward));
+                rb2D.angularVelocity = 0;
+            }
+            
         }
         if(roaming && !aiPath.reachedDestination) {
             moving = true;

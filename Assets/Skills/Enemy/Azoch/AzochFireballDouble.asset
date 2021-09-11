@@ -47,7 +47,7 @@ MonoBehaviour:
     immobilizeDuration: 0
     penetrates: 0
     projectileCount: 2
-    angleDifference: 90
+    angleDifference: 60
     timeDifference: 0
     homing: 0
     push: 0

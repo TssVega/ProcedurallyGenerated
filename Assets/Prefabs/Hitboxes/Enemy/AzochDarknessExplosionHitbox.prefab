@@ -1,0 +1,127 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6890043100139161156
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6890043100139161157}
+  - component: {fileID: -8700766999303058337}
+  - component: {fileID: -746924220292101009}
+  - component: {fileID: 7655978310006133105}
+  m_Layer: 0
+  m_Name: AzochDarknessExplosionHitbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6890043100139161157
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6890043100139161156}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-8700766999303058337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6890043100139161156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba995542ccf8cc84eb3301b996986276, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  amountToPool: 0
+  expandable: 1
+--- !u!114 &-746924220292101009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6890043100139161156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1447c67e752caa440a2e20e297a0ca49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!60 &7655978310006133105
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6890043100139161156}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 4.8793845, y: 1.2504644}
+      - {x: 4.3528852, y: 2.3902783}
+      - {x: 3.2195446, y: 3.884491}
+      - {x: 1.6227902, y: 4.79157}
+      - {x: 0, y: 5.006624}
+      - {x: -1.3431196, y: 4.8516517}
+      - {x: -2.5142176, y: 4.418999}
+      - {x: -3.589505, y: 3.5323582}
+      - {x: -4.371711, y: 2.344617}
+      - {x: -4.832417, y: 1.1342552}
+      - {x: -4.9805727, y: -0.017181844}
+      - {x: -4.8137813, y: -1.1579506}
+      - {x: -4.2945404, y: -2.5913339}
+      - {x: -3.3900692, y: -3.831565}
+      - {x: -2.2381566, y: -4.531059}
+      - {x: -1.1537626, y: -4.8735495}
+      - {x: -0.013316989, y: -5.0283866}
+      - {x: 1.0853966, y: -4.8946185}
+      - {x: 2.1213298, y: -4.5899014}
+      - {x: 3.189116, y: -3.9595382}
+      - {x: 4.2409267, y: -2.709043}
+      - {x: 4.787959, y: -1.485172}
+      - {x: 5.004315, y: 0.005443573}
+      - {x: 3.0995922, y: 0.011782527}
+      - {x: 2.8162036, y: -1.0101768}
+      - {x: 2.164613, y: -2.048497}
+      - {x: 1.2567322, y: -2.7405434}
+      - {x: -0.04334724, y: -2.981592}
+      - {x: -1.2949376, y: -2.6841908}
+      - {x: -2.17821, y: -1.9987837}
+      - {x: -2.7696128, y: -1.0199383}
+      - {x: -3.0078692, y: 0.062030196}
+      - {x: -2.7539723, y: 1.2473334}
+      - {x: -2.0887253, y: 2.2031531}
+      - {x: -1.1737453, y: 2.7422972}
+      - {x: 0.061444998, y: 2.9997673}
+      - {x: 1.1889836, y: 2.7711098}
+      - {x: 2.221073, y: 2.0918732}
+      - {x: 2.8015456, y: 1.1868737}
+      - {x: 3.0817313, y: 0.019155145}
+      - {x: 4.981581, y: 0.023851037}
