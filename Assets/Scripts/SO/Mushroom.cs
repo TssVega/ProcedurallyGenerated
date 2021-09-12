@@ -11,12 +11,12 @@ public class Mushroom : Item {
 
     public void Consume(StatusEffects status) {
         if(mushroomType == MushroomType.Edible) {
-            // heal over time and satisfy hunger here
+            // Heal over time and satisfy hunger here
             status.StartRegen(20f, mushroomPower * 0.05f);
         }
         else {
-            // poison here
-            //status.
+            // Poison here
+            status.AddPoisonStacks((int)mushroomPower);
         }
     }
 }

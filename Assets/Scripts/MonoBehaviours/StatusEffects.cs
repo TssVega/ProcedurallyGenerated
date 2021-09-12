@@ -205,6 +205,29 @@ public class StatusEffects : MonoBehaviour {
     public bool CanUseMana(float amount) {
         return stats.mana >= amount;
     }
+    private void TakeMushroomDamage(float amount) {
+        float damage = 0f;
+        AttackType attackType = AttackType.Poison;
+        if(!stats.living) {
+            return;
+        }
+        if(stats) {
+            damage = CalculateDamage.Calculate(amount, attackType, stats);
+        }
+        InstantiateDamageTakenParticles("PoisonDamageTaken");
+        damage = Mathf.Clamp(damage, 0f, stats.maxDamageTimesHealth * stats.maxHealth);
+        stats.health -= damage;
+        GenerateBloodParticles();
+        if(statusUI) {
+            statusUI.UpdateHealth(stats.health / stats.maxHealth, stats.health);
+        }
+        if(hitWarning) {
+            hitWarning.Hit();
+        }
+        if(stats.health <= 0f) {
+            Die();
+        }
+    }
     public void TakeDamage(float amount, AttackType attackType, Skill skill, StatusEffects attacker) {
         float damage = 0f;
         if(!stats.living) {
@@ -368,10 +391,6 @@ public class StatusEffects : MonoBehaviour {
         enemy.vision.recentlyHit = false;
         enemy.enemyDetection.CheckFollowStatus();
     }*/
-    // Inform the AI about stun and immobiliziation
-    private void ToggleCrowdControl() {
-        //enemy.enemyDetection.CheckFollowStatus();
-    }
     private void InterruptEnemyAI() {
         if(aiPath) {
             aiPath.canMove = false;
@@ -551,6 +570,10 @@ public class StatusEffects : MonoBehaviour {
         //statusParticles.StopBurningParticles();
         burning = false;
     }
+    public void AddPoisonStacks(int amount) {
+        poisonStacks += amount;
+        CheckPoisonStacks(amount, amount, null, null);
+    }
     public void AddPoisonStacks(int amount, float damage, float duration, Skill skill, StatusEffects attacker) {
         poisonStacks += amount;
         CheckPoisonStacks(duration, damage, skill, attacker);
@@ -583,6 +606,15 @@ public class StatusEffects : MonoBehaviour {
             poisonStacksCounterRunning = false;
         }
     }
+    /*
+    public void StartPoison(float mushroomPower) {
+        if(gameObject.activeInHierarchy) {
+            if(poisoned) {
+                StopPoison();
+            }
+            poisonCounter = StartCoroutine(Poison(mushroomPower, mushroomPower, 1f, null, null));
+        }
+    }*/
     private void StartPoison(float duration, float damage, float periodTimeDecrease, Skill skill, StatusEffects attacker) {
         if(gameObject.activeInHierarchy) {
             if(poisoned) {
@@ -601,7 +633,12 @@ public class StatusEffects : MonoBehaviour {
         poisoned = true;
         while(!done) {
             yield return new WaitForSeconds(period);
-            TakeDamage(damage / duration, AttackType.Poison, skill, attacker);
+            if(skill && attacker) {
+                TakeDamage(damage / duration, AttackType.Poison, skill, attacker);
+            }
+            else {
+                TakeMushroomDamage(damage);
+            }
             duration -= period;
             period = period <= 1 ? 1 : period -= periodTimeDecrease;
             if(duration <= 0) {

@@ -22,10 +22,10 @@ MonoBehaviour:
     vitalityRequirement: 0
     charismaRequirement: 0
     recipe:
-    - amount: 0
-      item: {fileID: 0}
-    - amount: 0
-      item: {fileID: 0}
+    - amount: 1
+      item: {fileID: 11400000, guid: 9eab6eefee9b3974aa23866792cf8b91, type: 2}
+    - amount: 1
+      item: {fileID: 11400000, guid: 9f4331579d008ab479e167b6b46f0ad2, type: 2}
     output: {fileID: 0}
   agilityRecipes: []
   dexterityRecipes: []
