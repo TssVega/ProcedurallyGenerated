@@ -146,17 +146,20 @@ public class EnemyAI : MonoBehaviour {
     private void Flee() {
         // Escape from the attacker
     }
-    private IEnumerator UseRandomSkill() {        
+    private IEnumerator UseRandomSkill() {
+        Debug.Log("Enemy enraged!");
         yield return new WaitForSeconds(Random.Range(timeBetweenSkills, timeBetweenSkills * 2));
         if(stats.living) {
             List<int> availableIndices = new List<int>();
-            for(int i = 0; i < skillUser.currentSkills.Count; i++) {
-                if(skillUser.currentSkills[i].aiRange > fov.GetDistanceToEnemy() && skillUser.skillCooldowns[i] <= 0f) {
+            
+            for(int i = 0; i < skillUser.currentSkills.Length; i++) {
+                ActiveSkill a = skillUser.currentSkills[i] as ActiveSkill;
+                if(a.aiRange > fov.GetDistanceToEnemy() && skillUser.skillCooldowns[i] <= 0f) {
                     availableIndices.Add(i);
                 }
             }
             if(availableIndices.Count > 0) {
-                ActiveSkill activeSkill = skillUser.currentSkills[availableIndices[Random.Range(0, availableIndices.Count)]];
+                ActiveSkill activeSkill = skillUser.currentSkills[availableIndices[Random.Range(0, availableIndices.Count)]] as ActiveSkill;
                 skillUser.UseSkill(activeSkill);
             }
             if(destinationSetter.target != null) {

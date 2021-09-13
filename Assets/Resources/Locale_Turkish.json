@@ -105,5 +105,13 @@
 "reishi":"Reishi",
 "truffle":"Trüf",
 "turkeyTail":"Hindi Kuyruğu",
-"vial":"Şişe"
+"vial":"Şişe",
+"inventory":"Envanter",
+"crafting":"Zanaatkarlık",
+"skills":"Yetenekler",
+"map":"Harita",
+"equippedItem":"Kullanılan eşya",
+"consume":"Tüket",
+"equip":"Kullan",
+"dismantle":"Parçala"
 }

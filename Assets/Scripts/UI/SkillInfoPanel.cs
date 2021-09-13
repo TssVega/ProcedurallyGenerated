@@ -57,14 +57,15 @@ public class SkillInfoPanel : MonoBehaviour {
         if(playerSkills.acquiredSkills.Contains(currentSkill) && currentSkill is ActiveSkill) {
             for(int i = 0; i < skillSlotCount; i++) {
                 skillSlots[i].gameObject.SetActive(true);
-                if(i >= playerSkills.currentSkills.Count) {
+                if(i >= playerSkills.currentSkills.Length) {
                     skillSlots[i].sprite = emptySlotSprite;
                     skillSlots[i].color = Color.white;
                     continue;
                 }
-                if(playerSkills.currentSkills[i] && playerSkills.currentSkills[i].skillIcon) {
-                    skillSlots[i].sprite = playerSkills.currentSkills[i].skillIcon;
-                    skillSlots[i].color = ColorBySkillType.GetColorByType(playerSkills.currentSkills[i].attackType);
+                ActiveSkill a = playerSkills.currentSkills[i] as ActiveSkill;
+                if(a && a.skillIcon) {
+                    skillSlots[i].sprite = a.skillIcon;
+                    skillSlots[i].color = ColorBySkillType.GetColorByType(a.attackType);
                 }
                 else {
                     skillSlots[i].sprite = emptySlotSprite;
@@ -80,10 +81,11 @@ public class SkillInfoPanel : MonoBehaviour {
     }
     public void ReplaceSkillSlot(int index) {
         for(int i = 0; i < skillSlotCount; i++) {
-            if(playerSkills.currentSkills.Count <= i) {
+            if(playerSkills.currentSkills.Length <= i) {
                 continue;
             }
-            if(playerSkills.currentSkills[i] == currentSkill) {
+            ActiveSkill a = playerSkills.currentSkills[i] as ActiveSkill;
+            if(a == currentSkill) {
                 playerSkills.currentSkills[i] = null;
                 break;
             }

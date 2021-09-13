@@ -48,7 +48,15 @@ public class Player : MonoBehaviour {
 
     private UICanvas uiCanvas;
 
+    public bool skillBookUnlocked = false;
+    public bool mapUnlocked = false;
+
+    public string[] consumableItems;
+
+    public MushroomDatabase mushroomDatabase;
+
     private void Awake() {
+        consumableItems = new string[11];
         worldGeneration = FindObjectOfType<WorldGeneration>();
         stats = GetComponent<Stats>();
         skillUser = GetComponent<SkillUser>();
@@ -103,7 +111,7 @@ public class Player : MonoBehaviour {
             mushroomGenerators[i].SaveMushrooms(0);
         }
         ReplaceAutosaveFilesWithSlotSpecificOnes();
-        Debug.LogWarning($"Saved successfully");
+        Debug.Log($"Saved successfully");
         /*
         for(int i = 0; i < chestGen.Length; i++) {
             chestGen[i].SaveChests(PersistentData.saveSlot);
@@ -129,6 +137,9 @@ public class Player : MonoBehaviour {
             transform.position = pos;
             Quaternion quat = new Quaternion(data.rotation[0], data.rotation[1], data.rotation[2], data.rotation[3]);
             transform.rotation = quat;
+            // Inventory buttons
+            skillBookUnlocked = data.skillBookUnlocked;
+            mapUnlocked = data.mapUnlocked;
             // Inventory and equipment
             for(int i = 0; i < data.inventory.Length; i++) {
                 if(data.inventory[i] != null) {
@@ -237,6 +248,20 @@ public class Player : MonoBehaviour {
                 }
                 else {
                     skillUser.currentSkills[i] = null;
+                }
+            }
+            for(int i = 0; i < data.consumableItems.Length; i++) {
+                if(!string.IsNullOrEmpty(data.consumableItems[i])) {
+                    int index = -1;
+                    for(int j = 0; j < mushroomDatabase.mushrooms.Count; j++) {
+                        if(mushroomDatabase.mushrooms[j].seed == data.consumableItems[i]) {
+                            index = j;
+                            break;
+                        }
+                    }
+                    if(index >= 0) {
+                        skillUser.currentSkills[i] = mushroomDatabase.mushrooms[index];
+                    }
                 }
             }
         }

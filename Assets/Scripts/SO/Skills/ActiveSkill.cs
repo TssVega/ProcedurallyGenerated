@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActiveSkill : Skill {
+public class ActiveSkill : Skill, IUsable {
 
     public int manaCost;
     public bool focusedSkill;
@@ -16,6 +16,7 @@ public class ActiveSkill : Skill {
     public string castingAnimationName;
     public string idleAnimationName;
 
+    
     public virtual void Launch(Stats stats) {
     
     }

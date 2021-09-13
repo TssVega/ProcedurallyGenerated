@@ -12,13 +12,13 @@ public class OpenItemInfo : MonoBehaviour {
     }
     public void SetItemInfoPanelFromInventory(int index) {
         if(inventory.inventory[index] != null) {
-            itemInfoPanel.SetItem(inventory.inventory[index]);
+            itemInfoPanel.SetItem(inventory.inventory[index], index);
             itemInfoPanel.gameObject.SetActive(true);
         }        
     }
     public void SetItemInfoPanelFromEquipment(int index) {
         if(inventory.equipment[index]) {
-            itemInfoPanel.SetItem(inventory.equipment[index]);
+            itemInfoPanel.SetItem(inventory.equipment[index], index);
             itemInfoPanel.gameObject.SetActive(true);
         }        
     }

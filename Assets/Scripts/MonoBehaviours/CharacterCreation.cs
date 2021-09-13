@@ -129,6 +129,9 @@ public class CharacterCreation : MonoBehaviour {
         if(!player || !player.skinColor || !player.hairColor || !player.hairStyle) {
             return;
         }
+        // Inventory buttons
+        player.skillBookUnlocked = false;
+        player.mapUnlocked = false;
         // Appearance
         player.skinColor.color = currentSkinColor;
         player.hairColor.color = currentHairColor;
@@ -194,19 +197,21 @@ public class CharacterCreation : MonoBehaviour {
         player.stats.statPoints = 10;
         // Skills
         // Beginner skills
+        
         player.skillUser.acquiredSkills = new List<Skill>();
         for(int i = 0; i < 6; i++) {
             player.skillUser.acquiredSkills.Add(player.skillUser.skillDatabase.skills[i]);
         }
-        player.skillUser.currentSkills = new List<ActiveSkill>();
+        player.skillUser.currentSkills = new IUsable[11];
         for(int i = 0; i < 11; i++) {
             if(i < 6) {
-                player.skillUser.currentSkills.Add(player.skillUser.skillDatabase.skills[i] as ActiveSkill);
+                player.skillUser.currentSkills[i] = player.skillUser.skillDatabase.skills[i] as ActiveSkill;
             }
             else {
-                player.skillUser.currentSkills.Add(null);
+                player.skillUser.currentSkills[i] = null;
             }
         }
+        player.consumableItems = new string[11];
     }
     private async Task GenerateNewWorld() {
         int smoothLevel = 4;

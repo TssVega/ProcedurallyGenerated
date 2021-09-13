@@ -33,12 +33,12 @@ public class Spawner : MonoBehaviour {
     }
     public void RemoveSideLevel(LevelGeneration sideLevel) {
         sideLevels.Remove(sideLevel);
-        for(int i = 0; i < entities.Count; i++) {
+        for(int i = 0; i < entities.Count; i++) {            
             /*
             if(Vector3.Distance(playerTransform.position, entities[i].transform.position) > disableDistance) {
                 entities[i].SetActive(false);
                 RemoveEntity(entities[i]);
-                continue;
+                //continue;
             }*/
             if(entities[i].GetComponent<EnemyAI>().level == null || !entities[i].GetComponent<EnemyAI>().level.gameObject.activeInHierarchy) {
                 entities[i].SetActive(false);

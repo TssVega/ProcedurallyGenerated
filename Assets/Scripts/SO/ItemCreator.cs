@@ -125,7 +125,7 @@ public class ItemCreator : ScriptableObject {
         }
         switch(slotIndex) {
             case 0: {                
-                Weapon w = CreateWeapon(mat);
+                Weapon w = CreateWeapon(mat);                
                 item = w;
                 break;
             }
@@ -157,9 +157,11 @@ public class ItemCreator : ScriptableObject {
                 item = r;
                 break;
             }
-            default:
+            default: {
                 item = null;
                 break;
+            }      
+                
         }
         if(item != null) {
             item.seed = seed;
@@ -334,6 +336,7 @@ public class ItemCreator : ScriptableObject {
                     weapon.thirdColor = bladeColor;
                     weapon.slot = EquipSlot.RightHand;
                     weapon.weaponType = WeaponType.OneHanded;
+                    weapon.dismantleOutput = 2;
                     weapon.itemName += $" {LocalizationManager.localization.GetText("Sword")}";
                 }
                 else if(preset == WeaponPreset.Axe) {
@@ -355,6 +358,7 @@ public class ItemCreator : ScriptableObject {
                     weapon.thirdColor = bladeColor;
                     weapon.slot = EquipSlot.RightHand;
                     weapon.weaponType = WeaponType.OneHanded;
+                    weapon.dismantleOutput = 3;
                     weapon.itemName += $" {LocalizationManager.localization.GetText("Axe")}";
                 }
                 else if(preset == WeaponPreset.Hammer) {
@@ -376,6 +380,7 @@ public class ItemCreator : ScriptableObject {
                     weapon.thirdColor = bladeColor;
                     weapon.slot = EquipSlot.RightHand;
                     weapon.weaponType = WeaponType.OneHanded;
+                    weapon.dismantleOutput = 3;
                     weapon.itemName += $" {LocalizationManager.localization.GetText("Hammer")}";
                 }
                 else if(preset == WeaponPreset.Spear) {
@@ -397,6 +402,7 @@ public class ItemCreator : ScriptableObject {
                     weapon.thirdColor = bladeColor;
                     weapon.slot = EquipSlot.RightHand;
                     weapon.weaponType = WeaponType.OneHanded;
+                    weapon.dismantleOutput = 2;
                     weapon.itemName += $" {LocalizationManager.localization.GetText("Spear")}";
                 }
                 else if(preset == WeaponPreset.Staff) {
@@ -418,6 +424,7 @@ public class ItemCreator : ScriptableObject {
                     weapon.thirdColor = headColor;
                     weapon.slot = EquipSlot.RightHand;
                     weapon.weaponType = WeaponType.OneHanded;
+                    weapon.dismantleOutput = 2;
                     weapon.itemName += $" {LocalizationManager.localization.GetText("Staff")}";
                 }
                 break;
@@ -430,6 +437,7 @@ public class ItemCreator : ScriptableObject {
                 weapon.firstColor = bowColor;
                 weapon.slot = EquipSlot.RightHand;
                 weapon.weaponType = WeaponType.Bow;
+                weapon.dismantleOutput = 2;
                 weapon.itemName += $" {LocalizationManager.localization.GetText("Bow")}";
                 break;
             }
@@ -443,6 +451,9 @@ public class ItemCreator : ScriptableObject {
                 weapon.firstColor = Color.clear;
                 weapon.secondColor = Color.clear;
                 weapon.thirdColor = Color.clear;
+                weapon.dismantleOutput = 2;
+                Debug.Log("This item is a dagger");
+                // TODO: Fix daggers
                 // weapon.itemName += $" {LocalizationManager.localization.GetText("Dagger")}";
                 return null;
                 //break;
@@ -512,6 +523,7 @@ public class ItemCreator : ScriptableObject {
         // Sprite 
         Armor armor = CreateInstance<Armor>();
         armor.itemMaterial = mat;
+        armor.dismantleOutput = 5;
         armor.itemName += $"{LocalizationManager.localization.GetText($"{armor.itemMaterial}")} {LocalizationManager.localization.GetText("Armor")}";
         armor.firstIcon = armorBase;
         if(armorOverlay) {
@@ -544,6 +556,7 @@ public class ItemCreator : ScriptableObject {
         Color propColor = helmetPropColor;
         Armor helmet = CreateInstance<Armor>();
         helmet.itemMaterial = mat;
+        helmet.dismantleOutput = 3;
         helmet.itemName += $"{LocalizationManager.localization.GetText($"{helmet.itemMaterial}")} {LocalizationManager.localization.GetText("Helmet")}";
         helmet.firstIcon = helmetBase;
         helmet.firstColor = baseColor;
@@ -563,6 +576,7 @@ public class ItemCreator : ScriptableObject {
         Color propColor = otherMaterialColors[pseudoRandom.Next(0, otherMaterialColors.Length)];
         Armor legging = CreateInstance<Armor>();
         legging.itemMaterial = mat;
+        legging.dismantleOutput = 4;
         legging.itemName += $"{LocalizationManager.localization.GetText($"{legging.itemMaterial}")} {LocalizationManager.localization.GetText("Leggings")}";
         legging.firstIcon = leggingBase;
         legging.secondIcon = leggingProp;
@@ -579,6 +593,7 @@ public class ItemCreator : ScriptableObject {
         Color propColor = otherMaterialColors[pseudoRandom.Next(0, otherMaterialColors.Length)];
         Shield shield = CreateInstance<Shield>();
         shield.itemMaterial = mat;
+        shield.dismantleOutput = 4;
         shield.itemName += $"{LocalizationManager.localization.GetText($"{shield.itemMaterial}")} {LocalizationManager.localization.GetText("Shield")}";
         shield.firstIcon = shieldBase;
         shield.secondIcon = shieldProp;
@@ -597,6 +612,7 @@ public class ItemCreator : ScriptableObject {
         Color jewelColor = bladeMaterialColors[(int)mat];
         Ring ring = CreateInstance<Ring>();
         ring.itemMaterial = mat;
+        ring.dismantleOutput = 1;
         ring.itemName += $"{LocalizationManager.localization.GetText($"{ring.itemMaterial}")} {LocalizationManager.localization.GetText("Ring")}";
         ring.firstIcon = ringBase;
         ring.firstColor = baseColor;

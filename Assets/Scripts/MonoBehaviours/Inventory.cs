@@ -31,6 +31,8 @@ public class Inventory : MonoBehaviour {
     private Player player;
     private Stats stats;
 
+    public ItemDatabase itemDatabase;
+
     private void Awake() {
         quantities = new int[70];
         player = FindObjectOfType<Player>();
@@ -244,6 +246,51 @@ public class Inventory : MonoBehaviour {
             }
         }
     }
+    public bool CanConsumeItem(IUsable usable) {
+        Item usableItem = usable as Item;
+        for(int i = 0; i < inventory.Count; i++) {
+            if(usableItem == inventory[i]) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public void ConsumeItem(IUsable usable) {
+        Item usableItem = usable as Item;
+        for(int i = 0; i < inventory.Count; i++) {
+            if(usableItem == inventory[i]) {
+                ConsumeInSlot(i);
+                return;
+            }
+        }
+    }
+    public void ConsumeInSlot(int slotIndex) {
+        if(!inventory[slotIndex] || quantities[slotIndex] < 1) {
+            return;
+        }
+        quantities[slotIndex]--;
+        if(inventory[slotIndex] is Mushroom m) {
+            m.Consume(stats.status);
+        }
+        if(quantities[slotIndex] < 1) {
+            inventory[slotIndex] = null;
+        }
+        UpdateSlot(slotIndex);
+    }
+    public void DismantleInSlot(int slotIndex) {
+        if(!inventory[slotIndex]) {
+            return;
+        }
+        if(!CanAddToInventory()) {
+            return;
+        }
+        for(int i = 0; i < inventory[slotIndex].dismantleOutput; i++) {
+            AddToInventory(itemDatabase.GetItemByMaterial(inventory[slotIndex].itemMaterial));
+        }
+        inventory[slotIndex] = null;
+        quantities[slotIndex]--;
+        UpdateSlot(slotIndex);
+    }
     public void EquipItem(Item item) {
         // RightHand, LeftHand, Head, Body, Legs, Finger, Consumable
         /*if(equipment[(int)item.slot] != null) {
@@ -281,7 +328,7 @@ public class Inventory : MonoBehaviour {
             player.SetItem(s);
         }
         else if(item is Ring) {
-            Debug.Log("Trying to equip ring");
+            // Debug.Log("Trying to equip ring");
         }
         equipment[(int)item.slot] = item;
         stats.OnItemEquip(item);

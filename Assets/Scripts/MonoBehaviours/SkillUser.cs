@@ -8,7 +8,7 @@ public class SkillUser : MonoBehaviour {
     //public List<Skill> skills;
     public SkillDatabase skillDatabase;
     public List<Skill> acquiredSkills;
-    public List<ActiveSkill> currentSkills;
+    public IUsable[] currentSkills;
     private Stats stats;
     public List<float> skillCooldowns;
     public Transform projectileExitPos;
@@ -26,13 +26,19 @@ public class SkillUser : MonoBehaviour {
         destinationSetter = GetComponent<AIDestinationSetter>();
         fov = GetComponent<FieldOfView>();
         skillCooldowns = new List<float>();
+        currentSkills = new IUsable[11];
         if(player) {
             for(int i = 0; i < skillDatabase.skills.Count; i++) {
                 skillCooldowns.Add(0f);
             }
         }
         if(enemy) {
-            for(int i = 0; i < skillDatabase.enemySkills.Count; i++) {
+            for(int i = 0; i < acquiredSkills.Count; i++) {
+                if(acquiredSkills[i] is ActiveSkill a) {
+                    currentSkills[i] = a;
+                }
+            }
+            for(int i = 0; i < skillDatabase.enemySkills.Count; i++) {                
                 skillCooldowns.Add(0f);
             }
         }
@@ -69,7 +75,8 @@ public class SkillUser : MonoBehaviour {
             }
         }
     }
-    public void UseSkill(ActiveSkill skill) {
+    public void UseSkill(IUsable usable) {
+        ActiveSkill skill = usable as ActiveSkill;
         if(!stats.living) {
             return;
         }

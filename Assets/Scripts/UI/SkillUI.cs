@@ -7,11 +7,17 @@ public class SkillUI : MonoBehaviour {
 
     private SkillUser playerSkills;
     public Image[] skillButtons;
+    public Image[] secondImages;
     private Image[] skillMasks;
     private readonly int maxActiveSkills = 11;
     private bool[] pressing;
 
+    private float potionCooldown = 0f;
+
+    private Inventory inventory;
+
     private void Awake() {
+        inventory = FindObjectOfType<Inventory>();
         pressing = new bool[maxActiveSkills];
         playerSkills = FindObjectOfType<Player>().GetComponent<SkillUser>();
         skillMasks = new Image[skillButtons.Length];
@@ -22,35 +28,65 @@ public class SkillUI : MonoBehaviour {
     private void Start() {
         RefreshSkillSlots();
     }
+    private void Update() {
+        UseSkill();
+        Countdown();
+        SkillCooldownMask();
+    }
+    private void Countdown() {
+        if(potionCooldown > 0f) {
+            potionCooldown -= Time.deltaTime;
+        }
+    }
     public void RefreshSkillSlots() {
         for(int i = 0; i < maxActiveSkills; i++) {
-            if(i >= playerSkills.currentSkills.Count) {
+            if(i >= playerSkills.currentSkills.Length) {
                 skillButtons[i].sprite = null;
                 skillButtons[i].color = Color.clear;
                 skillMasks[i].fillAmount = 0f;
+                secondImages[i].sprite = null;
+                secondImages[i].color = Color.clear;
                 continue;
             }
-            if(playerSkills.currentSkills[i]) {
-                skillButtons[i].sprite = playerSkills.currentSkills[i].skillIcon;
-                skillButtons[i].color = ColorBySkillType.GetColorByType(playerSkills.currentSkills[i].attackType);
-                skillMasks[i].fillAmount = playerSkills.skillCooldowns[playerSkills.currentSkills[i].skillIndex]
-                    / playerSkills.currentSkills[i].cooldown;
+            if(playerSkills.currentSkills[i] != null) {
+                if(playerSkills.currentSkills[i] is ActiveSkill a) {
+                    skillButtons[i].sprite = a.skillIcon;
+                    skillButtons[i].color = ColorBySkillType.GetColorByType(a.attackType);
+                    skillMasks[i].fillAmount = playerSkills.skillCooldowns[a.skillIndex]
+                        / a.cooldown;
+                    secondImages[i].sprite = null;
+                    secondImages[i].color = Color.clear;
+                }
+                // Else set the icons of the potion or mushroom
+                if(playerSkills.currentSkills[i] is Mushroom m) {
+                    skillButtons[i].sprite = m.firstIcon;
+                    skillButtons[i].color = m.firstColor;
+                    skillMasks[i].fillAmount = potionCooldown / 1f;
+                    secondImages[i].sprite = null;
+                    secondImages[i].color = Color.clear;
+                }
             }
             else {
                 skillButtons[i].sprite = null;
                 skillButtons[i].color = Color.clear;
                 skillMasks[i].fillAmount = 0f;
+                secondImages[i].sprite = null;
+                secondImages[i].color = Color.clear;
             }
         }
-    }
-    private void Update() {
-        UseSkill();
-        SkillCooldownMask();
-    }
+    }    
     public void UseSkill() {
         for(int i = 0; i < maxActiveSkills; i++) {
-            if(pressing[i] && playerSkills.currentSkills[i]) {
-                playerSkills.UseSkill(playerSkills.currentSkills[i]);
+            if(pressing[i] && playerSkills.currentSkills[i] != null) {
+                if(playerSkills.currentSkills[i] is ActiveSkill) {
+                    playerSkills.UseSkill(playerSkills.currentSkills[i]);
+                }
+                else if(potionCooldown <= 0f) {                    
+                    if(inventory.CanConsumeItem(playerSkills.currentSkills[i])) {
+                        potionCooldown = 1f;
+                        inventory.ConsumeItem(playerSkills.currentSkills[i]);
+                    }                    
+                }
             }
         }
     }
@@ -62,22 +98,38 @@ public class SkillUI : MonoBehaviour {
     }
     private void SkillCooldownMask() {
         for(int i = 0; i < maxActiveSkills; i++) {
-            if(i >= playerSkills.currentSkills.Count) {
+            if(i >= playerSkills.currentSkills.Length) {
                 skillButtons[i].sprite = null;
                 skillButtons[i].color = Color.clear;
                 skillMasks[i].fillAmount = 0f;
+                secondImages[i].sprite = null;
+                secondImages[i].color = Color.clear;
                 continue;
             }
-            if(playerSkills.currentSkills[i]) {
-                skillButtons[i].sprite = playerSkills.currentSkills[i].skillIcon;
-                skillButtons[i].color = ColorBySkillType.GetColorByType(playerSkills.currentSkills[i].attackType);
-                skillMasks[i].fillAmount = playerSkills.skillCooldowns[playerSkills.currentSkills[i].skillIndex]
-                    / playerSkills.currentSkills[i].cooldown;
+            if(playerSkills.currentSkills[i] != null) {
+                if(playerSkills.currentSkills[i] is ActiveSkill a) {
+                    skillButtons[i].sprite = a.skillIcon;
+                    skillButtons[i].color = ColorBySkillType.GetColorByType(a.attackType);
+                    skillMasks[i].fillAmount = playerSkills.skillCooldowns[a.skillIndex]
+                        / a.cooldown;
+                    secondImages[i].sprite = null;
+                    secondImages[i].color = Color.clear;
+                }
+                // Else set the icons of the potion or mushroom
+                if(playerSkills.currentSkills[i] is Mushroom m) {
+                    skillButtons[i].sprite = m.firstIcon;
+                    skillButtons[i].color = m.firstColor;
+                    skillMasks[i].fillAmount = potionCooldown / 1f;
+                    secondImages[i].sprite = null;
+                    secondImages[i].color = Color.clear;
+                }
             }
             else {
                 skillButtons[i].sprite = null;
                 skillButtons[i].color = Color.clear;
                 skillMasks[i].fillAmount = 0f;
+                secondImages[i].sprite = null;
+                secondImages[i].color = Color.clear;
             }
         }
     }

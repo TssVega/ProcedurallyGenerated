@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Items/Mushroom")]
-public class Mushroom : Item {
+public class Mushroom : Item, IUsable {
 
     public MushroomType mushroomType;
     [Range(1f, 50f)]

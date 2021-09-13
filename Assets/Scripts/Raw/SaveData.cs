@@ -5,6 +5,9 @@ using UnityEngine;
 [System.Serializable]
 public class SaveData {
     public int saveSlot;
+    // Inventory buttons
+    public bool skillBookUnlocked;
+    public bool mapUnlocked;
     // Transform
     public float[] position;
     public float[] rotation;
@@ -79,9 +82,14 @@ public class SaveData {
     // Skills
     public int[] acquiredSkills;
     public int[] currentSkills;
+    // Consumable items in skill slots
+    public string[] consumableItems;
 
     public SaveData(Player data) {
         saveSlot = data.saveSlot;
+        // Inventory buttons
+        skillBookUnlocked = data.skillBookUnlocked;
+        mapUnlocked = data.mapUnlocked;
         // Inventory and equipment
         inventory = new string[data.inventory.InventorySize];
         for(int i = 0; i < data.inventory.InventorySize; i++) {
@@ -190,15 +198,20 @@ public class SaveData {
             }
         }
         currentSkills = new int[11];
+        consumableItems = new string[11];
         for(int i = 0; i < 11; i++) {
-            if(i >= data.skillUser.currentSkills.Count) {
+            if(i >= data.skillUser.currentSkills.Length) {
                 break;
             }
-            if(data.skillUser.currentSkills[i]) {
-                currentSkills[i] = data.skillUser.currentSkills[i].skillIndex;
+            if(data.skillUser.currentSkills[i] != null && data.skillUser.currentSkills[i] is ActiveSkill a) {
+                // ActiveSkill a = data.skillUser.currentSkills[i] as ActiveSkill;
+                currentSkills[i] = a.skillIndex;
             }
             else {
                 currentSkills[i] = -1;
+            }
+            if(data.skillUser.currentSkills[i] != null && data.skillUser.currentSkills[i] is Mushroom m) {
+                consumableItems[i] = m.seed;
             }
         }
     }

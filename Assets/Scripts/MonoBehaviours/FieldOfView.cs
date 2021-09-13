@@ -50,7 +50,7 @@ public class FieldOfView : MonoBehaviour {
     }
     public Transform GetClosestTarget() {
         Transform closest = null;
-        float leastDistance = 9999f;
+        float leastDistance = viewRadius;
         for(int i = 0; i < visibleTargets.Count; i++) {
             Stats stats = visibleTargets[i].GetComponent<Stats>();
             if(stats && (stats.team == this.stats.team || this.stats == stats)) {
@@ -68,7 +68,7 @@ public class FieldOfView : MonoBehaviour {
     }
     private void ChaseClosestTarget() {
         Transform closest = null;
-        float leastDistance = 9999f;
+        float leastDistance = viewRadius;
         for(int i = 0; i < visibleTargets.Count; i++) {
             Stats stats = visibleTargets[i].GetComponent<Stats>();
             if(stats && (stats.team == this.stats.team || this.stats == stats)) {

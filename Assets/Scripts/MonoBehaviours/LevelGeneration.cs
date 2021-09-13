@@ -50,6 +50,9 @@ public class LevelGeneration : MonoBehaviour {
         if(collision.CompareTag("Player")) {
             worldGeneration.ChangeCurrentCoordinates(layout.worldCoordinates);
         }
+        else if(collision.GetComponent<EnemyAI>()) {
+            collision.GetComponent<EnemyAI>().level = this;
+        }
     }    
     private void OnTriggerExit2D(Collider2D collision) {
         if(collision.CompareTag("Player")) {

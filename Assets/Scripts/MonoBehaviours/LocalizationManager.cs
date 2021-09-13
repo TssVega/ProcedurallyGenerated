@@ -77,6 +77,9 @@ public class LocalizationManager : MonoBehaviour {
     /// <param name="identifier">Identifier to search the current locale for.</param>
     /// <returns>The string associated with the identifier. If this doesn't exist, null.</returns>
     public string GetText(string identifier) {
+        if(string.IsNullOrEmpty(identifier)) {
+            return null;
+        }
         if(!texts.ContainsKey(identifier)) {
             Debug.Log("Localization Error!: " + identifier + " does not have an associated string!");
             return null;
