@@ -6,6 +6,8 @@ public class ItemInfoPanel : MonoBehaviour {
 
     private Item item;
 
+    public SkillUser playerSkills;
+
     private int currentInventoryIndex;
 
     public TextMeshProUGUI itemName;
@@ -15,11 +17,11 @@ public class ItemInfoPanel : MonoBehaviour {
     public TextMeshProUGUI[] equippedItemDefenceStats;
     public TextMeshProUGUI currentItemDescription;
     public TextMeshProUGUI equippedItemDescription;
-
     public TextMeshProUGUI equippedItemText;
-
     public TextMeshProUGUI consumeEquipButtonText;
     public TextMeshProUGUI dismantleButtonText;
+    public TextMeshProUGUI infoText;
+
     public GameObject consumeEquipButton;
     public GameObject dismantleButton;
 
@@ -34,8 +36,20 @@ public class ItemInfoPanel : MonoBehaviour {
 
     public GameObject currentItemChart;
     public GameObject equippedItemChart;
+    public GameObject totalChart;
 
     public Inventory inventory;
+
+    public Image[] skillSlots;
+    public Image[] secondaryImages;
+
+    private const int skillSlotCount = 11;
+
+    public Sprite emptySlotSprite;
+
+    public SkillUI skillUI;
+
+    public TextMeshProUGUI[] quantityTexts;
 
     private void Awake() {
         equippedItemText.text = LocalizationManager.localization.GetText("equippedItem");
@@ -46,6 +60,7 @@ public class ItemInfoPanel : MonoBehaviour {
         SetStats();
         SetButtons();
         UpdateStats();
+        Refresh();
     }
     private void SetStats() {
         if(item != null) {
@@ -53,21 +68,108 @@ public class ItemInfoPanel : MonoBehaviour {
             itemName.color = ColorBySkillType.GetColorByRarity(item.rarity);
         }
     }
+    // Replace an IUsable in a slot with the current one
+    public void ReplaceSkillSlot(int index) {
+        for(int i = 0; i < skillSlotCount; i++) {
+            if(playerSkills.currentSkills.Length <= i) {
+                continue;
+            }
+            Mushroom mush = playerSkills.currentSkills[i] as Mushroom;
+            if(mush == item) {
+                playerSkills.currentSkills[i] = null;
+                break;
+            }
+        }
+        if(item is Mushroom m) {
+            playerSkills.currentSkills[index] = m;
+        }        
+        skillUI.RefreshSkillSlots();
+        Refresh();
+    }
+    // Refresh all the skill slots
+    private void Refresh() {
+        if(item.slot != EquipSlot.Consumable) {
+            return;
+        }
+        // Set skill slots sprites
+        for(int i = 0; i < skillSlotCount; i++) {
+            skillSlots[i].gameObject.SetActive(true);
+            if(i >= playerSkills.currentSkills.Length) {
+                skillSlots[i].sprite = emptySlotSprite;
+                skillSlots[i].color = Color.white;
+                secondaryImages[i].sprite = null;
+                secondaryImages[i].color = Color.clear;
+                quantityTexts[i].text = "";
+                continue;
+            }
+            ActiveSkill a = playerSkills.currentSkills[i] as ActiveSkill;
+            if(a && a.skillIcon) {
+                skillSlots[i].sprite = a.skillIcon;
+                skillSlots[i].color = ColorBySkillType.GetColorByType(a.attackType);
+                secondaryImages[i].sprite = null;
+                secondaryImages[i].color = Color.clear;
+                quantityTexts[i].text = "";
+            }
+            else if(playerSkills.currentSkills[i] is Mushroom m) {
+                skillSlots[i].sprite = m.firstIcon;
+                skillSlots[i].color = m.firstColor;
+                secondaryImages[i].sprite = null;
+                secondaryImages[i].color = Color.clear;
+                quantityTexts[i].text = inventory.quantities[currentInventoryIndex].ToString();
+            }
+            /* Potions here
+            else if(playerSkills.currentSkills[i] is Mushroom m) {
+                skillSlots[i].sprite = m.firstIcon;
+                skillSlots[i].color = m.firstColor;
+                secondaryImages[i].sprite = null;
+                secondaryImages[i].color = Color.white;
+            }*/
+            else {
+                skillSlots[i].sprite = emptySlotSprite;
+                skillSlots[i].color = Color.white;
+                secondaryImages[i].sprite = null;
+                secondaryImages[i].color = Color.clear;
+                quantityTexts[i].text = "";
+            }
+        }
+    }
     private void SetButtons() {
         if(item.slot == EquipSlot.Consumable) {
             consumeEquipButton.SetActive(true);
             consumeEquipButtonText.text = LocalizationManager.localization.GetText("consume");
             dismantleButton.SetActive(false);
+            for(int i = 0; i < skillSlots.Length; i++) {
+                skillSlots[i].gameObject.SetActive(true);
+            }
+            for(int i = 0; i < skillSlots.Length; i++) {
+                secondaryImages[i].gameObject.SetActive(true);
+            }
+            infoText.gameObject.SetActive(true);
+            infoText.text = LocalizationManager.localization.GetText("skillInfoNotif");
         }
         else if(item.slot == EquipSlot.Other) {
             consumeEquipButton.SetActive(false);
             dismantleButton.SetActive(false);
+            for(int i = 0; i < skillSlots.Length; i++) {
+                skillSlots[i].gameObject.SetActive(false);
+            }
+            for(int i = 0; i < skillSlots.Length; i++) {
+                secondaryImages[i].gameObject.SetActive(false);
+            }
+            infoText.gameObject.SetActive(false);
         }
         else {
             consumeEquipButton.SetActive(true);
             consumeEquipButtonText.text = LocalizationManager.localization.GetText("equip");
             dismantleButton.SetActive(true);
             dismantleButtonText.text = LocalizationManager.localization.GetText("dismantle");
+            for(int i = 0; i < skillSlots.Length; i++) {
+                skillSlots[i].gameObject.SetActive(false);
+            }
+            for(int i = 0; i < skillSlots.Length; i++) {
+                secondaryImages[i].gameObject.SetActive(false);
+            }
+            infoText.gameObject.SetActive(false);
         }
     }
     public void ConsumeEquipButton() {
@@ -174,6 +276,7 @@ public class ItemInfoPanel : MonoBehaviour {
             currentItemDefenceStats[11].text = "0";
             currentItemDefenceStats[12].text = "0";
             currentItemChart.SetActive(true);
+            totalChart.SetActive(true);
             
             Weapon equippedWeapon = inventory.equipment[(int)w.slot] as Weapon;
             if(equippedWeapon) {
@@ -243,6 +346,7 @@ public class ItemInfoPanel : MonoBehaviour {
             currentItemDefenceStats[11].text = a.poisonDefence.ToString();
             currentItemDefenceStats[12].text = a.curseDefence.ToString();
             currentItemChart.SetActive(true);
+            totalChart.SetActive(true);
             Armor equippedArmor = inventory.equipment[(int)a.slot] as Armor;
             if(equippedArmor) {
                 equippedItemOffenceStats[0].text = "0";
@@ -311,6 +415,7 @@ public class ItemInfoPanel : MonoBehaviour {
             currentItemDefenceStats[11].text = s.poisonDefence.ToString();
             currentItemDefenceStats[12].text = s.curseDefence.ToString();
             currentItemChart.SetActive(true);
+            totalChart.SetActive(true);
             Shield equippedShield = inventory.equipment[(int)s.slot] as Shield;
             if(equippedShield) {
                 equippedItemOffenceStats[0].text = "0";
@@ -379,6 +484,7 @@ public class ItemInfoPanel : MonoBehaviour {
             currentItemDefenceStats[11].text = r.poisonDefence.ToString();
             currentItemDefenceStats[12].text = r.curseDefence.ToString();
             currentItemChart.SetActive(true);
+            totalChart.SetActive(true);
             Ring equippedRing = inventory.equipment[(int)r.slot] as Ring;
             if(equippedRing) {
                 equippedItemOffenceStats[0].text = equippedRing.fireDamage.ToString();
@@ -431,6 +537,7 @@ public class ItemInfoPanel : MonoBehaviour {
             }
             currentItemChart.SetActive(false);
             equippedItemChart.SetActive(false);
+            totalChart.SetActive(false);
             equippedItemText.gameObject.SetActive(false);
         }
     }

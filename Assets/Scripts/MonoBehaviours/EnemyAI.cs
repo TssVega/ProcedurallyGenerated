@@ -154,7 +154,7 @@ public class EnemyAI : MonoBehaviour {
             
             for(int i = 0; i < skillUser.currentSkills.Length; i++) {
                 ActiveSkill a = skillUser.currentSkills[i] as ActiveSkill;
-                if(a.aiRange > fov.GetDistanceToEnemy() && skillUser.skillCooldowns[i] <= 0f) {
+                if(a && a.aiRange > fov.GetDistanceToEnemy() && skillUser.skillCooldowns[i] <= 0f) {
                     availableIndices.Add(i);
                 }
             }

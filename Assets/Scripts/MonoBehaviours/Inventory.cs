@@ -255,6 +255,15 @@ public class Inventory : MonoBehaviour {
         }
         return false;
     }
+    public int GetItemCount(IUsable usable) {
+        Item usableItem = usable as Item;
+        for(int i = 0; i < inventory.Count; i++) {
+            if(usableItem == inventory[i]) {
+                return quantities[i];
+            }
+        }
+        return 0;
+    }
     public void ConsumeItem(IUsable usable) {
         Item usableItem = usable as Item;
         for(int i = 0; i < inventory.Count; i++) {

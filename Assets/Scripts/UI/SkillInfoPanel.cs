@@ -7,6 +7,7 @@ using TMPro;
 public class SkillInfoPanel : MonoBehaviour {
 
     public Image[] skillSlots;
+    public Image[] secondaryImages;
     public Sprite emptySlotSprite;
     public TextMeshProUGUI guideText;
     public TextMeshProUGUI acquireText;
@@ -19,6 +20,8 @@ public class SkillInfoPanel : MonoBehaviour {
     private LocalizationManager localizationManager;
     private Stats playerStats;
     public SkillTreeManager skillTree;
+
+    public TextMeshProUGUI[] quantityTexts;
 
     private void Awake() {
         playerStats = FindObjectOfType<Player>().GetComponent<Stats>();
@@ -47,29 +50,54 @@ public class SkillInfoPanel : MonoBehaviour {
             skillTree.RefreshAcquiredStatus();
         }        
     }
+    // Refresh all the skill slots
     private void Refresh() {
+        // Activate the learn button if the skill is not yet learned
         if(playerSkills.acquiredSkills.Contains(currentSkill)) {
             learnButton.SetActive(false);
         }
         else {
             learnButton.SetActive(true);
         }
+        // Set skill slots sprites
         if(playerSkills.acquiredSkills.Contains(currentSkill) && currentSkill is ActiveSkill) {
             for(int i = 0; i < skillSlotCount; i++) {
                 skillSlots[i].gameObject.SetActive(true);
                 if(i >= playerSkills.currentSkills.Length) {
                     skillSlots[i].sprite = emptySlotSprite;
                     skillSlots[i].color = Color.white;
+                    secondaryImages[i].sprite = null;
+                    secondaryImages[i].color = Color.clear;
+                    quantityTexts[i].text = "";
                     continue;
                 }
                 ActiveSkill a = playerSkills.currentSkills[i] as ActiveSkill;
                 if(a && a.skillIcon) {
                     skillSlots[i].sprite = a.skillIcon;
                     skillSlots[i].color = ColorBySkillType.GetColorByType(a.attackType);
+                    secondaryImages[i].sprite = null;
+                    secondaryImages[i].color = Color.clear;
+                    quantityTexts[i].text = "";
                 }
+                else if(playerSkills.currentSkills[i] is Mushroom m) {
+                    skillSlots[i].sprite = m.firstIcon;
+                    skillSlots[i].color = m.firstColor;
+                    secondaryImages[i].sprite = null;
+                    secondaryImages[i].color = Color.white;
+                }
+                /* Potions here
+                else if(playerSkills.currentSkills[i] is Mushroom m) {
+                    skillSlots[i].sprite = m.firstIcon;
+                    skillSlots[i].color = m.firstColor;
+                    secondaryImages[i].sprite = null;
+                    secondaryImages[i].color = Color.white;
+                }*/
                 else {
                     skillSlots[i].sprite = emptySlotSprite;
                     skillSlots[i].color = Color.white;
+                    secondaryImages[i].sprite = null;
+                    secondaryImages[i].color = Color.clear;
+                    quantityTexts[i].text = "";
                 }
             }
         }

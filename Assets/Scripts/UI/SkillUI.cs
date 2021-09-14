@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class SkillUI : MonoBehaviour {
 
     private SkillUser playerSkills;
     public Image[] skillButtons;
     public Image[] secondImages;
+    public TextMeshProUGUI[] quantityTexts;
     private Image[] skillMasks;
     private readonly int maxActiveSkills = 11;
     private bool[] pressing;
@@ -22,7 +24,7 @@ public class SkillUI : MonoBehaviour {
         playerSkills = FindObjectOfType<Player>().GetComponent<SkillUser>();
         skillMasks = new Image[skillButtons.Length];
         for(int i = 0; i < skillButtons.Length; i++) {
-            skillMasks[i] = skillButtons[i].transform.GetChild(0).GetComponent<Image>();
+            skillMasks[i] = skillButtons[i].transform.GetChild(2).GetComponent<Image>();
         }
     }
     private void Start() {
@@ -39,6 +41,7 @@ public class SkillUI : MonoBehaviour {
         }
     }
     public void RefreshSkillSlots() {
+        UpdateQuantities();
         for(int i = 0; i < maxActiveSkills; i++) {
             if(i >= playerSkills.currentSkills.Length) {
                 skillButtons[i].sprite = null;
@@ -85,8 +88,25 @@ public class SkillUI : MonoBehaviour {
                     if(inventory.CanConsumeItem(playerSkills.currentSkills[i])) {
                         potionCooldown = 1f;
                         inventory.ConsumeItem(playerSkills.currentSkills[i]);
+                        UpdateQuantities();
                     }                    
                 }
+            }
+        }
+    }
+    private void UpdateQuantities() {
+        for(int i = 0; i < maxActiveSkills; i++) {
+            if(i >= playerSkills.currentSkills.Length) {
+                quantityTexts[i].text = "";
+            }
+            else if(playerSkills.currentSkills[i] is ActiveSkill) {
+                quantityTexts[i].text = "";
+            }
+            else if(playerSkills.currentSkills[i] is Mushroom m) {
+                quantityTexts[i].text = inventory.GetItemCount(m).ToString();
+            }
+            else {
+                quantityTexts[i].text = "";
             }
         }
     }
