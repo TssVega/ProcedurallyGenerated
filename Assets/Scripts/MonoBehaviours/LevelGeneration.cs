@@ -32,6 +32,7 @@ public class LevelGeneration : MonoBehaviour {
 
     private List<Vector3Int> wallCoordinates;
     private const int torchCount = 1;
+    private const int crystalCount = 2;
 
     private List<GameObject> torches;
 
@@ -39,12 +40,17 @@ public class LevelGeneration : MonoBehaviour {
 
     public List<Vector3Int> occupiedCoordinates;
 
+    public GameObject[] crystals;
+
+    private List<GameObject> activeCrystals;
+
     private void Awake() {
         worldGeneration = FindObjectOfType<WorldGeneration>();
         chestGeneration = GetComponent<ChestGeneration>();
         mushroomGeneration = GetComponent<MushroomGeneration>();
         torches = new List<GameObject>();
         occupiedCoordinates = new List<Vector3Int>();
+        activeCrystals = new List<GameObject>();
     }
     private void OnTriggerEnter2D(Collider2D collision) {
         if(collision.CompareTag("Player")) {
@@ -116,8 +122,34 @@ public class LevelGeneration : MonoBehaviour {
         }
         chestGeneration.LoadChests(0, layout.seed);
         mushroomGeneration.GenerateMushrooms(0, layout.seed);
+        GenerateCrystals();
         //mushroomGeneration.GenerateMushrooms(0, layout.seed);
         
+    }
+    private void GenerateCrystals() {
+        for(int i = 0; i < crystalCount; i++) {
+            GameObject crystal = ObjectPooler.objectPooler.GetPooledObject(crystals[pseudoRandomForPlants.Next(0, crystals.Length)].name);
+            Vector3Int randomLocation = Vector3Int.zero;
+            bool valid = false;
+            while(!valid) {
+                // pseudoRandomForMushrooms.Next(3, levelGeneration.layout.levelSize - 4)
+                randomLocation = new Vector3Int(pseudoRandomForPlants.Next(3, layout.levelSize - 4), pseudoRandomForPlants.Next(3, layout.levelSize - 4), 0);
+                if(CheckLocation(randomLocation.x, randomLocation.y) && !occupiedCoordinates.Contains(randomLocation)) {
+                    valid = true;
+                }
+            }
+            occupiedCoordinates.Add(randomLocation);
+            crystal.transform.position = GetPreciseLocation(randomLocation.x, randomLocation.y);
+            crystal.transform.rotation = Quaternion.identity;
+            crystal.SetActive(true);
+            activeCrystals.Add(crystal);
+        }        
+    }
+    private void ClearCrystals() {        
+        for(int i = 0; i < activeCrystals.Count; i++) {
+            activeCrystals[i].SetActive(false);
+        }
+        activeCrystals.Clear();
     }
     private void ClearStartPosition() {
         for(int x = layout.levelSize / 2 - 4; x < layout.levelSize / 2 + 4; x++) {
@@ -159,6 +191,7 @@ public class LevelGeneration : MonoBehaviour {
         chestGeneration.ClearChests();
         mushroomGeneration.ClearMushrooms();
         ClearTorches();
+        ClearCrystals();
         gameObject.SetActive(false);
     }    
     private static int ConvertTileIdToTilesetIndex(int id) {

@@ -12,7 +12,6 @@ public class FieldOfView : MonoBehaviour {
     public LayerMask targetMask;
     public LayerMask obstacleMask;
 
-    [HideInInspector]
     public List<Transform> visibleTargets = new List<Transform>();
 
     private const float delay = 0.5f;
@@ -29,17 +28,18 @@ public class FieldOfView : MonoBehaviour {
         distanceToEnemy = distance;
     }
     private void Awake() {
-        SetDistanceToEnemy(9999f);
+        SetDistanceToEnemy(viewRadius);
         enemyAI = GetComponent<EnemyAI>();
         destinationSetter = GetComponent<AIDestinationSetter>();
         stats = GetComponent<Stats>();
     }
-
-    void Start() {
-        StartCoroutine(FindTargetWithDelay());    
+    private void OnEnable() {
+        StartCoroutine(FindTargetWithDelay());
     }
-
-    IEnumerator FindTargetWithDelay() {
+    private void OnDisable() {
+        StopAllCoroutines();
+    }
+    private IEnumerator FindTargetWithDelay() {
         while(true) {
             yield return new WaitForSeconds(delay);
             FindVisibleTargets();
@@ -90,11 +90,11 @@ public class FieldOfView : MonoBehaviour {
             enemyAI.Enrage();
         }
         else if(destinationSetter) {
-            SetDistanceToEnemy(9999f);
+            SetDistanceToEnemy(viewRadius);
         }
     }
     // Finds targets inside field of view not blocked by walls
-    void FindVisibleTargets() {
+    private void FindVisibleTargets() {
         visibleTargets.Clear();
         //Adds targets in view radius to an array
         Collider2D[] targetsInViewRadius = Physics2D.OverlapCircleAll(transform.position, viewRadius, targetMask);
@@ -109,6 +109,7 @@ public class FieldOfView : MonoBehaviour {
                     if(target == transform) {
                         continue;
                     }
+                    Debug.Log("Seeing a target");
                     visibleTargets.Add(target);
                 }
             }

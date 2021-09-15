@@ -78,9 +78,11 @@ public class Spawner : MonoBehaviour {
             case Biome.Rock:                
                 int diceResult = RollDice(4, 6);
                 int index = 0;
+                // Bats
                 if(diceResult <= 14) {
                     index = 0;
-                }                
+                }
+                // Nopes
                 else if(diceResult < 16) {
                     index = 1;
                 }

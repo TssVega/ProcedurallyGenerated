@@ -14,12 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seed: amber
   itemName: Amber
-  firstSprite: {fileID: -2171591679821508185, guid: fe720c1b11fc8164e8e359281d11d6a2,
-    type: 3}
+  descriptionID: 
+  firstSprite: {fileID: 21300000, guid: 7bd4baa03343a794fa0619cc0ecd23a8, type: 3}
   secondSprite: {fileID: 0}
   thirdSprite: {fileID: 0}
-  firstIcon: {fileID: -2171591679821508185, guid: fe720c1b11fc8164e8e359281d11d6a2,
-    type: 3}
+  firstIcon: {fileID: 21300000, guid: 7bd4baa03343a794fa0619cc0ecd23a8, type: 3}
   secondIcon: {fileID: 0}
   thirdIcon: {fileID: 0}
   firstColor: {r: 1, g: 1, b: 1, a: 1}
@@ -65,6 +64,7 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   material: 1
+  itemMaterial: 0
   strength: 0
   agility: 0
   dexterity: 0

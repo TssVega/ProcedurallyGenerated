@@ -14,12 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seed: copper
   itemName: Copper
-  firstSprite: {fileID: -5679857420678019278, guid: fe720c1b11fc8164e8e359281d11d6a2,
-    type: 3}
+  descriptionID: 
+  firstSprite: {fileID: 21300000, guid: 95edb5be0415eba42bcaf8bd532b459b, type: 3}
   secondSprite: {fileID: 0}
   thirdSprite: {fileID: 0}
-  firstIcon: {fileID: -5679857420678019278, guid: fe720c1b11fc8164e8e359281d11d6a2,
-    type: 3}
+  firstIcon: {fileID: 21300000, guid: 95edb5be0415eba42bcaf8bd532b459b, type: 3}
   secondIcon: {fileID: 0}
   thirdIcon: {fileID: 0}
   firstColor: {r: 1, g: 1, b: 1, a: 1}
@@ -65,6 +64,7 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   material: 1
+  itemMaterial: 0
   strength: 0
   agility: 0
   dexterity: 0

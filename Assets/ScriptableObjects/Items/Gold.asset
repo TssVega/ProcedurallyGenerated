@@ -14,12 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seed: gold
   itemName: Gold
-  firstSprite: {fileID: 2970378186890581302, guid: fe720c1b11fc8164e8e359281d11d6a2,
-    type: 3}
+  descriptionID: 
+  firstSprite: {fileID: 21300000, guid: 0e55d0ed674442c45a44a8f96ed22c21, type: 3}
   secondSprite: {fileID: 0}
   thirdSprite: {fileID: 0}
-  firstIcon: {fileID: 2970378186890581302, guid: fe720c1b11fc8164e8e359281d11d6a2,
-    type: 3}
+  firstIcon: {fileID: 21300000, guid: 0e55d0ed674442c45a44a8f96ed22c21, type: 3}
   secondIcon: {fileID: 0}
   thirdIcon: {fileID: 0}
   firstColor: {r: 1, g: 1, b: 1, a: 1}
@@ -65,6 +64,7 @@ MonoBehaviour:
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
   material: 1
+  itemMaterial: 0
   strength: 0
   agility: 0
   dexterity: 0

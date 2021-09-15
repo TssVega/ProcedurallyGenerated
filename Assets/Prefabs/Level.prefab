@@ -53,6 +53,7 @@ MonoBehaviour:
     useRandomSeed: 1
     seed: 
     worldCoordinates: {x: 0, y: 0}
+    biomeIndex: 0
     levelSize: 32
     generateWalls: 1
     generateGrass: 0
@@ -111,6 +112,14 @@ MonoBehaviour:
     - {fileID: 11400000, guid: df23bcf016f93ac4490cfe612dfbc81a, type: 2}
     - {fileID: 11400000, guid: 27cd4228fe86f964b94ae2a4291f39f7, type: 2}
     - {fileID: 11400000, guid: 2f3f6585c100f234abe9f4989afea4be, type: 2}
+  occupiedCoordinates: []
+  crystals:
+  - {fileID: 5036906735598353528, guid: 88fe3c3e8b550bc4fa8efb13560d0046, type: 3}
+  - {fileID: 5036906735598353528, guid: d7fd8fd5227e794479a36c8aa5410aa7, type: 3}
+  - {fileID: 5036906735598353528, guid: f8521a1124aeb874e829bfd44418784b, type: 3}
+  - {fileID: 5036906735598353528, guid: 156d06680b83853489e713fa8caf5da3, type: 3}
+  - {fileID: 5036906735598353528, guid: 096974944cb81d840a64b55a8254ebf4, type: 3}
+  - {fileID: 5036906735598353528, guid: 8f948c7e802f3c84e81899d657937b55, type: 3}
 --- !u!114 &2913122364275797249
 MonoBehaviour:
   m_ObjectHideFlags: 0
