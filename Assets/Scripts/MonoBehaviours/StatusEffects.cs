@@ -188,7 +188,7 @@ public class StatusEffects : MonoBehaviour {
         }
     }
     public void UseMana(float amount) {
-        stats.mana -= amount;
+        stats.mana -= Mathf.Clamp(amount, 0, stats.maxMana);
         //if(player) {
         //    player.PlayerConsumeMana(amount);
         //}
@@ -197,7 +197,7 @@ public class StatusEffects : MonoBehaviour {
         }
     }
     public void GiveMana(float amount) {
-        stats.mana += amount;
+        stats.mana += Mathf.Clamp(amount, 0, stats.maxMana - stats.mana);
         if(statusUI) {
             statusUI.UpdateMana(stats.mana / stats.maxMana, stats.mana);
         }

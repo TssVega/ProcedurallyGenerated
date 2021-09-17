@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2016924447434614480}
   - component: {fileID: 2913122364275797249}
   - component: {fileID: 579866985699479157}
+  - component: {fileID: -109976545555676187}
   - component: {fileID: 6886192618472798170}
   - component: {fileID: 1440041319163023640}
   - component: {fileID: 4589421620878623544}
@@ -120,6 +121,10 @@ MonoBehaviour:
   - {fileID: 5036906735598353528, guid: 156d06680b83853489e713fa8caf5da3, type: 3}
   - {fileID: 5036906735598353528, guid: 096974944cb81d840a64b55a8254ebf4, type: 3}
   - {fileID: 5036906735598353528, guid: 8f948c7e802f3c84e81899d657937b55, type: 3}
+  stalagmites:
+  - {fileID: 5036906735598353528, guid: 7b70a9ca817611d44aefba3f6da35c9a, type: 3}
+  - {fileID: 5036906735598353528, guid: 13a37a9fb59ab2b4eb2264ef7707c1ab, type: 3}
+  - {fileID: 5036906735598353528, guid: 63b98872afd0cdf4c8ffee49d3f3eb1e, type: 3}
 --- !u!114 &2913122364275797249
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,6 +155,27 @@ MonoBehaviour:
   mushroomDatabase: {fileID: 11400000, guid: cd02dd15f0de94643ac6f426f808693a, type: 2}
   itemDatabase: {fileID: 11400000, guid: 54f63e30eeab869438b4c4e0e1e6351e, type: 2}
   mushrooms: []
+--- !u!114 &-109976545555676187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2016924447434614481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d54ae420c91ccf149a943a48dd5f8f23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poolData:
+    hasPool: 0
+    full: 0
+    healthPool: 0
+  poolObject: {fileID: 3793037868560500656, guid: 766f3ec880efc6b47a08ef479ad3c414,
+    type: 3}
+  hasPool: 0
+  full: 0
+  healthPool: 0
 --- !u!61 &6886192618472798170
 BoxCollider2D:
   m_ObjectHideFlags: 0

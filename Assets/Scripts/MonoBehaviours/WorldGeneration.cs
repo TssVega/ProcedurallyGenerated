@@ -87,12 +87,16 @@ public class WorldGeneration : MonoBehaviour {
     private void GetAutosaveFiles() {
         List<string> chestFiles = PersistentData.GetAllFilesWithKey($"ChestData{PersistentData.saveSlot}", $"", $"");
         List<string> mushroomFiles = PersistentData.GetAllFilesWithKey($"MushroomData{PersistentData.saveSlot}", $"", $"");
+        List<string> poolFiles = PersistentData.GetAllFilesWithKey($"PoolData{PersistentData.saveSlot}", $"", $"");
         for(int i = 0; i < chestFiles.Count; i++) {
             File.Copy(chestFiles[i], chestFiles[i].Replace($"Data{PersistentData.saveSlot}", "Data0"));
         }
         for(int i = 0; i < mushroomFiles.Count; i++) {
             File.Copy(mushroomFiles[i], mushroomFiles[i].Replace($"Data{PersistentData.saveSlot}", "Data0"));
-        }   
+        }
+        for(int i = 0; i < poolFiles.Count; i++) {
+            File.Copy(poolFiles[i], poolFiles[i].Replace($"Data{PersistentData.saveSlot}", "Data0"));
+        }
     }
     public bool CanSave() {
         bool canSave = !(world.currentCoordinates[0] == world.lastCoordinates[0]

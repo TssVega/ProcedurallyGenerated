@@ -190,6 +190,7 @@ public class ItemInfoPanel : MonoBehaviour {
             inventory.DismantleInSlot(currentInventoryIndex);
         }
         UpdateStats();
+        gameObject.SetActive(false);
     }
     private void UpdateStats() {
         currentItemDescription.text = LocalizationManager.localization.GetText(item.descriptionID);
@@ -277,7 +278,7 @@ public class ItemInfoPanel : MonoBehaviour {
             currentItemDefenceStats[12].text = "0";
             currentItemChart.SetActive(true);
             totalChart.SetActive(true);
-            
+            quantityText.text = "";
             Weapon equippedWeapon = inventory.equipment[(int)w.slot] as Weapon;
             if(equippedWeapon) {
                 equippedItemOffenceStats[0].text = equippedWeapon.fireDamage.ToString();
@@ -347,6 +348,7 @@ public class ItemInfoPanel : MonoBehaviour {
             currentItemDefenceStats[12].text = a.curseDefence.ToString();
             currentItemChart.SetActive(true);
             totalChart.SetActive(true);
+            quantityText.text = "";
             Armor equippedArmor = inventory.equipment[(int)a.slot] as Armor;
             if(equippedArmor) {
                 equippedItemOffenceStats[0].text = "0";
@@ -416,6 +418,7 @@ public class ItemInfoPanel : MonoBehaviour {
             currentItemDefenceStats[12].text = s.curseDefence.ToString();
             currentItemChart.SetActive(true);
             totalChart.SetActive(true);
+            quantityText.text = "";
             Shield equippedShield = inventory.equipment[(int)s.slot] as Shield;
             if(equippedShield) {
                 equippedItemOffenceStats[0].text = "0";
@@ -485,6 +488,7 @@ public class ItemInfoPanel : MonoBehaviour {
             currentItemDefenceStats[12].text = r.curseDefence.ToString();
             currentItemChart.SetActive(true);
             totalChart.SetActive(true);
+            quantityText.text = "";
             Ring equippedRing = inventory.equipment[(int)r.slot] as Ring;
             if(equippedRing) {
                 equippedItemOffenceStats[0].text = equippedRing.fireDamage.ToString();

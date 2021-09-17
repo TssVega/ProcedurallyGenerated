@@ -104,11 +104,15 @@ public class Player : MonoBehaviour {
         // Save chests here
         ChestGeneration[] chestGenerators = FindObjectsOfType<ChestGeneration>();
         MushroomGeneration[] mushroomGenerators = FindObjectsOfType<MushroomGeneration>();
+        PoolGeneration[] poolGenerators = FindObjectsOfType<PoolGeneration>();
         for(int i = 0; i < chestGenerators.Length; i++) {
             chestGenerators[i].SaveChests(0);
         }
         for(int i = 0; i < mushroomGenerators.Length; i++) {
             mushroomGenerators[i].SaveMushrooms(0);
+        }
+        for(int i = 0; i < poolGenerators.Length; i++) {
+            poolGenerators[i].SavePools(0);
         }
         ReplaceAutosaveFilesWithSlotSpecificOnes();
         Debug.Log($"Saved successfully");

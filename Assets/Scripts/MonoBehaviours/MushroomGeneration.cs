@@ -35,9 +35,11 @@ public class MushroomGeneration : MonoBehaviour {
                     if(mushroomData.mushroomMap[x, y] >= 0 && levelGeneration.CheckLocation(x, y)) {
                         mushroomValues[x, y] = mushroomData.mushroomMap[x, y];
                         if(mushroomValues[x, y] >= 0 && mushroomValues[x, y] < 12) {
+                            levelGeneration.occupiedCoordinates.Add(new Vector3Int(x, y, 0));
                             PlaceMushroom(x, y, mushroomValues[x, y]);
                         }
                         else if(mushroomValues[x, y] > 0) {
+                            levelGeneration.occupiedCoordinates.Add(new Vector3Int(x, y, 0));
                             PlaceObject(x, y, mushroomValues[x, y]);
                         }
                     }

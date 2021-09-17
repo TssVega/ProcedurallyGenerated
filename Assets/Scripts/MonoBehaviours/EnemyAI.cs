@@ -147,7 +147,6 @@ public class EnemyAI : MonoBehaviour {
         // Escape from the attacker
     }
     private IEnumerator UseRandomSkill() {
-        Debug.Log("Enemy enraged!");
         yield return new WaitForSeconds(Random.Range(timeBetweenSkills, timeBetweenSkills * 2));
         if(stats.living) {
             List<int> availableIndices = new List<int>();

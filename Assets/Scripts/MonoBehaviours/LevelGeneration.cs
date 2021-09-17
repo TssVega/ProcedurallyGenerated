@@ -29,10 +29,12 @@ public class LevelGeneration : MonoBehaviour {
     private WorldGeneration worldGeneration;
     private ChestGeneration chestGeneration;
     private MushroomGeneration mushroomGeneration;
+    private PoolGeneration poolGeneration;
 
     private List<Vector3Int> wallCoordinates;
     private const int torchCount = 1;
     private const int crystalCount = 2;
+    private const int stalagmiteCount = 3;
 
     private List<GameObject> torches;
 
@@ -41,16 +43,20 @@ public class LevelGeneration : MonoBehaviour {
     public List<Vector3Int> occupiedCoordinates;
 
     public GameObject[] crystals;
+    public GameObject[] stalagmites;
 
     private List<GameObject> activeCrystals;
+    private List<GameObject> activeStalagmites;
 
     private void Awake() {
         worldGeneration = FindObjectOfType<WorldGeneration>();
         chestGeneration = GetComponent<ChestGeneration>();
         mushroomGeneration = GetComponent<MushroomGeneration>();
+        poolGeneration = GetComponent<PoolGeneration>();
         torches = new List<GameObject>();
         occupiedCoordinates = new List<Vector3Int>();
         activeCrystals = new List<GameObject>();
+        activeStalagmites = new List<GameObject>();
     }
     private void OnTriggerEnter2D(Collider2D collision) {
         if(collision.CompareTag("Player")) {
@@ -123,12 +129,63 @@ public class LevelGeneration : MonoBehaviour {
         chestGeneration.LoadChests(0, layout.seed);
         mushroomGeneration.GenerateMushrooms(0, layout.seed);
         GenerateCrystals();
+        GenerateStalagmites();
+        poolGeneration.GeneratePools(0, layout.seed);
         //mushroomGeneration.GenerateMushrooms(0, layout.seed);
         
     }
+    private void GenerateStalagmites() {
+        // Only generate stalagmites on rocky caves
+        if(layout.biomeIndex != 1) {
+            return;
+        }
+        for(int i = 0; i < stalagmiteCount; i++) {
+            GameObject stalagmite = ObjectPooler.objectPooler.GetPooledObject(stalagmites[pseudoRandomForPlants.Next(0, stalagmites.Length)].name);
+            Vector3Int randomLocation = Vector3Int.zero;
+            bool valid = false;
+            while(!valid) {
+                // pseudoRandomForMushrooms.Next(3, levelGeneration.layout.levelSize - 4)
+                randomLocation = new Vector3Int(pseudoRandomForPlants.Next(3, layout.levelSize - 4), pseudoRandomForPlants.Next(3, layout.levelSize - 4), 0);
+                if(CheckLocation(randomLocation.x, randomLocation.y) && !occupiedCoordinates.Contains(randomLocation)) {
+                    valid = true;
+                }
+            }
+            occupiedCoordinates.Add(randomLocation);
+            stalagmite.transform.position = GetPreciseLocation(randomLocation.x, randomLocation.y);
+            stalagmite.transform.rotation = Quaternion.identity;
+            stalagmite.SetActive(true);
+            activeStalagmites.Add(stalagmite);
+        }
+    }
+    private void ClearStalagmites() {
+        for(int i = 0; i < activeCrystals.Count; i++) {
+            activeStalagmites[i].SetActive(false);
+        }
+        activeStalagmites.Clear();
+    }
     private void GenerateCrystals() {
         for(int i = 0; i < crystalCount; i++) {
-            GameObject crystal = ObjectPooler.objectPooler.GetPooledObject(crystals[pseudoRandomForPlants.Next(0, crystals.Length)].name);
+            int biomeIndex = layout.biomeIndex;
+            int crystalIndex;
+            if(biomeIndex == 0) {
+                return;
+            }
+            else if(biomeIndex == 1) {
+                crystalIndex = pseudoRandomForPlants.Next(1, 4);
+            }
+            else if(biomeIndex == 2) {
+                crystalIndex = pseudoRandomForPlants.Next(3, 6);
+            }
+            else if(biomeIndex == 3) {
+                crystalIndex = pseudoRandomForPlants.Next(0, 4);
+                if(crystalIndex == 2) {
+                    crystalIndex = 0;
+                }
+            }
+            else {
+                crystalIndex = pseudoRandomForPlants.Next(0, crystals.Length);
+            }            
+            GameObject crystal = ObjectPooler.objectPooler.GetPooledObject(crystals[crystalIndex].name);
             Vector3Int randomLocation = Vector3Int.zero;
             bool valid = false;
             while(!valid) {
@@ -192,6 +249,8 @@ public class LevelGeneration : MonoBehaviour {
         mushroomGeneration.ClearMushrooms();
         ClearTorches();
         ClearCrystals();
+        ClearStalagmites();
+        poolGeneration.ClearPools();
         gameObject.SetActive(false);
     }    
     private static int ConvertTileIdToTilesetIndex(int id) {

@@ -143,4 +143,38 @@ public static class SaveSystem {
             return null;
         }
     }
+    public static void SavePools(PoolGeneration data, int slot, Vector2Int coordinates) {
+        // Formatter to convert game data to binary
+        BinaryFormatter bin = new BinaryFormatter();
+        string path = $"{Application.persistentDataPath}/PoolData{slot}_{coordinates.x}x{coordinates.y}y.tss";
+        using(FileStream stream = new FileStream(path, FileMode.Create)) {
+            PoolData _data = new PoolData(data);
+            bin.Serialize(stream, _data);
+        }
+        // FileStream stream = new FileStream(path, FileMode.Create);
+        // Take the data and write it to the file
+        // SaveData _data = new SaveData(data);
+        // bin.Serialize(stream, _data);
+        // Close the stream
+        //Debug.Log("Mushroom data " + data + " saved to slot " + slot + " successfully at " + Application.persistentDataPath);
+        // stream.Close();
+    }
+    public static PoolData LoadPools(int slot, Vector2Int coordinates) {
+        string path = $"{Application.persistentDataPath}/PoolData{slot}_{coordinates.x}x{coordinates.y}y.tss";
+        if(File.Exists(path)) {
+            BinaryFormatter bin = new BinaryFormatter();
+            using(FileStream stream = new FileStream(path, FileMode.Open)) {
+                PoolData data = bin.Deserialize(stream) as PoolData;
+                return data;
+            }
+            // FileStream stream = new FileStream(path, FileMode.Open);
+            // SaveData data = bin.Deserialize(stream) as SaveData;
+            // Debug.Log("Deserialized file");
+            // stream.Close();
+            // return data;
+        }
+        else {
+            return null;
+        }
+    }
 }

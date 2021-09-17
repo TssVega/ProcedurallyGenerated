@@ -109,7 +109,6 @@ public class FieldOfView : MonoBehaviour {
                     if(target == transform) {
                         continue;
                     }
-                    Debug.Log("Seeing a target");
                     visibleTargets.Add(target);
                 }
             }

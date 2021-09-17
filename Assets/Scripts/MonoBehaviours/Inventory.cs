@@ -358,7 +358,8 @@ public class Inventory : MonoBehaviour {
         if(item && item.slot != EquipSlot.Consumable && !equipment[(int)item.slot]) {
             inventory[slot] = null;
             quantities[slot]--;
-            EquipItem(item);            
+            EquipItem(item);
+            UpdateSlot(slot);
         }
         else if(item && item.slot != EquipSlot.Consumable && equipment[(int)item.slot]) {
             Item tempItem = equipment[(int)item.slot];
