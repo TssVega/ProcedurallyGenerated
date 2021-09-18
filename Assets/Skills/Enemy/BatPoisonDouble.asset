@@ -39,7 +39,7 @@ MonoBehaviour:
     lightIntensity: 0.3
     lightRadius: 0.5
     lightColor: {r: 0, g: 1, b: 0.17519307, a: 1}
-    damageRate: 0.3
+    damageRate: 0.1
     rotationSpeed: 0
     projectileSpeed: 4
     radius: 0.1
@@ -53,7 +53,7 @@ MonoBehaviour:
     homing: 0
     push: 0
     poisonStacks: 35
-    poisonDuration: 25
+    poisonDuration: 15
     bloodStacks: 0
     bleedDuration: 0
     curseStacks: 0

@@ -16,7 +16,7 @@ public class PoolGeneration : MonoBehaviour {
     public bool full;
     public bool healthPool; // True is health pool and false is mana pool
 
-    private const int poolChance = 100;
+    private const int poolChance = 4;
 
     private List<GameObject> pools;
 

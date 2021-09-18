@@ -275,7 +275,7 @@ public class ItemCreator : ScriptableObject {
         return newMaterial;
     }
     public Item CreateUniqueItem() {
-        Item item = uniqueItemDatabase.uniqueItems[Random.Range(0, uniqueItemDatabase.uniqueItems.Count)];
+        Item item = uniqueItemDatabase.uniqueItems[pseudoRandom.Next(0, uniqueItemDatabase.uniqueItems.Count)];
         string itemName = LocalizationManager.localization.GetText(item.seed);
         if(itemName != null) {
             item.itemName = itemName;

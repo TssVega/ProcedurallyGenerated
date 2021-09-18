@@ -21,6 +21,8 @@ public class ItemInfoPanel : MonoBehaviour {
     public TextMeshProUGUI consumeEquipButtonText;
     public TextMeshProUGUI dismantleButtonText;
     public TextMeshProUGUI infoText;
+    public TextMeshProUGUI areYouSureText;
+    public TextMeshProUGUI yesText;
 
     public GameObject consumeEquipButton;
     public GameObject dismantleButton;
@@ -37,6 +39,7 @@ public class ItemInfoPanel : MonoBehaviour {
     public GameObject currentItemChart;
     public GameObject equippedItemChart;
     public GameObject totalChart;
+    public GameObject dismantleConfirmationPanel;
 
     public Inventory inventory;
 
@@ -53,6 +56,11 @@ public class ItemInfoPanel : MonoBehaviour {
 
     private void Awake() {
         equippedItemText.text = LocalizationManager.localization.GetText("equippedItem");
+        areYouSureText.text = LocalizationManager.localization.GetText("dismantleConfirmation");
+        yesText.text = LocalizationManager.localization.GetText("yes");
+    }
+    private void OnEnable() {
+        dismantleConfirmationPanel.SetActive(false);
     }
     public void SetItem(Item item, int index) {
         this.item = item;
@@ -187,8 +195,11 @@ public class ItemInfoPanel : MonoBehaviour {
     }
     public void DismantleButton() {
         if(item.dismantleOutput > 0) {
-            inventory.DismantleInSlot(currentInventoryIndex);
-        }
+            dismantleConfirmationPanel.SetActive(true);
+        }        
+    }
+    public void Dismantle() {
+        inventory.DismantleInSlot(currentInventoryIndex);
         UpdateStats();
         gameObject.SetActive(false);
     }

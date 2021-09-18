@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06483e1273c0bf64e9475d86de85f9d9, type: 3}
   m_Name: BatPoisonHoming
   m_EditorClassIdentifier: 
-  skillIndex: 0
+  skillIndex: 8
   skillName: 
   skillDescription: 
   skillIcon: {fileID: 0}
@@ -36,8 +36,8 @@ MonoBehaviour:
     arrowSkill: 0
     lightIntensity: 0.3
     lightRadius: 0.5
-    lightColor: {r: 0, g: 1, b: 0.1764706, a: 0}
-    damageRate: 0.5
+    lightColor: {r: 0, g: 1, b: 0.1764706, a: 1}
+    damageRate: 0.1
     rotationSpeed: 200
     projectileSpeed: 3
     radius: 0.1
@@ -51,7 +51,7 @@ MonoBehaviour:
     homing: 1
     push: 0
     poisonStacks: 50
-    poisonDuration: 25
+    poisonDuration: 15
     bloodStacks: 0
     bleedDuration: 0
     curseStacks: 0

@@ -11,6 +11,7 @@ public class Pool : MonoBehaviour, IInteractable {
     private PoolGeneration poolGeneration;
 
     private SpriteRenderer spriteRenderer;
+    private ParticleSystem particleSys;
 
     private bool full;
     private bool healingPool;
@@ -32,6 +33,7 @@ public class Pool : MonoBehaviour, IInteractable {
         playerStatus = FindObjectOfType<Player>().GetComponent<StatusEffects>();
         playerStats = FindObjectOfType<Player>().stats;
         spriteRenderer = GetComponent<SpriteRenderer>();
+        particleSys = GetComponent<ParticleSystem>();
         light2D = GetComponent<Light2D>();
         UISprite = interactImage;
     }
@@ -57,16 +59,23 @@ public class Pool : MonoBehaviour, IInteractable {
             if(!full) {
                 spriteRenderer.sprite = emptyPoolSprite;
                 light2D.intensity = 0f;
+                particleSys.Stop();
             }
             else if(healingPool) {
                 spriteRenderer.sprite = healthPoolSprite;
                 light2D.color = Color.red;
                 light2D.intensity = 1f;
+                var main = particleSys.main;
+                main.startColor = Color.red;
+                particleSys.Play();
             }
             else {
                 spriteRenderer.sprite = manaPoolSprite;
                 light2D.color = Color.blue;
                 light2D.intensity = 1f;
+                var main = particleSys.main;
+                main.startColor = Color.blue;
+                particleSys.Play();
             }
         }        
         /*

@@ -27,7 +27,7 @@ MonoBehaviour:
   secondColor: {r: 0, g: 0, b: 0, a: 0}
   thirdColor: {r: 0, g: 0, b: 0, a: 0}
   slot: 6
-  rarity: 0
+  rarity: 2
   diamondCost: 0
   goldCost: 0
   silverCost: 1
