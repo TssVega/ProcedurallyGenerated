@@ -100,13 +100,14 @@ public class ItemCreator : ScriptableObject {
         new int[] { 6, 6, 6, 4, 4, 3, 5, 5, 5, 5, 3, 4, 4 }
     };
 
-    private const int uniqueRate = 2;   // uniqueRate / 100 chance of getting a unique item
+    private int uniqueRate;   // uniqueRate / 100 chance of getting a unique item
     private const int dieCapacity = 10;
 
     private System.Random pseudoRandom;
 
     // Create an item
-    public Item CreateItem(string seed) {
+    public Item CreateItem(string seed, int luck) {
+        uniqueRate = luck;
         pseudoRandom = new System.Random(seed.GetHashCode());
         Item item;
         ItemMaterial mat = GetItemMaterial();
@@ -114,10 +115,46 @@ public class ItemCreator : ScriptableObject {
             item = CheckSpecialCase(seed);
             return item;
         }
-        int slotIndex = pseudoRandom.Next(0, 6);
+        int slotIndex = pseudoRandom.Next(0, 15);
         bool unique = pseudoRandom.Next(1, 101) <= uniqueRate;
         if(unique) {
             return CreateUniqueItem();
+        }
+        if(slotIndex > 5) {
+            switch(slotIndex) {
+                case 6:
+                case 7:
+                    return itemDatabase.commonBooks[pseudoRandom.Next(0, itemDatabase.commonBooks.Count)];
+                case 8:
+                case 9:
+                    return itemDatabase.essentialBooks[pseudoRandom.Next(0, itemDatabase.essentialBooks.Count)];
+                case 10:
+                case 11:
+                    return itemDatabase.grimoire[pseudoRandom.Next(0, itemDatabase.grimoire.Count)];
+                case 12:
+                case 13:
+                    return itemDatabase.physicalBooks[pseudoRandom.Next(0, itemDatabase.physicalBooks.Count)];
+                case 14:
+                    int rnd = pseudoRandom.Next(0, 6);
+                    if(rnd == 0) {
+                        return itemDatabase.tomes[pseudoRandom.Next(0, itemDatabase.tomes.Count)];
+                    }
+                    else if(rnd == 1) {
+                        return itemDatabase.commonBooks[pseudoRandom.Next(0, itemDatabase.commonBooks.Count)];
+                    }
+                    else if(rnd == 2) {
+                        return itemDatabase.essentialBooks[pseudoRandom.Next(0, itemDatabase.essentialBooks.Count)];
+                    }
+                    else if(rnd == 3) {
+                        return itemDatabase.grimoire[pseudoRandom.Next(0, itemDatabase.grimoire.Count)];
+                    }
+                    else if(rnd == 4) {
+                        return itemDatabase.physicalBooks[pseudoRandom.Next(0, itemDatabase.physicalBooks.Count)];
+                    }
+                    else {
+                        return itemDatabase.essentialBooks[pseudoRandom.Next(0, itemDatabase.essentialBooks.Count)];
+                    }
+            }
         }
         // To ensure you don't get weapons and rings out of fabric
         while((int)mat > 15 && (slotIndex == 0 || slotIndex == 5 || slotIndex == 1)) {

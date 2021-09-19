@@ -6,6 +6,12 @@ using UnityEngine;
 public class ItemDatabase : ScriptableObject {
 
     public List<Item> items;
+    public List<Item> books;
+    public List<Item> physicalBooks;
+    public List<Item> grimoire;
+    public List<Item> tomes;
+    public List<Item> commonBooks;
+    public List<Item> essentialBooks;
 
     public Item GetItemByMaterial(ItemMaterial mat) {
         if((int)mat < 15) {

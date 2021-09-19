@@ -66,6 +66,7 @@ public class SaveData {
     public float parryDuration;
     public float blockDuration;
     public float damageBlockRate;
+    public int luck;
     // Thresholds
     public int burningThreshold;
     public int earthingThreshold;
@@ -178,6 +179,7 @@ public class SaveData {
         parryDuration = data.stats.parryDuration;
         blockDuration = data.stats.blockDuration;
         damageBlockRate = data.stats.damageBlockRate;
+        luck = data.stats.luck;
         // Thresholds
         burningThreshold = data.stats.burningThreshold;
         earthingThreshold = data.stats.earthingThreshold;

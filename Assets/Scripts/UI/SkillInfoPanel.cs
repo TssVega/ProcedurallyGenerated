@@ -23,6 +23,8 @@ public class SkillInfoPanel : MonoBehaviour {
 
     public TextMeshProUGUI[] quantityTexts;
 
+    public SkillDatabase skillDatabase;
+
     private void Awake() {
         playerStats = FindObjectOfType<Player>().GetComponent<Stats>();
         localizationManager = FindObjectOfType<LocalizationManager>();
@@ -36,9 +38,14 @@ public class SkillInfoPanel : MonoBehaviour {
         currentSkill = skill;
         Refresh();
         RefreshText();
+        skillTree.UpdateStatPoints();
+        skillTree.RefreshAcquiredStatus();
     }
     public void LearnSkill() {
         if(playerSkills.acquiredSkills.Contains(currentSkill)) {
+            return;
+        }        
+        if(!CheckPrerequisites()) {
             return;
         }
         if(playerStats.statPoints >= currentSkill.skillPointsNeeded) {
@@ -50,10 +57,25 @@ public class SkillInfoPanel : MonoBehaviour {
             skillTree.RefreshAcquiredStatus();
         }        
     }
+    private bool CheckPrerequisites() {
+        bool allPrerequisitesMet = true;
+        for(int i = 0; i < currentSkill.prerequisites.Length; i++) {
+            if(currentSkill.prerequisites[i] < 0) {
+                return true;
+            }
+            if(!playerSkills.acquiredSkills.Contains(skillDatabase.skills[currentSkill.prerequisites[i]])) {
+                allPrerequisitesMet = false;
+            }
+        }
+        return allPrerequisitesMet;
+    }
     // Refresh all the skill slots
     private void Refresh() {
         // Activate the learn button if the skill is not yet learned
         if(playerSkills.acquiredSkills.Contains(currentSkill)) {
+            learnButton.SetActive(false);
+        }
+        else if(!CheckPrerequisites()) {
             learnButton.SetActive(false);
         }
         else {

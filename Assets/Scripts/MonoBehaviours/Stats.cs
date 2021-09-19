@@ -57,6 +57,7 @@ public class Stats : MonoBehaviour {
     public float parryDuration;
     public float blockDuration;
     public float damageBlockRate;
+    public int luck;
     [Header("Stack Counter Thresholds")]
     public int burningThreshold;
     public int earthingThreshold;

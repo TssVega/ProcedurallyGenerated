@@ -204,7 +204,7 @@ public class ItemInfoPanel : MonoBehaviour {
         gameObject.SetActive(false);
     }
     private void UpdateStats() {
-        currentItemDescription.text = LocalizationManager.localization.GetText(item.descriptionID);
+        currentItemDescription.text = LocalizationManager.localization.GetText($"{item.seed}Desc");
         Item equippedItem = null;
         if((int)item.slot < 6) {
             equippedItem = inventory.equipment[(int)item.slot];
@@ -231,7 +231,7 @@ public class ItemInfoPanel : MonoBehaviour {
             currentItemThirdImage.color = Color.clear;
         }
         if(equippedItem) {
-            equippedItemDescription.text = LocalizationManager.localization.GetText(equippedItem.descriptionID);
+            equippedItemDescription.text = LocalizationManager.localization.GetText($"{equippedItem.seed}Desc");
             if(equippedItem && equippedItem.firstIcon) {
                 equippedItemFirstImage.sprite = equippedItem.firstIcon;
                 equippedItemFirstImage.color = equippedItem.firstColor;

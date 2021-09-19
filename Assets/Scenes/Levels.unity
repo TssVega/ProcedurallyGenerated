@@ -186,8 +186,8 @@ MonoBehaviour:
   - {x: 0.15374851, y: 0.17920864, z: 0}
   - {x: -0.14865732, y: 0.1817545, z: 0}
   m_ShapePathHash: 584475405
-  m_Mesh: {fileID: 1112383937}
-  m_InstanceId: 389792
+  m_Mesh: {fileID: 1114100994}
+  m_InstanceId: 119838
 --- !u!1 &503760
 GameObject:
   m_ObjectHideFlags: 0
@@ -51122,7 +51122,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1108778163}
   m_CullTransparentMesh: 0
---- !u!43 &1112383937
+--- !u!43 &1114100994
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -89446,6 +89446,7 @@ MonoBehaviour:
   - {fileID: 1714750622}
   - {fileID: 840863972}
   - {fileID: 1598922951}
+  skillDatabase: {fileID: 11400000, guid: b84645b6f2bdb204bbc1cb0eb4d331c0, type: 2}
 --- !u!1 &2049802272
 GameObject:
   m_ObjectHideFlags: 0
@@ -100106,6 +100107,7 @@ MonoBehaviour:
   parryDuration: 0.3
   blockDuration: 1
   damageBlockRate: 0.95
+  luck: 1
   burningThreshold: 100
   earthingThreshold: 100
   frostbiteThreshold: 100
@@ -100148,6 +100150,8 @@ MonoBehaviour:
   deathPanel: {fileID: 779987120}
   statusUI: {fileID: 506769535}
   hitWarning: {fileID: 2085387187}
+  stats: {fileID: 0}
+  skillUser: {fileID: 0}
   stunned: 0
   frostbitten: 0
   airborne: 0

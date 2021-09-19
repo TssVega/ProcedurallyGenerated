@@ -13,7 +13,8 @@ public class StatusEffects : MonoBehaviour {
     public DeathPanel deathPanel;
     public StatusUI statusUI;
     public HitWarning hitWarning;
-    private Stats stats;
+    public Stats stats;
+    public SkillUser skillUser;
     private Passives passives;
     private Rigidbody2D rb2d;
     //private StatusBar bar;
@@ -109,6 +110,7 @@ public class StatusEffects : MonoBehaviour {
         stats = GetComponent<Stats>();
         passives = GetComponent<Passives>();
         rb2d = GetComponent<Rigidbody2D>();
+        skillUser = GetComponent<SkillUser>();
         //if(enemy) {
         //    stats.walkSpeed = enemy.enemy.speed;
         //}
@@ -563,7 +565,7 @@ public class StatusEffects : MonoBehaviour {
             yield return new WaitForSeconds(period);
             TakeDamage(damage, AttackType.Fire, skill, attacker);
             duration -= period;
-            if(duration <= 0) {
+            if(duration <= 0f) {
                 done = true;
             }
         }
@@ -598,7 +600,7 @@ public class StatusEffects : MonoBehaviour {
         if(!poisonStacksCounterRunning) {
             poisonStacksCounterRunning = true;
         }
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1f);
         if(poisonStacks > 0 && gameObject.activeInHierarchy) {
             StartCoroutine(DecreasePoisonStacks());
         }
@@ -640,7 +642,7 @@ public class StatusEffects : MonoBehaviour {
                 TakeMushroomDamage(damage);
             }
             duration -= period;
-            period = period <= 1 ? 1 : period -= periodTimeDecrease;
+            period = period <= 1f ? 1f : period -= periodTimeDecrease;
             if(duration <= 0) {
                 done = true;
             }
@@ -671,7 +673,7 @@ public class StatusEffects : MonoBehaviour {
         if(!bleedStacksCounterRunning) {
             bleedStacksCounterRunning = true;
         }
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1f);
         if(bleedStacks > 0 && gameObject.activeInHierarchy) {
             StartCoroutine(DecreaseBleedStacks());
         }
@@ -700,7 +702,7 @@ public class StatusEffects : MonoBehaviour {
             TakeDamage(damage / duration, AttackType.Bleed, skill, attacker);
             duration -= period;
             damage += damageIncrease;
-            if(duration <= 0) {
+            if(duration <= 0f) {
                 done = true;
             }
         }
@@ -729,7 +731,7 @@ public class StatusEffects : MonoBehaviour {
         if(!curseStacksCounterRunning) {
             curseStacksCounterRunning = true;
         }
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1f);
         if(curseStacks > 0 && gameObject.activeInHierarchy) {
             StartCoroutine(DecreaseCurseStacks());
         }
@@ -757,7 +759,7 @@ public class StatusEffects : MonoBehaviour {
             yield return new WaitForSeconds(period);
             TakeDamage(damage / duration, AttackType.Curse, skill, attacker);
             duration -= period;
-            if(duration <= 0) {
+            if(duration <= 0f) {
                 done = true;
             }
         }
@@ -890,9 +892,9 @@ public class StatusEffects : MonoBehaviour {
         if(burning) {
             StopBurn();
         }
-        stats.runSpeed *= 1 - slowRate;
+        stats.runSpeed *= 1f - slowRate;
         if(aiPath) {
-            aiPath.maxSpeed *= 1 - slowRate;
+            aiPath.maxSpeed *= 1f - slowRate;
         }
         /*
         if(enemy)
@@ -1021,7 +1023,7 @@ public class StatusEffects : MonoBehaviour {
         if(!earthStacksCounterRunning) {
             earthStacksCounterRunning = true;
         }
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1f);
         if(earthStacks > 0 && gameObject.activeInHierarchy) {
             StartCoroutine(DecreaseEarthStacks());
         }
@@ -1068,7 +1070,7 @@ public class StatusEffects : MonoBehaviour {
         if(!lightStacksCounterRunning) {
             lightStacksCounterRunning = true;
         }
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1f);
         if(lightStacks > 0 && gameObject.activeInHierarchy) {
             StartCoroutine(DecreaseLightStacks());
         }
@@ -1128,7 +1130,6 @@ public class StatusEffects : MonoBehaviour {
     private IEnumerator Blocking(float duration){
         blockingCoroutineRunning = true;
         blocking = true;
-        Debug.Log("setting block frame");
         defaultShieldTransform.position = forwardShieldTransform.position;
         defaultShieldTransform.rotation = forwardShieldTransform.rotation;
         yield return new WaitForSeconds(duration);

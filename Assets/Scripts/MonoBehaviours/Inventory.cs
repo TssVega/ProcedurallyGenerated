@@ -281,6 +281,12 @@ public class Inventory : MonoBehaviour {
         if(inventory[slotIndex] is Mushroom m) {
             m.Consume(stats.status);
         }
+        else if(inventory[slotIndex] is Book b) {
+            b.Consume(stats.status);
+        }
+        else if(inventory[slotIndex] is Potion p) {
+            p.Consume(stats.status);
+        }
         if(quantities[slotIndex] < 1) {
             inventory[slotIndex] = null;
         }

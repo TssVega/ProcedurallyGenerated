@@ -147,7 +147,7 @@ public class Player : MonoBehaviour {
             // Inventory and equipment
             for(int i = 0; i < data.inventory.Length; i++) {
                 if(data.inventory[i] != null) {
-                    inventory.inventory[i] = itemCreator.CreateItem(data.inventory[i]);
+                    inventory.inventory[i] = itemCreator.CreateItem(data.inventory[i], stats.luck);
                 }
                 else {
                     inventory.inventory[i] = null;
@@ -155,7 +155,7 @@ public class Player : MonoBehaviour {
             }
             for(int i = 0; i < data.equipment.Length; i++) {
                 if(data.equipment[i] != null) {
-                    inventory.equipment[i] = itemCreator.CreateItem(data.equipment[i]);
+                    inventory.equipment[i] = itemCreator.CreateItem(data.equipment[i], stats.luck);
                     SetItem(inventory.equipment[i]);
                 }
                 else {
@@ -224,6 +224,7 @@ public class Player : MonoBehaviour {
             stats.parryDuration = data.parryDuration;
             stats.blockDuration = data.blockDuration;
             stats.damageBlockRate = data.damageBlockRate;
+            stats.luck = data.luck;
             // Thresholds
             stats.burningThreshold = data.burningThreshold;
             stats.earthingThreshold = data.earthingThreshold;

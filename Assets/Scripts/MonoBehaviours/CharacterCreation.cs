@@ -195,9 +195,10 @@ public class CharacterCreation : MonoBehaviour {
         player.stats.curseDefence = 10f;
         // Stat points
         player.stats.statPoints = 10;
+        // Other
+        player.stats.luck = 1;
         // Skills
-        // Beginner skills
-        
+        // Beginner skills        
         player.skillUser.acquiredSkills = new List<Skill>();
         for(int i = 0; i < 6; i++) {
             player.skillUser.acquiredSkills.Add(player.skillUser.skillDatabase.skills[i]);

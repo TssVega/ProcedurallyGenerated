@@ -153,8 +153,9 @@ public class SkillUser : MonoBehaviour {
             channelingParticles[i].transform.position = transform.position;
             channelingParticles[i].transform.rotation = transform.rotation;
             channelingParticles[i].SetActive(true);
-            if(channelingParticles[i].GetComponent<ParticleSystem>()) {
-                channelingParticles[i].GetComponent<ParticleSystem>().Play();
+            ParticleSystem ps = channelingParticles[i].GetComponent<ParticleSystem>();
+            if(ps) {
+                ps.Play();
             }
         }
         PlayAnimation(proj.channelingAnimationName);
@@ -163,10 +164,6 @@ public class SkillUser : MonoBehaviour {
         for(int i = 0; i < proj.projectileData.projectileCount; i++) {
                         
         }        
-        if(proj.projectileData.homing) {
-            // TODO: Find target to set projectile
-            // projectile.GetComponent<Projectile>().SetProjectile();
-        }
         GameObject[] projectiles = new GameObject[proj.projectileData.projectileCount];
         for(int i = 0; i < proj.projectileData.projectileCount; i++) {
             projectiles[i] = ObjectPooler.objectPooler.GetPooledObject("Projectile");
@@ -188,8 +185,9 @@ public class SkillUser : MonoBehaviour {
             else if(fov && proj.projectileData.homing) {
                 target = fov.GetClosestTarget();
             }
-            projectiles[i].GetComponent<Projectile>().SetProjectile(proj, stats);
-            projectiles[i].GetComponent<Projectile>().StartProjectile(vect, target);
+            Projectile p = projectiles[i].GetComponent<Projectile>();
+            p.SetProjectile(proj, stats);
+            p.StartProjectile(vect, target);
             //projectiles[i].GetComponent<Projectile>().StartProjectile(vect);
             projectiles[i].SetActive(true);
             PlayAnimation(proj.castingAnimationName);
@@ -199,17 +197,19 @@ public class SkillUser : MonoBehaviour {
                 particles.Add(ObjectPooler.objectPooler.GetPooledObject(proj.particleNames[j]));
                 particles[j].GetComponent<Particles>().duration = proj.projectileData.projectileSpeed * proj.projectileData.lifetime;
                 particles[j].transform.parent = projectiles[i].transform;
-                if(particles[j].GetComponent<TrailRenderer>()) {
-                    particles[j].GetComponent<TrailRenderer>().emitting = false;
+                TrailRenderer trail = particles[j].GetComponent<TrailRenderer>();
+                if(trail) {
+                    trail.emitting = false;
                 }
                 particles[j].transform.position = projectiles[i].transform.position;
                 particles[j].transform.rotation = transform.rotation;
                 particles[j].SetActive(true);
-                if(particles[j].GetComponent<TrailRenderer>()) {
-                    particles[j].GetComponent<TrailRenderer>().emitting = true;
+                if(trail) {
+                    trail.emitting = true;
                 }
-                if(particles[j].GetComponent<ParticleSystem>()) {
-                    particles[j].GetComponent<ParticleSystem>().Play();
+                ParticleSystem ps = particles[j].GetComponent<ParticleSystem>();
+                if(ps) {
+                    ps.Play();
                 }
             }
             // Wait for next projectile

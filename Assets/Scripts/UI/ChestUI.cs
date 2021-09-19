@@ -18,6 +18,11 @@ public class ChestUI : MonoBehaviour {
     public ItemCreator itemCreator;
 
     private Inventory inventory;
+    private Stats playerStats;
+
+    private void Awake() {
+        playerStats = FindObjectOfType<Player>().GetComponent<Stats>();
+    }
 
     public void SetChestUI(ChestObject chestObj) {
         firstIcons = new Image[chestCapacity];
@@ -50,7 +55,7 @@ public class ChestUI : MonoBehaviour {
                 thirdIcons[i].color = Color.clear;
             }
             else {
-                item = itemCreator.CreateItem(chestObject.chestContent.items[i]);
+                item = itemCreator.CreateItem(chestObject.chestContent.items[i], playerStats.luck);
             }
             if(item == null) {
                 continue;
@@ -94,7 +99,7 @@ public class ChestUI : MonoBehaviour {
         if(string.IsNullOrEmpty(chestObject.chestContent.items[slot])) {
             return;
         }
-        if(inventory.AddToInventory(itemCreator.CreateItem(chestObject.chestContent.items[slot]))) {
+        if(inventory.AddToInventory(itemCreator.CreateItem(chestObject.chestContent.items[slot], playerStats.luck))) {
             firstIcons[slot].color = Color.clear;
             secondIcons[slot].color = Color.clear;
             thirdIcons[slot].color = Color.clear;
