@@ -13,25 +13,26 @@ MonoBehaviour:
   m_Name: HolyHeal
   m_EditorClassIdentifier: 
   skillIndex: 7
-  skillName: Holy Heal
-  skillDescription: Channel your inner faith for a moment to gain some health
+  skillName: HolyHeal
   skillIcon: {fileID: -1834977244087336064, guid: 8bdf6964d84a55d46a85dcf8ea72d604,
     type: 3}
   interruptable: 0
   attackType: 12
   skillPointsNeeded: 2
+  prerequisites: 
   manaCost: 0
   focusedSkill: 0
   channelingTime: 1.5
   castTime: 0
   cooldown: 4
+  aiRange: 0
   channelingParticleNames:
   - HolyHealChannelling
-  castingParticleNames: []
   particleNames:
   - HolyHealActivate
   channelingAnimationName: 
   castingAnimationName: 
+  idleAnimationName: 
   buffData:
     buffType: 0
     healRate: 2

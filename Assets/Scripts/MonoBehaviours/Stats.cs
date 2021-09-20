@@ -9,10 +9,13 @@ public class Stats : MonoBehaviour {
     public float health;
     public float mana;
     public float energy;
-    public float maxHealth;
+    public float maxHealth;         // Max health saved in data before vitality and strength added
     public float maxMana;
     public float maxEnergy;
     public float runSpeed;
+    public float trueMaxHealth;    // Max health after vitality and strength added
+    public float trueMaxMana;
+    public float trueMaxEnergy;
     [Header("Stats")]
     // Main
     public int strength;
@@ -70,15 +73,24 @@ public class Stats : MonoBehaviour {
 
     public bool living;
 
-    public StatusEffects status;    
+    public StatusEffects status;
+    private Enemy enemy;
 
     private void Awake() {
         //int skillCooldownsSize = FindObjectOfType<GameMaster>().talentDatabase.talents.Length;
+        enemy = GetComponent<Enemy>();
         status = GetComponent<StatusEffects>();
     }
     private void OnEnable() {
         living = true;
-        health = maxHealth;
+        if(enemy) {
+            trueMaxHealth = maxHealth + strength * 2 + vitality * 5;
+            trueMaxMana = maxMana + dexterity * 2 + wisdom * 5 + intelligence * 2 + faith * 2;
+            trueMaxEnergy = maxEnergy + vitality * 5 + strength * 2 + dexterity * 2 + agility * 2;
+            health = trueMaxHealth;
+            mana = trueMaxMana;
+            energy = trueMaxEnergy;
+        }
     }
     public void Die() {
         gameObject.SetActive(false);

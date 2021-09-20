@@ -103,7 +103,7 @@ public class Pool : MonoBehaviour, IInteractable {
                 return;
             }
             if(healingPool) {
-                playerStatus.Heal(playerStats.maxHealth);                
+                playerStatus.Heal(playerStats.trueMaxHealth);                
             }
             else {
                 playerStatus.GiveMana(playerStats.maxMana);

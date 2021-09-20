@@ -145,6 +145,8 @@ public class EnemyAI : MonoBehaviour {
     }
     private void Flee() {
         // Escape from the attacker
+        StopCoroutine(Roam());
+        StartCoroutine(Roam());        
     }
     private IEnumerator UseRandomSkill() {
         yield return new WaitForSeconds(Random.Range(timeBetweenSkills, timeBetweenSkills * 2));

@@ -149,13 +149,6 @@ public class CharacterCreation : MonoBehaviour {
         // Transform
         player.transform.position = new Vector3(5, 0, 0);
         player.transform.rotation = Quaternion.identity;
-        // Status
-        player.stats.health = 100f;
-        player.stats.mana = 100f;
-        player.stats.energy = 100f;
-        player.stats.maxHealth = 100f;
-        player.stats.maxMana = 100f;
-        player.stats.maxEnergy = 100f;
         // Main
         player.stats.strength = 10;
         player.stats.agility = 10;
@@ -165,6 +158,16 @@ public class CharacterCreation : MonoBehaviour {
         player.stats.wisdom = 10;
         player.stats.vitality = 10;
         player.stats.charisma = 10;
+        // Status
+        player.stats.maxHealth = 100f;
+        player.stats.maxMana = 100f;
+        player.stats.maxEnergy = 100f;
+        player.stats.trueMaxHealth = player.stats.maxHealth + player.stats.strength * 2 + player.stats.vitality * 5;
+        player.stats.trueMaxMana = player.stats.maxMana + player.stats.dexterity * 2 + player.stats.wisdom * 5 + player.stats.intelligence * 2 + player.stats.faith * 2;
+        player.stats.trueMaxEnergy = player.stats.maxEnergy + player.stats.vitality * 5 + player.stats.strength * 2 + player.stats.dexterity * 2 + player.stats.agility * 2;
+        player.stats.health = player.stats.trueMaxHealth;
+        player.stats.mana = player.stats.trueMaxMana;
+        player.stats.energy = player.stats.trueMaxEnergy;
         // Damages
         player.stats.bashDamage = 10f;
         player.stats.pierceDamage = 10f;

@@ -8,7 +8,7 @@ public class Passives : MonoBehaviour {
     private float toughSkinCounter;
     private bool toughSkinOnline;
     private SkillUser skillUser;
-    private readonly float toughSkinCooldown = 10f;
+    private const float toughSkinCooldown = 10f;
 
     private void Awake() {
         skillUser = GetComponent<SkillUser>();
@@ -35,7 +35,7 @@ public class Passives : MonoBehaviour {
     public float OnHitTaken(float damage, AttackType type, Stats defender) {        
         float reducedDamage = damage;
         if(skillUser.acquiredSkills.Contains(toughSkin) && toughSkinOnline) {
-            reducedDamage = damage / (defender.vitality * 0.3f);
+            reducedDamage = damage / (defender.vitality * 0.2f);
             toughSkinOnline = false;
             toughSkinCounter = toughSkinCooldown;
         }

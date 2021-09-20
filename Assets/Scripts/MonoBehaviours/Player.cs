@@ -55,6 +55,8 @@ public class Player : MonoBehaviour {
 
     public MushroomDatabase mushroomDatabase;
 
+    private StatusUI statusUI;
+
     private void Awake() {
         consumableItems = new string[11];
         worldGeneration = FindObjectOfType<WorldGeneration>();
@@ -62,6 +64,7 @@ public class Player : MonoBehaviour {
         skillUser = GetComponent<SkillUser>();
         uiCanvas = FindObjectOfType<UICanvas>();
         inventory = GetComponent<Inventory>();
+        statusUI = FindObjectOfType<StatusUI>();
     }
     private void Start() {
         interactionList = new List<IInteractable>();
@@ -174,12 +177,15 @@ public class Player : MonoBehaviour {
             hairStyleIndex = data.hairStyleIndex;
             SetAppearance();
             // Status
-            stats.health = data.health;
-            stats.mana = data.mana;
-            stats.energy = data.energy;
             stats.maxHealth = data.maxHealth;
             stats.maxMana = data.maxMana;
             stats.maxEnergy = data.maxEnergy;
+            stats.trueMaxHealth = stats.maxHealth + stats.strength * 2 + stats.vitality * 5;
+            stats.trueMaxMana = stats.maxMana + stats.dexterity * 2 + stats.wisdom * 5 + stats.intelligence * 2 + stats.faith * 2;
+            stats.trueMaxEnergy = stats.maxEnergy + stats.vitality * 5 + stats.strength * 2 + stats.dexterity * 2 + stats.agility * 2;
+            stats.health = data.health;
+            stats.mana = data.mana;
+            stats.energy = data.energy;            
             stats.runSpeed = data.runSpeed;
             // Main
             stats.strength = data.strength;
@@ -271,6 +277,11 @@ public class Player : MonoBehaviour {
             }
         }
         inventory.UpdateStats();
+        if(statusUI) {
+            statusUI.UpdateHealth(stats.health / stats.trueMaxHealth, stats.health);
+            statusUI.UpdateMana(stats.mana / stats.trueMaxMana, stats.mana);
+            statusUI.UpdateEnergy(stats.energy / stats.trueMaxEnergy, stats.energy);
+        }        
     }
     private void SetAppearance() {
         skinColor.color = appearance.skinColors[skinColorIndex];

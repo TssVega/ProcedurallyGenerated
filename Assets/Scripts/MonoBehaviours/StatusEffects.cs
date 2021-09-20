@@ -121,9 +121,9 @@ public class StatusEffects : MonoBehaviour {
         }        
         DefaultStatusValues();
         if(statusUI) {
-            statusUI.UpdateHealth(stats.health / stats.maxHealth, stats.health);
-            statusUI.UpdateMana(stats.mana / stats.maxMana, stats.mana);
-            statusUI.UpdateEnergy(stats.energy / stats.maxEnergy, stats.energy);
+            statusUI.UpdateHealth(stats.health / stats.trueMaxHealth, stats.health);
+            statusUI.UpdateMana(stats.mana / stats.trueMaxMana, stats.mana);
+            statusUI.UpdateEnergy(stats.energy / stats.trueMaxEnergy, stats.energy);
         }
     }
     // Stop all effect counters and reset values on disable
@@ -181,27 +181,27 @@ public class StatusEffects : MonoBehaviour {
         }        
     }
     public void Heal(float amount) {
-        stats.health += Mathf.Clamp(amount, 0, stats.maxHealth - stats.health);
+        stats.health += Mathf.Clamp(amount, 0, stats.trueMaxHealth - stats.health);
         //if(player && player.playerStatus) {
         //    player.playerStatus.OnStatusChange(PlayerStatus.Health);
         //}
         if(statusUI) {
-            statusUI.UpdateHealth(stats.health / stats.maxHealth, stats.health);
+            statusUI.UpdateHealth(stats.health / stats.trueMaxHealth, stats.health);
         }
     }
     public void UseMana(float amount) {
-        stats.mana -= Mathf.Clamp(amount, 0, stats.maxMana);
+        stats.mana -= Mathf.Clamp(amount, 0, stats.trueMaxMana);
         //if(player) {
         //    player.PlayerConsumeMana(amount);
         //}
         if(statusUI) {
-            statusUI.UpdateMana(stats.mana / stats.maxMana, stats.mana);
+            statusUI.UpdateMana(stats.mana / stats.trueMaxMana, stats.mana);
         }
     }
     public void GiveMana(float amount) {
-        stats.mana += Mathf.Clamp(amount, 0, stats.maxMana - stats.mana);
+        stats.mana += Mathf.Clamp(amount, 0, stats.trueMaxMana - stats.mana);
         if(statusUI) {
-            statusUI.UpdateMana(stats.mana / stats.maxMana, stats.mana);
+            statusUI.UpdateMana(stats.mana / stats.trueMaxMana, stats.mana);
         }
     }
     public bool CanUseMana(float amount) {
@@ -214,14 +214,14 @@ public class StatusEffects : MonoBehaviour {
             return;
         }
         if(stats) {
-            damage = CalculateDamage.Calculate(amount, attackType, stats);
+            damage = CalculateDamage.Calculate(amount, attackType, null, stats);
         }
         InstantiateDamageTakenParticles("PoisonDamageTaken");
-        damage = Mathf.Clamp(damage, 0f, stats.maxDamageTimesHealth * stats.maxHealth);
+        damage = Mathf.Clamp(damage, 0f, stats.maxDamageTimesHealth * stats.trueMaxHealth);
         stats.health -= damage;
         GenerateBloodParticles();
         if(statusUI) {
-            statusUI.UpdateHealth(stats.health / stats.maxHealth, stats.health);
+            statusUI.UpdateHealth(stats.health / stats.trueMaxHealth, stats.health);
         }
         if(hitWarning) {
             hitWarning.Hit();
@@ -236,7 +236,7 @@ public class StatusEffects : MonoBehaviour {
             return;
         }
         if(stats) {
-            damage = CalculateDamage.Calculate(amount, attackType, stats);
+            damage = CalculateDamage.Calculate(amount, attackType, attacker.stats, stats);
         }
         if(passives) {
             damage = passives.OnHitTaken(damage, attackType, stats);
@@ -319,7 +319,7 @@ public class StatusEffects : MonoBehaviour {
                 break;
             default: break;
         }
-        damage = Mathf.Clamp(damage, 0f, stats.maxDamageTimesHealth * stats.maxHealth);
+        damage = Mathf.Clamp(damage, 0f, stats.maxDamageTimesHealth * stats.trueMaxHealth);
         stats.health -= damage;
         GenerateBloodParticles();
         if(enemyAI && enemyAI.willDefendItself) {            
@@ -330,7 +330,7 @@ public class StatusEffects : MonoBehaviour {
             enemyAI.attacked = true;
         }
         if(statusUI) {
-            statusUI.UpdateHealth(stats.health / stats.maxHealth, stats.health);
+            statusUI.UpdateHealth(stats.health / stats.trueMaxHealth, stats.health);
         }
         if(hitWarning) {
             hitWarning.Hit();

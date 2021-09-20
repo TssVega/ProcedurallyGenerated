@@ -6,6 +6,13 @@ using TMPro;
 
 public class SkillInfoPanel : MonoBehaviour {
 
+    public TextMeshProUGUI skillNameText;
+    public TextMeshProUGUI damageTypeText;
+    public Image damageTypeIcon;
+    public TextMeshProUGUI damageType;
+    public TextMeshProUGUI description;
+    public TextMeshProUGUI skillPointsNeededText;
+
     public Image[] skillSlots;
     public Image[] secondaryImages;
     public Sprite emptySlotSprite;
@@ -24,6 +31,8 @@ public class SkillInfoPanel : MonoBehaviour {
     public TextMeshProUGUI[] quantityTexts;
 
     public SkillDatabase skillDatabase;
+
+    public Sprite[] damageIcons;
 
     private void Awake() {
         playerStats = FindObjectOfType<Player>().GetComponent<Stats>();
@@ -144,7 +153,25 @@ public class SkillInfoPanel : MonoBehaviour {
         skillUI.RefreshSkillSlots();
         Refresh();
     }
-    private void RefreshText() {        
+    private void RefreshText() {
+        skillNameText.text = localizationManager.GetText(currentSkill.skillName);
+        damageTypeText.text = localizationManager.GetText("damageType");
+        if(currentSkill.attackType != AttackType.None) {
+            damageTypeIcon.sprite = damageIcons[(int)currentSkill.attackType];
+            damageTypeIcon.color = Color.white;
+        }
+        else {
+            damageTypeIcon.sprite = null;
+            damageTypeIcon.color = Color.clear;
+        }
+        damageType.text = localizationManager.GetText(currentSkill.attackType.ToString());
+        description.text = localizationManager.GetText($"{currentSkill.skillName}Desc");
+        if(playerSkills.acquiredSkills.Contains(currentSkill)) {
+            skillPointsNeededText.text = "";
+        }
+        else {
+            skillPointsNeededText.text = $"{localizationManager.GetText("skillPointsNeeded")}: {currentSkill.skillPointsNeeded}";
+        }        
         acquireText.text = localizationManager.GetText("learn");
         if(playerSkills.acquiredSkills.Contains(currentSkill) && currentSkill is ActiveSkill) {
             guideText.text = localizationManager.GetText("skillInfoNotif");
