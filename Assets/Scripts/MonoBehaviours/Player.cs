@@ -437,3 +437,7 @@ public class Player : MonoBehaviour {
         }
     }
 }
+
+public enum Race {
+    Levona, Satian, Crevalonian, Othani, Pelthonese, Helgafelli, Yoseon, Qotush, Milona, Vilgerosi, Nastac, Havellian
+}

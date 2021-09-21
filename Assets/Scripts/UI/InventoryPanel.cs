@@ -12,6 +12,7 @@ public class InventoryPanel : MonoBehaviour {
     private bool firstTime = true;
 
     public TextMeshProUGUI inventoryText;
+    public TextMeshProUGUI characterText;
     public TextMeshProUGUI craftingText;
     public TextMeshProUGUI skillsText;
     public TextMeshProUGUI mapText;
@@ -37,6 +38,7 @@ public class InventoryPanel : MonoBehaviour {
     }
     public void CheckButtons() {
         inventoryText.text = LocalizationManager.localization.GetText("inventory");
+        characterText.text = LocalizationManager.localization.GetText("character");
         skillBook.SetActive(player.skillBookUnlocked);
         skillsText.gameObject.SetActive(player.skillBookUnlocked);
         skillsText.text = LocalizationManager.localization.GetText("skills");
