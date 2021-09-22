@@ -8,7 +8,8 @@ public class ItemInfoPanel : MonoBehaviour {
 
     public SkillUser playerSkills;
 
-    private int currentInventoryIndex;
+    private bool isInventorySlot;
+    private int currentIndex;
 
     public TextMeshProUGUI itemName;
     public TextMeshProUGUI[] currentItemOffenceStats;
@@ -62,9 +63,10 @@ public class ItemInfoPanel : MonoBehaviour {
     private void OnEnable() {
         dismantleConfirmationPanel.SetActive(false);
     }
-    public void SetItem(Item item, int index) {
+    public void SetItem(Item item, int index, bool isInventorySlot) {
         this.item = item;
-        currentInventoryIndex = index;
+        currentIndex = index;
+        this.isInventorySlot = isInventorySlot;
         SetStats();
         SetButtons();
         UpdateStats();
@@ -123,7 +125,7 @@ public class ItemInfoPanel : MonoBehaviour {
                 skillSlots[i].color = m.firstColor;
                 secondaryImages[i].sprite = null;
                 secondaryImages[i].color = Color.clear;
-                quantityTexts[i].text = inventory.quantities[currentInventoryIndex].ToString();
+                quantityTexts[i].text = inventory.quantities[currentIndex].ToString();
             }
             /* Potions here
             else if(playerSkills.currentSkills[i] is Mushroom m) {
@@ -142,35 +144,49 @@ public class ItemInfoPanel : MonoBehaviour {
         }
     }
     private void SetButtons() {
-        if(item.slot == EquipSlot.Consumable) {
-            consumeEquipButton.SetActive(true);
-            consumeEquipButtonText.text = LocalizationManager.localization.GetText("consume");
-            dismantleButton.SetActive(false);
-            for(int i = 0; i < skillSlots.Length; i++) {
-                skillSlots[i].gameObject.SetActive(true);
+        if(isInventorySlot) {
+            if(item.slot == EquipSlot.Consumable) {
+                consumeEquipButton.SetActive(true);
+                consumeEquipButtonText.text = LocalizationManager.localization.GetText("consume");
+                dismantleButton.SetActive(false);
+                for(int i = 0; i < skillSlots.Length; i++) {
+                    skillSlots[i].gameObject.SetActive(true);
+                }
+                for(int i = 0; i < skillSlots.Length; i++) {
+                    secondaryImages[i].gameObject.SetActive(true);
+                }
+                infoText.gameObject.SetActive(true);
+                infoText.text = LocalizationManager.localization.GetText("skillInfoNotif");
             }
-            for(int i = 0; i < skillSlots.Length; i++) {
-                secondaryImages[i].gameObject.SetActive(true);
+            else if(item.slot == EquipSlot.Other) {
+                consumeEquipButton.SetActive(false);
+                dismantleButton.SetActive(false);
+                for(int i = 0; i < skillSlots.Length; i++) {
+                    skillSlots[i].gameObject.SetActive(false);
+                }
+                for(int i = 0; i < skillSlots.Length; i++) {
+                    secondaryImages[i].gameObject.SetActive(false);
+                }
+                infoText.gameObject.SetActive(false);
             }
-            infoText.gameObject.SetActive(true);
-            infoText.text = LocalizationManager.localization.GetText("skillInfoNotif");
-        }
-        else if(item.slot == EquipSlot.Other) {
-            consumeEquipButton.SetActive(false);
-            dismantleButton.SetActive(false);
-            for(int i = 0; i < skillSlots.Length; i++) {
-                skillSlots[i].gameObject.SetActive(false);
+            else {
+                consumeEquipButton.SetActive(true);
+                consumeEquipButtonText.text = LocalizationManager.localization.GetText("equip");
+                dismantleButton.SetActive(true);
+                dismantleButtonText.text = LocalizationManager.localization.GetText("dismantle");
+                for(int i = 0; i < skillSlots.Length; i++) {
+                    skillSlots[i].gameObject.SetActive(false);
+                }
+                for(int i = 0; i < skillSlots.Length; i++) {
+                    secondaryImages[i].gameObject.SetActive(false);
+                }
+                infoText.gameObject.SetActive(false);
             }
-            for(int i = 0; i < skillSlots.Length; i++) {
-                secondaryImages[i].gameObject.SetActive(false);
-            }
-            infoText.gameObject.SetActive(false);
         }
         else {
             consumeEquipButton.SetActive(true);
-            consumeEquipButtonText.text = LocalizationManager.localization.GetText("equip");
-            dismantleButton.SetActive(true);
-            dismantleButtonText.text = LocalizationManager.localization.GetText("dismantle");
+            dismantleButton.SetActive(false);
+            consumeEquipButtonText.text = LocalizationManager.localization.GetText("unequip");
             for(int i = 0; i < skillSlots.Length; i++) {
                 skillSlots[i].gameObject.SetActive(false);
             }
@@ -181,17 +197,35 @@ public class ItemInfoPanel : MonoBehaviour {
         }
     }
     public void ConsumeEquipButton() {
-        if(item.slot == EquipSlot.Consumable) {
-            inventory.ConsumeInSlot(currentInventoryIndex);
-            if(inventory.quantities[currentInventoryIndex] < 1) {
+        if(isInventorySlot) {
+            if(item.slot == EquipSlot.Consumable) {
+                inventory.ConsumeInSlot(currentIndex);
+                if(inventory.quantities[currentIndex] < 1) {
+                    gameObject.SetActive(false);
+                }
+                UpdateStats();
+            }
+            else if(item.slot != EquipSlot.Other) {
+                inventory.EquipItemInSlot(currentIndex);
+                UpdateStats();
                 gameObject.SetActive(false);
             }
-            UpdateStats();
         }
-        else if(item.slot != EquipSlot.Other) {
-            inventory.EquipItemInSlot(currentInventoryIndex);
-            UpdateStats();
-        }        
+        else {
+            if(inventory.CanAddToInventory()) {
+                int emptySlotIndex = -1;
+                for(int i = 0; i < inventory.inventory.Count; i++) {
+                    if(inventory.inventory[i] is null) {
+                        emptySlotIndex = i;
+                        break;
+                    }
+                }
+                if(emptySlotIndex >= 0) {
+                    inventory.UnequipItem(currentIndex, emptySlotIndex);
+                    gameObject.SetActive(false);
+                }                
+            }            
+        }
     }
     public void DismantleButton() {
         if(item.dismantleOutput > 0) {
@@ -199,9 +233,11 @@ public class ItemInfoPanel : MonoBehaviour {
         }        
     }
     public void Dismantle() {
-        inventory.DismantleInSlot(currentInventoryIndex);
-        UpdateStats();
-        gameObject.SetActive(false);
+        if(isInventorySlot) {
+            inventory.DismantleInSlot(currentIndex);
+            UpdateStats();
+            gameObject.SetActive(false);
+        }
     }
     private void UpdateStats() {
         currentItemDescription.text = LocalizationManager.localization.GetText($"{item.seed}Desc");
@@ -541,7 +577,7 @@ public class ItemInfoPanel : MonoBehaviour {
             }
         }
         else {
-            quantityText.text = inventory.quantities[currentInventoryIndex].ToString();
+            quantityText.text = inventory.quantities[currentIndex].ToString();
             for(int i = 0; i < equippedItemOffenceStats.Length; i++) {
                 currentItemOffenceStats[i].text = "0";
                 currentItemDefenceStats[i].text = "0";

@@ -117,6 +117,7 @@
 "equippedItem":"Kullanılan eşya",
 "consume":"Tüket",
 "equip":"Kullan",
+"unequip":"Çıkar",
 "dismantle":"Parçala",
 "bookOfStrength":"Book of Strength",
 "bookOfStrengthDesc":"Reading this book will grant you strength",
