@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1331893954213756592}
   - component: {fileID: 4014895278378595393}
   - component: {fileID: 1972753018057763318}
+  - component: {fileID: 9181329446414410376}
   m_Layer: 0
   m_Name: RedCrystal
   m_TagString: Untagged
@@ -155,3 +156,29 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!114 &9181329446414410376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5036906735598353528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: 00000000
+  m_ShapePath:
+  - {x: -0.24051225, y: -0.2801562, z: 0}
+  - {x: 0.17203623, y: -0.2116803, z: 0}
+  - {x: 0.23330426, y: 0.17203629, z: 0}
+  - {x: -0.08914444, y: 0.009856582, z: 0}
+  m_ShapePathHash: -89259635
+  m_Mesh: {fileID: 0}
+  m_InstanceId: 408476

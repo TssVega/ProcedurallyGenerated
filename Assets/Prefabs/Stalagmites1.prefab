@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5036906735598353525}
   - component: {fileID: 1331893954213756592}
   - component: {fileID: 4014895278378595393}
+  - component: {fileID: 7323591563829172773}
   m_Layer: 0
   m_Name: Stalagmites1
   m_TagString: Untagged
@@ -113,3 +114,29 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.3
+--- !u!114 &7323591563829172773
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5036906735598353528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: 00000000
+  m_ShapePath:
+  - {x: -0.22615582, y: -0.32362577, z: 0}
+  - {x: 0.168138, y: -0.31666365, z: 0}
+  - {x: 0.20759013, y: 0.17277938, z: 0}
+  - {x: -0.18670368, y: 0.15189299, z: 0}
+  m_ShapePathHash: 1530779077
+  m_Mesh: {fileID: 0}
+  m_InstanceId: 408582

@@ -11,6 +11,7 @@ public class CharacterCreation : MonoBehaviour {
 
     public Image skinImage;
     public Image hairImage;
+    public Image shoulderImage;
 
     public CharacterAppearance appearance;
 
@@ -45,6 +46,7 @@ public class CharacterCreation : MonoBehaviour {
         skinImage.color = currentSkinColor;
         hairImage.color = currentHairColor;
         hairImage.sprite = currentHairStyle;
+        shoulderImage.color = currentSkinColor;
     }
     private void Start() {
         RefreshTexts();
@@ -77,6 +79,7 @@ public class CharacterCreation : MonoBehaviour {
             currentSkinColor = appearance.skinColors[currentSkinColorIndex];
         }
         skinImage.color = currentSkinColor;
+        shoulderImage.color = currentSkinColor;
         player.skinColorIndex = currentSkinColorIndex;
     }
     public void ChangeHairColor(bool increment) {

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1331893954213756592}
   - component: {fileID: 4014895278378595393}
   - component: {fileID: 1972753018057763318}
+  - component: {fileID: 3019045853859917332}
   m_Layer: 0
   m_Name: BlueCrystal
   m_TagString: Untagged
@@ -155,3 +156,29 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!114 &3019045853859917332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5036906735598353528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: 00000000
+  m_ShapePath:
+  - {x: -0.24400643, y: -0.18207246, z: 0}
+  - {x: 0.19858804, y: -0.19033033, z: 0}
+  - {x: 0.26877987, y: 0.1862014, z: 0}
+  - {x: -0.20271698, y: 0.19445932, z: 0}
+  m_ShapePathHash: 28058403
+  m_Mesh: {fileID: 0}
+  m_InstanceId: 408412

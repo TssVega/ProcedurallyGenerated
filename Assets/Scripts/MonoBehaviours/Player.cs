@@ -147,6 +147,14 @@ public class Player : MonoBehaviour {
             // Inventory buttons
             skillBookUnlocked = data.skillBookUnlocked;
             mapUnlocked = data.mapUnlocked;
+            // Appearance
+            skinColorIndex = data.skinColorIndex;
+            hairColorIndex = data.hairColorIndex;
+            hairStyleIndex = data.hairStyleIndex;
+            skinColorIndex = data.skinColorIndex;
+            hairColorIndex = data.hairColorIndex;
+            hairStyleIndex = data.hairStyleIndex;
+            SetAppearance();
             // Inventory and equipment
             for(int i = 0; i < data.inventory.Length; i++) {
                 if(data.inventory[i] != null) {
@@ -162,20 +170,17 @@ public class Player : MonoBehaviour {
                     SetItem(inventory.equipment[i]);
                 }
                 else {
+                    // If there's no body armor
+                    if(i == 3) {
+                        bodyArmor.sprite = appearance.defaultShoulders;
+                        bodyArmor.color = appearance.skinColors[skinColorIndex];
+                    }
                     inventory.equipment[i] = null;
                 }
             }            
             for(int i = 0; i < data.inventoryQuantities.Length; i++) {
                 inventory.quantities[i] = data.inventoryQuantities[i];
-            }
-            // Appearance
-            skinColorIndex = data.skinColorIndex;
-            hairColorIndex = data.hairColorIndex;
-            hairStyleIndex = data.hairStyleIndex;            
-            skinColorIndex = data.skinColorIndex;
-            hairColorIndex = data.hairColorIndex;
-            hairStyleIndex = data.hairStyleIndex;
-            SetAppearance();
+            }            
             // Status
             stats.maxHealth = data.maxHealth;
             stats.maxMana = data.maxMana;
@@ -287,6 +292,7 @@ public class Player : MonoBehaviour {
         skinColor.color = appearance.skinColors[skinColorIndex];
         hairColor.color = appearance.hairColors[hairColorIndex];
         hairStyle.sprite = appearance.hairStyles[hairStyleIndex];
+        // bodyArmor.color = appearance.skinColors[skinColorIndex];
     }
     public void SetWeapon(Weapon weapon) {
         ClearWeapons();
@@ -379,8 +385,8 @@ public class Player : MonoBehaviour {
         bodyArmor.color = armor.secondColor;
     }
     private void ClearBodyArmor() {
-        bodyArmor.sprite = null;
-        bodyArmor.color = Color.clear;
+        bodyArmor.sprite = appearance.defaultShoulders;
+        bodyArmor.color = appearance.skinColors[skinColorIndex];
     }
     private void SetHelmet(Armor helmet) {
         helmetBase.sprite = helmet.firstSprite;
