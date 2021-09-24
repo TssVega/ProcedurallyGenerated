@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06483e1273c0bf64e9475d86de85f9d9, type: 3}
+  m_Name: BatPoisonStraight
+  m_EditorClassIdentifier: 
+  skillIndex: 4
+  skillName: BatPoisonStraight
+  skillIcon: {fileID: 0}
+  interruptable: 0
+  attackType: 10
+  skillPointsNeeded: 0
+  prerequisites: 
+  manaCost: 0
+  focusedSkill: 1
+  channelingTime: 0.2
+  castTime: 0.2
+  cooldown: 1.5
+  aiRange: 5
+  channelingParticleNames: []
+  particleNames:
+  - BatPoison
+  channelingAnimationName: 
+  castingAnimationName: 
+  idleAnimationName: 
+  projectileData:
+    team: 2
+    arrowSkill: 0
+    lightIntensity: 0.3
+    lightRadius: 0.5
+    lightColor: {r: 0, g: 1, b: 0.1764706, a: 1}
+    damageRate: 0.1
+    rotationSpeed: 0
+    projectileSpeed: 4
+    radius: 0.1
+    lifetime: 2
+    stunDuration: 0
+    immobilizeDuration: 0
+    penetrates: 0
+    projectileCount: 1
+    angleDifference: 0
+    timeDifference: 0
+    homing: 0
+    push: 0
+    poisonStacks: 35
+    poisonDuration: 15
+    bloodStacks: 0
+    bleedDuration: 0
+    curseStacks: 0
+    curseDuration: 0
+    fireStacks: 0
+    fireDuration: 0
+    iceStacks: 0
+    iceDuration: 0
+    iceDamageMultiplier: 1
+    lightningStacks: 0
+    shockDuration: 0
+    earthStacks: 0
+    earthenDuration: 0
+    earthenHeal: 0
+    lightStacks: 0
+    litDuration: 0

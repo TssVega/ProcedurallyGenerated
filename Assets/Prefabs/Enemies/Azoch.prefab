@@ -300,24 +300,27 @@ MonoBehaviour:
   maxMana: 100
   maxEnergy: 100
   runSpeed: 7
+  trueMaxHealth: 0
+  trueMaxMana: 0
+  trueMaxEnergy: 0
   strength: 10
   agility: 10
   dexterity: 10
-  intelligence: 75
-  faith: 50
+  intelligence: 10
+  faith: 10
   wisdom: 50
   vitality: 10
   charisma: 10
   bashDamage: 10
   pierceDamage: 10
   slashDamage: 10
-  fireDamage: 50
+  fireDamage: 30
   iceDamage: 10
   lightningDamage: 10
   airDamage: 10
   earthDamage: 10
   lightDamage: 10
-  darkDamage: 50
+  darkDamage: 20
   poisonDamage: 10
   bleedDamage: 10
   curseDamage: 10
@@ -339,6 +342,7 @@ MonoBehaviour:
   parryDuration: 0.1
   blockDuration: 0.5
   damageBlockRate: 0.95
+  luck: 0
   burningThreshold: 300
   earthingThreshold: 100
   frostbiteThreshold: 100
@@ -364,6 +368,8 @@ MonoBehaviour:
   deathPanel: {fileID: 0}
   statusUI: {fileID: 0}
   hitWarning: {fileID: 0}
+  stats: {fileID: 0}
+  skillUser: {fileID: 0}
   stunned: 0
   frostbitten: 0
   airborne: 0

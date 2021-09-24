@@ -271,7 +271,7 @@ public class SkillUser : MonoBehaviour {
     private IEnumerator StartDash(DashSkill dash) {
         statusEffects.StartChanelling(dash.channelingTime);
         if(dash.focusedSkill) {
-            statusEffects.StartImmobilize(dash.channelingTime + dash.castTime);
+            statusEffects.StartImmobilize(dash.channelingTime/* + dash.castTime*/);
         }
         skillCooldowns[dash.skillIndex] = dash.cooldown;
         // Set channelling particles

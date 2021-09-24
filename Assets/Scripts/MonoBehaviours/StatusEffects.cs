@@ -496,7 +496,6 @@ public class StatusEffects : MonoBehaviour {
     // Stop regeneration
     public void StopRegen() {
         StopCoroutine(regenCounter);
-        Debug.Log("Regeneration stopped");
     }
     // Damage over time coroutines
     public IEnumerator Regeneration(float duration, float healAmountPerTick) {
@@ -976,7 +975,7 @@ public class StatusEffects : MonoBehaviour {
         float multiplier = 100f;
         immobilized = true;
         rb2d.AddForce((transform.position - attackerPosition.position).normalized * pushDistance * multiplier);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(pushDistance * 0.5f);
         immobilized = false;
     }
     public void StartTimeBomb(float seconds, float damage, AttackType attackType, Skill skill, StatusEffects attacker) {

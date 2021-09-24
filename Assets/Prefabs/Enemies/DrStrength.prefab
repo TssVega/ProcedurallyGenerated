@@ -162,7 +162,10 @@ MonoBehaviour:
   maxMana: 100
   maxEnergy: 100
   runSpeed: 2
-  strength: 100
+  trueMaxHealth: 0
+  trueMaxMana: 0
+  trueMaxEnergy: 0
+  strength: 25
   agility: 25
   dexterity: 10
   intelligence: 10
@@ -170,7 +173,7 @@ MonoBehaviour:
   wisdom: 10
   vitality: 10
   charisma: 10
-  bashDamage: 100
+  bashDamage: 10
   pierceDamage: 10
   slashDamage: 10
   fireDamage: 10
@@ -201,6 +204,7 @@ MonoBehaviour:
   parryDuration: 0.1
   blockDuration: 0.5
   damageBlockRate: 0.95
+  luck: 0
   burningThreshold: 100
   earthingThreshold: 100
   frostbiteThreshold: 100
@@ -226,6 +230,8 @@ MonoBehaviour:
   deathPanel: {fileID: 0}
   statusUI: {fileID: 0}
   hitWarning: {fileID: 0}
+  stats: {fileID: 0}
+  skillUser: {fileID: 0}
   stunned: 0
   frostbitten: 0
   airborne: 0
@@ -262,10 +268,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillDatabase: {fileID: 11400000, guid: b84645b6f2bdb204bbc1cb0eb4d331c0, type: 2}
   acquiredSkills:
-  - {fileID: 11400000, guid: e8d4238002cff6049b20e097a76bf1f6, type: 2}
-  - {fileID: 11400000, guid: 7f3a1cb409cd4b3448401fc2353cbe10, type: 2}
-  - {fileID: 11400000, guid: e1f03204e87fbd342af3d6f25bae7cf8, type: 2}
-  currentSkills:
   - {fileID: 11400000, guid: e8d4238002cff6049b20e097a76bf1f6, type: 2}
   - {fileID: 11400000, guid: 7f3a1cb409cd4b3448401fc2353cbe10, type: 2}
   - {fileID: 11400000, guid: e1f03204e87fbd342af3d6f25bae7cf8, type: 2}
@@ -371,6 +373,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roamTime: 10
   timeBetweenSkills: 2
+  rotationTime: 1.5
   speed: 3
   attacked: 0
   hostility: 1

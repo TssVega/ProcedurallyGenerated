@@ -33,10 +33,13 @@ public class Inventory : MonoBehaviour {
 
     public ItemDatabase itemDatabase;
 
+    private InventoryPanel inventoryPanel;
+
     private void Awake() {
+        inventoryPanel = FindObjectOfType<InventoryPanel>();
         quantities = new int[70];
         player = FindObjectOfType<Player>();
-        stats = GetComponent<Stats>();
+        stats = player.stats;
         if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name.Equals("Levels")) {
             for(int i = 0; i < itemSlots.Length; i++) {
                 itemSlots[i].GetComponent<ItemSlot>().slotIndex = i;
@@ -120,6 +123,7 @@ public class Inventory : MonoBehaviour {
         defenceStats[10].text = stats.bleedDefence.ToString();
         defenceStats[11].text = stats.poisonDefence.ToString();
         defenceStats[12].text = stats.curseDefence.ToString();
+        inventoryPanel.UpdateTexts(stats);
     }
     public void SetInventory() {
         itemImages = new Image[inventorySize];
@@ -157,7 +161,7 @@ public class Inventory : MonoBehaviour {
         equipmentFrames = new Image[equipment.Count];
         for(int i = 0; i < equipmentFrames.Length; i++) {
             equipmentFrames[i] = equipmentSlots[i].transform.GetChild(3).GetComponent<Image>();
-        }
+        }        
         //UpdateStats();
     }    
     public void UpdateSlot(int index) {
