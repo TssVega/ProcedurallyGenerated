@@ -32,17 +32,17 @@ public class AudioSystem : MonoBehaviour {
     }
     private void PlaySongs() {
         if(SceneManager.GetActiveScene().buildIndex == 0) {
-            PlaySound("menuTheme");
+            PlaySound("menuTheme", 0f);
         }
         else {
-            PlaySound("theCubeOfEverything");
+            PlaySound("theCubeOfEverything", 0f);
         }
     }
-    public void PlaySound(string _name) {
+    public void PlaySound(string _name, float distance) {
         if(!mute) {
             for(int i = 0; i < sounds.Length; i++) {
                 if(sounds[i].audioName == _name) {
-                    sounds[i].Play();
+                    sounds[i].Play(distance);
                 }
             }
         }
@@ -83,11 +83,11 @@ public class AudioSystem : MonoBehaviour {
         }
         sounds[0].volume = musicValue;
         sounds[1].volume = musicValue;
-        sounds[0].ChangeVolume();
-        sounds[1].ChangeVolume();
+        sounds[0].ChangeVolume(0f);
+        sounds[1].ChangeVolume(0f);
         sounds[2].volume = fxValue;
         sounds[3].volume = fxValue;
-        sounds[2].ChangeVolume();
-        sounds[3].ChangeVolume();
+        sounds[2].ChangeVolume(0f);
+        sounds[3].ChangeVolume(0f);
     }
 }

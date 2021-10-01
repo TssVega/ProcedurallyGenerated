@@ -108,6 +108,36 @@ public class Pool : MonoBehaviour, IInteractable {
             else {
                 playerStatus.GiveMana(playerStats.maxMana);
             }
+            // Milona wonder
+            if(playerStats.player.raceIndex == 8) {
+                int randomIndex = Random.Range(0, 9);
+                switch(randomIndex) {
+                    case 0:
+                        playerStats.strength++;
+                        break;
+                    case 1:
+                        playerStats.agility++;
+                        break;
+                    case 2:
+                        playerStats.dexterity++;
+                        break;
+                    case 3:
+                        playerStats.intelligence++;
+                        break;
+                    case 4:
+                        playerStats.faith++;
+                        break;
+                    case 5:
+                        playerStats.wisdom++;
+                        break;
+                    case 6:
+                        playerStats.vitality++;
+                        break;
+                    case 7:
+                        playerStats.charisma++;
+                        break;
+                }
+            }
             FindObjectOfType<Player>().ClearInteraction(this);
             SetPool(healingPool, false, true, poolGeneration);
             poolGeneration.full = false;

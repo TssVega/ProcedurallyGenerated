@@ -21,7 +21,7 @@ public class Sound {
     [Range(0f, 0.5f)] public float volumeRandomness = 0.1f;     // Randomness of the volume
     [Range(0f, 0.5f)] public float pitchRandomness = 0.1f;      // Randomness of the pitch
 
-    private AudioSource audioSource;
+    public AudioSource audioSource;
 
     // Set the audio source
     public void SetSource(AudioSource _source) {
@@ -30,7 +30,7 @@ public class Sound {
         audioSource.clip = audioClip;
     }
 
-    public void ChangeVolume() {
+    public void ChangeVolume(float distance) {
         // If the current values are not the default values, set them
         if(currentVolume != volume) {
             currentVolume = volume;
@@ -46,7 +46,15 @@ public class Sound {
         if(currentVolume < volume - volumeRandomness && randomizeVolume) {
             currentVolume = volume - volumeRandomness;
         }
-        audioSource.volume = currentVolume;
+        if(distance > 5) {
+            audioSource.volume = currentVolume / distance * 0.2f;
+        }
+        else if(distance > 20) {
+            audioSource.volume = 0f;
+        }
+        else {
+            audioSource.volume = currentVolume;
+        }
     }
 
     public void ChangePitch() {
@@ -67,9 +75,9 @@ public class Sound {
         }
     }
 
-    public void Play() {
+    public void Play(float distance) {
         // Change the randomness
-        ChangeVolume();
+        ChangeVolume(distance);
         ChangePitch();
         // Set the values
         audioSource.volume = currentVolume;

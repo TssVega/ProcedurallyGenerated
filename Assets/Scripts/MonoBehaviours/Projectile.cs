@@ -50,8 +50,14 @@ public class Projectile : MonoBehaviour {
         if(collision.CompareTag("Wall")) {
             EndProjectile();
         }
-        else if(collision.GetComponent<Stats>() && projectileData.team != collision.GetComponent<Stats>().team  ) {
-            projectileSkill.Activate(collision.GetComponent<StatusEffects>(), attackerStats);
+        else if(collision.GetComponent<Stats>() && projectileData.team != collision.GetComponent<Stats>().team) {
+            StatusEffects targetStatus = collision.GetComponent<StatusEffects>();
+            // Crevalonian arrow
+            if(attackerStats.player && attackerStats.player.raceIndex == 2) {
+                const float crevalonianArrowPush = 0.1f;
+                targetStatus.StartAirPush(crevalonianArrowPush, transform);
+            }
+            projectileSkill.Activate(targetStatus, attackerStats);
             if(!projectileData.penetrates) {
                 EndProjectile();
             }

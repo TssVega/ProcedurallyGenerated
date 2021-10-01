@@ -47,13 +47,13 @@ public class OptionsUI : MonoBehaviour {
     }
     public void ChangeFXVolume() {
         UpdateFXVolume();
-        AudioSystem.audioManager.PlaySound("menuButtonClick");
+        AudioSystem.audioManager.PlaySound("menuButtonClick", fxSlider.value);
         PlayerPrefs.SetFloat("fx", fxSlider.value);
         PlayerPrefs.Save();
     }
     public void ChangeMusicVolume() {
         UpdateMusicVolume();
-        AudioSystem.audioManager.PlaySound("menuButtonClick");
+        AudioSystem.audioManager.PlaySound("menuButtonClick", musicSlider.value);
         PlayerPrefs.SetFloat("music", musicSlider.value);
         PlayerPrefs.Save();
     }
@@ -85,10 +85,10 @@ public class OptionsUI : MonoBehaviour {
             }            
         }
         else {
-            AudioSystem.audioManager.PlaySound("menuButtonClick");
+            AudioSystem.audioManager.PlaySound("menuButtonClick", fxSlider.value);
             muteTick.SetActive(false);
             PlayerPrefs.SetInt("mute", 0);
-            AudioSystem.audioManager.PlaySound("menuTheme");
+            AudioSystem.audioManager.PlaySound("menuTheme", fxSlider.value);
         }
         PlayerPrefs.Save();
     }
@@ -145,13 +145,13 @@ public class OptionsUI : MonoBehaviour {
     private void UpdateMusicVolume() {        
         AudioSystem.audioManager.sounds[0].volume = musicSlider.value;
         AudioSystem.audioManager.sounds[1].volume = musicSlider.value;
-        AudioSystem.audioManager.sounds[0].ChangeVolume();
-        AudioSystem.audioManager.sounds[1].ChangeVolume();
+        AudioSystem.audioManager.sounds[0].ChangeVolume(0f);
+        AudioSystem.audioManager.sounds[1].ChangeVolume(0f);
     }
     private void UpdateFXVolume() {        
         AudioSystem.audioManager.sounds[2].volume = fxSlider.value;        
         AudioSystem.audioManager.sounds[3].volume = fxSlider.value;
-        AudioSystem.audioManager.sounds[2].ChangeVolume();
-        AudioSystem.audioManager.sounds[3].ChangeVolume();
+        AudioSystem.audioManager.sounds[2].ChangeVolume(0f);
+        AudioSystem.audioManager.sounds[3].ChangeVolume(0f);
     }
 }

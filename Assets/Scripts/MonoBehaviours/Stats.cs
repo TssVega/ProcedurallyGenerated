@@ -75,9 +75,11 @@ public class Stats : MonoBehaviour {
 
     public StatusEffects status;
     private Enemy enemy;
+    public Player player;
 
     private void Awake() {
         //int skillCooldownsSize = FindObjectOfType<GameMaster>().talentDatabase.talents.Length;
+        player = GetComponent<Player>();
         enemy = GetComponent<Enemy>();
         status = GetComponent<StatusEffects>();
     }

@@ -6,7 +6,7 @@ using Pathfinding;
 [RequireComponent(typeof(Stats))]
 public class StatusEffects : MonoBehaviour {
 
-    private Player player;
+    public Player player;
     //private Enemy enemy;
     private AIPath aiPath;
     private EnemyAI enemyAI;
@@ -190,10 +190,16 @@ public class StatusEffects : MonoBehaviour {
         }
     }
     public void UseMana(float amount) {
-        stats.mana -= Mathf.Clamp(amount, 0, stats.trueMaxMana);
+        float finalAmount = Mathf.Clamp(amount, 0, stats.trueMaxMana);
+        stats.mana -= finalAmount;
         //if(player) {
         //    player.PlayerConsumeMana(amount);
         //}
+        // Satian healing
+        if(finalAmount > 0f && player && player.raceIndex == 1) {
+            const float satianHealRate = 0.2f;
+            Heal(finalAmount * satianHealRate);
+        }
         if(statusUI) {
             statusUI.UpdateMana(stats.mana / stats.trueMaxMana, stats.mana);
         }
@@ -206,6 +212,18 @@ public class StatusEffects : MonoBehaviour {
     }
     public bool CanUseMana(float amount) {
         return stats.mana >= amount;
+    }
+    public void DecreaseEnergy(float amount) {
+        stats.energy -= Mathf.Clamp(amount, 0, stats.trueMaxEnergy);
+        if(statusUI) {
+            statusUI.UpdateEnergy(stats.energy / stats.trueMaxEnergy, stats.energy);
+        }
+    }
+    public void GiveEnergy(float amount) {
+        stats.energy += Mathf.Clamp(amount, 0, stats.trueMaxEnergy - stats.energy);
+        if(statusUI) {
+            statusUI.UpdateEnergy(stats.energy / stats.trueMaxEnergy, stats.energy);
+        }
     }
     private void TakeMushroomDamage(float amount) {
         float damage = 0f;
@@ -337,6 +355,11 @@ public class StatusEffects : MonoBehaviour {
         }
         if(stats.health <= 0f) {
             Die();
+        }
+        // Havellian clarity
+        if(player && player.raceIndex == 11) {
+            const float havellianManaRate = 0.2f;
+            GiveMana(damage * havellianManaRate);
         }
         //statusParticles.StartHitParticles();
         /*if(enemy && enemy.gameObject.activeInHierarchy) {
@@ -867,6 +890,10 @@ public class StatusEffects : MonoBehaviour {
         frostbiteDamage = damage;
     }
     public void StartChill(float duration, float slowRate) {
+        // Helgafelli vigor
+        if(player.raceIndex == 5) {
+            return;
+        }
         if(gameObject.activeInHierarchy) {
             if(chilled) {
                 StopChill();
@@ -1094,6 +1121,12 @@ public class StatusEffects : MonoBehaviour {
         yield return new WaitForSeconds(duration);
         lit = false;
     }
+    /// <summary>
+    /// Increases targets speed by speedRate * currentSpeed.
+    /// Speed rate example: 1.1f speedRate will increase your speed by %10
+    /// </summary>
+    /// <param name="speedRate"></param>
+    /// <param name="duration"></param>
     public void StartSpeedUp(float speedRate, float duration) {
         if(gameObject.activeInHierarchy) {
             if(spedUp) {
@@ -1111,7 +1144,7 @@ public class StatusEffects : MonoBehaviour {
         if(chilled) {
             StopChill();
         }
-        stats.runSpeed *= 1f * speedRate;
+        stats.runSpeed *= speedRate;
         spedUp = true;
         yield return new WaitForSeconds(duration);
         spedUp = false;

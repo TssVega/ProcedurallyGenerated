@@ -9,6 +9,8 @@ public class Potion : Item, IUsable {
     public float power = 20f;
     public float time = 60f;
 
+    private const float levonaEnergyRate = 0.4f;
+
     public void Consume(StatusEffects status) {
         switch(potionType) {
             case PotionType.Healing:
@@ -17,7 +19,11 @@ public class Potion : Item, IUsable {
             case PotionType.Mana:
                 status.GiveMana(power);
                 break;
-        }        
+        }
+        // Levona effect
+        if(status.player && status.player.raceIndex == 0) {
+            status.GiveEnergy(power * levonaEnergyRate);
+        }
     }
 }
 

@@ -10,6 +10,12 @@ public class Mushroom : Item, IUsable {
     public float mushroomPower;
 
     public void Consume(StatusEffects status) {
+        // Yoseon fervor
+        if(status.player && status.player.raceIndex == 6) {
+            const float yoseonFervorRate = 1.15f;
+            const float yoseonFervorDuration = 10f;
+            status.StartSpeedUp(yoseonFervorRate, yoseonFervorDuration);
+        }
         if(mushroomType == MushroomType.Edible) {
             // Heal over time and satisfy hunger here
             status.StartRegen(20f, mushroomPower * 0.05f);

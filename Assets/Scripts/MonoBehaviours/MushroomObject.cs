@@ -48,7 +48,6 @@ public class MushroomObject : MonoBehaviour, IInteractable {
     public Mushroom GetMushroom() {
         return this.mushroom;
     }
-
     public void Interact() {
         if(gameObject.activeSelf) {
             if(player.inventory.CanAddToInventory()) {

@@ -48,10 +48,16 @@ public class GroundObject : MonoBehaviour, IInteractable {
     public Item GetObject() {
         return this.groundObj;
     }
-
     public void Interact() {
         if(gameObject.activeSelf) {
             if(player.inventory.CanAddToInventory()) {
+                // Othani fortune
+                if(player.raceIndex == 3) {
+                    const float bonusYieldChance = 0.1f;
+                    if(Random.Range(0f, 1f) < bonusYieldChance) {
+                        player.inventory.AddToInventory(GetObject());
+                    }                    
+                }
                 player.inventory.AddToInventory(GetObject());
                 SetObject(null, new Vector2Int(), null);
             }
