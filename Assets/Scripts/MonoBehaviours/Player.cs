@@ -7,6 +7,8 @@ public class Player : MonoBehaviour {
 
     public int saveSlot;
 
+    public int raceIndex;
+
     public Stats stats;
     public Inventory inventory;
     public SkillUser skillUser;
@@ -15,7 +17,6 @@ public class Player : MonoBehaviour {
     public SpriteRenderer hairColor;
     public SpriteRenderer hairStyle;
 
-    [HideInInspector] public int skinColorIndex = 0;
     [HideInInspector] public int hairColorIndex = 0;
     [HideInInspector] public int hairStyleIndex = 0;
 
@@ -140,6 +141,7 @@ public class Player : MonoBehaviour {
         SaveData data = SaveSystem.Load(PersistentData.saveSlot);
         if(data != null) {
             saveSlot = data.saveSlot;
+            raceIndex = data.race;
             Vector3 pos = new Vector3(data.position[0], data.position[1], data.position[2]);
             transform.position = pos;
             Quaternion quat = new Quaternion(data.rotation[0], data.rotation[1], data.rotation[2], data.rotation[3]);
@@ -148,12 +150,10 @@ public class Player : MonoBehaviour {
             skillBookUnlocked = data.skillBookUnlocked;
             mapUnlocked = data.mapUnlocked;
             // Appearance
-            skinColorIndex = data.skinColorIndex;
             hairColorIndex = data.hairColorIndex;
             hairStyleIndex = data.hairStyleIndex;
-            skinColorIndex = data.skinColorIndex;
-            hairColorIndex = data.hairColorIndex;
-            hairStyleIndex = data.hairStyleIndex;
+            //hairColorIndex = data.hairColorIndex;
+            //hairStyleIndex = data.hairStyleIndex;
             SetAppearance();
             // Inventory and equipment
             for(int i = 0; i < data.inventory.Length; i++) {
@@ -173,7 +173,7 @@ public class Player : MonoBehaviour {
                     // If there's no body armor
                     if(i == 3) {
                         bodyArmor.sprite = appearance.defaultShoulders;
-                        bodyArmor.color = appearance.skinColors[skinColorIndex];
+                        bodyArmor.color = appearance.races[raceIndex].skinColor;
                     }
                     inventory.equipment[i] = null;
                 }
@@ -289,7 +289,7 @@ public class Player : MonoBehaviour {
         }        
     }
     private void SetAppearance() {
-        skinColor.color = appearance.skinColors[skinColorIndex];
+        skinColor.color = appearance.races[raceIndex].skinColor;
         hairColor.color = appearance.hairColors[hairColorIndex];
         hairStyle.sprite = appearance.hairStyles[hairStyleIndex];
         // bodyArmor.color = appearance.skinColors[skinColorIndex];
@@ -386,7 +386,7 @@ public class Player : MonoBehaviour {
     }
     private void ClearBodyArmor() {
         bodyArmor.sprite = appearance.defaultShoulders;
-        bodyArmor.color = appearance.skinColors[skinColorIndex];
+        bodyArmor.color = appearance.races[raceIndex].skinColor;
     }
     private void SetHelmet(Armor helmet) {
         helmetBase.sprite = helmet.firstSprite;
@@ -442,8 +442,4 @@ public class Player : MonoBehaviour {
             interactionList[interactionList.Count - 1].Interact();
         }
     }
-}
-
-public enum Race {
-    Levona, Satian, Crevalonian, Othani, Pelthonese, Helgafelli, Yoseon, Qotush, Milona, Vilgerosi, Nastac, Havellian
 }

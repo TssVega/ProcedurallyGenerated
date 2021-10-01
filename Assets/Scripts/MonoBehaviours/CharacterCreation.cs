@@ -20,13 +20,16 @@ public class CharacterCreation : MonoBehaviour {
     public TextMeshProUGUI hairStyleText;
     public TextMeshProUGUI confirmText;
 
+    public TextMeshProUGUI raceText;
+    public TextMeshProUGUI raceDescription;
+
     private Color currentSkinColor;
     private Color currentHairColor;
     private Sprite currentHairStyle;
 
-    private int currentSkinColorIndex = 0;
     private int currentHairColorIndex = 0;
     private int currentHairStyleIndex = 0;
+    private int currentRaceIndex = 0;
 
     private Player player;
     private LocalizationManager localizationManager;
@@ -40,7 +43,7 @@ public class CharacterCreation : MonoBehaviour {
     private void Awake() {
         localizationManager = FindObjectOfType<LocalizationManager>();
         player = FindObjectOfType<Player>();
-        currentSkinColor = appearance.skinColors[currentSkinColorIndex];
+        currentSkinColor = appearance.races[currentRaceIndex].skinColor;
         currentHairColor = appearance.hairColors[currentHairColorIndex];
         currentHairStyle = appearance.hairStyles[currentHairStyleIndex];
         skinImage.color = currentSkinColor;
@@ -63,24 +66,28 @@ public class CharacterCreation : MonoBehaviour {
     private void LoadSceneAsync(string sceneName) {
         SceneManager.LoadSceneAsync(sceneName);
     }
+    public void ChangeRace() {
+    
+    }
     public void ChangeSkinColor(bool increment) {
         if(increment) {
-            currentSkinColorIndex++;
-            if(currentSkinColorIndex > appearance.skinColors.Length - 1) {
-                currentSkinColorIndex = 0;
+            currentRaceIndex++;
+            if(currentRaceIndex > appearance.races.Length - 1) {
+                currentRaceIndex = 0;
             }
-            currentSkinColor = appearance.skinColors[currentSkinColorIndex];
+            currentSkinColor = appearance.races[currentRaceIndex].skinColor;
         }
         else {
-            currentSkinColorIndex--;
-            if(currentSkinColorIndex < 0) {
-                currentSkinColorIndex = appearance.skinColors.Length - 1;
+            currentRaceIndex--;
+            if(currentRaceIndex < 0) {
+                currentRaceIndex = appearance.races.Length - 1;
             }
-            currentSkinColor = appearance.skinColors[currentSkinColorIndex];
+            currentSkinColor = appearance.races[currentRaceIndex].skinColor;
         }
         skinImage.color = currentSkinColor;
         shoulderImage.color = currentSkinColor;
-        player.skinColorIndex = currentSkinColorIndex;
+        player.raceIndex = currentRaceIndex;
+        RefreshTexts();
     }
     public void ChangeHairColor(bool increment) {
         if(increment) {
@@ -119,10 +126,12 @@ public class CharacterCreation : MonoBehaviour {
         player.hairStyleIndex = currentHairStyleIndex;
     }
     public void RefreshTexts() {
-        skinColorText.text = localizationManager.GetText("skinColor");
+        skinColorText.text = localizationManager.GetText("race");
         hairColorText.text = localizationManager.GetText("hairColor");
         hairStyleText.text = localizationManager.GetText("hairStyle");
         confirmText.text = localizationManager.GetText("complete");
+        raceText.text = appearance.races[currentRaceIndex].raceName;
+        raceDescription.text = localizationManager.GetText($"{appearance.races[currentRaceIndex].raceName}Desc");
     }
     private async Task SetNewGameData() {
         // World data
@@ -139,7 +148,7 @@ public class CharacterCreation : MonoBehaviour {
         player.skinColor.color = currentSkinColor;
         player.hairColor.color = currentHairColor;
         player.hairStyle.sprite = currentHairStyle;
-        player.skinColorIndex = currentSkinColorIndex;
+        player.raceIndex = currentRaceIndex;
         player.hairColorIndex = currentHairColorIndex;
         player.hairStyleIndex = currentHairStyleIndex;
         // Inventory and equipment

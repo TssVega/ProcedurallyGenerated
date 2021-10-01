@@ -4,7 +4,10 @@ using UnityEngine;
 
 [System.Serializable]
 public class SaveData {
+    // Save slot
     public int saveSlot;
+    // Race
+    public int race;
     // Inventory buttons
     public bool skillBookUnlocked;
     public bool mapUnlocked;
@@ -88,6 +91,8 @@ public class SaveData {
 
     public SaveData(Player data) {
         saveSlot = data.saveSlot;
+        // Race
+        race = data.raceIndex;
         // Inventory buttons
         skillBookUnlocked = data.skillBookUnlocked;
         mapUnlocked = data.mapUnlocked;
@@ -125,7 +130,6 @@ public class SaveData {
         rotation[2] = data.transform.rotation.z;
         rotation[3] = data.transform.rotation.w;
         // Appearance
-        skinColorIndex = data.skinColorIndex;
         hairColorIndex = data.hairColorIndex;
         hairStyleIndex = data.hairStyleIndex;
         // Status

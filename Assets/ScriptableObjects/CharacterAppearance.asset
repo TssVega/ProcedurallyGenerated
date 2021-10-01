@@ -17,12 +17,19 @@ MonoBehaviour:
   - {fileID: -3809710169602733749, guid: 09d448423a05b134780a1ad74354a1b2, type: 3}
   - {fileID: 3384492076511602247, guid: 09d448423a05b134780a1ad74354a1b2, type: 3}
   - {fileID: 3781873707158436290, guid: 09d448423a05b134780a1ad74354a1b2, type: 3}
-  skinColors:
-  - {r: 0.5529412, g: 0.33333334, b: 0.14117648, a: 1}
-  - {r: 0.7764706, g: 0.5254902, b: 0.25882354, a: 1}
-  - {r: 0.8784314, g: 0.6745098, b: 0.4117647, a: 1}
-  - {r: 0.94509804, g: 0.7607843, b: 0.49019608, a: 1}
-  - {r: 1, g: 0.85882354, b: 0.6745098, a: 1}
+  races:
+  - {fileID: 11400000, guid: e97f777b07e7e764fbd74387c217d8b7, type: 2}
+  - {fileID: 11400000, guid: 1787a53e35a831c4784ec995d55fe1d6, type: 2}
+  - {fileID: 11400000, guid: f67d2d9e5348cbf4d864697dfee62aa9, type: 2}
+  - {fileID: 11400000, guid: c47d7094c55096a4ba1330114e9b0f57, type: 2}
+  - {fileID: 11400000, guid: 50bcb33cc865efc48a13a64e46ae87f6, type: 2}
+  - {fileID: 11400000, guid: f3a14fc77514bcf45be6b3a18c86a6e9, type: 2}
+  - {fileID: 11400000, guid: 0b06348956653884a8085e6d11cbc999, type: 2}
+  - {fileID: 11400000, guid: 86906b34a109fd644bd0b3a501001e3e, type: 2}
+  - {fileID: 11400000, guid: 80e4f5802ac8bda4d80a22d419f2995e, type: 2}
+  - {fileID: 11400000, guid: 57dac686daf97884bb559a7aa9aad3a0, type: 2}
+  - {fileID: 11400000, guid: 68089e6fc66dd28489ae42c6e5f5484d, type: 2}
+  - {fileID: 11400000, guid: 16c701472210ca4438f5a4fe9b730df4, type: 2}
   hairColors:
   - {r: 0.6666667, g: 0.53333336, b: 0.4, a: 1}
   - {r: 0.87058824, g: 0.74509805, b: 0.6, a: 1}
