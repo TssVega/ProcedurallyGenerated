@@ -39,8 +39,8 @@ public class ItemInfoPanel : MonoBehaviour {
 
     public GameObject currentItemChart;
     public GameObject equippedItemChart;
-    public GameObject totalChart;
     public GameObject dismantleConfirmationPanel;
+    public GameObject totalChart;
 
     public Inventory inventory;
 
@@ -48,6 +48,7 @@ public class ItemInfoPanel : MonoBehaviour {
     public Image[] secondaryImages;
 
     private const int skillSlotCount = 11;
+    private const string Format = "0";
 
     public Sprite emptySlotSprite;
 
@@ -62,6 +63,9 @@ public class ItemInfoPanel : MonoBehaviour {
     }
     private void OnEnable() {
         dismantleConfirmationPanel.SetActive(false);
+    }
+    private void OnDisable() {
+        totalChart.SetActive(true);
     }
     public void SetItem(Item item, int index, bool isInventorySlot) {
         this.item = item;
@@ -200,10 +204,10 @@ public class ItemInfoPanel : MonoBehaviour {
         if(isInventorySlot) {
             if(item.slot == EquipSlot.Consumable) {
                 inventory.ConsumeInSlot(currentIndex);
+                UpdateStats();
                 if(inventory.quantities[currentIndex] < 1) {
                     gameObject.SetActive(false);
-                }
-                UpdateStats();
+                }                
             }
             else if(item.slot != EquipSlot.Other) {
                 inventory.EquipItemInSlot(currentIndex);
@@ -297,19 +301,19 @@ public class ItemInfoPanel : MonoBehaviour {
             equippedItemDescription.text = "";
         }
         if(item is Weapon w) {
-            currentItemOffenceStats[0].text = w.fireDamage.ToString();
-            currentItemOffenceStats[1].text = w.iceDamage.ToString();
-            currentItemOffenceStats[2].text = w.airDamage.ToString();
-            currentItemOffenceStats[3].text = w.earthDamage.ToString();
-            currentItemOffenceStats[4].text = w.lightningDamage.ToString();
-            currentItemOffenceStats[5].text = w.lightDamage.ToString();
-            currentItemOffenceStats[6].text = w.darkDamage.ToString();
-            currentItemOffenceStats[7].text = w.bashDamage.ToString();
-            currentItemOffenceStats[8].text = w.pierceDamage.ToString();
-            currentItemOffenceStats[9].text = w.slashDamage.ToString();
-            currentItemOffenceStats[10].text = w.bleedDamage.ToString();
-            currentItemOffenceStats[11].text = w.poisonDamage.ToString();
-            currentItemOffenceStats[12].text = w.curseDamage.ToString();
+            currentItemOffenceStats[0].text = w.fireDamage.ToString(Format);
+            currentItemOffenceStats[1].text = w.iceDamage.ToString(Format);
+            currentItemOffenceStats[2].text = w.airDamage.ToString(Format);
+            currentItemOffenceStats[3].text = w.earthDamage.ToString(Format);
+            currentItemOffenceStats[4].text = w.lightningDamage.ToString(Format);
+            currentItemOffenceStats[5].text = w.lightDamage.ToString(Format);
+            currentItemOffenceStats[6].text = w.darkDamage.ToString(Format);
+            currentItemOffenceStats[7].text = w.bashDamage.ToString(Format);
+            currentItemOffenceStats[8].text = w.pierceDamage.ToString(Format);
+            currentItemOffenceStats[9].text = w.slashDamage.ToString(Format);
+            currentItemOffenceStats[10].text = w.bleedDamage.ToString(Format);
+            currentItemOffenceStats[11].text = w.poisonDamage.ToString(Format);
+            currentItemOffenceStats[12].text = w.curseDamage.ToString(Format);
             currentItemDefenceStats[0].text = "0";
             currentItemDefenceStats[1].text = "0";
             currentItemDefenceStats[2].text = "0";
@@ -328,19 +332,19 @@ public class ItemInfoPanel : MonoBehaviour {
             quantityText.text = "";
             Weapon equippedWeapon = inventory.equipment[(int)w.slot] as Weapon;
             if(equippedWeapon) {
-                equippedItemOffenceStats[0].text = equippedWeapon.fireDamage.ToString();
-                equippedItemOffenceStats[1].text = equippedWeapon.iceDamage.ToString();
-                equippedItemOffenceStats[2].text = equippedWeapon.airDamage.ToString();
-                equippedItemOffenceStats[3].text = equippedWeapon.earthDamage.ToString();
-                equippedItemOffenceStats[4].text = equippedWeapon.lightningDamage.ToString();
-                equippedItemOffenceStats[5].text = equippedWeapon.lightDamage.ToString();
-                equippedItemOffenceStats[6].text = equippedWeapon.darkDamage.ToString();
-                equippedItemOffenceStats[7].text = equippedWeapon.bashDamage.ToString();
-                equippedItemOffenceStats[8].text = equippedWeapon.pierceDamage.ToString();
-                equippedItemOffenceStats[9].text = equippedWeapon.slashDamage.ToString();
-                equippedItemOffenceStats[10].text = equippedWeapon.bleedDamage.ToString();
-                equippedItemOffenceStats[11].text = equippedWeapon.poisonDamage.ToString();
-                equippedItemOffenceStats[12].text = equippedWeapon.curseDamage.ToString();
+                equippedItemOffenceStats[0].text = equippedWeapon.fireDamage.ToString(Format);
+                equippedItemOffenceStats[1].text = equippedWeapon.iceDamage.ToString(Format);
+                equippedItemOffenceStats[2].text = equippedWeapon.airDamage.ToString(Format);
+                equippedItemOffenceStats[3].text = equippedWeapon.earthDamage.ToString(Format);
+                equippedItemOffenceStats[4].text = equippedWeapon.lightningDamage.ToString(Format);
+                equippedItemOffenceStats[5].text = equippedWeapon.lightDamage.ToString(Format);
+                equippedItemOffenceStats[6].text = equippedWeapon.darkDamage.ToString(Format);
+                equippedItemOffenceStats[7].text = equippedWeapon.bashDamage.ToString(Format);
+                equippedItemOffenceStats[8].text = equippedWeapon.pierceDamage.ToString(Format);
+                equippedItemOffenceStats[9].text = equippedWeapon.slashDamage.ToString(Format);
+                equippedItemOffenceStats[10].text = equippedWeapon.bleedDamage.ToString(Format);
+                equippedItemOffenceStats[11].text = equippedWeapon.poisonDamage.ToString(Format);
+                equippedItemOffenceStats[12].text = equippedWeapon.curseDamage.ToString(Format);
                 equippedItemDefenceStats[0].text = "0";
                 equippedItemDefenceStats[1].text = "0";
                 equippedItemDefenceStats[2].text = "0";
@@ -380,19 +384,19 @@ public class ItemInfoPanel : MonoBehaviour {
             currentItemOffenceStats[10].text = "0";
             currentItemOffenceStats[11].text = "0";
             currentItemOffenceStats[12].text = "0";
-            currentItemDefenceStats[0].text = a.fireDefence.ToString();
-            currentItemDefenceStats[1].text = a.iceDefence.ToString();
-            currentItemDefenceStats[2].text = a.airDefence.ToString();
-            currentItemDefenceStats[3].text = a.earthDefence.ToString();
-            currentItemDefenceStats[4].text = a.lightningDefence.ToString();
-            currentItemDefenceStats[5].text = a.lightDefence.ToString();
-            currentItemDefenceStats[6].text = a.darkDefence.ToString();
-            currentItemDefenceStats[7].text = a.bashDefence.ToString();
-            currentItemDefenceStats[8].text = a.pierceDefence.ToString();
-            currentItemDefenceStats[9].text = a.slashDefence.ToString();
-            currentItemDefenceStats[10].text = a.bleedDefence.ToString();
-            currentItemDefenceStats[11].text = a.poisonDefence.ToString();
-            currentItemDefenceStats[12].text = a.curseDefence.ToString();
+            currentItemDefenceStats[0].text = a.fireDefence.ToString(Format);
+            currentItemDefenceStats[1].text = a.iceDefence.ToString(Format);
+            currentItemDefenceStats[2].text = a.airDefence.ToString(Format);
+            currentItemDefenceStats[3].text = a.earthDefence.ToString(Format);
+            currentItemDefenceStats[4].text = a.lightningDefence.ToString(Format);
+            currentItemDefenceStats[5].text = a.lightDefence.ToString(Format);
+            currentItemDefenceStats[6].text = a.darkDefence.ToString(Format);
+            currentItemDefenceStats[7].text = a.bashDefence.ToString(Format);
+            currentItemDefenceStats[8].text = a.pierceDefence.ToString(Format);
+            currentItemDefenceStats[9].text = a.slashDefence.ToString(Format);
+            currentItemDefenceStats[10].text = a.bleedDefence.ToString(Format);
+            currentItemDefenceStats[11].text = a.poisonDefence.ToString(Format);
+            currentItemDefenceStats[12].text = a.curseDefence.ToString(Format);
             currentItemChart.SetActive(true);
             totalChart.SetActive(true);
             quantityText.text = "";
@@ -411,19 +415,19 @@ public class ItemInfoPanel : MonoBehaviour {
                 equippedItemOffenceStats[10].text = "0";
                 equippedItemOffenceStats[11].text = "0";
                 equippedItemOffenceStats[12].text = "0";
-                equippedItemDefenceStats[0].text = equippedArmor.fireDefence.ToString();
-                equippedItemDefenceStats[1].text = equippedArmor.iceDefence.ToString();
-                equippedItemDefenceStats[2].text = equippedArmor.airDefence.ToString();
-                equippedItemDefenceStats[3].text = equippedArmor.earthDefence.ToString();
-                equippedItemDefenceStats[4].text = equippedArmor.lightningDefence.ToString();
-                equippedItemDefenceStats[5].text = equippedArmor.lightDefence.ToString();
-                equippedItemDefenceStats[6].text = equippedArmor.darkDefence.ToString();
-                equippedItemDefenceStats[7].text = equippedArmor.bashDefence.ToString();
-                equippedItemDefenceStats[8].text = equippedArmor.pierceDefence.ToString();
-                equippedItemDefenceStats[9].text = equippedArmor.slashDefence.ToString();
-                equippedItemDefenceStats[10].text = equippedArmor.bleedDefence.ToString();
-                equippedItemDefenceStats[11].text = equippedArmor.poisonDefence.ToString();
-                equippedItemDefenceStats[12].text = equippedArmor.curseDefence.ToString();
+                equippedItemDefenceStats[0].text = equippedArmor.fireDefence.ToString(Format);
+                equippedItemDefenceStats[1].text = equippedArmor.iceDefence.ToString(Format);
+                equippedItemDefenceStats[2].text = equippedArmor.airDefence.ToString(Format);
+                equippedItemDefenceStats[3].text = equippedArmor.earthDefence.ToString(Format);
+                equippedItemDefenceStats[4].text = equippedArmor.lightningDefence.ToString(Format);
+                equippedItemDefenceStats[5].text = equippedArmor.lightDefence.ToString(Format);
+                equippedItemDefenceStats[6].text = equippedArmor.darkDefence.ToString(Format);
+                equippedItemDefenceStats[7].text = equippedArmor.bashDefence.ToString(Format);
+                equippedItemDefenceStats[8].text = equippedArmor.pierceDefence.ToString(Format);
+                equippedItemDefenceStats[9].text = equippedArmor.slashDefence.ToString(Format);
+                equippedItemDefenceStats[10].text = equippedArmor.bleedDefence.ToString(Format);
+                equippedItemDefenceStats[11].text = equippedArmor.poisonDefence.ToString(Format);
+                equippedItemDefenceStats[12].text = equippedArmor.curseDefence.ToString(Format);
                 equippedItemChart.SetActive(true);
                 equippedItemText.gameObject.SetActive(true);
             }
@@ -450,19 +454,19 @@ public class ItemInfoPanel : MonoBehaviour {
             currentItemOffenceStats[10].text = "0";
             currentItemOffenceStats[11].text = "0";
             currentItemOffenceStats[12].text = "0";
-            currentItemDefenceStats[0].text = s.fireDefence.ToString();
-            currentItemDefenceStats[1].text = s.iceDefence.ToString();
-            currentItemDefenceStats[2].text = s.airDefence.ToString();
-            currentItemDefenceStats[3].text = s.earthDefence.ToString();
-            currentItemDefenceStats[4].text = s.lightningDefence.ToString();
-            currentItemDefenceStats[5].text = s.lightDefence.ToString();
-            currentItemDefenceStats[6].text = s.darkDefence.ToString();
-            currentItemDefenceStats[7].text = s.bashDefence.ToString();
-            currentItemDefenceStats[8].text = s.pierceDefence.ToString();
-            currentItemDefenceStats[9].text = s.slashDefence.ToString();
-            currentItemDefenceStats[10].text = s.bleedDefence.ToString();
-            currentItemDefenceStats[11].text = s.poisonDefence.ToString();
-            currentItemDefenceStats[12].text = s.curseDefence.ToString();
+            currentItemDefenceStats[0].text = s.fireDefence.ToString(Format);
+            currentItemDefenceStats[1].text = s.iceDefence.ToString(Format);
+            currentItemDefenceStats[2].text = s.airDefence.ToString(Format);
+            currentItemDefenceStats[3].text = s.earthDefence.ToString(Format);
+            currentItemDefenceStats[4].text = s.lightningDefence.ToString(Format);
+            currentItemDefenceStats[5].text = s.lightDefence.ToString(Format);
+            currentItemDefenceStats[6].text = s.darkDefence.ToString(Format);
+            currentItemDefenceStats[7].text = s.bashDefence.ToString(Format);
+            currentItemDefenceStats[8].text = s.pierceDefence.ToString(Format);
+            currentItemDefenceStats[9].text = s.slashDefence.ToString(Format);
+            currentItemDefenceStats[10].text = s.bleedDefence.ToString(Format);
+            currentItemDefenceStats[11].text = s.poisonDefence.ToString(Format);
+            currentItemDefenceStats[12].text = s.curseDefence.ToString(Format);
             currentItemChart.SetActive(true);
             totalChart.SetActive(true);
             quantityText.text = "";
@@ -481,19 +485,19 @@ public class ItemInfoPanel : MonoBehaviour {
                 equippedItemOffenceStats[10].text = "0";
                 equippedItemOffenceStats[11].text = "0";
                 equippedItemOffenceStats[12].text = "0";
-                equippedItemDefenceStats[0].text = equippedShield.fireDefence.ToString();
-                equippedItemDefenceStats[1].text = equippedShield.iceDefence.ToString();
-                equippedItemDefenceStats[2].text = equippedShield.airDefence.ToString();
-                equippedItemDefenceStats[3].text = equippedShield.earthDefence.ToString();
-                equippedItemDefenceStats[4].text = equippedShield.lightningDefence.ToString();
-                equippedItemDefenceStats[5].text = equippedShield.lightDefence.ToString();
-                equippedItemDefenceStats[6].text = equippedShield.darkDefence.ToString();
-                equippedItemDefenceStats[7].text = equippedShield.bashDefence.ToString();
-                equippedItemDefenceStats[8].text = equippedShield.pierceDefence.ToString();
-                equippedItemDefenceStats[9].text = equippedShield.slashDefence.ToString();
-                equippedItemDefenceStats[10].text = equippedShield.bleedDefence.ToString();
-                equippedItemDefenceStats[11].text = equippedShield.poisonDefence.ToString();
-                equippedItemDefenceStats[12].text = equippedShield.curseDefence.ToString();
+                equippedItemDefenceStats[0].text = equippedShield.fireDefence.ToString(Format);
+                equippedItemDefenceStats[1].text = equippedShield.iceDefence.ToString(Format);
+                equippedItemDefenceStats[2].text = equippedShield.airDefence.ToString(Format);
+                equippedItemDefenceStats[3].text = equippedShield.earthDefence.ToString(Format);
+                equippedItemDefenceStats[4].text = equippedShield.lightningDefence.ToString(Format);
+                equippedItemDefenceStats[5].text = equippedShield.lightDefence.ToString(Format);
+                equippedItemDefenceStats[6].text = equippedShield.darkDefence.ToString(Format);
+                equippedItemDefenceStats[7].text = equippedShield.bashDefence.ToString(Format);
+                equippedItemDefenceStats[8].text = equippedShield.pierceDefence.ToString(Format);
+                equippedItemDefenceStats[9].text = equippedShield.slashDefence.ToString(Format);
+                equippedItemDefenceStats[10].text = equippedShield.bleedDefence.ToString(Format);
+                equippedItemDefenceStats[11].text = equippedShield.poisonDefence.ToString(Format);
+                equippedItemDefenceStats[12].text = equippedShield.curseDefence.ToString(Format);
                 equippedItemChart.SetActive(true);
                 equippedItemText.gameObject.SetActive(true);
             }
@@ -507,63 +511,63 @@ public class ItemInfoPanel : MonoBehaviour {
             }
         }
         else if(item is Ring r) {
-            currentItemOffenceStats[0].text = r.fireDamage.ToString();
-            currentItemOffenceStats[1].text = r.iceDamage.ToString();
-            currentItemOffenceStats[2].text = r.airDamage.ToString();
-            currentItemOffenceStats[3].text = r.earthDamage.ToString();
-            currentItemOffenceStats[4].text = r.lightningDamage.ToString();
-            currentItemOffenceStats[5].text = r.lightDamage.ToString();
-            currentItemOffenceStats[6].text = r.darkDamage.ToString();
-            currentItemOffenceStats[7].text = r.bashDamage.ToString();
-            currentItemOffenceStats[8].text = r.pierceDamage.ToString();
-            currentItemOffenceStats[9].text = r.slashDamage.ToString();
-            currentItemOffenceStats[10].text = r.bleedDamage.ToString();
-            currentItemOffenceStats[11].text = r.poisonDamage.ToString();
-            currentItemOffenceStats[12].text = r.curseDamage.ToString();
-            currentItemDefenceStats[0].text = r.fireDefence.ToString();
-            currentItemDefenceStats[1].text = r.iceDefence.ToString();
-            currentItemDefenceStats[2].text = r.airDefence.ToString();
-            currentItemDefenceStats[3].text = r.earthDefence.ToString();
-            currentItemDefenceStats[4].text = r.lightningDefence.ToString();
-            currentItemDefenceStats[5].text = r.lightDefence.ToString();
-            currentItemDefenceStats[6].text = r.darkDefence.ToString();
-            currentItemDefenceStats[7].text = r.bashDefence.ToString();
-            currentItemDefenceStats[8].text = r.pierceDefence.ToString();
-            currentItemDefenceStats[9].text = r.slashDefence.ToString();
-            currentItemDefenceStats[10].text = r.bleedDefence.ToString();
-            currentItemDefenceStats[11].text = r.poisonDefence.ToString();
-            currentItemDefenceStats[12].text = r.curseDefence.ToString();
+            currentItemOffenceStats[0].text = r.fireDamage.ToString(Format);
+            currentItemOffenceStats[1].text = r.iceDamage.ToString(Format);
+            currentItemOffenceStats[2].text = r.airDamage.ToString(Format);
+            currentItemOffenceStats[3].text = r.earthDamage.ToString(Format);
+            currentItemOffenceStats[4].text = r.lightningDamage.ToString(Format);
+            currentItemOffenceStats[5].text = r.lightDamage.ToString(Format);
+            currentItemOffenceStats[6].text = r.darkDamage.ToString(Format);
+            currentItemOffenceStats[7].text = r.bashDamage.ToString(Format);
+            currentItemOffenceStats[8].text = r.pierceDamage.ToString(Format);
+            currentItemOffenceStats[9].text = r.slashDamage.ToString(Format);
+            currentItemOffenceStats[10].text = r.bleedDamage.ToString(Format);
+            currentItemOffenceStats[11].text = r.poisonDamage.ToString(Format);
+            currentItemOffenceStats[12].text = r.curseDamage.ToString(Format);
+            currentItemDefenceStats[0].text = r.fireDefence.ToString(Format);
+            currentItemDefenceStats[1].text = r.iceDefence.ToString(Format);
+            currentItemDefenceStats[2].text = r.airDefence.ToString(Format);
+            currentItemDefenceStats[3].text = r.earthDefence.ToString(Format);
+            currentItemDefenceStats[4].text = r.lightningDefence.ToString(Format);
+            currentItemDefenceStats[5].text = r.lightDefence.ToString(Format);
+            currentItemDefenceStats[6].text = r.darkDefence.ToString(Format);
+            currentItemDefenceStats[7].text = r.bashDefence.ToString(Format);
+            currentItemDefenceStats[8].text = r.pierceDefence.ToString(Format);
+            currentItemDefenceStats[9].text = r.slashDefence.ToString(Format);
+            currentItemDefenceStats[10].text = r.bleedDefence.ToString(Format);
+            currentItemDefenceStats[11].text = r.poisonDefence.ToString(Format);
+            currentItemDefenceStats[12].text = r.curseDefence.ToString(Format);
             currentItemChart.SetActive(true);
             totalChart.SetActive(true);
             quantityText.text = "";
             Ring equippedRing = inventory.equipment[(int)r.slot] as Ring;
             if(equippedRing) {
-                equippedItemOffenceStats[0].text = equippedRing.fireDamage.ToString();
-                equippedItemOffenceStats[1].text = equippedRing.iceDamage.ToString();
-                equippedItemOffenceStats[2].text = equippedRing.airDamage.ToString();
-                equippedItemOffenceStats[3].text = equippedRing.earthDamage.ToString();
-                equippedItemOffenceStats[4].text = equippedRing.lightningDamage.ToString();
-                equippedItemOffenceStats[5].text = equippedRing.lightDamage.ToString();
-                equippedItemOffenceStats[6].text = equippedRing.darkDamage.ToString();
-                equippedItemOffenceStats[7].text = equippedRing.bashDamage.ToString();
-                equippedItemOffenceStats[8].text = equippedRing.pierceDamage.ToString();
-                equippedItemOffenceStats[9].text = equippedRing.slashDamage.ToString();
-                equippedItemOffenceStats[10].text = equippedRing.bleedDamage.ToString();
-                equippedItemOffenceStats[11].text = equippedRing.poisonDamage.ToString();
-                equippedItemOffenceStats[12].text = equippedRing.curseDamage.ToString();
-                equippedItemDefenceStats[0].text = equippedRing.fireDefence.ToString();
-                equippedItemDefenceStats[1].text = equippedRing.iceDefence.ToString();
-                equippedItemDefenceStats[2].text = equippedRing.airDefence.ToString();
-                equippedItemDefenceStats[3].text = equippedRing.earthDefence.ToString();
-                equippedItemDefenceStats[4].text = equippedRing.lightningDefence.ToString();
-                equippedItemDefenceStats[5].text = equippedRing.lightDefence.ToString();
-                equippedItemDefenceStats[6].text = equippedRing.darkDefence.ToString();
-                equippedItemDefenceStats[7].text = equippedRing.bashDefence.ToString();
-                equippedItemDefenceStats[8].text = equippedRing.pierceDefence.ToString();
-                equippedItemDefenceStats[9].text = equippedRing.slashDefence.ToString();
-                equippedItemDefenceStats[10].text = equippedRing.bleedDefence.ToString();
-                equippedItemDefenceStats[11].text = equippedRing.poisonDefence.ToString();
-                equippedItemDefenceStats[12].text = equippedRing.curseDefence.ToString();
+                equippedItemOffenceStats[0].text = equippedRing.fireDamage.ToString(Format);
+                equippedItemOffenceStats[1].text = equippedRing.iceDamage.ToString(Format);
+                equippedItemOffenceStats[2].text = equippedRing.airDamage.ToString(Format);
+                equippedItemOffenceStats[3].text = equippedRing.earthDamage.ToString(Format);
+                equippedItemOffenceStats[4].text = equippedRing.lightningDamage.ToString(Format);
+                equippedItemOffenceStats[5].text = equippedRing.lightDamage.ToString(Format);
+                equippedItemOffenceStats[6].text = equippedRing.darkDamage.ToString(Format);
+                equippedItemOffenceStats[7].text = equippedRing.bashDamage.ToString(Format);
+                equippedItemOffenceStats[8].text = equippedRing.pierceDamage.ToString(Format);
+                equippedItemOffenceStats[9].text = equippedRing.slashDamage.ToString(Format);
+                equippedItemOffenceStats[10].text = equippedRing.bleedDamage.ToString(Format);
+                equippedItemOffenceStats[11].text = equippedRing.poisonDamage.ToString(Format);
+                equippedItemOffenceStats[12].text = equippedRing.curseDamage.ToString(Format);
+                equippedItemDefenceStats[0].text = equippedRing.fireDefence.ToString(Format);
+                equippedItemDefenceStats[1].text = equippedRing.iceDefence.ToString(Format);
+                equippedItemDefenceStats[2].text = equippedRing.airDefence.ToString(Format);
+                equippedItemDefenceStats[3].text = equippedRing.earthDefence.ToString(Format);
+                equippedItemDefenceStats[4].text = equippedRing.lightningDefence.ToString(Format);
+                equippedItemDefenceStats[5].text = equippedRing.lightDefence.ToString(Format);
+                equippedItemDefenceStats[6].text = equippedRing.darkDefence.ToString(Format);
+                equippedItemDefenceStats[7].text = equippedRing.bashDefence.ToString(Format);
+                equippedItemDefenceStats[8].text = equippedRing.pierceDefence.ToString(Format);
+                equippedItemDefenceStats[9].text = equippedRing.slashDefence.ToString(Format);
+                equippedItemDefenceStats[10].text = equippedRing.bleedDefence.ToString(Format);
+                equippedItemDefenceStats[11].text = equippedRing.poisonDefence.ToString(Format);
+                equippedItemDefenceStats[12].text = equippedRing.curseDefence.ToString(Format);
                 equippedItemChart.SetActive(true);
                 equippedItemText.gameObject.SetActive(true);
             }

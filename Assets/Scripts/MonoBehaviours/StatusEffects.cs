@@ -102,6 +102,10 @@ public class StatusEffects : MonoBehaviour {
 
     private GameObject stunParticles;
 
+    private const float energyTime = 8f;
+    private const float hungerSlowRate = 0.2f;
+    private const float hungerDamageReductionRate = 0.8f;
+
     private void OnEnable() {
         aiPath = GetComponent<AIPath>();
         enemyAI = GetComponent<EnemyAI>();
@@ -125,6 +129,9 @@ public class StatusEffects : MonoBehaviour {
             statusUI.UpdateMana(stats.mana / stats.trueMaxMana, stats.mana);
             statusUI.UpdateEnergy(stats.energy / stats.trueMaxEnergy, stats.energy);
         }
+        if(player) {
+            GradualEnergyDrop();
+        }        
     }
     // Stop all effect counters and reset values on disable
     private void OnDisable() {
@@ -180,6 +187,24 @@ public class StatusEffects : MonoBehaviour {
             stunParticles.SetActive(false);
         }        
     }
+    private void GradualEnergyDrop() {
+        StartCoroutine(EnergyCounter());
+    }
+    private IEnumerator EnergyCounter() {
+        for(;;) {
+            yield return new WaitForSeconds(energyTime);
+            DecreaseEnergy(1f);
+            CheckEnergy();
+        }        
+    }
+    private void CheckEnergy() {
+        if(stats.energy < 20f) {
+            StartChill(energyTime, hungerSlowRate);
+        }
+        if(stats.energy < 1f) {
+            TakeDamage(10f, AttackType.Bleed, null, null);
+        }
+    }
     public void Heal(float amount) {
         stats.health += Mathf.Clamp(amount, 0, stats.trueMaxHealth - stats.health);
         //if(player && player.playerStatus) {
@@ -187,6 +212,7 @@ public class StatusEffects : MonoBehaviour {
         //}
         if(statusUI) {
             statusUI.UpdateHealth(stats.health / stats.trueMaxHealth, stats.health);
+            statusUI.UpdateEnergy(stats.energy / stats.trueMaxEnergy, stats.energy);
         }
     }
     public void UseMana(float amount) {
@@ -224,6 +250,7 @@ public class StatusEffects : MonoBehaviour {
         if(statusUI) {
             statusUI.UpdateEnergy(stats.energy / stats.trueMaxEnergy, stats.energy);
         }
+        CheckEnergy();
     }
     private void TakeMushroomDamage(float amount) {
         float damage = 0f;
@@ -253,13 +280,16 @@ public class StatusEffects : MonoBehaviour {
         if(!stats.living) {
             return;
         }
-        if(stats) {
+        if(stats && attacker) {
             damage = CalculateDamage.Calculate(amount, attackType, attacker.stats, stats);
+        }
+        else if(stats) {
+            damage = amount;
         }
         if(passives) {
             damage = passives.OnHitTaken(damage, attackType, stats);
         }
-        if(parrying && skill.interruptable) {
+        if(parrying && attacker && skill && skill.interruptable) {
             damage = 0f;
             attacker.StartStun(stats.vitality * 0.05f);
         }

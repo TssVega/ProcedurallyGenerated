@@ -18,10 +18,11 @@ public class CharacterCreation : MonoBehaviour {
     public TextMeshProUGUI skinColorText;
     public TextMeshProUGUI hairColorText;
     public TextMeshProUGUI hairStyleText;
-    public TextMeshProUGUI confirmText;
-
+    public TextMeshProUGUI confirmText;   
     public TextMeshProUGUI raceText;
     public TextMeshProUGUI raceDescription;
+
+    public TextMeshProUGUI generatingWorldText;
 
     private Color currentSkinColor;
     private Color currentHairColor;
@@ -50,6 +51,7 @@ public class CharacterCreation : MonoBehaviour {
         hairImage.color = currentHairColor;
         hairImage.sprite = currentHairStyle;
         shoulderImage.color = currentSkinColor;
+        generatingWorldText.text = localizationManager.GetText("generatingWorld");
     }
     private void Start() {
         RefreshTexts();
@@ -65,9 +67,6 @@ public class CharacterCreation : MonoBehaviour {
     }
     private void LoadSceneAsync(string sceneName) {
         SceneManager.LoadSceneAsync(sceneName);
-    }
-    public void ChangeRace() {
-    
     }
     public void ChangeSkinColor(bool increment) {
         if(increment) {

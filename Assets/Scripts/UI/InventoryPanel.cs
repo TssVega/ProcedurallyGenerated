@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class InventoryPanel : MonoBehaviour {
 
@@ -11,6 +12,8 @@ public class InventoryPanel : MonoBehaviour {
 
     private bool imagesSet = false;
     private bool firstTime = true;
+
+    public Image characterImage;
 
     public TextMeshProUGUI inventoryText;
     public TextMeshProUGUI characterText;
@@ -93,12 +96,13 @@ public class InventoryPanel : MonoBehaviour {
 
     private void Awake() {
         player = FindObjectOfType<Player>();
-        playerStats = player.stats;
+        playerStats = player.GetComponent<Stats>();
         inventory = player.GetComponent<Inventory>();
         inventory.SetInventory();
         loc = LocalizationManager.localization;
     }    
     private void OnEnable() {
+        characterImage.color = player.appearance.races[player.raceIndex].skinColor;
         if(firstTime) {
             firstTime = false;
             return;
@@ -108,7 +112,6 @@ public class InventoryPanel : MonoBehaviour {
             inventory.SetInventoryImages();
         }
         CheckButtons();
-        playerStats = player.stats;
         UpdateTexts(playerStats);
     }
     public void UpdateTexts(Stats stats) {

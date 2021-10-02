@@ -9,15 +9,21 @@ public class LoadingPanel : MonoBehaviour {
     private Image panel;
     private Image cube;
     private bool fadingIn = false;
-    public LoadingScreenTips tips;
     public TextMeshProUGUI loadingTip;
+    public TextMeshProUGUI doneText;
+
+    private const int tipCount = 10;
 
     private void Awake() {
         panel = GetComponent<Image>();
         cube = transform.GetChild(0).GetComponent<Image>();
     }
     private void Start() {
-        loadingTip.text = tips.tips[Random.Range(0, tips.tips.Count)];
+        int tipIndex = Random.Range(0, tipCount);
+        loadingTip.text = LocalizationManager.localization.GetText($"tip{tipIndex}");
+        if(doneText) {
+            doneText.text = LocalizationManager.localization.GetText("done");
+        }
     }
     private void Update() {
         if(gameObject.activeInHierarchy) {
@@ -68,6 +74,9 @@ public class LoadingPanel : MonoBehaviour {
                 newAlpha = panel.color.a + 0.01f;
                 panel.color = new Color(panel.color.r, panel.color.g, panel.color.b, newAlpha);
                 loadingTip.color = new Color(loadingTip.color.r, loadingTip.color.g, loadingTip.color.b, newAlpha);
+                if(doneText) {
+                    doneText.color = new Color(doneText.color.r, doneText.color.g, doneText.color.b, newAlpha);
+                }
                 yield return null;
             }
             gameObject.SetActive(false);
@@ -77,6 +86,9 @@ public class LoadingPanel : MonoBehaviour {
                 newAlpha = panel.color.a - 0.01f;
                 panel.color = new Color(panel.color.r, panel.color.g, panel.color.b, newAlpha);
                 loadingTip.color = new Color(loadingTip.color.r, loadingTip.color.g, loadingTip.color.b, newAlpha);
+                if(doneText) {
+                    doneText.color = new Color(doneText.color.r, doneText.color.g, doneText.color.b, newAlpha);
+                }
                 yield return null;
             }
             gameObject.SetActive(false);

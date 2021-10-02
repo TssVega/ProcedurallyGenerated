@@ -8,7 +8,8 @@ public class PlayerController : MonoBehaviour {
     private Vector2 joystickInput;
     public bool lockedOn;
     public Transform nearestEnemy;
-    public FloatingJoystick joystick;
+    //public FloatingJoystick joystick;
+    public DynamicJoystick joystick;
     private Stats playerStats;
     private StatusEffects statusEffects;
     private float horizontalInput = 0f;
@@ -103,7 +104,7 @@ public class PlayerController : MonoBehaviour {
             joystickInput = new Vector2(joystick.Horizontal, joystick.Vertical);
         }        
         else {
-            joystick = FindObjectOfType<FloatingJoystick>();
+            joystick = FindObjectOfType<DynamicJoystick>();
         }
         
         // Check if there is a nearest enemy

@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Experimental.Rendering.Universal;
+//using UnityEngine.Experimental.Rendering.LWRP;
 
 public class Inventory : MonoBehaviour {
+
+    private const string Format = "0";
 
     public List<Item> equipment;
     public List<Item> inventory;
@@ -35,10 +39,13 @@ public class Inventory : MonoBehaviour {
 
     private InventoryPanel inventoryPanel;
 
+    private Light2D playerLight;
+
     private void Awake() {
         inventoryPanel = FindObjectOfType<InventoryPanel>();
         quantities = new int[70];
         player = FindObjectOfType<Player>();
+        playerLight = GetComponent<Light2D>();
         stats = player.stats;
         if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name.Equals("Levels")) {
             for(int i = 0; i < itemSlots.Length; i++) {
@@ -54,6 +61,7 @@ public class Inventory : MonoBehaviour {
     }
     private void Start() {
         UpdateStats();
+        CheckLights();
         // Crate example weapon
         /*
         Weapon exampleItem = player.itemCreator.CreateWeapon("testWeapon");
@@ -93,36 +101,54 @@ public class Inventory : MonoBehaviour {
     public int EquipmentSize {
         get => equipmentSize;
     }
+    private void CheckLights() {
+        if(!player) {
+            return;
+        }
+        // Qotush sight
+        if(player.raceIndex == 7) {
+            const float qotushOuter = 7f;
+            const float qotushInner = 6f;
+            playerLight.pointLightOuterRadius = qotushOuter;
+            playerLight.pointLightInnerRadius = qotushInner;
+        }
+        else {
+            const float defaultOuter = 6f;
+            const float defaultInner = 1f;
+            playerLight.pointLightOuterRadius = defaultOuter;
+            playerLight.pointLightInnerRadius = defaultInner;
+        }
+    }
     public void UpdateStats() {
         if(offenceStats.Length <= 0 || offenceStats[0] == null) {
             return;
         }
-        offenceStats[0].text = stats.fireDamage.ToString();
-        offenceStats[1].text = stats.iceDamage.ToString();
-        offenceStats[2].text = stats.airDamage.ToString();
-        offenceStats[3].text = stats.earthDamage.ToString();
-        offenceStats[4].text = stats.lightningDamage.ToString();
-        offenceStats[5].text = stats.lightDamage.ToString();
-        offenceStats[6].text = stats.darkDamage.ToString();
-        offenceStats[7].text = stats.bashDamage.ToString();
-        offenceStats[8].text = stats.pierceDamage.ToString();
-        offenceStats[9].text = stats.slashDamage.ToString();
-        offenceStats[10].text = stats.bleedDamage.ToString();
-        offenceStats[11].text = stats.poisonDamage.ToString();
-        offenceStats[12].text = stats.curseDamage.ToString();
-        defenceStats[0].text = stats.fireDefence.ToString();
-        defenceStats[1].text = stats.iceDefence.ToString();
-        defenceStats[2].text = stats.airDefence.ToString();
-        defenceStats[3].text = stats.earthDefence.ToString();
-        defenceStats[4].text = stats.lightningDefence.ToString();
-        defenceStats[5].text = stats.lightDefence.ToString();
-        defenceStats[6].text = stats.darkDefence.ToString();
-        defenceStats[7].text = stats.bashDefence.ToString();
-        defenceStats[8].text = stats.pierceDefence.ToString();
-        defenceStats[9].text = stats.slashDefence.ToString();
-        defenceStats[10].text = stats.bleedDefence.ToString();
-        defenceStats[11].text = stats.poisonDefence.ToString();
-        defenceStats[12].text = stats.curseDefence.ToString();
+        offenceStats[0].text = stats.fireDamage.ToString(Format);
+        offenceStats[1].text = stats.iceDamage.ToString(Format);
+        offenceStats[2].text = stats.airDamage.ToString(Format);
+        offenceStats[3].text = stats.earthDamage.ToString(Format);
+        offenceStats[4].text = stats.lightningDamage.ToString(Format);
+        offenceStats[5].text = stats.lightDamage.ToString(Format);
+        offenceStats[6].text = stats.darkDamage.ToString(Format);
+        offenceStats[7].text = stats.bashDamage.ToString(Format);
+        offenceStats[8].text = stats.pierceDamage.ToString(Format);
+        offenceStats[9].text = stats.slashDamage.ToString(Format);
+        offenceStats[10].text = stats.bleedDamage.ToString(Format);
+        offenceStats[11].text = stats.poisonDamage.ToString(Format);
+        offenceStats[12].text = stats.curseDamage.ToString(Format);
+        defenceStats[0].text = stats.fireDefence.ToString(Format);
+        defenceStats[1].text = stats.iceDefence.ToString(Format);
+        defenceStats[2].text = stats.airDefence.ToString(Format);
+        defenceStats[3].text = stats.earthDefence.ToString(Format);
+        defenceStats[4].text = stats.lightningDefence.ToString(Format);
+        defenceStats[5].text = stats.lightDefence.ToString(Format);
+        defenceStats[6].text = stats.darkDefence.ToString(Format);
+        defenceStats[7].text = stats.bashDefence.ToString(Format);
+        defenceStats[8].text = stats.pierceDefence.ToString(Format);
+        defenceStats[9].text = stats.slashDefence.ToString(Format);
+        defenceStats[10].text = stats.bleedDefence.ToString(Format);
+        defenceStats[11].text = stats.poisonDefence.ToString(Format);
+        defenceStats[12].text = stats.curseDefence.ToString(Format);
         inventoryPanel.UpdateTexts(stats);
     }
     public void SetInventory() {
@@ -272,7 +298,7 @@ public class Inventory : MonoBehaviour {
         Item usableItem = usable as Item;
         for(int i = 0; i < inventory.Count; i++) {
             if(usableItem == inventory[i]) {
-                ConsumeInSlot(i);
+                ConsumeInSlot(i);                
                 return;
             }
         }
@@ -295,6 +321,7 @@ public class Inventory : MonoBehaviour {
             inventory[slotIndex] = null;
         }
         UpdateSlot(slotIndex);
+        UpdateStats();
     }
     public void DismantleInSlot(int slotIndex) {
         if(!inventory[slotIndex]) {
