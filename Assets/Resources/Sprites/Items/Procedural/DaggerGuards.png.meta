@@ -1,34 +1,25 @@
 fileFormatVersion: 2
-guid: 07254c0ea625ffd4581ef2207f5bec6f
+guid: 4b0d80ef35726284c8b169c1b1c1da00
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8495849641563066306
-    second: ChestArmorBaseOutlined_0
+      213: -2766289845729506425
+    second: DaggerGuards_0
   - first:
-      213: -3870516407121212619
-    second: ChestArmorBaseOutlined_1
+      213: -5481175870620027115
+    second: DaggerGuards_1
   - first:
-      213: -9046137695074791760
-    second: ChestArmorBaseOutlined_2
+      213: 6530282352566070218
+    second: DaggerGuards_2
   - first:
-      213: 3044221465601871528
-    second: ChestArmorBaseOutlined_3
+      213: 7771042205127902618
+    second: DaggerGuards_3
   - first:
-      213: -5384746902742611422
-    second: ChestArmorBaseOutlined_4
+      213: 676533691973670169
+    second: DaggerGuards_4
   - first:
-      213: -3507075878325653771
-    second: ChestArmorBaseOutlined_5
-  - first:
-      213: -6568569380501607579
-    second: ChestArmorBaseOutlined_6
-  - first:
-      213: -3284410036679380024
-    second: ChestArmorBaseOutlined_7
-  - first:
-      213: 7592845949887797369
-    second: ChestArmorBaseOutlined_8
+      213: 4916234820441972306
+    second: DaggerGuards_5
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -138,190 +129,127 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: ChestArmorBaseOutlined_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 64
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2cf0f7e6c3257e570800000000000000
-      internalID: 8495849641563066306
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ChestArmorBaseOutlined_1
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 64
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 53b0838a5d9294ac0800000000000000
-      internalID: -3870516407121212619
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ChestArmorBaseOutlined_2
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 64
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0becbcfd1b9a57280800000000000000
-      internalID: -9046137695074791760
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: ChestArmorBaseOutlined_3
+      name: DaggerGuards_0
       rect:
         serializedVersion: 2
         x: 0
         y: 32
         width: 32
         height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.125, y: 0.125}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8ae81d24b4f3f3a20800000000000000
-      internalID: 3044221465601871528
+      spriteID: 78bc58faa0a2c99d0800000000000000
+      internalID: -2766289845729506425
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ChestArmorBaseOutlined_4
+      name: DaggerGuards_1
       rect:
         serializedVersion: 2
         x: 32
         y: 32
         width: 32
         height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.125, y: 0.125}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 22a44a8b8398545b0800000000000000
-      internalID: -5384746902742611422
+      spriteID: 51730401693fee3b0800000000000000
+      internalID: -5481175870620027115
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ChestArmorBaseOutlined_5
+      name: DaggerGuards_2
       rect:
         serializedVersion: 2
         x: 64
         y: 32
         width: 32
         height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.125, y: 0.125}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5feee08e11d545fc0800000000000000
-      internalID: -3507075878325653771
+      spriteID: acbe3b3633930aa50800000000000000
+      internalID: 6530282352566070218
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ChestArmorBaseOutlined_6
+      name: DaggerGuards_3
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 32
         height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.125, y: 0.125}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 56ba1b043f0c7d4a0800000000000000
-      internalID: -6568569380501607579
+      spriteID: a95873b76b948db60800000000000000
+      internalID: 7771042205127902618
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ChestArmorBaseOutlined_7
+      name: DaggerGuards_4
       rect:
         serializedVersion: 2
         x: 32
         y: 0
         width: 32
         height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.125, y: 0.125}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8c37ff2297e6b62d0800000000000000
-      internalID: -3284410036679380024
+      spriteID: 9159ca4fec7836900800000000000000
+      internalID: 676533691973670169
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: ChestArmorBaseOutlined_8
+      name: DaggerGuards_5
       rect:
         serializedVersion: 2
         x: 64
         y: 0
         width: 32
         height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.125, y: 0.125}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 978535da9253f5960800000000000000
-      internalID: 7592845949887797369
+      spriteID: 25e99d89589f93440800000000000000
+      internalID: 4916234820441972306
       vertices: []
       indices: 
       edges: []

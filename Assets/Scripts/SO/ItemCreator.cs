@@ -51,6 +51,10 @@ public class ItemCreator : ScriptableObject {
     public Sprite[] staffHandles;
     public Sprite[] staffProps;
     public Sprite[] staffHeads;
+    // Dagger sprites
+    public Sprite[] daggerHandles;
+    public Sprite[] daggerGuards;
+    public Sprite[] daggerBlades;
 
     public MushroomDatabase mushroomDatabase;
     public ItemDatabase itemDatabase;
@@ -479,6 +483,27 @@ public class ItemCreator : ScriptableObject {
                 break;
             }
             case WeaponType.Dagger: {
+                // Swords
+                Sprite handle = daggerHandles[pseudoRandom.Next(0, daggerHandles.Length)];
+                Sprite guard = daggerGuards[pseudoRandom.Next(0, daggerGuards.Length)];
+                Sprite blade = daggerBlades[pseudoRandom.Next(0, daggerBlades.Length)];
+                Color handleColor = otherMaterialColors[pseudoRandom.Next(0, otherMaterialColors.Length)];
+                Color guardColor = bladeMaterialColors[pseudoRandom.Next(0, bladeMaterialColors.Length)];
+                Color bladeColor = bladeMaterialColors[(int)mat];
+                weapon.firstSprite = handle;
+                weapon.secondSprite = guard;
+                weapon.thirdSprite = blade;
+                weapon.firstIcon = handle;
+                weapon.secondIcon = guard;
+                weapon.thirdIcon = blade;
+                weapon.firstColor = handleColor;
+                weapon.secondColor = guardColor;
+                weapon.thirdColor = bladeColor;
+                weapon.slot = EquipSlot.RightHand;
+                weapon.weaponType = WeaponType.Dagger;
+                weapon.dismantleOutput = 1;
+                weapon.itemName += $" {LocalizationManager.localization.GetText("Dagger")}";
+                /*
                 weapon.firstSprite = null;
                 weapon.secondSprite = null;
                 weapon.thirdSprite = null;
@@ -489,11 +514,10 @@ public class ItemCreator : ScriptableObject {
                 weapon.secondColor = Color.clear;
                 weapon.thirdColor = Color.clear;
                 weapon.dismantleOutput = 2;
-                Debug.Log("This item is a dagger");
+                Debug.Log("This item is a dagger");*/
                 // TODO: Fix daggers
                 // weapon.itemName += $" {LocalizationManager.localization.GetText("Dagger")}";
-                return null;
-                //break;
+                break;
             }
         }
         return weapon;
@@ -527,35 +551,44 @@ public class ItemCreator : ScriptableObject {
             int armorOverlayIndex = pseudoRandom.Next(0, chestArmorOverlays.Length);
             armorOverlay = chestArmorOverlays[armorOverlayIndex];
             armorBack = chestArmorBacks[pseudoRandom.Next(0, chestArmorBacks.Length)];
-            if(new[] { 2, 9 }.Contains(armorOverlayIndex)) {
+            if(new[] { 5, 6, 7, 8 }.Contains(armorOverlayIndex)) {
                 // Small shoulders
                 //Debug.Log("Small shoulders");
                 inGameArmor = chestArmorInGame[1];
             }
-            else if(new[] { 5, 6, 7, 8 }.Contains(armorOverlayIndex)) {
+            else if(new[] { 0, 1, 2, 3, 4 }.Contains(armorOverlayIndex)) {
                 // Big shoulders
                 //Debug.Log("Big shoulders");
-                int overlay = pseudoRandom.Next(0, 4);
-                if(overlay == 1) {
+                // Represent shoulder guards in game
+                int overlay;
+                if(armorOverlayIndex == 0 || armorOverlayIndex == 1 || armorOverlayIndex == 2) {
+                    overlay = 3;
+                }
+                else if(armorOverlayIndex == 3) {
+                    overlay = 2;
+                }
+                else {
                     overlay = 0;
                 }
                 inGameArmor = chestArmorInGame[overlay];
             }
         }
         else if(leatherArmorIndices.Contains(armorBaseIndex)) {
+            /*
             int leatherOverlayIndex = pseudoRandom.Next(0, 4);
             if(leatherOverlayIndex == 3) {
                 leatherOverlayIndex = 0;
             }
-            armorOverlay = chestArmorOverlays[leatherOverlayIndex];
+            armorOverlay = chestArmorOverlays[leatherOverlayIndex];*/
             armorBack = chestArmorBacks[pseudoRandom.Next(0, chestArmorBacks.Length)];
             inGameArmor = chestArmorInGame[1];
         }
         else if(clothArmorIndices.Contains(armorBaseIndex)) {
             armorBack = chestArmorBacks[pseudoRandom.Next(0, chestArmorBacks.Length)];
+            inGameArmor = chestArmorInGame[1];
         }
         Color baseColor = bladeMaterialColors[(int)mat];
-        Color overlayColor = bladeMaterialColors[pseudoRandom.Next(0, bladeMaterialColors.Length)];
+        Color overlayColor = bladeMaterialColors[(int)mat];
         Color backColor = otherMaterialColors[pseudoRandom.Next(0, otherMaterialColors.Length)];
         // Sprite 
         Armor armor = CreateInstance<Armor>();

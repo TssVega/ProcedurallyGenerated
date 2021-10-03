@@ -327,7 +327,12 @@ public class Player : MonoBehaviour {
             }
         }
         else if(weapon.weaponType == WeaponType.Dagger) {
-
+            weaponHandle.sprite = weapon.firstSprite;
+            weaponGuard.sprite = weapon.secondSprite;
+            weaponBlade.sprite = weapon.thirdSprite;
+            weaponHandle.color = weapon.firstColor;
+            weaponGuard.color = weapon.secondColor;
+            weaponBlade.color = weapon.thirdColor;
         }
     }
     public void ClearWeapons() {

@@ -163,8 +163,8 @@ public class InventoryPanel : MonoBehaviour {
         poisonText.text = loc.GetText("Poison");
         curseText.text = loc.GetText("Curse");
         raceText.text = loc.GetText("race");
-        // raceValueText.text = loc.GetText("");
-        // raceDescText.text = loc.GetText("");
+        raceValueText.text = $"{player.appearance.races[player.raceIndex].raceName}:";
+        raceDescText.text = loc.GetText($"{player.appearance.races[player.raceIndex].raceName}Desc");
     }
     public void CheckButtons() {
         inventoryText.text = LocalizationManager.localization.GetText("inventory");

@@ -64,6 +64,12 @@ public class Inventory : MonoBehaviour {
     private void Start() {
         UpdateStats();
         CheckLights();
+        if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Levels") {
+            for(int i = 0; i < 50; i++) {
+                Item ex = player.itemCreator.CreateItem(Random.Range(0, 9999999).ToString(), 0);
+                AddToInventory(ex);
+            }
+        }
         // Crate example weapon
         /*
         Weapon exampleItem = player.itemCreator.CreateWeapon("testWeapon");
