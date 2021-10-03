@@ -94,7 +94,7 @@ public class SkillUI : MonoBehaviour {
             }
         }
     }
-    private void UpdateQuantities() {
+    public void UpdateQuantities() {
         for(int i = 0; i < maxActiveSkills; i++) {
             if(i >= playerSkills.currentSkills.Length) {
                 quantityTexts[i].text = "";

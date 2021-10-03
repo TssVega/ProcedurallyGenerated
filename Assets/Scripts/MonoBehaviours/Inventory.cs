@@ -38,10 +38,12 @@ public class Inventory : MonoBehaviour {
     public ItemDatabase itemDatabase;
 
     private InventoryPanel inventoryPanel;
+    private SkillUI skillUI;
 
     private Light2D playerLight;
 
     private void Awake() {
+        skillUI = FindObjectOfType<SkillUI>();
         inventoryPanel = FindObjectOfType<InventoryPanel>();
         quantities = new int[70];
         player = FindObjectOfType<Player>();
@@ -428,6 +430,7 @@ public class Inventory : MonoBehaviour {
                     if(inventory[i] == item) {
                         quantities[i]++;
                         UpdateSlot(i);
+                        skillUI.UpdateQuantities();
                         return true;
                     }
                 }
@@ -438,6 +441,7 @@ public class Inventory : MonoBehaviour {
                         inventory[i] = item;
                         quantities[i]++;
                         UpdateSlot(i);
+                        skillUI.UpdateQuantities();
                         return true;
                     }
                 }
@@ -462,6 +466,7 @@ public class Inventory : MonoBehaviour {
                 inventory[i] = item;
                 quantities[i]++;
                 UpdateSlot(i);
+                skillUI.UpdateQuantities();
                 return true;
             }            
         }

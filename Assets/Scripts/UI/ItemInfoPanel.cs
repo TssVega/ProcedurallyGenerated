@@ -129,7 +129,7 @@ public class ItemInfoPanel : MonoBehaviour {
                 skillSlots[i].color = m.firstColor;
                 secondaryImages[i].sprite = null;
                 secondaryImages[i].color = Color.clear;
-                quantityTexts[i].text = inventory.quantities[currentIndex].ToString();
+                quantityTexts[i].text = inventory.GetItemCount(m).ToString();
             }
             /* Potions here
             else if(playerSkills.currentSkills[i] is Mushroom m) {

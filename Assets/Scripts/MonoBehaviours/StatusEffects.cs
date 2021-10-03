@@ -104,7 +104,8 @@ public class StatusEffects : MonoBehaviour {
 
     private const float energyTime = 8f;
     private const float hungerSlowRate = 0.2f;
-    private const float hungerDamageReductionRate = 0.8f;
+
+    public GameObject lowEnergyParticles;
 
     private void OnEnable() {
         aiPath = GetComponent<AIPath>();
@@ -198,8 +199,16 @@ public class StatusEffects : MonoBehaviour {
         }        
     }
     private void CheckEnergy() {
+        if(!player) {
+            return;
+        }
+        if(stats.energy >= 20f) {
+            lowEnergyParticles.SetActive(false);
+            return;
+        }
         if(stats.energy < 20f) {
             StartChill(energyTime, hungerSlowRate);
+            lowEnergyParticles.SetActive(true);
         }
         if(stats.energy < 1f) {
             TakeDamage(10f, AttackType.Bleed, null, null);
@@ -214,6 +223,7 @@ public class StatusEffects : MonoBehaviour {
             statusUI.UpdateHealth(stats.health / stats.trueMaxHealth, stats.health);
             statusUI.UpdateEnergy(stats.energy / stats.trueMaxEnergy, stats.energy);
         }
+        InstantiateParticles("HealedParticles");
     }
     public void UseMana(float amount) {
         float finalAmount = Mathf.Clamp(amount, 0, stats.trueMaxMana);
@@ -235,6 +245,7 @@ public class StatusEffects : MonoBehaviour {
         if(statusUI) {
             statusUI.UpdateMana(stats.mana / stats.trueMaxMana, stats.mana);
         }
+        InstantiateParticles("GainedManaParticles");
     }
     public bool CanUseMana(float amount) {
         return stats.mana >= amount;
@@ -251,6 +262,7 @@ public class StatusEffects : MonoBehaviour {
             statusUI.UpdateEnergy(stats.energy / stats.trueMaxEnergy, stats.energy);
         }
         CheckEnergy();
+        InstantiateParticles("GainedEnergyParticles");
     }
     private void TakeMushroomDamage(float amount) {
         float damage = 0f;
@@ -429,6 +441,13 @@ public class StatusEffects : MonoBehaviour {
         damageTakenParticles.transform.position = transform.position;
         damageTakenParticles.transform.rotation = Quaternion.identity;
         damageTakenParticles.SetActive(true);
+    }
+    private void InstantiateParticles(string name) {
+        GameObject part = ObjectPooler.objectPooler.GetPooledObject(name);
+        part.transform.position = transform.position;
+        part.transform.rotation = Quaternion.identity;
+        part.transform.parent = transform;
+        part.SetActive(true);
     }
     /*
     private IEnumerator LocateTargetWhenHit() {
