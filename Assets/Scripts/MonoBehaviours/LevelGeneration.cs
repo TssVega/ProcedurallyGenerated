@@ -158,7 +158,7 @@ public class LevelGeneration : MonoBehaviour {
         }
     }
     private void ClearStalagmites() {
-        for(int i = 0; i < activeCrystals.Count; i++) {
+        for(int i = 0; i < activeStalagmites.Count; i++) {
             activeStalagmites[i].SetActive(false);
         }
         activeStalagmites.Clear();

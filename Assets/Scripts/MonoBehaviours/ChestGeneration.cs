@@ -9,7 +9,7 @@ public class ChestGeneration : MonoBehaviour {
 
     private List<ChestObject> chestObjects = new List<ChestObject>();
     private System.Random pseudoRandomForChests;
-    private readonly int maxChestCount = 6;
+    private readonly int maxChestCount = 5;
     private readonly int maxItemCountInChest = 16;
 
     private LevelGeneration levelGeneration;
@@ -22,8 +22,8 @@ public class ChestGeneration : MonoBehaviour {
     // Load chest data from binary file
     public void LoadChests(int slot, string seed) {
         pseudoRandomForChests = new System.Random(seed.GetHashCode());
-        int chestCount = pseudoRandomForChests.Next(0, maxChestCount) / 5;        
-        int itemCount = Mathf.Clamp(RollDice(8, 6) - 32, 1, maxItemCountInChest);      
+        int chestCount = pseudoRandomForChests.Next(0, maxChestCount) / 4;        
+        int itemCount = Mathf.Clamp(RollDice(8, 7) - 32, 1, maxItemCountInChest);      
         chests = new Chest[chestCount];
         ChestData chestData = SaveSystem.LoadChests(slot, levelGeneration.layout.worldCoordinates);
         // Get the chest content data from file. If there is no data, create a new file

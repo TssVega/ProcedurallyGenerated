@@ -6,6 +6,8 @@ public class Spawner : MonoBehaviour {
 
     public static Spawner spawner;
 
+    public bool spawn = true;
+
     private Biome currentBiome;
 
     public List<Enemy> rockyEntities;
@@ -26,7 +28,9 @@ public class Spawner : MonoBehaviour {
     }
     private void Start() {
         density = 0;
-        StartCoroutine(SpawnCounter());
+        if(spawn) {
+            StartCoroutine(SpawnCounter());
+        }        
     }
     public void AddSideLevel(LevelGeneration sideLevel) {
         sideLevels.Add(sideLevel);

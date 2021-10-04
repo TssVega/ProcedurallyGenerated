@@ -97,6 +97,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a13c8bb3b853e8548a18344b0c5bef67, type: 2}
   - {fileID: 11400000, guid: 2768ad86acd1c964cabf4552f7de0d17, type: 2}
   - {fileID: 11400000, guid: 3381d2fedebb63a47935b1c78fa63ad8, type: 2}
+  - {fileID: 11400000, guid: 942eabc6346452a4990010cb75e6102c, type: 2}
+  - {fileID: 11400000, guid: 746301f844bf5504db7971bbeea0d8b6, type: 2}
+  - {fileID: 11400000, guid: c425c2cbde1be0649a69520de2f7b30f, type: 2}
+  - {fileID: 11400000, guid: 19e19e7433f10e34881256c90fc6d1c4, type: 2}
+  - {fileID: 11400000, guid: 2074ec049a139d3489ad652099b1742f, type: 2}
+  - {fileID: 11400000, guid: 0cec95a8f6680c744b6b7ad71827fed3, type: 2}
+  - {fileID: 11400000, guid: 8e74ca8596fabe348b61d6bfdb5b7e2a, type: 2}
+  - {fileID: 11400000, guid: ea5e984e3f1928744993101bdbdd7bf8, type: 2}
   books:
   - {fileID: 11400000, guid: 3212137f97f6e484993c4b6b61414a08, type: 2}
   - {fileID: 11400000, guid: 7b98eae14e4f24a4f958af68cfc8ef65, type: 2}
@@ -205,3 +213,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a13c8bb3b853e8548a18344b0c5bef67, type: 2}
   essentialBooks:
   - {fileID: 11400000, guid: e0cb11cf2a750d3468fe99913ab53c9b, type: 2}
+  potions:
+  - {fileID: 11400000, guid: 942eabc6346452a4990010cb75e6102c, type: 2}
+  - {fileID: 11400000, guid: c425c2cbde1be0649a69520de2f7b30f, type: 2}
+  - {fileID: 11400000, guid: 746301f844bf5504db7971bbeea0d8b6, type: 2}
+  coins:
+  - {fileID: 11400000, guid: 19e19e7433f10e34881256c90fc6d1c4, type: 2}
+  - {fileID: 11400000, guid: 2074ec049a139d3489ad652099b1742f, type: 2}

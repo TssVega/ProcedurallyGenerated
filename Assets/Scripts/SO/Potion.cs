@@ -7,9 +7,10 @@ public class Potion : Item, IUsable {
 
     public PotionType potionType;
     public float power = 20f;
-    public float time = 60f;
 
-    private const float levonaEnergyRate = 0.4f;
+    private const float levonaEnergyRate = 0.6f;
+
+    public ItemDatabase itemDatabase;
 
     public void Consume(StatusEffects status) {
         switch(potionType) {
@@ -20,6 +21,8 @@ public class Potion : Item, IUsable {
                 status.GiveMana(power);
                 break;
         }
+        // Add a vial to inventory after you consume a potion
+        status.player.inventory.AddToInventory(itemDatabase.GetItemByMaterial(ItemMaterial.Glass));
         // Levona effect
         if(status.player && status.player.raceIndex == 0) {
             status.GiveEnergy(power * levonaEnergyRate);

@@ -286,8 +286,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.2
-      minScalar: 0.1
+      scalar: 0.08
+      minScalar: 0.03
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1813,7 +1813,7 @@ ParticleSystem:
     orbitalZ:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 8.02
+      scalar: 10
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -2025,7 +2025,7 @@ ParticleSystem:
     radial:
       serializedVersion: 2
       minMaxState: 0
-      scalar: -1.91
+      scalar: -2
       minScalar: 0
       maxCurve:
         serializedVersion: 2

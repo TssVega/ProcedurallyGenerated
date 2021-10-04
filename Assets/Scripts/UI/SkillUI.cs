@@ -61,9 +61,23 @@ public class SkillUI : MonoBehaviour {
                     secondImages[i].color = Color.clear;
                 }
                 // Else set the icons of the potion or mushroom
-                if(playerSkills.currentSkills[i] is Mushroom m) {
+                else if(playerSkills.currentSkills[i] is Mushroom m) {
                     skillButtons[i].sprite = m.firstIcon;
                     skillButtons[i].color = m.firstColor;
+                    skillMasks[i].fillAmount = potionCooldown / 1f;
+                    secondImages[i].sprite = null;
+                    secondImages[i].color = Color.clear;
+                }
+                else if(playerSkills.currentSkills[i] is Potion p) {
+                    skillButtons[i].sprite = p.firstIcon;
+                    skillButtons[i].color = p.firstColor;
+                    skillMasks[i].fillAmount = potionCooldown / 1f;
+                    secondImages[i].sprite = p.secondIcon;
+                    secondImages[i].color = p.secondColor;
+                }
+                else if(playerSkills.currentSkills[i] is Meat meat) {
+                    skillButtons[i].sprite = meat.firstIcon;
+                    skillButtons[i].color = meat.firstColor;
                     skillMasks[i].fillAmount = potionCooldown / 1f;
                     secondImages[i].sprite = null;
                     secondImages[i].color = Color.clear;
@@ -105,6 +119,12 @@ public class SkillUI : MonoBehaviour {
             else if(playerSkills.currentSkills[i] is Mushroom m) {
                 quantityTexts[i].text = inventory.GetItemCount(m).ToString();
             }
+            else if(playerSkills.currentSkills[i] is Potion p) {
+                quantityTexts[i].text = inventory.GetItemCount(p).ToString();
+            }
+            else if(playerSkills.currentSkills[i] is Meat meat) {
+                quantityTexts[i].text = inventory.GetItemCount(meat).ToString();
+            }
             else {
                 quantityTexts[i].text = "";
             }
@@ -136,9 +156,23 @@ public class SkillUI : MonoBehaviour {
                     secondImages[i].color = Color.clear;
                 }
                 // Else set the icons of the potion or mushroom
-                if(playerSkills.currentSkills[i] is Mushroom m) {
+                else if(playerSkills.currentSkills[i] is Mushroom m) {
                     skillButtons[i].sprite = m.firstIcon;
                     skillButtons[i].color = m.firstColor;
+                    skillMasks[i].fillAmount = potionCooldown / 1f;
+                    secondImages[i].sprite = null;
+                    secondImages[i].color = Color.clear;
+                }
+                else if(playerSkills.currentSkills[i] is Potion p) {
+                    skillButtons[i].sprite = p.firstIcon;
+                    skillButtons[i].color = p.firstColor;
+                    skillMasks[i].fillAmount = potionCooldown / 1f;
+                    secondImages[i].sprite = p.secondIcon;
+                    secondImages[i].color = p.secondColor;
+                }
+                else if(playerSkills.currentSkills[i] is Meat meat) {
+                    skillButtons[i].sprite = meat.firstIcon;
+                    skillButtons[i].color = meat.firstColor;
                     skillMasks[i].fillAmount = potionCooldown / 1f;
                     secondImages[i].sprite = null;
                     secondImages[i].color = Color.clear;

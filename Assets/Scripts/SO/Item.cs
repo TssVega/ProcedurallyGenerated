@@ -51,7 +51,6 @@ public class Item : ScriptableObject {
     public Color thirdColor;
     public EquipSlot slot;
     public Rarity rarity;
-    public int diamondCost;
     public int goldCost;
     public int silverCost;
     public bool stackable;

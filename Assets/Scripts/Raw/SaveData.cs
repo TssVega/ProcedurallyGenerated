@@ -219,6 +219,15 @@ public class SaveData {
             if(data.skillUser.currentSkills[i] != null && data.skillUser.currentSkills[i] is Mushroom m) {
                 consumableItems[i] = m.seed;
             }
+            else if(data.skillUser.currentSkills[i] != null && data.skillUser.currentSkills[i] is Potion p) {
+                consumableItems[i] = p.seed;
+            }
+            else if(data.skillUser.currentSkills[i] != null && data.skillUser.currentSkills[i] is Meat meat) {
+                consumableItems[i] = meat.seed;
+            }
+            else {
+                consumableItems[i] = "";
+            }
         }
     }
 }

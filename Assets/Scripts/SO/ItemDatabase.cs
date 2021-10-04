@@ -12,6 +12,8 @@ public class ItemDatabase : ScriptableObject {
     public List<Item> tomes;
     public List<Item> commonBooks;
     public List<Item> essentialBooks;
+    public List<Item> potions;
+    public List<Item> coins;
 
     public Item GetItemByMaterial(ItemMaterial mat) {
         if((int)mat < 15) {
@@ -37,6 +39,9 @@ public class ItemDatabase : ScriptableObject {
         }
         else if((int)mat == 21) {
             return items[32];
+        }
+        else if((int)mat == 22) {
+            return items[84];
         }
         else {
             return null;

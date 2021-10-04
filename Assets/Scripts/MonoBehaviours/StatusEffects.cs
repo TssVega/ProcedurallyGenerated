@@ -65,6 +65,7 @@ public class StatusEffects : MonoBehaviour {
     public bool chanelling = false;
     public bool blocking = false;
     public bool parrying = false;
+    public bool blessed = false;
     // Stacks
     [Header("Status Effect Counters")]
     private int lightningStacks = 0;
@@ -105,7 +106,10 @@ public class StatusEffects : MonoBehaviour {
     private const float energyTime = 8f;
     private const float hungerSlowRate = 0.2f;
 
+    public float blessRate = 1f;
+
     public GameObject lowEnergyParticles;
+    public GameObject blessParticles;
 
     private void OnEnable() {
         aiPath = GetComponent<AIPath>();
@@ -130,7 +134,7 @@ public class StatusEffects : MonoBehaviour {
             statusUI.UpdateMana(stats.mana / stats.trueMaxMana, stats.mana);
             statusUI.UpdateEnergy(stats.energy / stats.trueMaxEnergy, stats.energy);
         }
-        if(player) {
+        if(player && statusUI) {
             GradualEnergyDrop();
         }        
     }
@@ -184,6 +188,8 @@ public class StatusEffects : MonoBehaviour {
         chanelling = false;
         blocking = false;
         parrying = false;
+        blessed = false;
+        blessRate = 1f;
         if(stunParticles && stunParticles.activeInHierarchy) {
             stunParticles.SetActive(false);
         }        
@@ -475,6 +481,22 @@ public class StatusEffects : MonoBehaviour {
         if(aiPath) {
             aiPath.canMove = true;
         }
+    }
+    // Bless provides damage *= extraDamageRate extra damage
+    public void StartBless(float extraDamageRate, float duration) {
+        if(!blessParticles) {
+            return;
+        }
+        StopCoroutine(Bless(extraDamageRate, duration));
+        StartCoroutine(Bless(extraDamageRate, duration));
+    }
+    private IEnumerator Bless(float extraDamageRate, float duration) {
+        blessRate = extraDamageRate;
+        blessParticles.GetComponent<Particles>().duration = duration;
+        blessParticles.SetActive(true);
+        yield return new WaitForSeconds(duration);
+        blessRate = 1f;
+        blessParticles.SetActive(false);
     }
     public void StartChanelling(float duration) {
         if(gameObject.activeInHierarchy) {

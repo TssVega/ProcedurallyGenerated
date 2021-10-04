@@ -8,6 +8,8 @@ public class ItemCreator : ScriptableObject {
     // Mine and weapon material colors
     public Color[] bladeMaterialColors;
     public Color[] otherMaterialColors;
+    public Color[] paperColors;
+    public Color[] textColors;
     // Swords
     public Sprite[] weaponHandles;
     public Sprite[] weaponGuards;
@@ -55,6 +57,10 @@ public class ItemCreator : ScriptableObject {
     public Sprite[] daggerHandles;
     public Sprite[] daggerGuards;
     public Sprite[] daggerBlades;
+    // Tome sprites
+    public Sprite tomeCover;
+    public Sprite tomePaper;
+    public Sprite tomeText;
 
     public MushroomDatabase mushroomDatabase;
     public ItemDatabase itemDatabase;
@@ -128,14 +134,17 @@ public class ItemCreator : ScriptableObject {
             switch(slotIndex) {
                 case 6:
                 case 7:
-                    return itemDatabase.commonBooks[pseudoRandom.Next(0, itemDatabase.commonBooks.Count)];
+                    return itemDatabase.coins[1];
                 case 8:
+                    return itemDatabase.commonBooks[pseudoRandom.Next(0, itemDatabase.commonBooks.Count)];
                 case 9:
                     return itemDatabase.essentialBooks[pseudoRandom.Next(0, itemDatabase.essentialBooks.Count)];
                 case 10:
+                    return itemDatabase.coins[0];
                 case 11:
                     return itemDatabase.grimoire[pseudoRandom.Next(0, itemDatabase.grimoire.Count)];
                 case 12:
+                    return itemDatabase.potions[pseudoRandom.Next(0, itemDatabase.potions.Count)];
                 case 13:
                     return itemDatabase.physicalBooks[pseudoRandom.Next(0, itemDatabase.physicalBooks.Count)];
                 case 14:
@@ -325,7 +334,7 @@ public class ItemCreator : ScriptableObject {
     }
     // Create a weapon sprite
     public Weapon CreateWeapon(ItemMaterial mat) {
-        int presetIndex = pseudoRandom.Next(0, 7);
+        int presetIndex = pseudoRandom.Next(0, 8);
         WeaponPreset preset = (WeaponPreset)presetIndex;
         WeaponType type = WeaponType.OneHanded;
         //int index = 0;  // Currently only short swords
@@ -349,6 +358,9 @@ public class ItemCreator : ScriptableObject {
                 type = WeaponType.Dagger;
                 break;
             case 6:
+                type = WeaponType.OneHanded;
+                break;
+            case 7:
                 type = WeaponType.OneHanded;
                 break;
         }
@@ -468,6 +480,28 @@ public class ItemCreator : ScriptableObject {
                     weapon.dismantleOutput = 2;
                     weapon.itemName += $" {LocalizationManager.localization.GetText("Staff")}";
                 }
+                else if(preset == WeaponPreset.Tome) {
+                    // Tome
+                    Sprite cover = tomeCover;
+                    Sprite paper = tomePaper;
+                    Sprite scripture = tomeText;
+                    Color coverColor = otherMaterialColors[pseudoRandom.Next(0, otherMaterialColors.Length)];
+                    Color paperColor = paperColors[pseudoRandom.Next(0, paperColors.Length)];
+                    Color scriptureColor = textColors[pseudoRandom.Next(0, textColors.Length)];
+                    weapon.firstSprite = cover;
+                    weapon.secondSprite = scripture;
+                    weapon.thirdSprite = paper;
+                    weapon.firstIcon = cover;
+                    weapon.secondIcon = scripture;
+                    weapon.thirdIcon = paper;
+                    weapon.firstColor = coverColor;
+                    weapon.secondColor = scriptureColor;
+                    weapon.thirdColor = paperColor;
+                    weapon.slot = EquipSlot.RightHand;
+                    weapon.weaponType = WeaponType.OneHanded;
+                    weapon.dismantleOutput = 2;
+                    weapon.itemName = $"{LocalizationManager.localization.GetText("Tome")}";
+                }
                 break;
             }
             case WeaponType.Bow: {
@@ -554,7 +588,7 @@ public class ItemCreator : ScriptableObject {
             if(new[] { 5, 6, 7, 8 }.Contains(armorOverlayIndex)) {
                 // Small shoulders
                 //Debug.Log("Small shoulders");
-                inGameArmor = chestArmorInGame[1];
+                inGameArmor = chestArmorInGame[0];
             }
             else if(new[] { 0, 1, 2, 3, 4 }.Contains(armorOverlayIndex)) {
                 // Big shoulders
@@ -914,5 +948,5 @@ public enum WeaponPreset {
 
 public enum ItemMaterial {
     Wood, Copper, Iron, Silver, Gold, Platinum, Titanium, Tungsten, Sapphire,
-    Ruby, Emerald, Diamond, Musgravite, Taaffeite, Amber, Bone, Wool, Fur, Silk, Leather, Scale, Coal
+    Ruby, Emerald, Diamond, Musgravite, Taaffeite, Amber, Bone, Wool, Fur, Silk, Leather, Scale, Coal, Glass
 }

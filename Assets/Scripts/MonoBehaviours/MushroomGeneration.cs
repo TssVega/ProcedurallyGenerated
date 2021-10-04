@@ -103,7 +103,7 @@ public class MushroomGeneration : MonoBehaviour {
         return Mathf.Clamp(RollDice(2, 6) - 6, 1, 6);
     }
     private int CalculateMushroomValue() {
-        int diceRollTotal = RollDice(6, 6);
+        int diceRollTotal = RollDice(4, 8);
         int mushroomValue;
         switch(diceRollTotal) {
             case 34:
@@ -163,6 +163,7 @@ public class MushroomGeneration : MonoBehaviour {
                 // Copper
                 mushroomValue = 13;
                 break;
+            case 10:
             case 16:
                 // Iron
                 mushroomValue = 14;
@@ -187,22 +188,23 @@ public class MushroomGeneration : MonoBehaviour {
                 // Tungsten
                 mushroomValue = 19;
                 break;
-            case 10:
+            case 9:
                 // Sapphire
                 mushroomValue = 20;
                 break;
-            case 7:
+            case 6:
                 // Ruby
                 mushroomValue = 21;
                 break;
-            case 9:
+            case 5:
                 // Emerald
                 mushroomValue = 22;
                 break;
-            case 6:
+            case 4:
                 // Diamond
                 mushroomValue = 23;
                 break;
+            case 7:
             case 8:
                 // Musgravite
                 mushroomValue = 24;

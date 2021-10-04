@@ -64,13 +64,14 @@ public class Inventory : MonoBehaviour {
     private void Start() {
         UpdateStats();
         CheckLights();
+        /*
         if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Levels") {
-            for(int i = 0; i < 50; i++) {
-                Item ex = player.itemCreator.CreateItem(Random.Range(0, 9999999).ToString(), 0);
+            for(int i = 0; i < 10; i++) {
+                Item ex = itemDatabase.items[91];
                 AddToInventory(ex);
             }
-        }
-        // Crate example weapon
+        }*/
+        // Create example weapon
         /*
         Weapon exampleItem = player.itemCreator.CreateWeapon("testWeapon");
         AddToInventory(exampleItem);
@@ -325,6 +326,9 @@ public class Inventory : MonoBehaviour {
         else if(inventory[slotIndex] is Potion p) {
             p.Consume(stats.status);
         }
+        else if(inventory[slotIndex] is Meat meat) {
+            meat.Consume(stats.status);
+        }
         if(quantities[slotIndex] < 1) {
             inventory[slotIndex] = null;
         }
@@ -417,6 +421,7 @@ public class Inventory : MonoBehaviour {
             UpdateStats();
             //UnequipItem(slot, GetEmptyInventorySlot());
             UpdateSlot((int)tempItem.slot);
+            UpdateSlot(slot);
         }
     }
     public bool AddToInventory(Item item) {

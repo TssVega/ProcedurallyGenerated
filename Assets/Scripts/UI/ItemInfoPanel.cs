@@ -93,10 +93,26 @@ public class ItemInfoPanel : MonoBehaviour {
                 playerSkills.currentSkills[i] = null;
                 break;
             }
+            Potion pot = playerSkills.currentSkills[i] as Potion;
+            if(pot == item) {
+                playerSkills.currentSkills[i] = null;
+                break;
+            }
+            Meat meat = playerSkills.currentSkills[i] as Meat;
+            if(meat == item) {
+                playerSkills.currentSkills[i] = null;
+                break;
+            }
         }
         if(item is Mushroom m) {
             playerSkills.currentSkills[index] = m;
-        }        
+        }
+        else if(item is Potion p) {
+            playerSkills.currentSkills[index] = p;
+        }
+        else if(item is Meat meat) {
+            playerSkills.currentSkills[index] = meat;
+        }
         skillUI.RefreshSkillSlots();
         Refresh();
     }
@@ -130,14 +146,21 @@ public class ItemInfoPanel : MonoBehaviour {
                 secondaryImages[i].sprite = null;
                 secondaryImages[i].color = Color.clear;
                 quantityTexts[i].text = inventory.GetItemCount(m).ToString();
-            }
-            /* Potions here
-            else if(playerSkills.currentSkills[i] is Mushroom m) {
-                skillSlots[i].sprite = m.firstIcon;
-                skillSlots[i].color = m.firstColor;
+            }            
+            else if(playerSkills.currentSkills[i] is Potion p) {
+                skillSlots[i].sprite = p.firstIcon;
+                skillSlots[i].color = p.firstColor;
                 secondaryImages[i].sprite = null;
                 secondaryImages[i].color = Color.white;
-            }*/
+                quantityTexts[i].text = inventory.GetItemCount(p).ToString();
+            }
+            else if(playerSkills.currentSkills[i] is Meat meat) {
+                skillSlots[i].sprite = meat.firstIcon;
+                skillSlots[i].color = meat.firstColor;
+                secondaryImages[i].sprite = null;
+                secondaryImages[i].color = Color.clear;
+                quantityTexts[i].text = inventory.GetItemCount(meat).ToString();
+            }
             else {
                 skillSlots[i].sprite = emptySlotSprite;
                 skillSlots[i].color = Color.white;

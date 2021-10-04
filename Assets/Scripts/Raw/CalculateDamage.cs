@@ -70,6 +70,7 @@ public static class CalculateDamage {
                 Debug.LogError("No AttackType found");
                 break;
         }
+        damage = attacker.status.blessed ? damage * attacker.status.blessRate : damage;
         return damage;
     }
     /*

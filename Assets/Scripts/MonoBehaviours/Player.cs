@@ -55,8 +55,10 @@ public class Player : MonoBehaviour {
     public string[] consumableItems;
 
     public MushroomDatabase mushroomDatabase;
+    public ItemDatabase itemDatabase;
 
     private StatusUI statusUI;
+    private SkillUI skillUI;
 
     private void Awake() {
         consumableItems = new string[11];
@@ -66,6 +68,7 @@ public class Player : MonoBehaviour {
         uiCanvas = FindObjectOfType<UICanvas>();
         inventory = GetComponent<Inventory>();
         statusUI = FindObjectOfType<StatusUI>();
+        skillUI = FindObjectOfType<SkillUI>();
     }
     private void Start() {
         interactionList = new List<IInteractable>();
@@ -269,17 +272,18 @@ public class Player : MonoBehaviour {
             for(int i = 0; i < data.consumableItems.Length; i++) {
                 if(!string.IsNullOrEmpty(data.consumableItems[i])) {
                     int index = -1;
-                    for(int j = 0; j < mushroomDatabase.mushrooms.Count; j++) {
-                        if(mushroomDatabase.mushrooms[j].seed == data.consumableItems[i]) {
+                    for(int j = 0; j < itemDatabase.items.Count; j++) {
+                        if(itemDatabase.items[j].seed == data.consumableItems[i]) {
                             index = j;
                             break;
                         }
                     }
                     if(index >= 0) {
-                        skillUser.currentSkills[i] = mushroomDatabase.mushrooms[index];
+                        skillUser.currentSkills[i] = itemDatabase.items[index] as IUsable;                        
                     }
                 }
             }
+            skillUI.UpdateQuantities();
         }
         inventory.UpdateStats();
         if(statusUI) {

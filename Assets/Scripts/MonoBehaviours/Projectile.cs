@@ -49,6 +49,7 @@ public class Projectile : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D collision) {
         if(collision.CompareTag("Wall")) {
             EndProjectile();
+            Debug.Log("Hit a wall");
         }
         else if(collision.GetComponent<Stats>() && projectileData.team != collision.GetComponent<Stats>().team) {
             StatusEffects targetStatus = collision.GetComponent<StatusEffects>();
