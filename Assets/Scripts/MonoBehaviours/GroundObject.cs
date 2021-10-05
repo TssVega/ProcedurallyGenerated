@@ -34,12 +34,12 @@ public class GroundObject : MonoBehaviour, IInteractable {
     }
     public void SetObject(Item item, Vector2Int itemCoordinates, MushroomGeneration itemGeneration) {
         this.groundObj = item;
-        if(item && spriteRen) {
+        if(item && spriteRen && itemGeneration) {
             spriteRen.sprite = item.firstSprite;
             this.itemCoordinates = itemCoordinates;
             this.itemGeneration = itemGeneration;
         }
-        else if(spriteRen) {
+        else if(spriteRen && !itemGeneration) {
             spriteRen.sprite = null;
             this.itemGeneration.TakeMushroom(new Vector2Int(this.itemCoordinates.x, this.itemCoordinates.y));
             gameObject.SetActive(false);

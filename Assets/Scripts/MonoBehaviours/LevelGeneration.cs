@@ -131,8 +131,7 @@ public class LevelGeneration : MonoBehaviour {
         GenerateCrystals();
         GenerateStalagmites();
         poolGeneration.GeneratePools(0, layout.seed);
-        //mushroomGeneration.GenerateMushrooms(0, layout.seed);
-        
+        //mushroomGeneration.GenerateMushrooms(0, layout.seed);        
     }
     private void GenerateStalagmites() {
         // Only generate stalagmites on rocky caves
@@ -218,7 +217,7 @@ public class LevelGeneration : MonoBehaviour {
     private void GenerateTorches() {
         for(int i = 0; i < torchCount; i++) {
             Vector3Int torchPosition = GetRandomWallCoordinates();
-            GameObject torchClone = ObjectPooler.objectPooler.GetPooledObject("Torch");
+            GameObject torchClone = ObjectPooler.objectPooler.GetPooledObject("CaveTorch");
             torchClone.transform.position = torchPosition;
             torchClone.transform.rotation = Quaternion.identity;
             torchClone.SetActive(true);

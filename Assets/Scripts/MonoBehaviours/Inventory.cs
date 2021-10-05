@@ -63,14 +63,14 @@ public class Inventory : MonoBehaviour {
     }
     private void Start() {
         UpdateStats();
-        CheckLights();
-        /*
+        CheckLights(null);
+        
         if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Levels") {
-            for(int i = 0; i < 10; i++) {
-                Item ex = itemDatabase.items[91];
+            for(int i = 0; i < 1; i++) {
+                Item ex = itemDatabase.items[89];
                 AddToInventory(ex);
             }
-        }*/
+        }
         // Create example weapon
         /*
         Weapon exampleItem = player.itemCreator.CreateWeapon("testWeapon");
@@ -110,9 +110,17 @@ public class Inventory : MonoBehaviour {
     public int EquipmentSize {
         get => equipmentSize;
     }
-    private void CheckLights() {
+    public void CheckLights(Item item) {
         if(!player) {
             return;
+        }
+        if(!item) {
+            for(int i = 0; i < equipment.Count; i++) {
+                if(equipment[i] && equipment[i].alterLight) {
+                    item = equipment[i];
+                    break;
+                }
+            }
         }
         // Qotush sight
         if(player.raceIndex == 7) {
@@ -120,6 +128,11 @@ public class Inventory : MonoBehaviour {
             const float qotushInner = 6f;
             playerLight.pointLightOuterRadius = qotushOuter;
             playerLight.pointLightInnerRadius = qotushInner;
+        }
+        else if(item && item.alterLight) {
+            playerLight.pointLightInnerRadius = item.innerRadius;
+            playerLight.pointLightOuterRadius = item.outerRadius;
+            playerLight.intensity = item.intensity;
         }
         else {
             const float defaultOuter = 6f;
@@ -390,6 +403,9 @@ public class Inventory : MonoBehaviour {
         }
         equipment[(int)item.slot] = item;
         stats.OnItemEquip(item);
+        if(item.alterLight) {
+            CheckLights(item);
+        }        
         UpdateStats();
         UpdateEquipmentSlot((int)item.slot);
     }
@@ -415,6 +431,7 @@ public class Inventory : MonoBehaviour {
             //equipment[(int)item.slot] = null;
             inventory[slot] = null;
             quantities[slot]--;
+            player.ClearItem(tempItem);
             EquipItem(item);
             AddToInventory(tempItem);
             stats.OnItemUnequip(tempItem);
@@ -541,13 +558,13 @@ public class Inventory : MonoBehaviour {
             stats.OnItemUnequip(equipment[fromSlot]);
             UpdateStats();
             equipment[fromSlot] = null;
-            Debug.Log("Unequipping");
         }
         else {
             return;
         }
         UpdateEquipmentSlot(fromSlot);
         UpdateSlot(toSlot);
+        CheckLights(null);
     }
     private void UpdateSpritesOnUnequip(Item item) {
         if(item is Weapon) {

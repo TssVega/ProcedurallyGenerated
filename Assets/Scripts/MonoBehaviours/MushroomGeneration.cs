@@ -59,10 +59,10 @@ public class MushroomGeneration : MonoBehaviour {
                 }
                 levelGeneration.occupiedCoordinates.Add(randomLocation);
                 mushroomValues[randomLocation.x, randomLocation.y] = CalculateMushroomValue();
-                if(mushroomValues[randomLocation.x, randomLocation.y] >= 0 && mushroomValues[randomLocation.x, randomLocation.y] < 12) {
+                if(mushroomValues[randomLocation.x, randomLocation.y] >= 0 && mushroomValues[randomLocation.x, randomLocation.y] < 104 && mushroomValues[randomLocation.x, randomLocation.y] >= 92) {
                     PlaceMushroom(randomLocation.x, randomLocation.y, mushroomValues[randomLocation.x, randomLocation.y]);
                 }
-                else if(mushroomValues[randomLocation.x, randomLocation.y] > 0) {
+                else if(mushroomValues[randomLocation.x, randomLocation.y] >= 0) {
                     PlaceObject(randomLocation.x, randomLocation.y, mushroomValues[randomLocation.x, randomLocation.y]);
                 }
             }            
@@ -74,7 +74,7 @@ public class MushroomGeneration : MonoBehaviour {
         mushroomClone.transform.position = levelGeneration.GetPreciseLocation(x, y);
         mushroomClone.transform.rotation = Quaternion.identity;
         mushrooms.Add(mushroomClone);
-        mushroomClone.GetComponent<MushroomObject>().SetMushroom(mushroomDatabase.mushrooms[mushroomValue], new Vector2Int(x, y), this);
+        mushroomClone.GetComponent<MushroomObject>().SetMushroom(itemDatabase.items[mushroomValue] as Mushroom, new Vector2Int(x, y), this);
         mushroomClone.SetActive(true);
     }
     private void PlaceObject(int x, int y, int objectValue) {
@@ -82,7 +82,7 @@ public class MushroomGeneration : MonoBehaviour {
         objectClone.transform.position = levelGeneration.GetPreciseLocation(x, y);
         objectClone.transform.rotation = Quaternion.identity;
         mushrooms.Add(objectClone);
-        objectClone.GetComponent<GroundObject>().SetObject(itemDatabase.items[objectValue - 12], new Vector2Int(x, y), this);
+        objectClone.GetComponent<GroundObject>().SetObject(itemDatabase.items[objectValue], new Vector2Int(x, y), this);
         objectClone.SetActive(true);
     }
     public void ClearMushrooms() {
@@ -100,134 +100,134 @@ public class MushroomGeneration : MonoBehaviour {
         SaveSystem.SaveMushrooms(this, slot, levelGeneration.layout.worldCoordinates);
     }
     private int CalculateMushroomCount() {
-        return Mathf.Clamp(RollDice(2, 6) - 6, 1, 6);
+        return Mathf.Clamp(RollDice(2, 6) - 6, 2, 6);
     }
     private int CalculateMushroomValue() {
-        int diceRollTotal = RollDice(4, 8);
+        int diceRollTotal = RollDice(4, 9);
         int mushroomValue;
         switch(diceRollTotal) {
             case 34:
                 // Matsutake mushroom
-                mushroomValue = 6;
+                mushroomValue = 97;
                 break;
             case 33:
                 // Morel mushroom
-                mushroomValue = 10;
+                mushroomValue = 98;
                 break;
             case 32:
                 // Black trumpet mushroom
-                mushroomValue = 3;
+                mushroomValue = 92;
                 break;
             case 29:
                 // Truffle mushroom
-                mushroomValue = 1;
+                mushroomValue = 102;
                 break;
             case 30:
                 // Reishi mushroom
-                mushroomValue = 5;
+                mushroomValue = 101;
                 break;
             case 28:
                 // Chanterelle mushroom
-                mushroomValue = 4;
+                mushroomValue = 93;
                 break;
             case 27:
                 // Fly agaric mushroom
-                mushroomValue = 11;
+                mushroomValue = 96;
                 break;
             case 26:
                 // Turkey tail mushroom
-                mushroomValue = 2;
+                mushroomValue = 103;
                 break;
             case 25:
                 // Destroying angel mushroom
-                mushroomValue = 0;
+                mushroomValue = 94;
                 break;
             case 20:
                 // Porcini mushroom
-                mushroomValue = 9;
+                mushroomValue = 99;
                 break;
             case 23:
                 // Enoki mushroom
-                mushroomValue = 8;
+                mushroomValue = 95;
                 break;
             case 24:
                 // Puffball mushroom
-                mushroomValue = 7;
+                mushroomValue = 100;
                 break;
             case 21:
             case 18:
                 // Wood
-                mushroomValue = 12;
+                mushroomValue = 0;
                 break;
             case 17:
                 // Copper
-                mushroomValue = 13;
+                mushroomValue = 1;
                 break;
             case 10:
             case 16:
                 // Iron
-                mushroomValue = 14;
+                mushroomValue = 2;
                 break;
             case 15:
                 // Silver
-                mushroomValue = 15;
+                mushroomValue = 3;
                 break;
             case 12:
                 // Gold
-                mushroomValue = 16;
+                mushroomValue = 4;
                 break;
             case 11:
                 // Platinum
-                mushroomValue = 17;
+                mushroomValue = 5;
                 break;
             case 14:
                 // Titanium
-                mushroomValue = 18;
+                mushroomValue = 6;
                 break;
             case 13:
                 // Tungsten
-                mushroomValue = 19;
+                mushroomValue = 7;
                 break;
             case 9:
                 // Sapphire
-                mushroomValue = 20;
+                mushroomValue = 8;
                 break;
             case 6:
                 // Ruby
-                mushroomValue = 21;
+                mushroomValue = 9;
                 break;
             case 5:
                 // Emerald
-                mushroomValue = 22;
+                mushroomValue = 10;
                 break;
             case 4:
                 // Diamond
-                mushroomValue = 23;
+                mushroomValue = 11;
                 break;
             case 7:
             case 8:
                 // Musgravite
-                mushroomValue = 24;
+                mushroomValue = 12;
                 break;
             case 35:
             case 36:
                 // Taaffeite
-                mushroomValue = 25;
+                mushroomValue = 13;
                 break;
             case 31:
                 // Amber
-                mushroomValue = 26;
+                mushroomValue = 14;
                 break;
             case 19:
                 // Stone
-                mushroomValue = 42;
+                mushroomValue = 30;
                 break;
             case 22:
                 // Coal
-                mushroomValue = 44;
+                mushroomValue = 32;
                 break;
             default:
-                mushroomValue = -1;
+                mushroomValue = 30;
                 break;
         }
         return mushroomValue;

@@ -57,11 +57,12 @@ public class Item : ScriptableObject {
     //public Enchantment enchantment;
     public int dismantleOutput;
     public GameObject particles;
-    public bool hasTrail;
-    public Vector2 trailPosition = new Vector2(0.4f, 0.4f);
-    public Gradient weaponTrailGradient;
     public bool material = false;
     public ItemMaterial itemMaterial;
+    public bool alterLight = false;
+    public float innerRadius = 6f;
+    public float outerRadius = 7f;
+    public float intensity = 1f;
 
     [Header("Main Stats")]
     public int strength;

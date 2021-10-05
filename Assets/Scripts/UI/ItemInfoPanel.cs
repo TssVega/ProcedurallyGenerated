@@ -150,8 +150,8 @@ public class ItemInfoPanel : MonoBehaviour {
             else if(playerSkills.currentSkills[i] is Potion p) {
                 skillSlots[i].sprite = p.firstIcon;
                 skillSlots[i].color = p.firstColor;
-                secondaryImages[i].sprite = null;
-                secondaryImages[i].color = Color.white;
+                secondaryImages[i].sprite = p.secondIcon;
+                secondaryImages[i].color = p.secondColor;
                 quantityTexts[i].text = inventory.GetItemCount(p).ToString();
             }
             else if(playerSkills.currentSkills[i] is Meat meat) {

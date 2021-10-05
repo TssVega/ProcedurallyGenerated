@@ -60,6 +60,12 @@ public class Player : MonoBehaviour {
     private StatusUI statusUI;
     private SkillUI skillUI;
 
+    public Transform rightHand;
+    public Transform leftHand;
+
+    private GameObject rightHandParticles;
+    private GameObject leftHandParticles;
+
     private void Awake() {
         consumableItems = new string[11];
         worldGeneration = FindObjectOfType<WorldGeneration>();
@@ -292,6 +298,48 @@ public class Player : MonoBehaviour {
             statusUI.UpdateEnergy(stats.energy / stats.trueMaxEnergy, stats.energy);
         }        
     }
+    private void SetItemParticles(Item item) {
+        if(item.particles) {
+            GameObject p = ObjectPooler.objectPooler.GetPooledObject(item.particles.name);
+            Transform part;
+            switch(item.slot) {
+                case EquipSlot.RightHand:
+                    part = rightHand;
+                    break;
+                case EquipSlot.LeftHand:
+                    part = leftHand;
+                    break;
+                default:
+                    part = rightHand;
+                    break;
+            }            
+            p.transform.localPosition = part.position;
+            p.transform.rotation = part.rotation;
+            p.transform.SetParent(part);
+            if(item.slot == EquipSlot.RightHand) {
+                rightHandParticles = p;
+            }
+            else if(item.slot == EquipSlot.LeftHand) {
+                leftHandParticles = p;
+            }
+            p.SetActive(true);
+        }
+    }
+    private void ClearItemParticles(Item item) {
+        if(!item.particles) {
+            return;
+        }
+        if(item.slot == EquipSlot.RightHand && rightHandParticles) {
+            rightHandParticles.transform.SetParent(null);
+            rightHandParticles.SetActive(false);
+            rightHandParticles = null;
+        }
+        else if(item.slot == EquipSlot.LeftHand && leftHandParticles) {
+            leftHandParticles.transform.SetParent(null);
+            leftHandParticles.SetActive(false);
+            leftHandParticles = null;
+        }
+    }
     private void SetAppearance() {
         skinColor.color = appearance.races[raceIndex].skinColor;
         hairColor.color = appearance.hairColors[hairColorIndex];
@@ -372,6 +420,7 @@ public class Player : MonoBehaviour {
         if(item is Weapon) {
             SetWeapon(item as Weapon);
         }
+        SetItemParticles(item);
     }
     public void ClearItem(Item item) {
         if(item is Armor) {
@@ -388,6 +437,7 @@ public class Player : MonoBehaviour {
         if(item is Weapon) {
             ClearWeapons();
         }
+        ClearItemParticles(item);
     }
     private void SetBodyArmor(Armor armor) {
         bodyArmor.sprite = armor.firstSprite;
