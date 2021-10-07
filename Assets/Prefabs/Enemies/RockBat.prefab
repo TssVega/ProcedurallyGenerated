@@ -149,8 +149,16 @@ MonoBehaviour:
   poisonThreshold: 100
   bleedThreshold: 100
   curseThreshold: 100
+  drops:
+  - dropRate: 0.1
+    dropRange: 1
+    item: {fileID: 11400000, guid: 280cdaa66790ae645ae6732357db6cc1, type: 2}
+  - dropRate: 1
+    dropRange: 10
+    item: {fileID: 11400000, guid: 6a0279edbea37e84199f962dcf54be41, type: 2}
   living: 1
   status: {fileID: 1553987817055992803}
+  player: {fileID: 0}
 --- !u!114 &1553987817055992803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,6 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bde332c1a9495294daf47a94f1ff2362, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   deathPanel: {fileID: 0}
   statusUI: {fileID: 0}
   hitWarning: {fileID: 0}
@@ -187,9 +196,13 @@ MonoBehaviour:
   chanelling: 0
   blocking: 0
   parrying: 0
+  blessed: 0
   defaultShieldTransform: {fileID: 0}
   forwardShieldTransform: {fileID: 0}
   parryTransform: {fileID: 0}
+  blessRate: 1
+  lowEnergyParticles: {fileID: 0}
+  blessParticles: {fileID: 0}
 --- !u!114 &1553987817055992802
 MonoBehaviour:
   m_ObjectHideFlags: 0

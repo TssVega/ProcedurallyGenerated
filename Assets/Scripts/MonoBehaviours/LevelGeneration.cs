@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using System.Threading;
-// ReSharper disable All
 
 public class LevelGeneration : MonoBehaviour {
 

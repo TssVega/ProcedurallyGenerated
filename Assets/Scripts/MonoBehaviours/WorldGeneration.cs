@@ -1,12 +1,8 @@
 ﻿using UnityEngine;
-using System.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine.Tilemaps;
 using System.IO;
-using System;
-using System.Globalization;
 
 public class WorldGeneration : MonoBehaviour {
     // Should be an odd number so it can have one center
@@ -122,12 +118,11 @@ public class WorldGeneration : MonoBehaviour {
         }
         else {
             world = new WorldData(new string[worldSize, worldSize], new[] { 0, 0 }, new int[worldSize, worldSize],
-                UnityEngine.Random.Range(0, 99999999).ToString(), new int[worldSize, worldSize]) {                
+                Random.Range(0, 99999999).ToString(), new int[worldSize, worldSize]) {
                 lastCoordinates = new[] { -1, -1 }
             };
         }
-    }
-   
+    }   
     public void ChangeCurrentCoordinates(Vector2Int coordinates) {
         //ChangeLastCoordinates(new Vector2Int(world.currentCoordinates[0], world.currentCoordinates[1]));
         world.currentCoordinates = new[] { coordinates.x, coordinates.y};
@@ -156,7 +151,8 @@ public class WorldGeneration : MonoBehaviour {
                 if((x == world.currentCoordinates[0] - 1 && y == world.currentCoordinates[1] - 1)
                     || (x == world.currentCoordinates[0] - 1 && y == world.currentCoordinates[1] + 1)
                     || (x == world.currentCoordinates[0] + 1 && y == world.currentCoordinates[1] - 1)
-                    || (x == world.currentCoordinates[0] + 1 && y == world.currentCoordinates[1] + 1)) {
+                    || (x == world.currentCoordinates[0] + 1 && y == world.currentCoordinates[1] + 1)/*
+                    || (x == world.currentCoordinates[0] && y == world.currentCoordinates[1])*/) {
                     continue;
                 }
                 if(!loadingPanel.gameObject.activeInHierarchy) {
@@ -178,7 +174,7 @@ public class WorldGeneration : MonoBehaviour {
                 PersistentData.AddWorkingThread();
                 if(world.worldData[x, y] == null) {
                     //pseudoRandomForWorld = new System.Random(worldSeed.GetHashCode());
-                    world.worldData[x, y] = pseudoRandomForWorld.Next(x + 1, y * worldSize + worldSize + 1).ToString();
+                    world.worldData[x, y] = $"{WorldSeed}{Insignify(x)}{Insignify(y)}";
                 }
                 // Create a level with object pooling
                 GameObject levelClone = ObjectPooler.objectPooler.GetPooledObject(level.name);
@@ -194,10 +190,7 @@ public class WorldGeneration : MonoBehaviour {
                     Spawner.spawner.RemoveSideLevel(levelGen);
                 }*/
                 currentRenderedLevels.Add(new Vector2Int(x, y));
-                string xCoord = GetNumberWithZeroesInIgsignificantBits(x);
-                string yCoord = GetNumberWithZeroesInIgsignificantBits(y);
-                string levelSeed = $"{WorldSeed}{xCoord}{yCoord}";
-                levelGen.layout = new LevelLayout(levelSeed) {
+                levelGen.layout = new LevelLayout(world.worldData[x, y]) {
                     worldCoordinates = new Vector2Int(x, y),
                     worldSize = worldSize,
                     biomeIndex = WorldMap[x, y]                    
@@ -230,12 +223,12 @@ public class WorldGeneration : MonoBehaviour {
         // Unload far away levels
         for(int i = 0; i < levels.Count; i++) {
             int xDifference = Mathf.Abs(levels[i].layout.worldCoordinates.x - world.currentCoordinates[0]);
-            int yDifference = Mathf.Abs(levels[i].layout.worldCoordinates.y - world.currentCoordinates[1]);
-            if(xDifference + yDifference > 1) {
+            int yDifference = Mathf.Abs(levels[i].layout.worldCoordinates.y - world.currentCoordinates[1]);            
+            if(xDifference + yDifference > 1) {                
                 levels[i].UnloadLevel();
                 Spawner.spawner.RemoveSideLevel(levels[i]);
                 levels.RemoveAt(i);
-                currentRenderedLevels.RemoveAt(i);                
+                currentRenderedLevels.RemoveAt(i);
             }
         }
     }
@@ -247,12 +240,14 @@ public class WorldGeneration : MonoBehaviour {
             }
         }
     }
-    private string GetNumberWithZeroesInIgsignificantBits(int value) {
+    // Returns the specified number with up to 2 insignificant digits in front of it until it reaches 3 digits
+    // Eg: 9 returns "009", 25 returns "025"
+    private string Insignify(int value) {
         string newValue;
-        if((float)value / 100f > 1f) {
+        if((float)value / 100f >= 1f) {
             newValue = value.ToString();
         }
-        else if((float)value / 10f > 1f) {
+        else if((float)value / 10f >= 1f) {
             newValue = $"0{value}";
         }
         else {

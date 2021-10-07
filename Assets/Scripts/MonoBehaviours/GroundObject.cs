@@ -41,6 +41,7 @@ public class GroundObject : MonoBehaviour, IInteractable {
         }
         else if(spriteRen && !itemGeneration) {
             spriteRen.sprite = null;
+            Debug.LogWarning("Disappeared object");
             this.itemGeneration.TakeMushroom(new Vector2Int(this.itemCoordinates.x, this.itemCoordinates.y));
             gameObject.SetActive(false);
         }

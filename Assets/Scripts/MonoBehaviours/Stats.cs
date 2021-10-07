@@ -70,7 +70,10 @@ public class Stats : MonoBehaviour {
     public int poisonThreshold;
     public int bleedThreshold;
     public int curseThreshold;
-
+    [Header("Drops")]
+    public List<DropChance> drops;
+    private const float dropInitializeForce = 150f;
+    [Header("Alive state")]
     public bool living;
 
     public StatusEffects status;
@@ -95,8 +98,25 @@ public class Stats : MonoBehaviour {
         }
     }
     public void Die() {
+        CalculateDrops();
         gameObject.SetActive(false);
         living = false;
+    }
+    private void CalculateDrops() {
+        for(int i = 0; i < drops.Count; i++) {
+            if(Random.Range(0f, 1f) <= drops[i].dropRate) {
+                for(int j = 0; j < Random.Range(1, drops[i].dropRange + 1); j++) {
+                    GameObject dropObj = ObjectPooler.objectPooler.GetPooledObject("Drop");
+                    Drop drop = dropObj.GetComponent<Drop>();
+                    Rigidbody2D rb2D = dropObj.GetComponent<Rigidbody2D>();
+                    dropObj.transform.position = transform.position;
+                    dropObj.transform.rotation = transform.rotation;
+                    drop.SetItem(drops[i].item);
+                    dropObj.SetActive(true);
+                    rb2D.AddForce(new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized * dropInitializeForce);
+                }
+            }
+        }
     }
     public void OnItemEquip(Item item) {
         if(item is Weapon weap) {

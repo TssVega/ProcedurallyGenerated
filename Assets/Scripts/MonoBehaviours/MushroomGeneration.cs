@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class MushroomGeneration : MonoBehaviour {
@@ -34,11 +32,11 @@ public class MushroomGeneration : MonoBehaviour {
                 for(int y = 0; y < levelSize; y++) {
                     if(mushroomData.mushroomMap[x, y] >= 0 && levelGeneration.CheckLocation(x, y)) {
                         mushroomValues[x, y] = mushroomData.mushroomMap[x, y];
-                        if(mushroomValues[x, y] >= 0 && mushroomValues[x, y] < 12) {
+                        if(mushroomValues[x, y] >= 0 && mushroomValues[x, y] < 104 && mushroomValues[x, y] >= 92) {
                             levelGeneration.occupiedCoordinates.Add(new Vector3Int(x, y, 0));
                             PlaceMushroom(x, y, mushroomValues[x, y]);
                         }
-                        else if(mushroomValues[x, y] > 0) {
+                        else if(mushroomValues[x, y] >= 0) {
                             levelGeneration.occupiedCoordinates.Add(new Vector3Int(x, y, 0));
                             PlaceObject(x, y, mushroomValues[x, y]);
                         }
@@ -74,6 +72,12 @@ public class MushroomGeneration : MonoBehaviour {
         mushroomClone.transform.position = levelGeneration.GetPreciseLocation(x, y);
         mushroomClone.transform.rotation = Quaternion.identity;
         mushrooms.Add(mushroomClone);
+        if(itemDatabase.items[mushroomValue] is Mushroom) {
+            
+        }
+        else {
+            Debug.LogError("This item is not a mushroom");
+        }
         mushroomClone.GetComponent<MushroomObject>().SetMushroom(itemDatabase.items[mushroomValue] as Mushroom, new Vector2Int(x, y), this);
         mushroomClone.SetActive(true);
     }
@@ -82,6 +86,9 @@ public class MushroomGeneration : MonoBehaviour {
         objectClone.transform.position = levelGeneration.GetPreciseLocation(x, y);
         objectClone.transform.rotation = Quaternion.identity;
         mushrooms.Add(objectClone);
+        if(itemDatabase.items[objectValue] == null) {
+            Debug.LogError("null item");
+        }
         objectClone.GetComponent<GroundObject>().SetObject(itemDatabase.items[objectValue], new Vector2Int(x, y), this);
         objectClone.SetActive(true);
     }

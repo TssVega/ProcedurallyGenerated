@@ -89,19 +89,14 @@ public class SkillUser : MonoBehaviour {
         if(!statusEffects.CanUseMana(skill.manaCost)) {
             return;
         }
-        else {
-            statusEffects.UseMana(skill.manaCost);
-        }
         if(skill is ProjectileSkill) {
             ProjectileSkill proj = skill as ProjectileSkill;
             if(proj.projectileData.arrowSkill) {
                 Weapon w = inventory.equipment[0] as Weapon;
                 if(w == null) {
-                    statusEffects.GiveMana(skill.manaCost);
                     return;
                 }
                 if(w.weaponType != WeaponType.Bow) {
-                    statusEffects.GiveMana(skill.manaCost);
                     return;
                 }
             }
@@ -121,12 +116,14 @@ public class SkillUser : MonoBehaviour {
         }
         else if(skill is AreaSkill) {
             AreaSkill area = skill as AreaSkill;
+            
             StartCoroutine(StartAreaSkill(area));
         }
         else if(skill is BlockSkill) {
             BlockSkill block = skill as BlockSkill;
             StartCoroutine(StartBlockSkill(block));
         }
+        statusEffects.UseMana(skill.manaCost);
     }
     private IEnumerator ThrowProjectile(ProjectileSkill proj) {
         // Set status effects
@@ -142,8 +139,9 @@ public class SkillUser : MonoBehaviour {
             statusEffects.StartImmobilize(proj.channelingTime + proj.castTime);
         }
         // Set projectile game object
-        skillCooldowns[proj.skillIndex] = proj.cooldown;
-               
+        if(proj.skillIndex >= 0) {
+            skillCooldowns[proj.skillIndex] = proj.cooldown;
+        }
         // Set channelling particles
         List<GameObject> channelingParticles = new List<GameObject>();
         for(int i = 0; i < proj.channelingParticleNames.Length; i++) {
@@ -225,7 +223,9 @@ public class SkillUser : MonoBehaviour {
             statusEffects.StartImmobilize(buff.channelingTime + buff.castTime);
         }
         // Set buffer game object
-        skillCooldowns[buff.skillIndex] = buff.cooldown;
+        if(buff.skillIndex >= 0) {
+            skillCooldowns[buff.skillIndex] = buff.cooldown;
+        }        
         GameObject b = ObjectPooler.objectPooler.GetPooledObject("Buff");
         b.GetComponent<Buff>().SetBuff(buff.buffData);
         b.transform.position = transform.position;
@@ -268,12 +268,14 @@ public class SkillUser : MonoBehaviour {
             yield return new WaitForSeconds(seq.sequence[i].activeSkill.channelingTime + seq.sequence[i].activeSkill.castTime);
         }
     }
-    private IEnumerator StartDash(DashSkill dash) {
+    private IEnumerator StartDash(DashSkill dash) {        
         statusEffects.StartChanelling(dash.channelingTime);
         if(dash.focusedSkill) {
             statusEffects.StartImmobilize(dash.channelingTime/* + dash.castTime*/);
         }
-        skillCooldowns[dash.skillIndex] = dash.cooldown;
+        if(dash.skillIndex >= 0) {
+            skillCooldowns[dash.skillIndex] = dash.cooldown;
+        }        
         // Set channelling particles
         List<GameObject> channelingParticles = new List<GameObject>();
         for(int i = 0; i < dash.channelingParticleNames.Length; i++) {
@@ -311,7 +313,9 @@ public class SkillUser : MonoBehaviour {
         if(area.focusedSkill) {
             statusEffects.StartImmobilize(area.channelingTime + area.castTime);
         }
-        skillCooldowns[area.skillIndex] = area.cooldown;
+        if(area.skillIndex >= 0) {
+            skillCooldowns[area.skillIndex] = area.cooldown;
+        }        
         // Set channelling particles
         List<GameObject> channelingParticles = new List<GameObject>();
         for(int i = 0; i < area.channelingParticleNames.Length; i++) {

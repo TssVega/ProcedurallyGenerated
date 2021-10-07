@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillIndex: 0
   skillName: Dash
-  skillDescription: Leap forward for a small distance
   skillIcon: {fileID: 21300000, guid: 0cd69803be151954091f386d0478f2a1, type: 3}
   interruptable: 0
   attackType: 13
   skillPointsNeeded: 0
+  prerequisites: 
   manaCost: 0
   focusedSkill: 0
   channelingTime: 0
@@ -30,7 +30,7 @@ MonoBehaviour:
   particleNames: []
   channelingAnimationName: 
   castingAnimationName: 
-  idleAnimationName: Idle
+  idleAnimationName: 
   dashData:
     dashMultiplier: 4
     dashDuration: 0.3

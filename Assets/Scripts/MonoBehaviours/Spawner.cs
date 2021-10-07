@@ -19,7 +19,7 @@ public class Spawner : MonoBehaviour {
 
     private Transform playerTransform;
 
-    private const float disableDistance = 40f;
+    private const float disableDistance = 80f;
 
     private void Awake() {
         sideLevels = new List<LevelGeneration>();
@@ -38,13 +38,13 @@ public class Spawner : MonoBehaviour {
     public void RemoveSideLevel(LevelGeneration sideLevel) {
         sideLevels.Remove(sideLevel);
         for(int i = 0; i < entities.Count; i++) {            
-            /*
+            
             if(Vector3.Distance(playerTransform.position, entities[i].transform.position) > disableDistance) {
                 entities[i].SetActive(false);
                 RemoveEntity(entities[i]);
                 //continue;
-            }*/
-            if(entities[i].GetComponent<EnemyAI>().level == null || !entities[i].GetComponent<EnemyAI>().level.gameObject.activeInHierarchy) {
+            }
+            else if(entities[i].GetComponent<EnemyAI>().level == null || !entities[i].GetComponent<EnemyAI>().level.gameObject.activeInHierarchy) {
                 entities[i].SetActive(false);
                 RemoveEntity(entities[i]);
             }

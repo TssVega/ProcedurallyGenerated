@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Skill : ScriptableObject{
 
-    public int skillIndex;
+    public int skillIndex = -1;
     public string skillName;
     public Sprite skillIcon;
     public bool interruptable;

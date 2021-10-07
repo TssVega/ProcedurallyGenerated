@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d43363dad53c8bd469a134df327bd261, type: 3}
   m_Name: BasicDash
   m_EditorClassIdentifier: 
-  skillIndex: 0
+  skillIndex: -1
   skillName: basicDash
-  skillDescription: 
   skillIcon: {fileID: 0}
   interruptable: 0
   attackType: 13
   skillPointsNeeded: 0
+  prerequisites: 
   manaCost: 0
   focusedSkill: 0
   channelingTime: 0.1

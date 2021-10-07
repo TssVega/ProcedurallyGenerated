@@ -77,7 +77,7 @@ public static class SaveSystem {
     public static void SaveChests(ChestGeneration data, int slot, Vector2Int coordinates) {
         // Formatter to convert game data to binary
         BinaryFormatter bin = new BinaryFormatter();
-        string path = $"{Application.persistentDataPath}/ChestData{slot}_{coordinates.x}x{coordinates.y}y.tss";
+        string path = $"{Application.persistentDataPath}/ChestData{slot}_{Insignify(coordinates.x)}x{Insignify(coordinates.y)}yy.tss";
         using(FileStream stream = new FileStream(path, FileMode.Create)) {
             ChestData _data = new ChestData(data);
             bin.Serialize(stream, _data);
@@ -92,7 +92,7 @@ public static class SaveSystem {
     }
     // Load from a slot
     public static ChestData LoadChests(int slot, Vector2Int coordinates) {
-        string path = $"{Application.persistentDataPath}/ChestData{slot}_{coordinates.x}x{coordinates.y}y.tss";
+        string path = $"{Application.persistentDataPath}/ChestData{slot}_{Insignify(coordinates.x)}x{Insignify(coordinates.y)}y.tss";
         if(File.Exists(path)) {
             BinaryFormatter bin = new BinaryFormatter();
             using(FileStream stream = new FileStream(path, FileMode.Open)) {
@@ -112,7 +112,7 @@ public static class SaveSystem {
     public static void SaveMushrooms(MushroomGeneration data, int slot, Vector2Int coordinates) {
         // Formatter to convert game data to binary
         BinaryFormatter bin = new BinaryFormatter();
-        string path = $"{Application.persistentDataPath}/MushroomData{slot}_{coordinates.x}x{coordinates.y}y.tss";
+        string path = $"{Application.persistentDataPath}/MushroomData{slot}_{Insignify(coordinates.x)}x{Insignify(coordinates.y)}y.tss";
         using(FileStream stream = new FileStream(path, FileMode.Create)) {
             MushroomData _data = new MushroomData(data);
             bin.Serialize(stream, _data);
@@ -126,7 +126,7 @@ public static class SaveSystem {
         // stream.Close();
     }
     public static MushroomData LoadMushrooms(int slot, Vector2Int coordinates) {
-        string path = $"{Application.persistentDataPath}/MushroomData{slot}_{coordinates.x}x{coordinates.y}y.tss";
+        string path = $"{Application.persistentDataPath}/MushroomData{slot}_{Insignify(coordinates.x)}x{Insignify(coordinates.y)}y.tss";
         if(File.Exists(path)) {
             BinaryFormatter bin = new BinaryFormatter();
             using(FileStream stream = new FileStream(path, FileMode.Open)) {
@@ -146,7 +146,7 @@ public static class SaveSystem {
     public static void SavePools(PoolGeneration data, int slot, Vector2Int coordinates) {
         // Formatter to convert game data to binary
         BinaryFormatter bin = new BinaryFormatter();
-        string path = $"{Application.persistentDataPath}/PoolData{slot}_{coordinates.x}x{coordinates.y}y.tss";
+        string path = $"{Application.persistentDataPath}/PoolData{slot}_{Insignify(coordinates.x)}x{Insignify(coordinates.y)}y.tss";
         using(FileStream stream = new FileStream(path, FileMode.Create)) {
             PoolData _data = new PoolData(data);
             bin.Serialize(stream, _data);
@@ -160,7 +160,7 @@ public static class SaveSystem {
         // stream.Close();
     }
     public static PoolData LoadPools(int slot, Vector2Int coordinates) {
-        string path = $"{Application.persistentDataPath}/PoolData{slot}_{coordinates.x}x{coordinates.y}y.tss";
+        string path = $"{Application.persistentDataPath}/PoolData{slot}_{Insignify(coordinates.x)}x{Insignify(coordinates.y)}y.tss";
         if(File.Exists(path)) {
             BinaryFormatter bin = new BinaryFormatter();
             using(FileStream stream = new FileStream(path, FileMode.Open)) {
@@ -176,5 +176,18 @@ public static class SaveSystem {
         else {
             return null;
         }
+    }
+    private static string Insignify(int value) {
+        string newValue;
+        if((float)value / 100f >= 1f) {
+            newValue = value.ToString();
+        }
+        else if((float)value / 10f >= 1f) {
+            newValue = $"0{value}";
+        }
+        else {
+            newValue = $"00{value}";
+        }
+        return newValue;
     }
 }

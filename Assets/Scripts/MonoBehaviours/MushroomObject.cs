@@ -34,15 +34,16 @@ public class MushroomObject : MonoBehaviour, IInteractable {
     }
     public void SetMushroom(Mushroom mushroom, Vector2Int mushroomCoordinates, MushroomGeneration mushroomGeneration) {
         this.mushroom = mushroom;
-        if(mushroom && spriteRen && mushroomGeneration) {
-            spriteRen.sprite = mushroom.firstSprite;
+        if(this.mushroom && spriteRen && mushroomGeneration) {
+            spriteRen.sprite = this.mushroom.firstSprite;
             this.mushroomCoordinates = mushroomCoordinates;
             this.mushroomGeneration = mushroomGeneration;
         }
         else if(spriteRen && !mushroomGeneration) {
             spriteRen.sprite = null;
+            Debug.LogWarning("Mushroom taken");
             this.mushroomGeneration.TakeMushroom(new Vector2Int(this.mushroomCoordinates.x, this.mushroomCoordinates.y));
-            gameObject.SetActive(false);
+            gameObject.SetActive(false);            
         }
     }
     public Mushroom GetMushroom() {

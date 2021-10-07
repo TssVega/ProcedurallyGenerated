@@ -98,7 +98,7 @@ public class SkillUI : MonoBehaviour {
                 if(playerSkills.currentSkills[i] is ActiveSkill) {
                     playerSkills.UseSkill(playerSkills.currentSkills[i]);
                 }
-                else if(potionCooldown <= 0f) {                    
+                else if(potionCooldown <= 0f) {
                     if(inventory.CanConsumeItem(playerSkills.currentSkills[i])) {
                         potionCooldown = 1f;
                         inventory.ConsumeItem(playerSkills.currentSkills[i]);
