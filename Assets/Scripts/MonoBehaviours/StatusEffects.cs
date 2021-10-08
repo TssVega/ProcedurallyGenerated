@@ -7,6 +7,7 @@ using Pathfinding;
 public class StatusEffects : MonoBehaviour {
 
     public Player player;
+    private Player globalPlayer;
     //private Enemy enemy;
     private AIPath aiPath;
     private EnemyAI enemyAI;
@@ -111,7 +112,13 @@ public class StatusEffects : MonoBehaviour {
     public GameObject lowEnergyParticles;
     public GameObject blessParticles;
 
+    private float DistanceToPlayer {
+        get {
+            return player ? 0f : enemyAI ? Vector3.Distance(globalPlayer.transform.position, transform.position) : 0f;
+        }
+    }
     private void OnEnable() {
+        globalPlayer = FindObjectOfType<Player>();
         aiPath = GetComponent<AIPath>();
         enemyAI = GetComponent<EnemyAI>();
         player = GetComponent<Player>();
@@ -127,7 +134,7 @@ public class StatusEffects : MonoBehaviour {
         originalSpeed = stats.runSpeed;
         if(enemyAI) {
             enemyAI.speed = originalSpeed;
-        }        
+        }
         DefaultStatusValues();
         if(statusUI) {
             statusUI.UpdateHealth(stats.health / stats.trueMaxHealth, stats.health);
@@ -136,7 +143,7 @@ public class StatusEffects : MonoBehaviour {
         }
         if(player && statusUI) {
             GradualEnergyDrop();
-        }        
+        }
     }
     // Stop all effect counters and reset values on disable
     private void OnDisable() {
@@ -192,17 +199,17 @@ public class StatusEffects : MonoBehaviour {
         blessRate = 1f;
         if(stunParticles && stunParticles.activeInHierarchy) {
             stunParticles.SetActive(false);
-        }        
+        }
     }
     private void GradualEnergyDrop() {
         StartCoroutine(EnergyCounter());
     }
     private IEnumerator EnergyCounter() {
-        for(;;) {
+        for(; ; ) {
             yield return new WaitForSeconds(energyTime);
             DecreaseEnergy(1f);
             CheckEnergy();
-        }        
+        }
     }
     private void CheckEnergy() {
         if(!player) {
@@ -230,7 +237,8 @@ public class StatusEffects : MonoBehaviour {
             statusUI.UpdateEnergy(stats.energy / stats.trueMaxEnergy, stats.energy);
         }
         InstantiateParticles("HealedParticles");
-    }
+        AudioSystem.audioManager.PlaySound("heal", DistanceToPlayer);
+    }    
     public void UseMana(float amount) {
         float finalAmount = Mathf.Clamp(amount, 0, stats.trueMaxMana);
         stats.mana -= finalAmount;
@@ -252,6 +260,7 @@ public class StatusEffects : MonoBehaviour {
             statusUI.UpdateMana(stats.mana / stats.trueMaxMana, stats.mana);
         }
         InstantiateParticles("GainedManaParticles");
+        AudioSystem.audioManager.PlaySound("manaGain", DistanceToPlayer);
     }
     public bool CanUseMana(float amount) {
         return stats.mana >= amount;
@@ -269,6 +278,7 @@ public class StatusEffects : MonoBehaviour {
         }
         CheckEnergy();
         InstantiateParticles("GainedEnergyParticles");
+        AudioSystem.audioManager.PlaySound("energyGain", DistanceToPlayer);
     }
     private void TakeMushroomDamage(float amount) {
         float damage = 0f;
@@ -383,12 +393,13 @@ public class StatusEffects : MonoBehaviour {
             case AttackType.Curse:
                 InstantiateDamageTakenParticles("CurseDamageTaken");
                 break;
-            default: break;
+            default:
+                break;
         }
         damage = Mathf.Clamp(damage, 0f, stats.maxDamageTimesHealth * stats.trueMaxHealth);
         stats.health -= damage;
         GenerateBloodParticles();
-        if(enemyAI && enemyAI.willDefendItself) {            
+        if(enemyAI && enemyAI.willDefendItself) {
             if(!stunned && !chanelling && !immobilized && !enemyAI.attacked) {
                 enemyAI.transform.eulerAngles = new Vector3(0, 0, Vector3.SignedAngle(Vector3.up, attacker.transform.position - transform.position, Vector3.forward));
             }
@@ -419,7 +430,7 @@ public class StatusEffects : MonoBehaviour {
         //    player.playerStatus.OnStatusChange(PlayerStatus.Health);
         //}
         //if(bar) {
-         //   bar.UpdateStatus();
+        //   bar.UpdateStatus();
         //}
         /*if(enemy && stats.health <= 0f) {
             stats.health = 0;
@@ -475,7 +486,7 @@ public class StatusEffects : MonoBehaviour {
         if(aiPath) {
             aiPath.canMove = false;
             aiPath.destination = aiPath.transform.position;
-        }        
+        }
     }
     private void CommenceEnemyAI() {
         if(aiPath) {
@@ -590,11 +601,13 @@ public class StatusEffects : MonoBehaviour {
     // Stop regeneration
     public void StopRegen() {
         StopCoroutine(regenCounter);
+        regenerating = false;
     }
     // Damage over time coroutines
     public IEnumerator Regeneration(float duration, float healAmountPerTick) {
         float period = 1f;
         bool done = false;
+        regenerating = true;
         while(!done) {
             yield return new WaitForSeconds(period);
             Heal(healAmountPerTick);
@@ -603,6 +616,7 @@ public class StatusEffects : MonoBehaviour {
                 done = true;
             }
         }
+        regenerating = false;
     }
     public void AddFireStacks(int amount, float damage, float duration, Skill skill, StatusEffects attacker) {
         fireStacks += amount;
@@ -726,6 +740,7 @@ public class StatusEffects : MonoBehaviour {
         float period = 1f;
         bool done = false;
         poisoned = true;
+        AudioSystem.audioManager.PlaySound("poisoned", DistanceToPlayer);
         while(!done) {
             yield return new WaitForSeconds(period);
             if(skill && attacker) {
@@ -790,6 +805,7 @@ public class StatusEffects : MonoBehaviour {
         float period = 0.5f;
         bool done = false;
         bleeding = true;
+        AudioSystem.audioManager.PlaySound("bleeding", DistanceToPlayer);
         while(!done) {
             yield return new WaitForSeconds(period);
             TakeDamage(damage / duration, AttackType.Bleed, skill, attacker);
@@ -848,6 +864,7 @@ public class StatusEffects : MonoBehaviour {
         float period = 2f;
         bool done = false;
         cursed = true;
+        AudioSystem.audioManager.PlaySound("cursed", DistanceToPlayer);
         while(!done) {
             yield return new WaitForSeconds(period);
             TakeDamage(damage / duration, AttackType.Curse, skill, attacker);
@@ -1230,7 +1247,7 @@ public class StatusEffects : MonoBehaviour {
             blockingCoroutine = StartCoroutine(Blocking(duration));
         }
     }
-    private IEnumerator Blocking(float duration){
+    private IEnumerator Blocking(float duration) {
         blockingCoroutineRunning = true;
         blocking = true;
         defaultShieldTransform.position = forwardShieldTransform.position;
@@ -1248,7 +1265,7 @@ public class StatusEffects : MonoBehaviour {
         blockingCoroutineRunning = false;
     }
     public void StartParrying(float duration) {
-        if(gameObject.activeInHierarchy) {            
+        if(gameObject.activeInHierarchy) {
             blockingCoroutine = StartCoroutine(Parry(duration));
         }
     }

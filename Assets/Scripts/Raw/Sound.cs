@@ -9,15 +9,15 @@ public class Sound {
     public AudioClip audioClip;                                 // Audio file
 
     [Range(0f, 1f)] public float volume = 1f;                   // Set the normal volume
-    [SerializeField] private float currentVolume;
+    [SerializeField] private float currentVolume = 1f;
     [Range(0.2f, 1.8f)] public float pitch = 1f;                // Set the normal pitch
-    [SerializeField] private float currentPitch;
+    [SerializeField] private float currentPitch = 1f;
     // public float soundEndingOffset = 0.3f;
 
-    public bool looping;                                        // Set true if the audio is supposed to loop
+    public bool looping = false;                                // Set true if the audio is supposed to loop
 
-    public bool randomizeVolume;                                // Set true if you want randomized volume
-    public bool randomizePitch;                                 // Set true if you want randomized pitch
+    public bool randomizeVolume = false;                        // Set true if you want randomized volume
+    public bool randomizePitch = false;                         // Set true if you want randomized pitch
     [Range(0f, 0.5f)] public float volumeRandomness = 0.1f;     // Randomness of the volume
     [Range(0f, 0.5f)] public float pitchRandomness = 0.1f;      // Randomness of the pitch
 
@@ -38,7 +38,7 @@ public class Sound {
         // Randomize current value
         currentVolume =
             randomizeVolume ? currentVolume *= 1 +
-            (Random.Range(-volumeRandomness / 2, volumeRandomness / 2)) : currentVolume *= 1;
+            (Random.Range(-volumeRandomness / 2, volumeRandomness / 2)) : currentVolume;
         // These statemens are keeping the current volume between randomness offsets
         if(currentVolume > volume + volumeRandomness && randomizeVolume) {
             currentVolume = volume + volumeRandomness;

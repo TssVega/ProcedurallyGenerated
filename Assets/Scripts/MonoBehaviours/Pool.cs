@@ -135,6 +135,7 @@ public class Pool : MonoBehaviour, IInteractable {
                         playerStats.charisma++;
                         break;
                 }
+                AudioSystem.audioManager.PlaySound("mainStatGained", 0f);
             }
             FindObjectOfType<Player>().ClearInteraction(this);
             SetPool(healingPool, false, true, poolGeneration);

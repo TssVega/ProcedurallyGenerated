@@ -43,8 +43,10 @@ public class AudioSystem : MonoBehaviour {
             for(int i = 0; i < sounds.Length; i++) {
                 if(sounds[i].audioName == _name) {
                     sounds[i].Play(distance);
+                    return;
                 }
             }
+            Debug.LogError($"{_name} cannot be found on audioSystem");
         }
     }
     public void Mute() {
@@ -89,5 +91,8 @@ public class AudioSystem : MonoBehaviour {
         sounds[3].volume = fxValue;
         sounds[2].ChangeVolume(0f);
         sounds[3].ChangeVolume(0f);
+        for(int i = 4; i < sounds.Length; i++) {
+            sounds[i].volume = fxValue;
+        }
     }
 }

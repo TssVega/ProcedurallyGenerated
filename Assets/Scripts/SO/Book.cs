@@ -12,27 +12,35 @@ public class Book : Item, IUsable {
         switch(bookType) {
             case BookType.Strength:
                 status.stats.strength++;
+                AudioSystem.audioManager.PlaySound("mainStatGained", 0f);
                 break;
             case BookType.Agility:
                 status.stats.agility++;
+                AudioSystem.audioManager.PlaySound("mainStatGained", 0f);
                 break;
             case BookType.Dexterity:
                 status.stats.dexterity++;
+                AudioSystem.audioManager.PlaySound("mainStatGained", 0f);
                 break;
             case BookType.Intelligence:
                 status.stats.intelligence++;
+                AudioSystem.audioManager.PlaySound("mainStatGained", 0f);
                 break;
             case BookType.Faith:
                 status.stats.faith++;
+                AudioSystem.audioManager.PlaySound("mainStatGained", 0f);
                 break;
             case BookType.Wisdom:
                 status.stats.wisdom++;
+                AudioSystem.audioManager.PlaySound("mainStatGained", 0f);
                 break;
             case BookType.Vitality:
                 status.stats.vitality++;
+                AudioSystem.audioManager.PlaySound("mainStatGained", 0f);
                 break;
             case BookType.Charisma:
                 status.stats.charisma++;
+                AudioSystem.audioManager.PlaySound("mainStatGained", 0f);
                 break;
             case BookType.Flame:
                 status.stats.fireDamage += 2f;

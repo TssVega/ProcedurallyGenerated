@@ -56,6 +56,7 @@ MonoBehaviour:
     randomizePitch: 0
     volumeRandomness: 0
     pitchRandomness: 0
+    audioSource: {fileID: 0}
   - audioName: theCubeOfEverything
     audioClip: {fileID: 8300000, guid: 0401d640733e9774f8ab3c35b69e4d15, type: 3}
     volume: 1
@@ -67,6 +68,7 @@ MonoBehaviour:
     randomizePitch: 0
     volumeRandomness: 0
     pitchRandomness: 0
+    audioSource: {fileID: 0}
   - audioName: menuButton
     audioClip: {fileID: 8300000, guid: ca315992a9f0b604ebf671a0e1681c91, type: 3}
     volume: 1
@@ -78,6 +80,7 @@ MonoBehaviour:
     randomizePitch: 0
     volumeRandomness: 0
     pitchRandomness: 0
+    audioSource: {fileID: 0}
   - audioName: inGameButton
     audioClip: {fileID: 8300000, guid: 1cab14e7eef701048a7a1ad81acfff98, type: 3}
     volume: 1
@@ -89,3 +92,473 @@ MonoBehaviour:
     randomizePitch: 0
     volumeRandomness: 0
     pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: airDamage
+    audioClip: {fileID: 8300000, guid: fc0e6f8d349a7894d979ca6907c256c9, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: bashDamage
+    audioClip: {fileID: 8300000, guid: 3d70915002d35d44dbd75c0760d27091, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: bleedDamage
+    audioClip: {fileID: 8300000, guid: ba6e363e074edd04bb739b26dfe31298, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: bleeding
+    audioClip: {fileID: 8300000, guid: 70f35b86db502ed4bae96fe85c55e902, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: blessed
+    audioClip: {fileID: 8300000, guid: 0ba0c17d11d05e641924376041fbf133, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: block
+    audioClip: {fileID: 8300000, guid: e6fceb3998ee9eb4f873179cc8d21e41, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: burning
+    audioClip: {fileID: 8300000, guid: fc01e7f8d63cf914587f54ff4bbdbe14, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: cursed
+    audioClip: {fileID: 8300000, guid: 7753da4cef36fd44494d0649c698fffd, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: curseDamage
+    audioClip: {fileID: 8300000, guid: a78ec854858930f4baa094d61eeaaccf, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: darkDamage
+    audioClip: {fileID: 8300000, guid: c70ad41eaaf711d439baf1707a50794b, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: darkSigilActivate
+    audioClip: {fileID: 8300000, guid: cc1eb9326a24b094d9d3ba398d2eddc5, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: darkSigilHit
+    audioClip: {fileID: 8300000, guid: 87d40390239e7d24db2b79f854ae23ff, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: earthDamage
+    audioClip: {fileID: 8300000, guid: eebfb6b700004b142b466dfc5cd45f62, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: energyGain
+    audioClip: {fileID: 8300000, guid: 8ff7b58a6800b8f46b4f6d1859172e47, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: fireDamage
+    audioClip: {fileID: 8300000, guid: 702f393cad444a541bb6fd9112b8640a, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: footsteps
+    audioClip: {fileID: 8300000, guid: a1274df9bf86bc34c98fdfaa9d689208, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: frostbitten
+    audioClip: {fileID: 8300000, guid: ad6ff47ae1666d549a40667fb4a80753, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: heal
+    audioClip: {fileID: 8300000, guid: 670a36c50bd7662489b089eec7e653de, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: hungry
+    audioClip: {fileID: 8300000, guid: 37ea9c4474351674e9189852ff5bb6d5, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: itemEquip
+    audioClip: {fileID: 8300000, guid: d82a06fdffc281842bc0ad6599baeb55, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: lightDamage
+    audioClip: {fileID: 8300000, guid: 94a79bd95a2e6754aaafdeb7a3425744, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: lightningDamage
+    audioClip: {fileID: 8300000, guid: a5ab5b6954039c441ab4ae592ad98b7d, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: lit
+    audioClip: {fileID: 8300000, guid: 74086c89281d985498cdcea6a6f8c271, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: mainStatGained
+    audioClip: {fileID: 8300000, guid: 6cc5c11eb3185fe45b37cfccfc596954, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: manaGain
+    audioClip: {fileID: 8300000, guid: 78fe738e256847048a5698ebe3e60818, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: meatEat
+    audioClip: {fileID: 8300000, guid: 32fd3acef1097e74183287f83d5d266f, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: mushroomEat
+    audioClip: {fileID: 8300000, guid: 5b55f32f263a5824a8726d57a5cd1188, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: parry
+    audioClip: {fileID: 8300000, guid: d45e15abe7e8b38458e12be4a8e5c60e, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: pickItem
+    audioClip: {fileID: 8300000, guid: c65232907a051cb42870474465653378, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: pierceDamage
+    audioClip: {fileID: 8300000, guid: c0eeb87f5dba8b447a8d2786bc5651f5, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: poisonDamage
+    audioClip: {fileID: 8300000, guid: 3a57fd0f6a6524f47a2bdadf14c9862f, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: poisoned
+    audioClip: {fileID: 8300000, guid: 300503430c1f3374aa998c8183c8b666, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: potionDrink
+    audioClip: {fileID: 8300000, guid: e3234c3df5e8c1b4ba1e97069ee0c782, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: rooted
+    audioClip: {fileID: 8300000, guid: 915361cdca274da4d94b96b06755025a, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: shocked
+    audioClip: {fileID: 8300000, guid: e3696840d2c443d49b4e142d2b82b55f, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: skillUnlocked
+    audioClip: {fileID: 8300000, guid: 7af351ebc9041d64b9037bdc9ff9eafa, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: slashDamage
+    audioClip: {fileID: 8300000, guid: e5e6ba016ebc302428276d27845615fa, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: stunned
+    audioClip: {fileID: 8300000, guid: a04bb08368c5ba64cbec058d402d4c9a, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: waterDamage
+    audioClip: {fileID: 8300000, guid: 633921b95aed1714db1e820accc3c4cf, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  optionsUI: {fileID: 0}
