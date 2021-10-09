@@ -174,11 +174,13 @@ public class Book : Item, IUsable {
             default:
                 break;
         }
+        AudioSystem.audioManager.PlaySound("bookRead", 0f);
     }
     private void UnlockNewSkill(AttackType attackType, StatusEffects status) {
         for(int i = 0; i < skillDatabase.skills.Count; i++) {
             if(skillDatabase.skills[i].attackType == attackType) {
                 status.skillUser.acquiredSkills.Add(skillDatabase.skills[i]);
+                AudioSystem.audioManager.PlaySound("skillUnlocked", 0f);
                 return;
             }
         }

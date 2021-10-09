@@ -52,7 +52,7 @@ public class MushroomObject : MonoBehaviour, IInteractable {
     public void Interact() {
         if(gameObject.activeSelf) {
             if(player.inventory.CanAddToInventory()) {
-                player.inventory.AddToInventory(GetMushroom());
+                player.inventory.AddToInventory(GetMushroom(), true);
                 SetMushroom(null, new Vector2Int(), null);
             }            
         }        

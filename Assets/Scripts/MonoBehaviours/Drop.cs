@@ -32,7 +32,7 @@ public class Drop : MonoBehaviour {
             takeItemTime -= Time.deltaTime;
             yield return null;
         }
-        inventory.AddToInventory(item);
+        inventory.AddToInventory(item, true);
         item = null;
         gameObject.SetActive(false);
     }

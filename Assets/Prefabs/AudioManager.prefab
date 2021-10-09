@@ -561,4 +561,16 @@ MonoBehaviour:
     volumeRandomness: 0
     pitchRandomness: 0
     audioSource: {fileID: 0}
+  - audioName: bookRead
+    audioClip: {fileID: 8300000, guid: c42e818312570194a9f4030d1547b00c, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
   optionsUI: {fileID: 0}

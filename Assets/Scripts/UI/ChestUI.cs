@@ -99,7 +99,10 @@ public class ChestUI : MonoBehaviour {
         if(string.IsNullOrEmpty(chestObject.chestContent.items[slot])) {
             return;
         }
-        if(inventory.AddToInventory(itemCreator.CreateItem(chestObject.chestContent.items[slot], playerStats.luck))) {
+        if(!inventory.CanAddToInventory()) {
+            return;
+        }
+        if(inventory.AddToInventory(itemCreator.CreateItem(chestObject.chestContent.items[slot], playerStats.luck), true)) {
             firstIcons[slot].color = Color.clear;
             secondIcons[slot].color = Color.clear;
             thirdIcons[slot].color = Color.clear;

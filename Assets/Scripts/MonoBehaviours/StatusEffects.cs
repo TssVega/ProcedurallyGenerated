@@ -114,7 +114,7 @@ public class StatusEffects : MonoBehaviour {
 
     private float DistanceToPlayer {
         get {
-            return player ? 0f : enemyAI ? Vector3.Distance(globalPlayer.transform.position, transform.position) : 0f;
+            return player ? 0f : Vector3.Distance(globalPlayer.transform.position, transform.position);
         }
     }
     private void OnEnable() {
@@ -222,6 +222,7 @@ public class StatusEffects : MonoBehaviour {
         if(stats.energy < 20f) {
             StartChill(energyTime, hungerSlowRate);
             lowEnergyParticles.SetActive(true);
+            AudioSystem.audioManager.PlaySound("hungry", 0f);
         }
         if(stats.energy < 1f) {
             TakeDamage(10f, AttackType.Bleed, null, null);
@@ -317,9 +318,14 @@ public class StatusEffects : MonoBehaviour {
         if(passives) {
             damage = passives.OnHitTaken(damage, attackType, stats);
         }
-        if(parrying && attacker && skill && skill.interruptable) {
+        if(parrying && attacker && skill && skill.parryable) {
             damage = 0f;
             attacker.StartStun(stats.vitality * 0.05f);
+            AudioSystem.audioManager.PlaySound("parry", DistanceToPlayer);
+        }
+        else if(blocking && attacker && skill && skill.parryable) {
+            damage *= 1f - stats.damageBlockRate;
+            AudioSystem.audioManager.PlaySound("block", DistanceToPlayer);
         }
         else {
             // If this target is dark sigiled, add sigil charges
@@ -356,42 +362,55 @@ public class StatusEffects : MonoBehaviour {
         switch(attackType) {
             case AttackType.Slash:
                 InstantiateDamageTakenParticles("SlashDamageTaken");
+                AudioSystem.audioManager.PlaySound("slashDamage", DistanceToPlayer);
                 break;
             case AttackType.Bash:
                 InstantiateDamageTakenParticles("BashDamageTaken");
+                AudioSystem.audioManager.PlaySound("bashDamage", DistanceToPlayer);
                 break;
             case AttackType.Pierce:
                 InstantiateDamageTakenParticles("PierceDamageTaken");
+                AudioSystem.audioManager.PlaySound("pierceDamage", DistanceToPlayer);
                 break;
             case AttackType.Fire:
                 InstantiateDamageTakenParticles("FireDamageTaken");
+                AudioSystem.audioManager.PlaySound("fireDamage", DistanceToPlayer);
                 break;
             case AttackType.Ice:
                 InstantiateDamageTakenParticles("IceDamageTaken");
+                AudioSystem.audioManager.PlaySound("waterDamage", DistanceToPlayer);
                 break;
             case AttackType.Air:
                 InstantiateDamageTakenParticles("AirDamageTaken");
+                AudioSystem.audioManager.PlaySound("airDamage", DistanceToPlayer);
                 break;
             case AttackType.Earth:
                 InstantiateDamageTakenParticles("EarthDamageTaken");
+                AudioSystem.audioManager.PlaySound("earthDamage", DistanceToPlayer);
                 break;
             case AttackType.Lightning:
                 InstantiateDamageTakenParticles("LightningDamageTaken");
+                AudioSystem.audioManager.PlaySound("lightningDamage", DistanceToPlayer);
                 break;
             case AttackType.Light:
                 InstantiateDamageTakenParticles("LightDamageTaken");
+                AudioSystem.audioManager.PlaySound("lightDamage", DistanceToPlayer);
                 break;
             case AttackType.Dark:
                 InstantiateDamageTakenParticles("DarkDamageTaken");
+                AudioSystem.audioManager.PlaySound("darkDamage", DistanceToPlayer);
                 break;
             case AttackType.Poison:
                 InstantiateDamageTakenParticles("PoisonDamageTaken");
+                AudioSystem.audioManager.PlaySound("poisonDamage", DistanceToPlayer);
                 break;
             case AttackType.Bleed:
                 InstantiateDamageTakenParticles("BloodDamageTaken");
+                AudioSystem.audioManager.PlaySound("bleedDamage", DistanceToPlayer);
                 break;
             case AttackType.Curse:
                 InstantiateDamageTakenParticles("CurseDamageTaken");
+                AudioSystem.audioManager.PlaySound("curseDamage", DistanceToPlayer);
                 break;
             default:
                 break;
@@ -505,6 +524,7 @@ public class StatusEffects : MonoBehaviour {
         blessRate = extraDamageRate;
         blessParticles.GetComponent<Particles>().duration = duration;
         blessParticles.SetActive(true);
+        AudioSystem.audioManager.PlaySound("blessed", DistanceToPlayer);
         yield return new WaitForSeconds(duration);
         blessRate = 1f;
         blessParticles.SetActive(false);
@@ -535,6 +555,7 @@ public class StatusEffects : MonoBehaviour {
         if(lightningStacks >= stats.shockThreshold) {
             lightningStacks = 0;
             StartStun(duration);
+            AudioSystem.audioManager.PlaySound("shocked", DistanceToPlayer);
             //statusParticles.StartShockedParticles(duration);
             TakeDamage(damage, AttackType.Lightning, skill, attacker);
         }
@@ -627,6 +648,7 @@ public class StatusEffects : MonoBehaviour {
         if(fireStacks >= stats.burningThreshold) {
             fireStacks = 0;
             StartBurn(duration, damage, skill, attacker);
+            AudioSystem.audioManager.PlaySound("burning", DistanceToPlayer);
         }
         else if(fireStacks > 0) {
             if(!fireStacksCounterRunning && gameObject.activeInHierarchy) {
@@ -900,6 +922,7 @@ public class StatusEffects : MonoBehaviour {
         stunParticles.transform.rotation = transform.rotation;
         stunParticles.SetActive(true);
         InterruptEnemyAI();
+        AudioSystem.audioManager.PlaySound("stunned", DistanceToPlayer);
         /*
         if(enemy)
             ToggleCrowdControl();*/
@@ -957,6 +980,7 @@ public class StatusEffects : MonoBehaviour {
         /*if(enemy) {
             ToggleCrowdControl();
         }*/
+        AudioSystem.audioManager.PlaySound("frostbitten", DistanceToPlayer);
         StartStun(duration);
         SetFrostbiteDamage(amplifiedDamage);
         StartCoroutine(FrostbiteCooldown(frostbiteCooldown));
@@ -1030,7 +1054,6 @@ public class StatusEffects : MonoBehaviour {
     public void StartDarkSigil(float duration, float damageRate, Skill skill, StatusEffects attacker) {
         if(gameObject.activeInHierarchy) {
             if(!darkSigilRunning && !cannotBeDarkSigiled) {
-                Debug.LogWarning("Dark sigil started");
                 StartCoroutine(DarkSigilCooldown(darkSigilCooldown));
                 darkSigilCounter = StartCoroutine(DarkSigil(duration, damageRate, skill, attacker));
             }
@@ -1048,8 +1071,10 @@ public class StatusEffects : MonoBehaviour {
         if(!darkSigilRunning) {
             darkSigilRunning = true;
         }
+        AudioSystem.audioManager.PlaySound("darkSigilActivate", DistanceToPlayer);
         yield return new WaitForSeconds(duration);
         TakeDamage(darkSigilCharge * damageRate, AttackType.Dark, skill, attacker);
+        AudioSystem.audioManager.PlaySound("darkSigilHit", DistanceToPlayer);
         darkSigilCharge = 0;
         darkSigil = false;
         darkSigilRunning = false;
@@ -1159,6 +1184,7 @@ public class StatusEffects : MonoBehaviour {
     }
     private IEnumerator Earthen(float duration) {
         earthed = true;
+        AudioSystem.audioManager.PlaySound("rooted", DistanceToPlayer);
         yield return new WaitForSeconds(duration);
         earthed = false;
     }
@@ -1171,6 +1197,7 @@ public class StatusEffects : MonoBehaviour {
         if(lightStacks >= stats.lightingThreshold) {
             lightStacks = 0;
             StartEnlighten(duration);
+            AudioSystem.audioManager.PlaySound("lit", DistanceToPlayer);
         }
         else if(lightStacks > 0) {
             if(!lightStacksCounterRunning && gameObject.activeInHierarchy) {

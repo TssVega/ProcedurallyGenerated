@@ -37,8 +37,8 @@ public class Sound {
         }
         // Randomize current value
         currentVolume =
-            randomizeVolume ? currentVolume *= 1 +
-            (Random.Range(-volumeRandomness / 2, volumeRandomness / 2)) : currentVolume;
+            randomizeVolume ? currentVolume *= 1f +
+            (Random.Range(-volumeRandomness / 2f, volumeRandomness / 2f)) : currentVolume;
         // These statemens are keeping the current volume between randomness offsets
         if(currentVolume > volume + volumeRandomness && randomizeVolume) {
             currentVolume = volume + volumeRandomness;
@@ -46,12 +46,12 @@ public class Sound {
         if(currentVolume < volume - volumeRandomness && randomizeVolume) {
             currentVolume = volume - volumeRandomness;
         }
-        if(distance > 5) {
-            audioSource.volume = currentVolume / distance * 0.2f;
-        }
-        else if(distance > 20) {
+        if(distance > 20f) {
             audioSource.volume = 0f;
         }
+        else if(distance > 5f) {
+            audioSource.volume = currentVolume / distance * 0.2f;
+        }        
         else {
             audioSource.volume = currentVolume;
         }
@@ -64,8 +64,8 @@ public class Sound {
         }
         // Randomize current value
         currentPitch =
-            randomizePitch ? currentPitch *= 1 +
-            (Random.Range(-pitchRandomness / 2, pitchRandomness / 2)) : currentPitch *= 1;
+            randomizePitch ? currentPitch *= 1f +
+            (Random.Range(-pitchRandomness / 2f, pitchRandomness / 2f)) : currentPitch;
         // These statemens are keeping the current volume between randomness offsets
         if(currentPitch > pitch + pitchRandomness && randomizePitch) {
             currentPitch = pitch + pitchRandomness;
@@ -80,8 +80,8 @@ public class Sound {
         ChangeVolume(distance);
         ChangePitch();
         // Set the values
-        audioSource.volume = currentVolume;
-        audioSource.pitch = currentPitch;
+        //audioSource.volume = currentVolume;
+        //audioSource.pitch = currentPitch;
         // Play
         audioSource.Play();
     }

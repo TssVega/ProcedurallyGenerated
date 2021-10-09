@@ -27,6 +27,7 @@ public class Mushroom : Item, IUsable {
             // Poison here
             status.AddPoisonStacks((int)mushroomPower);
         }
+        AudioSystem.audioManager.PlaySound("mushroomEat", 0f);
     }
 }
 

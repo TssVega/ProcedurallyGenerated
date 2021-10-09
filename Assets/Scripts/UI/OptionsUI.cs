@@ -47,13 +47,13 @@ public class OptionsUI : MonoBehaviour {
     }
     public void ChangeFXVolume() {
         UpdateFXVolume();
-        AudioSystem.audioManager.PlaySound("menuButtonClick", fxSlider.value);
+        AudioSystem.audioManager.PlaySound("menuButton", 0f);
         PlayerPrefs.SetFloat("fx", fxSlider.value);
         PlayerPrefs.Save();
     }
     public void ChangeMusicVolume() {
         UpdateMusicVolume();
-        AudioSystem.audioManager.PlaySound("menuButtonClick", musicSlider.value);
+        AudioSystem.audioManager.PlaySound("menuButton", 0f);
         PlayerPrefs.SetFloat("music", musicSlider.value);
         PlayerPrefs.Save();
     }
@@ -85,7 +85,7 @@ public class OptionsUI : MonoBehaviour {
             }            
         }
         else {
-            AudioSystem.audioManager.PlaySound("menuButtonClick", fxSlider.value);
+            AudioSystem.audioManager.PlaySound("menuButton", fxSlider.value);
             muteTick.SetActive(false);
             PlayerPrefs.SetInt("mute", 0);
             AudioSystem.audioManager.PlaySound("menuTheme", fxSlider.value);

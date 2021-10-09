@@ -22,5 +22,6 @@ public class Meat : Item, IUsable {
         if(cooked && status.player.raceIndex == 9) {
             status.StartBless(vilgerosiBless, vilgerosiBlessDuration);
         }
+        AudioSystem.audioManager.PlaySound("meatEat", 0f);
     }
 }

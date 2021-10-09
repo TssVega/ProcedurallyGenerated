@@ -64,6 +64,7 @@ public class SkillInfoPanel : MonoBehaviour {
             RefreshText();
             skillTree.UpdateStatPoints();
             skillTree.RefreshAcquiredStatus();
+            AudioSystem.audioManager.PlaySound("skillUnlocked", 0f);
         }        
     }
     private bool CheckPrerequisites() {

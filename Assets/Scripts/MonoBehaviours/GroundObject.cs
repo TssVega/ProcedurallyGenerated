@@ -56,10 +56,10 @@ public class GroundObject : MonoBehaviour, IInteractable {
                 if(player.raceIndex == 3) {
                     const float bonusYieldChance = 0.1f;
                     if(Random.Range(0f, 1f) < bonusYieldChance) {
-                        player.inventory.AddToInventory(GetObject());
+                        player.inventory.AddToInventory(GetObject(), false);
                     }                    
                 }
-                player.inventory.AddToInventory(GetObject());
+                player.inventory.AddToInventory(GetObject(), true);
                 SetObject(null, new Vector2Int(), null);
             }
         }

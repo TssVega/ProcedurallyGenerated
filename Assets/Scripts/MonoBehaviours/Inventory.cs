@@ -68,7 +68,7 @@ public class Inventory : MonoBehaviour {
         if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Levels") {
             for(int i = 0; i < 1; i++) {
                 Item ex = itemDatabase.items[89];
-                AddToInventory(ex);
+                AddToInventory(ex, false);
             }
         }
         // Create example weapon
@@ -356,7 +356,7 @@ public class Inventory : MonoBehaviour {
             return;
         }
         for(int i = 0; i < inventory[slotIndex].dismantleOutput; i++) {
-            AddToInventory(itemDatabase.GetItemByMaterial(inventory[slotIndex].itemMaterial));
+            AddToInventory(itemDatabase.GetItemByMaterial(inventory[slotIndex].itemMaterial), true);
         }
         inventory[slotIndex] = null;
         quantities[slotIndex]--;
@@ -402,6 +402,7 @@ public class Inventory : MonoBehaviour {
             // Debug.Log("Trying to equip ring");
         }
         equipment[(int)item.slot] = item;
+        AudioSystem.audioManager.PlaySound("itemEquip", 0f);
         stats.OnItemEquip(item);
         if(item.alterLight) {
             CheckLights(item);
@@ -433,7 +434,7 @@ public class Inventory : MonoBehaviour {
             quantities[slot]--;
             player.ClearItem(tempItem);
             EquipItem(item);
-            AddToInventory(tempItem);
+            AddToInventory(tempItem, false);
             stats.OnItemUnequip(tempItem);
             UpdateStats();
             //UnequipItem(slot, GetEmptyInventorySlot());
@@ -441,7 +442,7 @@ public class Inventory : MonoBehaviour {
             UpdateSlot(slot);
         }
     }
-    public bool AddToInventory(Item item) {
+    public bool AddToInventory(Item item, bool playSound) {
         if(!item) {
             return false;
         }
@@ -459,6 +460,9 @@ public class Inventory : MonoBehaviour {
                         quantities[i]++;
                         UpdateSlot(i);
                         skillUI.UpdateQuantities();
+                        if(playSound) {
+                            AudioSystem.audioManager.PlaySound("pickItem", 0f);
+                        }
                         return true;
                     }
                 }
@@ -470,7 +474,10 @@ public class Inventory : MonoBehaviour {
                         quantities[i]++;
                         UpdateSlot(i);
                         skillUI.UpdateQuantities();
-                        return true;
+                        if(playSound) {
+                            AudioSystem.audioManager.PlaySound("pickItem", 0f);
+                        }
+                        return true;                        
                     }
                 }
             }
@@ -495,6 +502,7 @@ public class Inventory : MonoBehaviour {
                 quantities[i]++;
                 UpdateSlot(i);
                 skillUI.UpdateQuantities();
+                AudioSystem.audioManager.PlaySound("pickItem", 0f);
                 return true;
             }            
         }
