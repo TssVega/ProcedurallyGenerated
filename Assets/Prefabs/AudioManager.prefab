@@ -281,9 +281,9 @@ MonoBehaviour:
     currentPitch: 1
     looping: 0
     randomizeVolume: 0
-    randomizePitch: 0
-    volumeRandomness: 0
-    pitchRandomness: 0
+    randomizePitch: 1
+    volumeRandomness: 0.05
+    pitchRandomness: 0.5
     audioSource: {fileID: 0}
   - audioName: frostbitten
     audioClip: {fileID: 8300000, guid: ad6ff47ae1666d549a40667fb4a80753, type: 3}

@@ -18,6 +18,8 @@ public class Projectile : MonoBehaviour {
 
     private const float setTargetDelay = 0.75f;
 
+    private bool isActive = true;
+
     private void Awake() {
         rb2d = GetComponent<Rigidbody2D>();
         circleCollider2D = GetComponent<CircleCollider2D>();
@@ -27,14 +29,21 @@ public class Projectile : MonoBehaviour {
         if(targetToSet) {
             StartCoroutine(SetTargetDelayed(targetToSet));
         }
+        isActive = true;
+        light2D.enabled = true;
     }
     private void Update() {
         countdown -= Time.deltaTime;
         if(countdown <= 0f) {
-            EndProjectile();
+            StartCoroutine(EndProjectile());
         }
     }
     private void FixedUpdate() {
+        if(!isActive) {
+            rb2d.angularVelocity = 0f;
+            rb2d.velocity = Vector2.zero;
+            return;
+        }
         if(projectileData.homing && target) {
             Vector3 direction = target.position - transform.position;
             direction.Normalize();
@@ -47,8 +56,11 @@ public class Projectile : MonoBehaviour {
         }        
     }
     private void OnTriggerEnter2D(Collider2D collision) {
+        if(!isActive) {
+            return;
+        }
         if(collision.CompareTag("Wall")) {
-            EndProjectile();
+            StartCoroutine(EndProjectile());
         }
         else if(collision.GetComponent<Stats>() && projectileData.team != collision.GetComponent<Stats>().team) {
             StatusEffects targetStatus = collision.GetComponent<StatusEffects>();
@@ -59,16 +71,23 @@ public class Projectile : MonoBehaviour {
             }
             projectileSkill.Activate(targetStatus, attackerStats);
             if(!projectileData.penetrates) {
-                EndProjectile();
+                StartCoroutine(EndProjectile());
             }
         }        
     }
-    private void EndProjectile() {
+    private IEnumerator EndProjectile() {
+        isActive = false;
         for(int i = 0; i < transform.childCount; i++) {
             if(transform.GetChild(i).GetComponent<ParticleSystem>()) {
                 transform.GetChild(i).GetComponent<ParticleSystem>().Stop();
             }            
-            transform.GetChild(i).gameObject.SetActive(false);
+        }
+        light2D.enabled = false;
+        yield return new WaitForSeconds(1f);
+        for(int i = 0; i < transform.childCount; i++) {
+            if(transform.GetChild(i).GetComponent<ParticleSystem>()) {
+                transform.GetChild(i).gameObject.SetActive(false);
+            }
         }
         transform.DetachChildren();
         target = null;

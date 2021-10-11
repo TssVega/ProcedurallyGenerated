@@ -72,11 +72,14 @@ public class MushroomGeneration : MonoBehaviour {
         mushroomClone.transform.position = levelGeneration.GetPreciseLocation(x, y);
         mushroomClone.transform.rotation = Quaternion.identity;
         mushrooms.Add(mushroomClone);
-        if(itemDatabase.items[mushroomValue] is Mushroom) {
-            
+        if(itemDatabase.items[mushroomValue] && itemDatabase.items[mushroomValue] is Mushroom) {
+
+        }
+        else if(itemDatabase.items[mushroomValue] == null) {
+            Debug.LogError($"This is not an item. Item value: {mushroomValue}");
         }
         else {
-            Debug.LogError("This item is not a mushroom");
+            Debug.LogError($"This is not a mushroom. Item value: {mushroomValue}");
         }
         mushroomClone.GetComponent<MushroomObject>().SetMushroom(itemDatabase.items[mushroomValue] as Mushroom, new Vector2Int(x, y), this);
         mushroomClone.SetActive(true);
@@ -87,7 +90,7 @@ public class MushroomGeneration : MonoBehaviour {
         objectClone.transform.rotation = Quaternion.identity;
         mushrooms.Add(objectClone);
         if(itemDatabase.items[objectValue] == null) {
-            Debug.LogError("null item");
+            Debug.LogError($"Null item. Value: {objectValue}");
         }
         objectClone.GetComponent<GroundObject>().SetObject(itemDatabase.items[objectValue], new Vector2Int(x, y), this);
         objectClone.SetActive(true);

@@ -16,7 +16,8 @@ public class PlayerController : MonoBehaviour {
     private float verticalInput = 0f;
 
     private const float autoLockSearchInterval = 0.5f;
-
+    private const float footstepInterval = 0.4f;
+    private const float footstepThreshold = 2.7f;
     private FieldOfView fov;
 
     private bool autoLock;
@@ -45,6 +46,7 @@ public class PlayerController : MonoBehaviour {
             StartCoroutine(AutoLock());            
         }
         StartCoroutine(CheckLockUI());
+        StartCoroutine(CheckFootsteps());
     }
     // Get input
     private void Update() {
@@ -88,7 +90,7 @@ public class PlayerController : MonoBehaviour {
         }
     }
     private IEnumerator CheckLockUI() {
-        while(true) {
+        for(; ; ) {
             if(lockUI) {
                 lockUI.SetUIVisibility(fov.visibleTargets.Count > 0);
             }            
@@ -98,6 +100,14 @@ public class PlayerController : MonoBehaviour {
             yield return new WaitForSeconds(1f);            
         }        
     }
+    private IEnumerator CheckFootsteps() {
+        for(; ; ) {
+            if(rb2D.velocity.magnitude >= footstepThreshold) {
+                AudioSystem.audioManager.PlaySound("footsteps", 0f);
+            }
+            yield return new WaitForSeconds(footstepInterval);
+        }        
+    }
     private void GetInput() {
         // Input
         if(joystick) {
@@ -105,8 +115,7 @@ public class PlayerController : MonoBehaviour {
         }        
         else {
             joystick = FindObjectOfType<DynamicJoystick>();
-        }
-        
+        }        
         // Check if there is a nearest enemy
         if(!nearestEnemy || !nearestEnemy.gameObject.activeSelf) {
             lockedOn = false;            

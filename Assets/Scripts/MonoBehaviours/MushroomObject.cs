@@ -39,12 +39,11 @@ public class MushroomObject : MonoBehaviour, IInteractable {
             this.mushroomCoordinates = mushroomCoordinates;
             this.mushroomGeneration = mushroomGeneration;
         }
-        else if(spriteRen && !mushroomGeneration) {
-            spriteRen.sprite = null;
-            Debug.LogWarning("Mushroom taken");
-            this.mushroomGeneration.TakeMushroom(new Vector2Int(this.mushroomCoordinates.x, this.mushroomCoordinates.y));
-            gameObject.SetActive(false);            
-        }
+    }
+    private void TakeMushroom() {
+        spriteRen.sprite = null;
+        this.mushroomGeneration.TakeMushroom(new Vector2Int(this.mushroomCoordinates.x, this.mushroomCoordinates.y));
+        gameObject.SetActive(false);
     }
     public Mushroom GetMushroom() {
         return this.mushroom;
@@ -53,7 +52,7 @@ public class MushroomObject : MonoBehaviour, IInteractable {
         if(gameObject.activeSelf) {
             if(player.inventory.CanAddToInventory()) {
                 player.inventory.AddToInventory(GetMushroom(), true);
-                SetMushroom(null, new Vector2Int(), null);
+                TakeMushroom();
             }            
         }        
     }

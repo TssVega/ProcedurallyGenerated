@@ -46,7 +46,7 @@ public class Sound {
         if(currentVolume < volume - volumeRandomness && randomizeVolume) {
             currentVolume = volume - volumeRandomness;
         }
-        if(distance > 20f) {
+        if(distance > 25f) {
             audioSource.volume = 0f;
         }
         else if(distance > 5f) {
@@ -73,6 +73,7 @@ public class Sound {
         if(currentPitch < pitch - pitchRandomness && randomizePitch) {
             currentPitch = pitch - pitchRandomness;
         }
+        audioSource.pitch = currentPitch;
     }
 
     public void Play(float distance) {

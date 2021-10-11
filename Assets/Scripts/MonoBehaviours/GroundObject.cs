@@ -39,12 +39,11 @@ public class GroundObject : MonoBehaviour, IInteractable {
             this.itemCoordinates = itemCoordinates;
             this.itemGeneration = itemGeneration;
         }
-        else if(spriteRen && !itemGeneration) {
-            spriteRen.sprite = null;
-            Debug.LogWarning("Disappeared object");
-            this.itemGeneration.TakeMushroom(new Vector2Int(this.itemCoordinates.x, this.itemCoordinates.y));
-            gameObject.SetActive(false);
-        }
+    }
+    private void TakeObject() {
+        spriteRen.sprite = null;
+        this.itemGeneration.TakeMushroom(new Vector2Int(this.itemCoordinates.x, this.itemCoordinates.y));
+        gameObject.SetActive(false);
     }
     public Item GetObject() {
         return this.groundObj;
@@ -60,7 +59,7 @@ public class GroundObject : MonoBehaviour, IInteractable {
                     }                    
                 }
                 player.inventory.AddToInventory(GetObject(), true);
-                SetObject(null, new Vector2Int(), null);
+                TakeObject();
             }
         }
     }
