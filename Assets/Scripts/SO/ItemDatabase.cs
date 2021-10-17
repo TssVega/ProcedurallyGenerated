@@ -41,7 +41,7 @@ public class ItemDatabase : ScriptableObject {
             return items[32];
         }
         else if((int)mat == 22) {
-            return items[84];
+            return items[104];
         }
         else {
             return null;

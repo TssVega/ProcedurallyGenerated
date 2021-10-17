@@ -150,11 +150,11 @@ MonoBehaviour:
   bleedThreshold: 100
   curseThreshold: 100
   drops:
-  - dropRate: 0.1
+  - dropRate: 0.0001
     dropRange: 1
     item: {fileID: 11400000, guid: 280cdaa66790ae645ae6732357db6cc1, type: 2}
-  - dropRate: 1
-    dropRange: 10
+  - dropRate: 0.3
+    dropRange: 1
     item: {fileID: 11400000, guid: 6a0279edbea37e84199f962dcf54be41, type: 2}
   living: 1
   status: {fileID: 1553987817055992803}

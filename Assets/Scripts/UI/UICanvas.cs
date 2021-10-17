@@ -13,6 +13,7 @@ public class UICanvas : MonoBehaviour {
     public GameObject skillInfoPanel;
     public GameObject mapPanel;
     public GameObject deathPanel;
+    public GameObject craftingPanel;
     public Image interactImage;
     public SelectedItem selectedItem;
 
@@ -25,6 +26,7 @@ public class UICanvas : MonoBehaviour {
         chestPanel.SetActive(false);
         skillInfoPanel.SetActive(false);
         mapPanel.SetActive(false);
+        craftingPanel.SetActive(false);
         ClearInteractButton();
     }
     public void TogglePlayerUI() {

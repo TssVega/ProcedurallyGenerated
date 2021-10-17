@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Databases/CraftingDatabase")]
 public class CraftingDatabase : ScriptableObject {
 
+    public List<CraftingRecipe> generalRecipes;
     public List<CraftingRecipe> strengthRecipes;
     public List<CraftingRecipe> agilityRecipes;
     public List<CraftingRecipe> dexterityRecipes;

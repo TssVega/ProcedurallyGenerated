@@ -31,6 +31,10 @@ public class PoolGeneration : MonoBehaviour {
             hasPool = poolData.hasPool;
             full = poolData.full;
             healthPool = poolData.healthPool;
+            // Get two next pseudo numbers if there are pool data
+            // This is to prevent the pool to swapn in a different position when you come back to it
+            pseudoRandomForPools.Next(0, 100);
+            pseudoRandomForPools.Next(0, 2);
         }
         else {
             hasPool = pseudoRandomForPools.Next(0, 100) < poolChance;
@@ -38,8 +42,7 @@ public class PoolGeneration : MonoBehaviour {
             healthPool = pseudoRandomForPools.Next(0, 2) == 0;
         }
         if(hasPool) {
-            Pool pool = ObjectPooler.objectPooler.GetPooledObject(poolObject.name).GetComponent<Pool>();
-            pool.SetPool(healthPool, full, hasPool, this);
+            Pool pool = ObjectPooler.objectPooler.GetPooledObject(poolObject.name).GetComponent<Pool>();            
             Vector3Int randomLocation = Vector3Int.zero;
             bool valid = false;
             while(!valid) {
@@ -54,6 +57,7 @@ public class PoolGeneration : MonoBehaviour {
             pool.transform.rotation = Quaternion.identity;
             pools.Add(pool.gameObject);
             pool.gameObject.SetActive(true);
+            pool.SetPool(healthPool, full, hasPool, this);
         }
     }
     public void SavePools(int slot) {
