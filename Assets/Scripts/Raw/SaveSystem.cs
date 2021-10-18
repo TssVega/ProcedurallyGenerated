@@ -77,7 +77,7 @@ public static class SaveSystem {
     public static void SaveChests(ChestGeneration data, int slot, Vector2Int coordinates) {
         // Formatter to convert game data to binary
         BinaryFormatter bin = new BinaryFormatter();
-        string path = $"{Application.persistentDataPath}/ChestData{slot}_{Insignify(coordinates.x)}x{Insignify(coordinates.y)}yy.tss";
+        string path = $"{Application.persistentDataPath}/ChestData{slot}_{Insignify(coordinates.x)}x{Insignify(coordinates.y)}y.tss";
         using(FileStream stream = new FileStream(path, FileMode.Create)) {
             ChestData _data = new ChestData(data);
             bin.Serialize(stream, _data);

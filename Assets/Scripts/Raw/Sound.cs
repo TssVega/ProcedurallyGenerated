@@ -50,7 +50,7 @@ public class Sound {
             audioSource.volume = 0f;
         }
         else if(distance > 5f) {
-            audioSource.volume = currentVolume / distance * 0.2f;
+            audioSource.volume = currentVolume / (distance * 0.2f);
         }        
         else {
             audioSource.volume = currentVolume;

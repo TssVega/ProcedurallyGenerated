@@ -20,13 +20,14 @@ public class EnemyAI : MonoBehaviour {
     public float rotationTime = 1.5f;
     [HideInInspector] public float speed = 3f;
 
-    private bool moving = false;
+    public bool moving = false;
     private bool roaming = false;
     private bool rotating = false;
     public bool attacked = false;
     public bool hostility = false;          // Will it attack enemies on sight?
     public bool hostile = false;            // Current hostility status
     public bool willDefendItself = true;    // Will this entity defend itself if it gets attacked?
+    public bool hasEars = true;             // If this enemy is hostile and it hears footsteps, will it attack the target?
 
     public string walkAnimationName;
     public string idleAnimationName;
@@ -114,20 +115,25 @@ public class EnemyAI : MonoBehaviour {
         }
         rotating = false;
         yield return new WaitForSeconds(rotationTime);
-        StartCoroutine(RotateTowardsPlayer());
+        if(gameObject.activeInHierarchy) {
+            StartCoroutine(RotateTowardsPlayer());
+        }        
     }
     private IEnumerator Roam() {
         yield return new WaitForSeconds(Random.Range(roamTime, roamTime * 2));
         if(!destinationSetter.target) {
             roaming = true;
-            if(level) {
+            if(level && level.isActiveAndEnabled) {
                 aiPath.destination = GetRoamingPosition();
-            }            
+            }
+            else {
+                gameObject.SetActive(false);
+            }
         }
         else {
             roaming = false;
         }
-        if(stats.living) {
+        if(stats.living && gameObject.activeInHierarchy) {
             StartCoroutine(Roam());
         }        
     }
@@ -149,8 +155,8 @@ public class EnemyAI : MonoBehaviour {
         StartCoroutine(Roam());        
     }
     private IEnumerator UseRandomSkill() {
-        yield return new WaitForSeconds(Random.Range(timeBetweenSkills, timeBetweenSkills * 2));
-        if(stats.living) {
+        yield return new WaitForSeconds(Random.Range(timeBetweenSkills, timeBetweenSkills * 2f));
+        if(stats.living && gameObject.activeInHierarchy) {
             List<int> availableIndices = new List<int>();
             
             for(int i = 0; i < skillUser.currentSkills.Length; i++) {
@@ -170,8 +176,5 @@ public class EnemyAI : MonoBehaviour {
     }
     private Vector3 GetRoamingPosition() {
         return level.GetRandomLocation();
-    }
-    private Vector3 GetRandomDirection() {
-        return new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
     }
 }

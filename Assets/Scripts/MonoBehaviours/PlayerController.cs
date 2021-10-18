@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviour {
 
     private bool autoLock;
 
+    public bool makingNoise;
+
     public LockUI lockUI;
 
     // Assign private values
@@ -104,6 +106,10 @@ public class PlayerController : MonoBehaviour {
         for(; ; ) {
             if(rb2D.velocity.magnitude >= footstepThreshold) {
                 AudioSystem.audioManager.PlaySound("footsteps", 0f);
+                makingNoise = true;
+            }
+            else {
+                makingNoise = false;
             }
             yield return new WaitForSeconds(footstepInterval);
         }        

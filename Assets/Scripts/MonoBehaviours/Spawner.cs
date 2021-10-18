@@ -19,7 +19,7 @@ public class Spawner : MonoBehaviour {
 
     private Transform playerTransform;
 
-    private const float disableDistance = 80f;
+    private const float disableDistance = 60f;
 
     private void Awake() {
         sideLevels = new List<LevelGeneration>();

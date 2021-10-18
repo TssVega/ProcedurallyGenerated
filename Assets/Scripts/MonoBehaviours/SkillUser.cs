@@ -80,6 +80,9 @@ public class SkillUser : MonoBehaviour {
         if(!stats.living) {
             return;
         }
+        if(skill == null) {
+            return;
+        }
         if(skill.skillIndex >= 0 && skillCooldowns[skill.skillIndex] > 0f) {
             return;
         }

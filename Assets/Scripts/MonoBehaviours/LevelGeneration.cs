@@ -54,11 +54,12 @@ public class LevelGeneration : MonoBehaviour {
         activeStalagmites = new List<GameObject>();
     }
     private void OnTriggerEnter2D(Collider2D collision) {
+        EnemyAI enemy = collision.GetComponent<EnemyAI>();
         if(collision.CompareTag("Player")) {
             worldGeneration.ChangeCurrentCoordinates(layout.worldCoordinates);
         }
-        else if(collision.GetComponent<EnemyAI>()) {
-            collision.GetComponent<EnemyAI>().level = this;
+        else if(enemy && enemy.moving) {
+            enemy.level = this;
         }
     }    
     private void OnTriggerExit2D(Collider2D collision) {
@@ -245,6 +246,7 @@ public class LevelGeneration : MonoBehaviour {
         ClearCrystals();
         ClearStalagmites();
         poolGeneration.ClearPools();
+        occupiedCoordinates.Clear();
         gameObject.SetActive(false);
     }    
     private static int ConvertTileIdToTilesetIndex(int id) {
@@ -309,9 +311,10 @@ public class LevelGeneration : MonoBehaviour {
                 valid = true;
             }
         }
-        location = new Vector3Int(
-                    (location.x - layout.levelSize / 2) + layout.worldCoordinates.x * layout.levelSize,
-                    (location.y - layout.levelSize / 2) + layout.worldCoordinates.y * layout.levelSize, 0);
+        location = GetPreciseLocation(location.x, location.y);
+        //location = new Vector3Int(
+        //           (location.x - layout.levelSize / 2) + layout.worldCoordinates.x * layout.levelSize,
+        //           (location.y - layout.levelSize / 2) + layout.worldCoordinates.y * layout.levelSize, 0);
         return location;
     }
     public bool CheckLocation(int x, int y) {

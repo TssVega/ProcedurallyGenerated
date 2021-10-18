@@ -49,22 +49,22 @@ public class ChestGeneration : MonoBehaviour {
                 };
                 for(int j = 0; j < itemCount; j++) {
                     //chests[i].items[j] = Random.Range(0, 99999999).ToString();
-                    string xWorld = GetNumberWithZeroesInIgsignificantBits(levelGeneration.layout.worldCoordinates.x);
-                    string yWorld = GetNumberWithZeroesInIgsignificantBits(levelGeneration.layout.worldCoordinates.y);
-                    string chestIndex = GetNumberWithZeroesInIgsignificantBits(i);
-                    string itemIndex = GetNumberWithZeroesInIgsignificantBits(j);
+                    string xWorld = Insignify(levelGeneration.layout.worldCoordinates.x);
+                    string yWorld = Insignify(levelGeneration.layout.worldCoordinates.y);
+                    string chestIndex = Insignify(i);
+                    string itemIndex = Insignify(j);
                     chests[i].items[j] = $"{worldGeneration.WorldSeed}{xWorld}{yWorld}{chestIndex}{itemIndex}";
                 }
             }
         }
         PutChests(chestCount, levelGeneration);
     }
-    private string GetNumberWithZeroesInIgsignificantBits(int value) {
+    private string Insignify(int value) {
         string newValue;
-        if(value / 100 >= 1) {
+        if((float)value / 100f >= 1f) {
             newValue = value.ToString();
         }
-        else if(value / 10 >= 1) {
+        else if((float)value / 10f >= 1f) {
             newValue = $"0{value}";
         }
         else {

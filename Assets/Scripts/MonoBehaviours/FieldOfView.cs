@@ -40,7 +40,7 @@ public class FieldOfView : MonoBehaviour {
         StopAllCoroutines();
     }
     private IEnumerator FindTargetWithDelay() {
-        while(true) {
+        for(; ; ) {
             yield return new WaitForSeconds(delay);
             FindVisibleTargets();
             if(enemyAI) {
@@ -101,14 +101,21 @@ public class FieldOfView : MonoBehaviour {
         // For every targetsInViewRadius it checks if they are inside the field of view
         for(int i = 0; i < targetsInViewRadius.Length; i++) {
             Transform target = targetsInViewRadius[i].transform;
+            if(target == transform) {
+                continue;
+            }
             Vector3 dirToTarget = (target.position - transform.position).normalized;
-            if(Vector3.Angle(transform.up, dirToTarget) < viewAngle / 2) {
+            // Take noise making targets
+            PlayerController pc = target.GetComponent<PlayerController>();
+            if(pc && pc.makingNoise) {
+                visibleTargets.Add(target);
+                continue;
+            }
+            // Only take targets in the view cone
+            if(Vector3.Angle(transform.up, dirToTarget) < viewAngle / 2f) {
                 float dstToTarget = Vector3.Distance(transform.position, target.position);
                 // If line drawn from object to target is not interrupted by wall, add target to list of visible targets
-                if(!Physics2D.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask)) {
-                    if(target == transform) {
-                        continue;
-                    }
+                if(!Physics2D.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask)) {                    
                     visibleTargets.Add(target);
                 }
             }
@@ -119,6 +126,6 @@ public class FieldOfView : MonoBehaviour {
         if(!angleIsGlobal) {
             angleInDegrees -= transform.eulerAngles.z;
         }
-        return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), Mathf.Cos(angleInDegrees * Mathf.Deg2Rad), 0);
+        return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), Mathf.Cos(angleInDegrees * Mathf.Deg2Rad), 0f);
     }
 }

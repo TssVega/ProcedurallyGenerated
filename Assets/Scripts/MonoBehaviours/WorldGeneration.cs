@@ -223,12 +223,14 @@ public class WorldGeneration : MonoBehaviour {
         // Unload far away levels
         for(int i = 0; i < levels.Count; i++) {
             int xDifference = Mathf.Abs(levels[i].layout.worldCoordinates.x - world.currentCoordinates[0]);
-            int yDifference = Mathf.Abs(levels[i].layout.worldCoordinates.y - world.currentCoordinates[1]);            
-            if(xDifference + yDifference > 1) {                
-                levels[i].UnloadLevel();
+            int yDifference = Mathf.Abs(levels[i].layout.worldCoordinates.y - world.currentCoordinates[1]);
+            if(xDifference + yDifference > 1) {
+                currentRenderedLevels.Remove(levels[i].layout.worldCoordinates/*new Vector2Int(levels[i].layout.worldCoordinates.x, levels[i].layout.worldCoordinates.y)*/);
                 Spawner.spawner.RemoveSideLevel(levels[i]);
-                levels.RemoveAt(i);
-                currentRenderedLevels.RemoveAt(i);
+                levels[i].UnloadLevel();
+                levels.Remove(levels[i]);                
+                // levels.RemoveAt(i);                               
+                //currentRenderedLevels.RemoveAt(i);
             }
         }
     }
@@ -264,6 +266,5 @@ public class WorldGeneration : MonoBehaviour {
             aStarPath.Scan(aStarPath.graphs[0]);
         }
         loadingPanel.FadeOut();
-    }
-    
+    }    
 }
