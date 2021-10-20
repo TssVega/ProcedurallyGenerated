@@ -50,16 +50,18 @@ public class EnemyAI : MonoBehaviour {
         aiPath.canMove = true;
         speed = stats.runSpeed;
         aiPath.maxSpeed = speed;
-        aiPath.destination = transform.position;
         destinationSetter.target = null;
         hostile = hostility;
         attacked = false;
         aiPath.enableRotation = true;
         rotating = false;
-        StartCoroutine(Roam());
-        StartCoroutine(RotateTowardsPlayer());
+        if(gameObject.activeInHierarchy && gameObject.activeSelf) {
+            StartCoroutine(Roam());
+            StartCoroutine(RotateTowardsPlayer());
+        }        
     }
     private void OnDisable() {
+        //aiPath.destination = transform.position;
         StopAllCoroutines();        
     }
     private void Update() {
@@ -115,12 +117,12 @@ public class EnemyAI : MonoBehaviour {
         }
         rotating = false;
         yield return new WaitForSeconds(rotationTime);
-        if(gameObject.activeInHierarchy) {
+        if(stats.living && gameObject.activeInHierarchy) {
             StartCoroutine(RotateTowardsPlayer());
         }        
     }
     private IEnumerator Roam() {
-        yield return new WaitForSeconds(Random.Range(roamTime, roamTime * 2));
+        yield return null;
         if(!destinationSetter.target) {
             roaming = true;
             if(level && level.isActiveAndEnabled) {
@@ -133,6 +135,7 @@ public class EnemyAI : MonoBehaviour {
         else {
             roaming = false;
         }
+        yield return new WaitForSeconds(Random.Range(roamTime, roamTime * 2));
         if(stats.living && gameObject.activeInHierarchy) {
             StartCoroutine(Roam());
         }        
@@ -175,6 +178,9 @@ public class EnemyAI : MonoBehaviour {
         }              
     }
     private Vector3 GetRoamingPosition() {
-        return level.GetRandomLocation();
+        if(level) {
+            return level.GetRandomLocation();
+        }
+        return transform.position;
     }
 }

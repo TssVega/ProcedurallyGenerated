@@ -8,6 +8,9 @@ public class Drop : MonoBehaviour {
 
     private float takeItemTime = 0.5f;
 
+    private const float stayTime = 300f;
+    private float timer;
+
     private bool taking = false;
 
     public void SetItem(Item item) {
@@ -16,6 +19,13 @@ public class Drop : MonoBehaviour {
         GetComponent<SpriteRenderer>().sprite = item.firstSprite;
         takeItemTime = 0.5f;
         taking = false;
+        timer = stayTime;
+    }
+    private void Update() {
+        timer -= Time.deltaTime;
+        if(timer <= 0f) {
+            gameObject.SetActive(false);
+        }
     }
     private void OnTriggerEnter2D(Collider2D collision) {
         if(collision.CompareTag("Player")) {

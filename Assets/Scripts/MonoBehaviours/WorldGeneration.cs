@@ -151,8 +151,7 @@ public class WorldGeneration : MonoBehaviour {
                 if((x == world.currentCoordinates[0] - 1 && y == world.currentCoordinates[1] - 1)
                     || (x == world.currentCoordinates[0] - 1 && y == world.currentCoordinates[1] + 1)
                     || (x == world.currentCoordinates[0] + 1 && y == world.currentCoordinates[1] - 1)
-                    || (x == world.currentCoordinates[0] + 1 && y == world.currentCoordinates[1] + 1)/*
-                    || (x == world.currentCoordinates[0] && y == world.currentCoordinates[1])*/) {
+                    || (x == world.currentCoordinates[0] + 1 && y == world.currentCoordinates[1] + 1)) {
                     continue;
                 }
                 if(!loadingPanel.gameObject.activeInHierarchy) {
@@ -225,11 +224,11 @@ public class WorldGeneration : MonoBehaviour {
             int xDifference = Mathf.Abs(levels[i].layout.worldCoordinates.x - world.currentCoordinates[0]);
             int yDifference = Mathf.Abs(levels[i].layout.worldCoordinates.y - world.currentCoordinates[1]);
             if(xDifference + yDifference > 1) {
-                currentRenderedLevels.Remove(levels[i].layout.worldCoordinates/*new Vector2Int(levels[i].layout.worldCoordinates.x, levels[i].layout.worldCoordinates.y)*/);
+                currentRenderedLevels.Remove(levels[i].layout.worldCoordinates);
                 Spawner.spawner.RemoveSideLevel(levels[i]);
                 levels[i].UnloadLevel();
                 levels.Remove(levels[i]);                
-                // levels.RemoveAt(i);                               
+                // levels.RemoveAt(i);
                 //currentRenderedLevels.RemoveAt(i);
             }
         }

@@ -12,9 +12,12 @@ public class Inventory : MonoBehaviour {
 
     public List<Item> equipment;
     public List<Item> inventory;
+    public Item[] craftingSlots;
+    public Item craft;
     public int[] quantities;
     private readonly int inventorySize = 70;
     private readonly int equipmentSize = 6;
+    private const int gridSize = 9;
 
     public GameObject[] itemSlots;
     public GameObject[] equipmentSlots;
@@ -45,7 +48,8 @@ public class Inventory : MonoBehaviour {
     private void Awake() {
         skillUI = FindObjectOfType<SkillUI>();
         inventoryPanel = FindObjectOfType<InventoryPanel>();
-        quantities = new int[70];
+        quantities = new int[inventorySize];
+        craftingSlots = new Item[gridSize];
         player = FindObjectOfType<Player>();
         playerLight = GetComponent<Light2D>();
         stats = player.stats;
@@ -109,6 +113,35 @@ public class Inventory : MonoBehaviour {
     }
     public int EquipmentSize {
         get => equipmentSize;
+    }
+    private bool IsEmpty(int index) {
+        return craftingSlots[index] == null;
+    }
+    public Item GetItem(int index) {
+        return craftingSlots[index];
+    }
+    public void SetItem(Item item, int index) {
+        craftingSlots[index] = item;
+        UpdateCraftingSlot(index);
+    }
+    private void RemoveItem(int index) {
+        SetItem(null, index);
+        UpdateCraftingSlot(index);
+    }
+    private bool TryAddItem(Item item, int index) {
+        if(IsEmpty(index)) {
+            SetItem(item, index);
+            return true;
+        }
+        return false;
+    }
+    private void UpdateCraftingSlot(int index) {
+        if(craftingSlots[index] != null) {
+            inventoryPanel.PutItem(craftingSlots[index], index);
+        }
+        else {
+            inventoryPanel.ClearItem(index);
+        }
     }
     public void CheckLights(Item item) {
         if(!player) {

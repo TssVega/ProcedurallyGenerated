@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 using TMPro;
 using UnityEngine.UI;
 
-public class ItemSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler {
+public class CraftingSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IDropHandler {
 
     public int slotIndex;
 
@@ -26,24 +26,27 @@ public class ItemSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     }
 
     public void OnBeginDrag(PointerEventData eventData) {
+        /*
         if(inventory.inventory[slotIndex]) {
             inventory.SetVisibilityOfInventorySlot(false, slotIndex);
             Item item = inventory.inventory[slotIndex];
             selectedItem.SetImages(item.firstIcon, item.secondIcon, item.thirdIcon, item.firstColor, item.secondColor, item.thirdColor);
             selectedItem.rectTransform.anchoredPosition = itemSlotGrid.localPosition + rectTransform.localPosition;
             canvasGroup.blocksRaycasts = false;
-        }
+        }*/
     }
 
     public void OnDrag(PointerEventData eventData) {
+        /*
         selectedItem.rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
+        */
     }
 
     public void OnDrop(PointerEventData eventData) {
+       
         ItemSlot droppedSlot = GetComponent<ItemSlot>();
         EquipmentSlot fromEquipmentSlot = eventData.pointerDrag.GetComponent<EquipmentSlot>();
         ItemSlot fromSlot = eventData.pointerDrag.GetComponent<ItemSlot>();
-        CraftingSlot craftingSlot = eventData.pointerDrag.GetComponent<CraftingSlot>();
         if(fromSlot && inventory.inventory[fromSlot.slotIndex]) {
             if(fromSlot && droppedSlot && fromSlot != droppedSlot) {
                 inventory.MoveItem(fromSlot.slotIndex, droppedSlot.slotIndex);
@@ -54,19 +57,16 @@ public class ItemSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
                 inventory.UnequipItem(fromEquipmentSlot.slotIndex, droppedSlot.slotIndex);
             }
         }
-        /*
-        else if(craftingSlot) {
-            if(droppedSlot) {
-                inventory.
-            }
-        }*/
         selectedItem.Release();
         inventory.SetVisibilityOfInventorySlot(true, slotIndex);
+        
     }
 
     public void OnEndDrag(PointerEventData eventData) {
+        
         canvasGroup.blocksRaycasts = true;
         selectedItem.Release();
         inventory.SetVisibilityOfInventorySlot(true, slotIndex);
+        
     }
 }

@@ -77,18 +77,23 @@ public class InventoryPanel : MonoBehaviour {
     public TextMeshProUGUI raceText;
     public TextMeshProUGUI raceValueText;
     public TextMeshProUGUI raceDescText;
+    [Header("Crafting")]
+    public ItemImages[] inputImages;
 
-        /*
-    public int burningThreshold;
-    public int earthingThreshold;
-    public int frostbiteThreshold;
-    public int shockThreshold;
-    public int lightingThreshold;
-    public int poisonThreshold;
-    public int bleedThreshold;
-    public int curseThreshold;
+    public ItemImages outputImages;
 
-        */
+    /*
+public int burningThreshold;
+public int earthingThreshold;
+public int frostbiteThreshold;
+public int shockThreshold;
+public int lightingThreshold;
+public int poisonThreshold;
+public int bleedThreshold;
+public int curseThreshold;
+
+    */
+    [Header("Other")]
     public GameObject skillBook;
     public GameObject map;
 
@@ -113,6 +118,22 @@ public class InventoryPanel : MonoBehaviour {
         }
         CheckButtons();
         UpdateTexts(playerStats);
+    }
+    public void PutItem(Item item, int index) {
+        inputImages[index].firstImage.sprite = item.firstIcon;
+        inputImages[index].secondImage.sprite = item.secondIcon;
+        inputImages[index].thirdImage.sprite = item.thirdIcon;
+        inputImages[index].firstImage.color = item.firstColor;
+        inputImages[index].secondImage.color = item.secondColor;
+        inputImages[index].thirdImage.color = item.thirdColor;
+    }
+    public void ClearItem(int index) {
+        inputImages[index].firstImage.sprite = null;
+        inputImages[index].secondImage.sprite = null;
+        inputImages[index].thirdImage.sprite = null;
+        inputImages[index].firstImage.color = Color.clear;
+        inputImages[index].secondImage.color = Color.clear;
+        inputImages[index].thirdImage.color = Color.clear;
     }
     public void UpdateTexts(Stats stats) {
         mainStatsText.text = loc.GetText("mainStats");
