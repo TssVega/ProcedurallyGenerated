@@ -40,9 +40,17 @@ public class EquipmentSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, 
     public void OnDrop(PointerEventData eventData) {
         EquipmentSlot droppedSlot = GetComponent<EquipmentSlot>();
         ItemSlot fromSlot = eventData.pointerDrag.GetComponent<ItemSlot>();
-        if(inventory.inventory[fromSlot.slotIndex] != null) {
+        CraftingOutput craftingOutput = eventData.pointerDrag.GetComponent<CraftingOutput>();
+        if(fromSlot && inventory.inventory[fromSlot.slotIndex] != null) {
             //inventory.EquipItem(inventory.inventory[fromSlot.slotIndex]);
             inventory.EquipItemInSlot(fromSlot.slotIndex);
+        }
+        else if(craftingOutput) {
+            if(inventory.CanAddToInventory() && inventory.craft) {
+                inventory.EquipItem(inventory.craft);
+                inventory.craft = null;
+                inventory.UpdateCraftingResult();
+            }
         }
         selectedItem.Release();
         inventory.SetVisibilityOfEquipmentSlot(true, slotIndex);

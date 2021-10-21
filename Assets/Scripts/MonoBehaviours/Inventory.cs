@@ -39,6 +39,7 @@ public class Inventory : MonoBehaviour {
     private Stats stats;
 
     public ItemDatabase itemDatabase;
+    public CraftingDatabase craftingDatabase;
 
     private InventoryPanel inventoryPanel;
     private SkillUI skillUI;
@@ -68,13 +69,20 @@ public class Inventory : MonoBehaviour {
     private void Start() {
         UpdateStats();
         CheckLights(null);
-        
+        if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Levels") {
+            for(int i = 0; i < craftingSlots.Length; i++) {
+                UpdateCraftingSlot(i);
+            }
+            UpdateCraftingResult();
+        }        
+        /*
+        // Torch
         if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "Levels") {
             for(int i = 0; i < 1; i++) {
                 Item ex = itemDatabase.items[89];
                 AddToInventory(ex, false);
             }
-        }
+        }*/
         // Create example weapon
         /*
         Weapon exampleItem = player.itemCreator.CreateWeapon("testWeapon");
@@ -114,8 +122,77 @@ public class Inventory : MonoBehaviour {
     public int EquipmentSize {
         get => equipmentSize;
     }
-    private bool IsEmpty(int index) {
-        return craftingSlots[index] == null;
+    public void ClearCrafting() {
+        if(craft) {
+            AddToInventory(craft, false);
+            craft = null;
+            UpdateCraftingResult();
+            for(int i = 0; i < craftingSlots.Length; i++) {
+                if(craftingSlots[i]) {
+                    craftingSlots[i] = null;
+                    UpdateCraftingSlot(i);
+                }
+            }
+            return;
+        }
+        for(int i = 0; i < craftingSlots.Length; i++) {
+            if(craftingSlots[i]) {
+                AddToInventory(craftingSlots[i], false);
+                craftingSlots[i] = null;
+                UpdateCraftingSlot(i);
+            }            
+        }                
+    }
+    public void ConsumeCraftingMaterials() {
+        for(int i = 0; i < craftingSlots.Length; i++) {
+            if(craftingSlots[i]) {
+                craftingSlots[i] = null;
+                UpdateCraftingSlot(i);
+            }
+        }
+        UpdateCraftingResult();
+    }
+    private void CheckCrafting() {
+        for(int i = 0; i < craftingDatabase.allRecipes.Count; i++) {
+            int checker = 0;
+            if(craftingSlots[0] == craftingDatabase.allRecipes[i].input0) {
+                checker++;
+            }
+            if(craftingSlots[1] == craftingDatabase.allRecipes[i].input1) {
+                checker++;
+            }
+            if(craftingSlots[2] == craftingDatabase.allRecipes[i].input2) {
+                checker++;
+            }
+            if(craftingSlots[3] == craftingDatabase.allRecipes[i].input3) {
+                checker++;
+            }
+            if(craftingSlots[4] == craftingDatabase.allRecipes[i].input4) {
+                checker++;
+            }
+            if(craftingSlots[5] == craftingDatabase.allRecipes[i].input5) {
+                checker++;
+            }
+            if(craftingSlots[6] == craftingDatabase.allRecipes[i].input6) {
+                checker++;
+            }
+            if(craftingSlots[7] == craftingDatabase.allRecipes[i].input7) {
+                checker++;
+            }
+            if(craftingSlots[8] == craftingDatabase.allRecipes[i].input8) {
+                checker++;
+            }
+            if(checker == 9) {
+                craft = craftingDatabase.allRecipes[i].output;
+                UpdateCraftingResult();
+                break;
+            }
+            else {
+                craft = null;
+                UpdateCraftingResult();                
+            }
+        }
+        
     }
     public Item GetItem(int index) {
         return craftingSlots[index];
@@ -123,24 +200,27 @@ public class Inventory : MonoBehaviour {
     public void SetItem(Item item, int index) {
         craftingSlots[index] = item;
         UpdateCraftingSlot(index);
+        CheckCrafting();
     }
-    private void RemoveItem(int index) {
+    public void RemoveItem(int index) {
         SetItem(null, index);
         UpdateCraftingSlot(index);
+        CheckCrafting();
     }
-    private bool TryAddItem(Item item, int index) {
-        if(IsEmpty(index)) {
-            SetItem(item, index);
-            return true;
-        }
-        return false;
-    }
-    private void UpdateCraftingSlot(int index) {
+    public void UpdateCraftingSlot(int index) {
         if(craftingSlots[index] != null) {
             inventoryPanel.PutItem(craftingSlots[index], index);
         }
         else {
             inventoryPanel.ClearItem(index);
+        }
+    }
+    public void UpdateCraftingResult() {
+        if(craft != null) {
+            inventoryPanel.SetCraft(craft);
+        }
+        else {
+            inventoryPanel.ClearCraft();
         }
     }
     public void CheckLights(Item item) {
@@ -400,6 +480,9 @@ public class Inventory : MonoBehaviour {
         /*if(equipment[(int)item.slot] != null) {
             AddToInventory(equipment[(int)item.slot]);
         }*/
+        if(!item) {
+            return;
+        }
         if(item.slot == EquipSlot.Consumable) {
             return;
         }
@@ -563,6 +646,19 @@ public class Inventory : MonoBehaviour {
         }
         return false;
     }
+    public void TakeItemFromSlot(int slot) {
+        if(!inventory[slot]) {
+            return;
+        }
+        if(quantities[slot] < 1) {
+            return;
+        }
+        --quantities[slot];
+        if(quantities[slot] < 1) {
+            inventory[slot] = null;
+        }
+        UpdateSlot(slot);
+    }
     public void MoveItem(int fromSlot, int toSlot) {
         if(!inventory[fromSlot]) {
             return;
@@ -621,6 +717,30 @@ public class Inventory : MonoBehaviour {
         }
         else if(item is Shield) {
             player.ClearItem(item);
+        }
+    }
+    public void SetVisibilityOfCraftingSlot(bool visible, int index) {
+        if(visible) {
+            if(craftingSlots[index]) {
+                inventoryPanel.PutItem(craftingSlots[index], index);
+            }
+        }
+        else {
+            if(craftingSlots[index]) {
+                inventoryPanel.ClearItem(index);
+            }
+        }
+    }
+    public void SetVisibilityOfCraft(bool visible) {
+        if(visible) {
+            if(craft) {
+                inventoryPanel.SetCraft(craft);
+            }
+        }
+        else {
+            if(craft) {
+                inventoryPanel.ClearCraft();
+            }
         }
     }
     public void SetVisibilityOfInventorySlot(bool visible, int index) {

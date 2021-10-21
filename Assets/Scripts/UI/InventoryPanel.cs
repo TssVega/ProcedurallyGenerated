@@ -135,6 +135,22 @@ public int curseThreshold;
         inputImages[index].secondImage.color = Color.clear;
         inputImages[index].thirdImage.color = Color.clear;
     }
+    public void SetCraft(Item item) {
+        outputImages.firstImage.sprite = item.firstIcon;
+        outputImages.secondImage.sprite = item.secondIcon;
+        outputImages.thirdImage.sprite = item.thirdIcon;
+        outputImages.firstImage.color = item.firstColor;
+        outputImages.secondImage.color = item.secondColor;
+        outputImages.thirdImage.color = item.thirdColor;
+    }
+    public void ClearCraft() {
+        outputImages.firstImage.sprite = null;
+        outputImages.secondImage.sprite = null;
+        outputImages.thirdImage.sprite = null;
+        outputImages.firstImage.color = Color.clear;
+        outputImages.secondImage.color = Color.clear;
+        outputImages.thirdImage.color = Color.clear;
+    }
     public void UpdateTexts(Stats stats) {
         mainStatsText.text = loc.GetText("mainStats");
         thresholdsText.text = loc.GetText("thresholds");

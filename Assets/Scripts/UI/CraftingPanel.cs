@@ -11,13 +11,9 @@ public class CraftingPanel : MonoBehaviour {
 
     public CraftingDatabase craftingDatabase;
 
-    public Image[] inputFirstImages;
-    public Image[] inputSecondImages;
-    public Image[] inputThirdImages;
+    public ItemImages[] inputImages;
 
-    public Image outputFirstImage;
-    public Image outputSecondImage;
-    public Image outputThirdImage;
+    public ItemImages outputImages;
 
     private Inventory inventory;
 
@@ -32,8 +28,5 @@ public class CraftingPanel : MonoBehaviour {
 
                 break;
         }
-    }
-    private void PutItem(Item item, int x, int y) {
-        
     }
 }

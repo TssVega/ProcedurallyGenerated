@@ -110,6 +110,7 @@ public class Player : MonoBehaviour {
             Debug.LogWarning($"Cannot save right now. Currently working threads: {PersistentData.ThreadCount}");
             return;
         }
+        inventory.ClearCrafting();
         SaveSystem.Save(this, PersistentData.saveSlot);
         if(worldGeneration) {
             worldGeneration.SaveWorldData();

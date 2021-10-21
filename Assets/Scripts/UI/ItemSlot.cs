@@ -44,6 +44,7 @@ public class ItemSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         EquipmentSlot fromEquipmentSlot = eventData.pointerDrag.GetComponent<EquipmentSlot>();
         ItemSlot fromSlot = eventData.pointerDrag.GetComponent<ItemSlot>();
         CraftingSlot craftingSlot = eventData.pointerDrag.GetComponent<CraftingSlot>();
+        CraftingOutput craftingOutput = eventData.pointerDrag.GetComponent<CraftingOutput>();
         if(fromSlot && inventory.inventory[fromSlot.slotIndex]) {
             if(fromSlot && droppedSlot && fromSlot != droppedSlot) {
                 inventory.MoveItem(fromSlot.slotIndex, droppedSlot.slotIndex);
@@ -52,6 +53,19 @@ public class ItemSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         else if(fromEquipmentSlot) {
             if(fromEquipmentSlot && droppedSlot && fromEquipmentSlot != droppedSlot) {
                 inventory.UnequipItem(fromEquipmentSlot.slotIndex, droppedSlot.slotIndex);
+            }
+        }
+        else if(craftingSlot) {
+            if(droppedSlot) {
+                inventory.AddToInventory(inventory.craftingSlots[craftingSlot.slotIndex], true);
+                inventory.RemoveItem(craftingSlot.slotIndex);
+            }
+        }
+        else if(craftingOutput) {
+            if(inventory.CanAddToInventory()) {
+                inventory.AddToInventory(inventory.craft, false);
+                inventory.craft = null;
+                inventory.UpdateCraftingResult();
             }
         }
         /*

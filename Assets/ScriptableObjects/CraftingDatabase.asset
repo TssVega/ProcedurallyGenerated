@@ -12,46 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8a4a362f8b8d6e44a85197f715c8e9a, type: 3}
   m_Name: CraftingDatabase
   m_EditorClassIdentifier: 
-  generalRecipes:
-  - strengthRequirement: 0
-    agilityRequirement: 0
-    dexterityRequirement: 0
-    intelligenceRequirement: 0
-    faithRequirement: 0
-    wisdomRequirement: 0
-    vitalityRequirement: 0
-    charismaRequirement: 0
-    recipe:
-    - amount: 1
-      item: {fileID: 11400000, guid: 639a614daf911534fb52343a1207742c, type: 2}
-    output: {fileID: 11400000, guid: 942eabc6346452a4990010cb75e6102c, type: 2}
-  - strengthRequirement: 0
-    agilityRequirement: 0
-    dexterityRequirement: 0
-    intelligenceRequirement: 0
-    faithRequirement: 0
-    wisdomRequirement: 0
-    vitalityRequirement: 0
-    charismaRequirement: 0
-    recipe:
-    - amount: 1
-      item: {fileID: 11400000, guid: c9a83107f8156a148abb79a48f5deafa, type: 2}
-    output: {fileID: 11400000, guid: 942eabc6346452a4990010cb75e6102c, type: 2}
-  strengthRecipes:
-  - strengthRequirement: 11
-    agilityRequirement: 0
-    dexterityRequirement: 0
-    intelligenceRequirement: 0
-    faithRequirement: 0
-    wisdomRequirement: 0
-    vitalityRequirement: 0
-    charismaRequirement: 0
-    recipe:
-    - amount: 1
-      item: {fileID: 11400000, guid: 9eab6eefee9b3974aa23866792cf8b91, type: 2}
-    - amount: 1
-      item: {fileID: 11400000, guid: 9f4331579d008ab479e167b6b46f0ad2, type: 2}
-    output: {fileID: 0}
+  allRecipes:
+  - {fileID: 11400000, guid: 4c2d4f4581dab0644a87647599b83156, type: 2}
+  generalRecipes: []
+  strengthRecipes: []
   agilityRecipes: []
   dexterityRecipes: []
   intelligenceRecipes: []
