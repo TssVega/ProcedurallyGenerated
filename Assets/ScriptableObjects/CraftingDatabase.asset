@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   allRecipes:
   - {fileID: 11400000, guid: 4c2d4f4581dab0644a87647599b83156, type: 2}
+  - {fileID: 11400000, guid: d44842f3a69f67f4fb9851bc440476c3, type: 2}
+  - {fileID: 11400000, guid: 605abf7fc1b92a64098ed7995aeca1af, type: 2}
   generalRecipes: []
   strengthRecipes: []
   agilityRecipes: []

@@ -9,8 +9,29 @@ public class CraftingRecipeEditor : Editor {
     public override void OnInspectorGUI() {
 
         serializedObject.Update();
-
+        
         CraftingRecipe craftingRecipe = (CraftingRecipe)target;
+
+        GUIStyle style = new GUIStyle {
+            richText = true
+        };
+
+        GUILayout.Label("<color=white>Strength req</color>", style);
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("strengthRequirement"), GUIContent.none, GUILayout.Width(150));
+        GUILayout.Label("<color=white>Agility req</color>", style);
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("agilityRequirement"), GUIContent.none, GUILayout.Width(150));
+        GUILayout.Label("<color=white>Dexterity req</color>", style);
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("dexterityRequirement"), GUIContent.none, GUILayout.Width(150));
+        GUILayout.Label("<color=white>Intelligence req</color>", style);
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("intelligenceRequirement"), GUIContent.none, GUILayout.Width(150));
+        GUILayout.Label("<color=white>Faith req</color>", style);
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("faithRequirement"), GUIContent.none, GUILayout.Width(150));
+        GUILayout.Label("<color=white>Wisdom req</color>", style);
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("wisdomRequirement"), GUIContent.none, GUILayout.Width(150));
+        GUILayout.Label("<color=white>Vitality req</color>", style);
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("vitalityRequirement"), GUIContent.none, GUILayout.Width(150));
+        GUILayout.Label("<color=white>Charisma req</color>", style);
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("charismaRequirement"), GUIContent.none, GUILayout.Width(150));
 
         EditorGUILayout.BeginHorizontal();
         GUILayout.FlexibleSpace();

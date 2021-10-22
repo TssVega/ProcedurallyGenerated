@@ -47,6 +47,7 @@ public class Inventory : MonoBehaviour {
     private Light2D playerLight;
 
     private void Awake() {
+        craftingDatabase.SortAllRecipes();
         skillUI = FindObjectOfType<SkillUI>();
         inventoryPanel = FindObjectOfType<InventoryPanel>();
         quantities = new int[inventorySize];
