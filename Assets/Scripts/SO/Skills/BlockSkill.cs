@@ -10,7 +10,6 @@ public class BlockSkill : ActiveSkill {
     public override void Launch(StatusEffects statusEffects) {
         if(blockData.blockType == BlockType.Block) {
             statusEffects.StartBlocking(castTime);
-            Debug.Log("Blocking");
         }
         else if(blockData.blockType == BlockType.Parry) {
             statusEffects.StartParrying(castTime);

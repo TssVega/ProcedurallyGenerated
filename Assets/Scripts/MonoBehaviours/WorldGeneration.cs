@@ -170,7 +170,7 @@ public class WorldGeneration : MonoBehaviour {
                 if(currentRenderedLevels.Contains(new Vector2Int(x, y))) {
                     continue;                    
                 }                
-                PersistentData.AddWorkingThread();
+                //PersistentData.AddWorkingThread();
                 if(world.worldData[x, y] == null) {
                     //pseudoRandomForWorld = new System.Random(worldSeed.GetHashCode());
                     world.worldData[x, y] = $"{WorldSeed}{Insignify(x)}{Insignify(y)}";
@@ -227,11 +227,12 @@ public class WorldGeneration : MonoBehaviour {
                 currentRenderedLevels.Remove(levels[i].layout.worldCoordinates);
                 Spawner.spawner.RemoveSideLevel(levels[i]);
                 levels[i].UnloadLevel();
-                levels.Remove(levels[i]);                
+                levels.Remove(levels[i]);
+                --i;
                 // levels.RemoveAt(i);
                 //currentRenderedLevels.RemoveAt(i);
             }
-        }
+        }        
     }
     private void SetSideLevels() {
         Spawner.spawner.ClearSideLevels();

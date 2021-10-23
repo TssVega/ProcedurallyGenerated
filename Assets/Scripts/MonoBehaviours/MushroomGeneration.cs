@@ -65,7 +65,7 @@ public class MushroomGeneration : MonoBehaviour {
                 }
             }            
         }
-        PersistentData.FinishWorkingThread();
+        //PersistentData.FinishWorkingThread();
     }
     private void PlaceMushroom(int x, int y, int mushroomValue) {
         GameObject mushroomClone = ObjectPooler.objectPooler.GetPooledObject("Mushroom");

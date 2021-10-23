@@ -47,7 +47,9 @@ public class Inventory : MonoBehaviour {
     private Light2D playerLight;
 
     private void Awake() {
-        craftingDatabase.SortAllRecipes();
+        if(craftingDatabase) {
+            craftingDatabase.SortAllRecipes();
+        }        
         skillUI = FindObjectOfType<SkillUI>();
         inventoryPanel = FindObjectOfType<InventoryPanel>();
         quantities = new int[inventorySize];
@@ -183,7 +185,41 @@ public class Inventory : MonoBehaviour {
             if(craftingSlots[8] == craftingDatabase.allRecipes[i].input8) {
                 checker++;
             }
-            if(checker == 9) {
+            if(craftingDatabase.allRecipes[i].strengthRequirement > 0 && stats.strength >= craftingDatabase.allRecipes[i].strengthRequirement) {
+                checker++;
+            }
+            else if(craftingDatabase.allRecipes[i].agilityRequirement > 0 && stats.agility >= craftingDatabase.allRecipes[i].agilityRequirement) {
+                checker++;
+            }
+            else if(craftingDatabase.allRecipes[i].dexterityRequirement > 0 && stats.dexterity >= craftingDatabase.allRecipes[i].dexterityRequirement) {
+                checker++;
+            }
+            else if(craftingDatabase.allRecipes[i].intelligenceRequirement > 0 && stats.intelligence >= craftingDatabase.allRecipes[i].intelligenceRequirement) {
+                checker++;
+            }
+            else if(craftingDatabase.allRecipes[i].faithRequirement > 0 && stats.faith >= craftingDatabase.allRecipes[i].faithRequirement) {
+                checker++;
+            }
+            else if(craftingDatabase.allRecipes[i].wisdomRequirement > 0 && stats.wisdom >= craftingDatabase.allRecipes[i].wisdomRequirement) {
+                checker++;
+            }
+            else if(craftingDatabase.allRecipes[i].vitalityRequirement > 0 && stats.vitality >= craftingDatabase.allRecipes[i].vitalityRequirement) {
+                checker++;
+            }
+            else if(craftingDatabase.allRecipes[i].charismaRequirement > 0 && stats.charisma >= craftingDatabase.allRecipes[i].charismaRequirement) {
+                checker++;
+            }
+            else if(craftingDatabase.allRecipes[i].strengthRequirement == 0
+                && craftingDatabase.allRecipes[i].agilityRequirement == 0
+                && craftingDatabase.allRecipes[i].dexterityRequirement == 0
+                && craftingDatabase.allRecipes[i].intelligenceRequirement == 0
+                && craftingDatabase.allRecipes[i].faithRequirement == 0
+                && craftingDatabase.allRecipes[i].wisdomRequirement == 0
+                && craftingDatabase.allRecipes[i].vitalityRequirement == 0
+                && craftingDatabase.allRecipes[i].charismaRequirement == 0) {
+                checker++;
+            }
+            if(checker == 10) {
                 craft = craftingDatabase.allRecipes[i].output;
                 UpdateCraftingResult();
                 break;

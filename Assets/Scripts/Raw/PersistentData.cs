@@ -8,7 +8,7 @@ public static class PersistentData {
     public static int saveSlot = 1;
 
     public static List<string> fileNames;
-
+    /*
     public static int ThreadCount { get; private set; } = 0;
 
     public static bool CanSave() {
@@ -22,6 +22,7 @@ public static class PersistentData {
     public static void FinishWorkingThread() {
         --ThreadCount;
     }
+    */
     public static void GetFileNames() {
         fileNames = new List<string>();
         DirectoryInfo dir = new DirectoryInfo(Application.persistentDataPath);
