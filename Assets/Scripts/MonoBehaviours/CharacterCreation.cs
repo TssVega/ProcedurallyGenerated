@@ -62,6 +62,7 @@ public class CharacterCreation : MonoBehaviour {
             newGameButtonPressed = true;
             await SetNewGameData();
             player.SavePlayer();
+            AudioSystem.audioManager.PlaySound("inGameButton", 0f);
             LoadSceneAsync("Levels");
         }        
     }
@@ -87,6 +88,7 @@ public class CharacterCreation : MonoBehaviour {
         shoulderImage.color = currentSkinColor;
         player.raceIndex = currentRaceIndex;
         RefreshTexts();
+        AudioSystem.audioManager.PlaySound("inGameButton", 0f);
     }
     public void ChangeHairColor(bool increment) {
         if(increment) {
@@ -105,6 +107,7 @@ public class CharacterCreation : MonoBehaviour {
         }
         hairImage.color = currentHairColor;
         player.hairColorIndex = currentHairColorIndex;
+        AudioSystem.audioManager.PlaySound("inGameButton", 0f);
     }
     public void ChangeHairStyle(bool increment) {
         if(increment) {
@@ -123,6 +126,7 @@ public class CharacterCreation : MonoBehaviour {
         }
         hairImage.sprite = currentHairStyle;
         player.hairStyleIndex = currentHairStyleIndex;
+        AudioSystem.audioManager.PlaySound("inGameButton", 0f);
     }
     public void RefreshTexts() {
         skinColorText.text = localizationManager.GetText("race");

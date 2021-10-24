@@ -9,6 +9,8 @@ public class AreaSkill : ActiveSkill {
     public float duration;
     public GameObject hitbox;
     public bool warn = false;
+    [Header("Is this attack melee?")]
+    public bool checkRange = false; // If this is true, there will be a range check depending on the current weapon's type
     public GameObject hitboxWarning;
     [Tooltip("Diameter length")]
     public float hitboxWarningScale = 1f;
@@ -37,11 +39,43 @@ public class AreaSkill : ActiveSkill {
     public int lightStacks = 0;
     public float litDuration = 0f;
 
+    private const float daggerRange = 1.7f;
+    private const float spearRange = 2.9f;
+    private const float swordRange = 2.2f;
+
     public override void Activate(StatusEffects targetStatus, Stats attackerStats) {
         /*GameObject clone = ObjectPooler.objectPooler.GetPooledObject(hitbox.name);
         clone.transform.position = pos;
         clone.transform.rotation = rot;
         clone.SetActive(true);*/
+        if(attackerStats.inventory && checkRange) {
+            float range = 0f;
+            float distance = Vector3.Distance(attackerStats.transform.position, targetStatus.transform.position);
+            Weapon w = attackerStats.inventory.equipment[0] as Weapon;
+            if(w) {
+                if(w.preset == WeaponPreset.Dagger) {
+                    range = daggerRange;
+                }
+                else if(w.preset == WeaponPreset.Axe || w.preset == WeaponPreset.Sword || w.preset == WeaponPreset.Hammer) {
+                    range = swordRange;
+                }
+                else if(w.preset == WeaponPreset.Spear) {
+                    range = spearRange;
+                }
+                else if(w.preset == WeaponPreset.Staff || w.preset == WeaponPreset.Tome) {
+                    range = swordRange;
+                }
+                else {
+                    range = 999f;
+                }
+            }
+            else {
+                range = 2f;
+            }
+            if(distance > range) {
+                return;
+            }
+        }
         targetStatus.TakeDamage(DamageFromDamageType.GetDamage(attackType, attackerStats)
             * damageRate, attackType, this, attackerStats.status);
         if(stunDuration > 0) {

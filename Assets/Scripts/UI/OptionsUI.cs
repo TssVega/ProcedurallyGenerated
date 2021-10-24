@@ -32,6 +32,7 @@ public class OptionsUI : MonoBehaviour {
     public void ChangeLanguage(string language) {
         localizationManager.SetLocalization(language);
         UpdateLanguageHighlighters(language);
+        AudioSystem.audioManager.PlaySound("menuButton", 0f);
     }
     private void UpdateLanguageHighlighters(string language) {
         mainMenu.RefreshTexts();
@@ -74,6 +75,7 @@ public class OptionsUI : MonoBehaviour {
             autoLockTick.SetActive(false);
         }
         PlayerPrefs.Save();
+        AudioSystem.audioManager.PlaySound("menuButton", 0f);
     }
     public void Mute() {
         AudioSystem.audioManager.mute = !AudioSystem.audioManager.mute;        
@@ -91,6 +93,7 @@ public class OptionsUI : MonoBehaviour {
             AudioSystem.audioManager.PlaySound("menuTheme", fxSlider.value);
         }
         PlayerPrefs.Save();
+        AudioSystem.audioManager.PlaySound("menuButton", 0f);
     }
     private void LoadLockOptions() {
         int lockValue = PlayerPrefs.GetInt("lock");
@@ -147,11 +150,13 @@ public class OptionsUI : MonoBehaviour {
         AudioSystem.audioManager.sounds[1].volume = musicSlider.value;
         AudioSystem.audioManager.sounds[0].ChangeVolume(0f);
         AudioSystem.audioManager.sounds[1].ChangeVolume(0f);
+        AudioSystem.audioManager.PlaySound("menuButton", 0f);
     }
     private void UpdateFXVolume() {        
         AudioSystem.audioManager.sounds[2].volume = fxSlider.value;        
         AudioSystem.audioManager.sounds[3].volume = fxSlider.value;
         AudioSystem.audioManager.sounds[2].ChangeVolume(0f);
         AudioSystem.audioManager.sounds[3].ChangeVolume(0f);
+        AudioSystem.audioManager.PlaySound("menuButton", 0f);
     }
 }

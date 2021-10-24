@@ -22,6 +22,9 @@ public class MushroomObject : MonoBehaviour, IInteractable {
         spriteRen = GetComponent<SpriteRenderer>();
         UISprite = interactImage;
     }
+    private void OnDisable() {
+        Debug.Log("Here", this);
+    }
     private void OnTriggerEnter2D(Collider2D collision) {
         if(collision.CompareTag("Player")) {
             collision.GetComponent<Player>().SetInteraction(this);

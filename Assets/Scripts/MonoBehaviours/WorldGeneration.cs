@@ -169,7 +169,7 @@ public class WorldGeneration : MonoBehaviour {
                 }
                 if(currentRenderedLevels.Contains(new Vector2Int(x, y))) {
                     continue;                    
-                }                
+                }
                 //PersistentData.AddWorkingThread();
                 if(world.worldData[x, y] == null) {
                     //pseudoRandomForWorld = new System.Random(worldSeed.GetHashCode());
@@ -223,11 +223,11 @@ public class WorldGeneration : MonoBehaviour {
         for(int i = 0; i < levels.Count; i++) {
             int xDifference = Mathf.Abs(levels[i].layout.worldCoordinates.x - world.currentCoordinates[0]);
             int yDifference = Mathf.Abs(levels[i].layout.worldCoordinates.y - world.currentCoordinates[1]);
-            if(xDifference + yDifference > 1) {
-                currentRenderedLevels.Remove(levels[i].layout.worldCoordinates);
+            if(xDifference + yDifference > 1) {                
                 Spawner.spawner.RemoveSideLevel(levels[i]);
                 levels[i].UnloadLevel();
-                levels.Remove(levels[i]);
+                currentRenderedLevels.Remove(levels[i].layout.worldCoordinates);
+                levels.Remove(levels[i]);                
                 --i;
                 // levels.RemoveAt(i);
                 //currentRenderedLevels.RemoveAt(i);

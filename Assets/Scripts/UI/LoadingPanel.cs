@@ -12,7 +12,7 @@ public class LoadingPanel : MonoBehaviour {
     public TextMeshProUGUI loadingTip;
     public TextMeshProUGUI doneText;
 
-    private const int tipCount = 10;
+    private const int tipCount = 11;
 
     private void Awake() {
         panel = GetComponent<Image>();

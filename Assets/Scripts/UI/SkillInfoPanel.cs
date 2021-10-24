@@ -65,7 +65,10 @@ public class SkillInfoPanel : MonoBehaviour {
             skillTree.UpdateStatPoints();
             skillTree.RefreshAcquiredStatus();
             AudioSystem.audioManager.PlaySound("skillUnlocked", 0f);
-        }        
+        }
+        else {
+            AudioSystem.audioManager.PlaySound("inGameButton", 0f);
+        }
     }
     private bool CheckPrerequisites() {
         bool allPrerequisitesMet = true;
@@ -153,6 +156,7 @@ public class SkillInfoPanel : MonoBehaviour {
         playerSkills.currentSkills[index] = currentSkill as ActiveSkill;
         skillUI.RefreshSkillSlots();
         Refresh();
+        AudioSystem.audioManager.PlaySound("inGameButton", 0f);
     }
     private void RefreshText() {
         skillNameText.text = localizationManager.GetText(currentSkill.skillName);

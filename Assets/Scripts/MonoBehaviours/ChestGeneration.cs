@@ -91,7 +91,6 @@ public class ChestGeneration : MonoBehaviour {
             chestObjects[i].gameObject.SetActive(false);
         }
         chestObjects.Clear();
-        levelGeneration.occupiedCoordinates.Clear();
     }
     public void SaveChests(int slot) {
         SaveSystem.SaveChests(this, slot, levelGeneration.layout.worldCoordinates);

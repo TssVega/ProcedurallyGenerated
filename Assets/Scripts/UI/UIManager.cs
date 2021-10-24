@@ -18,5 +18,6 @@ public class UIManager : MonoBehaviour {
         for(int i = 0; i < panelsToToggle.Count; i++) {
             panelsToToggle[i].SetActive(!panelsToToggle[i].activeSelf);
         }
+        AudioSystem.audioManager.PlaySound("inGameButton", 0f);
     }
 }

@@ -69,6 +69,5 @@ public class PoolGeneration : MonoBehaviour {
             pools[i].SetActive(false);
         }
         pools.Clear();
-        levelGeneration.occupiedCoordinates.Clear();
     }
 }

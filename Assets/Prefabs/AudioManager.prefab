@@ -106,7 +106,7 @@ MonoBehaviour:
     pitchRandomness: 0
     audioSource: {fileID: 0}
   - audioName: bashDamage
-    audioClip: {fileID: 8300000, guid: 3d70915002d35d44dbd75c0760d27091, type: 3}
+    audioClip: {fileID: 8300000, guid: a5d4d6eabb184f340815b2a2b51963c7, type: 3}
     volume: 1
     currentVolume: 1
     pitch: 1
@@ -442,7 +442,7 @@ MonoBehaviour:
     pitchRandomness: 0
     audioSource: {fileID: 0}
   - audioName: pierceDamage
-    audioClip: {fileID: 8300000, guid: c0eeb87f5dba8b447a8d2786bc5651f5, type: 3}
+    audioClip: {fileID: 8300000, guid: 7d6f037fdb0b01c409417ca6130e4818, type: 3}
     volume: 1
     currentVolume: 1
     pitch: 1
@@ -526,7 +526,7 @@ MonoBehaviour:
     pitchRandomness: 0
     audioSource: {fileID: 0}
   - audioName: slashDamage
-    audioClip: {fileID: 8300000, guid: e5e6ba016ebc302428276d27845615fa, type: 3}
+    audioClip: {fileID: 8300000, guid: 0fbdf9bd3fb28b44faeb9fc16a373583, type: 3}
     volume: 1
     currentVolume: 1
     pitch: 1
@@ -563,6 +563,18 @@ MonoBehaviour:
     audioSource: {fileID: 0}
   - audioName: bookRead
     audioClip: {fileID: 8300000, guid: c42e818312570194a9f4030d1547b00c, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: death
+    audioClip: {fileID: 8300000, guid: d02049466a4e45941bd37b7c76fb3849, type: 3}
     volume: 1
     currentVolume: 1
     pitch: 1

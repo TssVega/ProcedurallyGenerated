@@ -80,11 +80,16 @@ public class Stats : MonoBehaviour {
     private Enemy enemy;
     public Player player;
 
+    public Inventory inventory;
+
     private void Awake() {
         //int skillCooldownsSize = FindObjectOfType<GameMaster>().talentDatabase.talents.Length;
         player = GetComponent<Player>();
         enemy = GetComponent<Enemy>();
         status = GetComponent<StatusEffects>();
+        if(player) {
+            inventory = player.GetComponent<Inventory>();
+        }        
     }
     private void OnEnable() {
         living = true;

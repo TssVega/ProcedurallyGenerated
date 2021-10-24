@@ -14,6 +14,7 @@ public class MainMenu : MonoBehaviour {
     public TextMeshProUGUI musicText;
     public TextMeshProUGUI soundFXText;
     public TextMeshProUGUI autoLockText;
+    public TextMeshProUGUI autoLockDescText;
 
     public void OnEnable() {
         RefreshTexts();
@@ -26,12 +27,14 @@ public class MainMenu : MonoBehaviour {
         musicText.text = localizationManager.GetText("music");
         soundFXText.text = localizationManager.GetText("soundFX");
         autoLockText.text = localizationManager.GetText("autoLock");
+        autoLockDescText.text = localizationManager.GetText("autoLockDesc");
     }
     public void StartNewGame(int slot) {
         PersistentData.saveSlot = slot;
         List<string> saveFiles = PersistentData.GetAllFilesWithKey($"Data{slot}", "", "");
         PersistentData.DeleteFiles(saveFiles);
         PersistentData.ClearAutosaveFiles();
+        AudioSystem.audioManager.PlaySound("menuButton", 0f);
         LoadSceneAsync("CharacterCreation");
     }
     public void LoadGame(int slot) {
@@ -39,6 +42,7 @@ public class MainMenu : MonoBehaviour {
         PersistentData.GetFileNames();        
         if(!string.IsNullOrEmpty(PersistentData.GetFileName(slot.ToString(), "GameData", ""))) {
             PersistentData.ClearAutosaveFiles();
+            AudioSystem.audioManager.PlaySound("menuButton", 0f);
             LoadSceneAsync("Levels");
         }        
     }

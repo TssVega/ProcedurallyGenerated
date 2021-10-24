@@ -186,7 +186,8 @@ public class SkillTreeManager : MonoBehaviour, IDragHandler {
     public void OpenSkillInfo(int index) {
         if(skillDatabase.skills.Count >= index && skillDatabase.skills[index]) {
             skillInfoPanel.SetActive(true);
-            skillInfoPanel.GetComponent<SkillInfoPanel>().SetSkill(skillDatabase.skills[index]);            
+            skillInfoPanel.GetComponent<SkillInfoPanel>().SetSkill(skillDatabase.skills[index]);
+            AudioSystem.audioManager.PlaySound("inGameButton", 0f);
         }
     }
 }

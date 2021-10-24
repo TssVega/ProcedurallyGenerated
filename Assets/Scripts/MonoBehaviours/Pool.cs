@@ -7,6 +7,7 @@ public class Pool : MonoBehaviour, IInteractable {
 
     private StatusEffects playerStatus;
     private Stats playerStats;
+    private Inventory inventory;
 
     private PoolGeneration poolGeneration;
 
@@ -31,6 +32,7 @@ public class Pool : MonoBehaviour, IInteractable {
 
     private void Awake() {
         playerStatus = FindObjectOfType<Player>().GetComponent<StatusEffects>();
+        inventory = FindObjectOfType<Player>().GetComponent<Inventory>();
         playerStats = FindObjectOfType<Player>().stats;
         spriteRenderer = GetComponent<SpriteRenderer>();
         particleSys = GetComponent<ParticleSystem>();
@@ -135,6 +137,7 @@ public class Pool : MonoBehaviour, IInteractable {
                         playerStats.charisma++;
                         break;
                 }
+                inventory.CheckCrafting();
                 AudioSystem.audioManager.PlaySound("mainStatGained", 0f);
             }
             FindObjectOfType<Player>().ClearInteraction(this);

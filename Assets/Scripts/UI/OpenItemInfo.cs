@@ -14,12 +14,14 @@ public class OpenItemInfo : MonoBehaviour {
         if(inventory.inventory[index] != null) {
             itemInfoPanel.SetItem(inventory.inventory[index], index, true);
             itemInfoPanel.gameObject.SetActive(true);
-        }        
+        }
+        AudioSystem.audioManager.PlaySound("inGameButton", 0f);
     }
     public void SetItemInfoPanelFromEquipment(int index) {
         if(inventory.equipment[index]) {
             itemInfoPanel.SetItem(inventory.equipment[index], index, false);
             itemInfoPanel.gameObject.SetActive(true);
-        }        
+        }
+        AudioSystem.audioManager.PlaySound("inGameButton", 0f);
     }
 }

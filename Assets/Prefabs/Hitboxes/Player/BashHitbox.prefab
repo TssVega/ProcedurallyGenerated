@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: -8700766999303058337}
   - component: {fileID: -746924220292101009}
   m_Layer: 0
-  m_Name: SwipeHitbox
+  m_Name: BashHitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -58,11 +58,11 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 0, y: 1}
-      - {x: -0.95105654, y: 0.30901697}
-      - {x: -0.5877852, y: -0.80901706}
-      - {x: 0.58778536, y: -0.80901694}
-      - {x: 0.9510565, y: 0.30901712}
+    - - {x: 0, y: 2.21}
+      - {x: -1.75, y: 1.2}
+      - {x: -0.34, y: -0.8}
+      - {x: 0.34, y: -0.8}
+      - {x: 1.75, y: 1.2}
 --- !u!114 &-8700766999303058337
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -155,7 +155,7 @@ public class Inventory : MonoBehaviour {
         }
         UpdateCraftingResult();
     }
-    private void CheckCrafting() {
+    public void CheckCrafting() {
         for(int i = 0; i < craftingDatabase.allRecipes.Count; i++) {
             int checker = 0;
             if(craftingSlots[0] == craftingDatabase.allRecipes[i].input0) {
@@ -209,7 +209,33 @@ public class Inventory : MonoBehaviour {
             else if(craftingDatabase.allRecipes[i].charismaRequirement > 0 && stats.charisma >= craftingDatabase.allRecipes[i].charismaRequirement) {
                 checker++;
             }
-            else if(craftingDatabase.allRecipes[i].strengthRequirement == 0
+            else if(player.raceIndex == 4) {
+                if(craftingDatabase.allRecipes[i].strengthRequirement > 0 && stats.strength >= craftingDatabase.allRecipes[i].strengthRequirement - 3) {
+                    checker++;
+                }
+                else if(craftingDatabase.allRecipes[i].agilityRequirement > 0 && stats.agility >= craftingDatabase.allRecipes[i].agilityRequirement - 3) {
+                    checker++;
+                }
+                else if(craftingDatabase.allRecipes[i].dexterityRequirement > 0 && stats.dexterity >= craftingDatabase.allRecipes[i].dexterityRequirement - 3) {
+                    checker++;
+                }
+                else if(craftingDatabase.allRecipes[i].intelligenceRequirement > 0 && stats.intelligence >= craftingDatabase.allRecipes[i].intelligenceRequirement - 3) {
+                    checker++;
+                }
+                else if(craftingDatabase.allRecipes[i].faithRequirement > 0 && stats.faith >= craftingDatabase.allRecipes[i].faithRequirement - 3) {
+                    checker++;
+                }
+                else if(craftingDatabase.allRecipes[i].wisdomRequirement > 0 && stats.wisdom >= craftingDatabase.allRecipes[i].wisdomRequirement - 3) {
+                    checker++;
+                }
+                else if(craftingDatabase.allRecipes[i].vitalityRequirement > 0 && stats.vitality >= craftingDatabase.allRecipes[i].vitalityRequirement - 3) {
+                    checker++;
+                }
+                else if(craftingDatabase.allRecipes[i].charismaRequirement > 0 && stats.charisma >= craftingDatabase.allRecipes[i].charismaRequirement - 3) {
+                    checker++;
+                }
+            }
+            if(craftingDatabase.allRecipes[i].strengthRequirement == 0
                 && craftingDatabase.allRecipes[i].agilityRequirement == 0
                 && craftingDatabase.allRecipes[i].dexterityRequirement == 0
                 && craftingDatabase.allRecipes[i].intelligenceRequirement == 0
@@ -219,7 +245,8 @@ public class Inventory : MonoBehaviour {
                 && craftingDatabase.allRecipes[i].charismaRequirement == 0) {
                 checker++;
             }
-            if(checker == 10) {
+            //Debug.Log(checker);
+            if(checker >= 10) {
                 craft = craftingDatabase.allRecipes[i].output;
                 UpdateCraftingResult();
                 break;
@@ -485,6 +512,7 @@ public class Inventory : MonoBehaviour {
         }
         else if(inventory[slotIndex] is Book b) {
             b.Consume(stats.status);
+            CheckCrafting();
         }
         else if(inventory[slotIndex] is Potion p) {
             p.Consume(stats.status);
@@ -546,8 +574,11 @@ public class Inventory : MonoBehaviour {
         else if(item is Shield) {
             Shield s = item as Shield;
             Weapon w = equipment[(int)EquipSlot.RightHand] as Weapon;
-            if(w != null && CanAddToInventory() && w.weaponType == WeaponType.TwoHanded) {
+            if(w != null && CanAddToInventory() && (w.weaponType == WeaponType.TwoHanded || w.weaponType == WeaponType.Dagger)) {
                 UnequipItem((int)EquipSlot.RightHand, GetEmptyInventorySlot());
+            }
+            else if(equipment[(int)EquipSlot.LeftHand] && CanAddToInventory()) {
+                UnequipItem((int)EquipSlot.LeftHand, GetEmptyInventorySlot());
             }
             player.SetItem(s);
         }

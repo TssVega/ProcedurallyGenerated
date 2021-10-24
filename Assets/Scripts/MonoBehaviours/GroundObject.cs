@@ -43,7 +43,6 @@ public class GroundObject : MonoBehaviour, IInteractable {
     private void TakeObject() {
         spriteRen.sprite = null;
         this.itemGeneration.TakeMushroom(new Vector2Int(this.itemCoordinates.x, this.itemCoordinates.y));
-        Debug.Log("Taking object");
         gameObject.SetActive(false);
     }
     public Item GetObject() {

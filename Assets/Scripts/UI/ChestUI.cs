@@ -85,6 +85,7 @@ public class ChestUI : MonoBehaviour {
                 thirdIcons[i].color = Color.clear;
             }
         }
+        AudioSystem.audioManager.PlaySound("inGameButton", 0f);
     }
     public void TakeAllItems() {
         for(int i = 0; i < chestObject.chestContent.items.Length; i++) {
@@ -111,5 +112,6 @@ public class ChestUI : MonoBehaviour {
             thirdIcons[slot].sprite = null;
             chestObject.chestContent.items[slot] = null;
         }
+        AudioSystem.audioManager.PlaySound("inGameButton", 0f);
     }
 }

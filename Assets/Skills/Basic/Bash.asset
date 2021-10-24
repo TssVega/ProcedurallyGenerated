@@ -16,6 +16,7 @@ MonoBehaviour:
   skillName: bash
   skillIcon: {fileID: 0}
   interruptable: 0
+  parryable: 0
   attackType: 2
   skillPointsNeeded: 0
   prerequisites: 
@@ -35,6 +36,7 @@ MonoBehaviour:
   duration: 0.1
   hitbox: {fileID: 6890043100139161156, guid: 9b6fa8579b551ca4bad10ad5efe0d696, type: 3}
   warn: 0
+  checkRange: 1
   hitboxWarning: {fileID: 0}
   hitboxWarningScale: 1
   stunDuration: 0

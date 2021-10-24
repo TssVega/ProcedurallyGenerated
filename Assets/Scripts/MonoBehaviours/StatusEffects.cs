@@ -470,6 +470,7 @@ public class StatusEffects : MonoBehaviour {
         if(enemyAI) {
             Spawner.spawner.RemoveEntity(gameObject);
         }
+        AudioSystem.audioManager.PlaySound("death", DistanceToPlayer);
         stats.Die();
     }
     private void InstantiateDamageTakenParticles(string name) {

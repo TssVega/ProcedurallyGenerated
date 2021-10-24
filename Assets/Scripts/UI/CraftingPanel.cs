@@ -36,12 +36,14 @@ public class CraftingPanel : MonoBehaviour {
     private LocalizationManager loc;
 
     private Stats playerStats;
+    private Player player;
 
     // private int page;
     private void Awake() {
-        inventory = FindObjectOfType<Inventory>();
+        player = FindObjectOfType<Player>();
+        inventory = player.GetComponent<Inventory>();
         loc = LocalizationManager.localization;
-        playerStats = FindObjectOfType<Player>().GetComponent<Stats>();
+        playerStats = player.GetComponent<Stats>();
     }
     private void OnEnable() {
         currentTabIndex = 0;
@@ -179,10 +181,13 @@ public class CraftingPanel : MonoBehaviour {
                 for(int i = startingIndex; i < startingIndex + recipeCountPerPage; i++) {
                     index = 0;                    
                     if(i <= craftingDatabase.strengthRecipes.Count - 1) {
-                        if(playerStats.strength < craftingDatabase.strengthRecipes[i].strengthRequirement) {
-                            unlockText = $"{GT("need")} {craftingDatabase.strengthRecipes[i].strengthRequirement} {GT("strength")} {GT("toUnlock")}";
+                        int requirement = player.raceIndex == 4 ? craftingDatabase.strengthRecipes[i].strengthRequirement - 3 : craftingDatabase.strengthRecipes[i].strengthRequirement;
+                        if(playerStats.strength < requirement) {
+                            unlockText = $"{GT("need")} {requirement} {GT("strength")} {GT("toUnlock")}";
                             unlockTexts[iteration].text = unlockText;
                             unlockTexts[iteration].gameObject.SetActive(true);
+                            iteration++;
+                            continue;
                         }                        
                         if(craftingDatabase.strengthRecipes[i].input0 != null) {
                             inputImages[index + (iteration * gridCount)].firstImage.sprite = craftingDatabase.strengthRecipes[i].input0.firstIcon;
@@ -283,10 +288,12 @@ public class CraftingPanel : MonoBehaviour {
                 for(int i = startingIndex; i < startingIndex + recipeCountPerPage; i++) {
                     index = 0;
                     if(i <= craftingDatabase.agilityRecipes.Count - 1) {
-                        if(playerStats.agility < craftingDatabase.agilityRecipes[i].agilityRequirement) {
-                            unlockText = $"{GT("need")} {craftingDatabase.agilityRecipes[i].agilityRequirement} {GT("agility")} {GT("toUnlock")}";
+                        int requirement = player.raceIndex == 4 ? craftingDatabase.agilityRecipes[i].agilityRequirement - 3 : craftingDatabase.agilityRecipes[i].agilityRequirement;
+                        if(playerStats.agility < requirement) {
+                            unlockText = $"{GT("need")} {requirement} {GT("agility")} {GT("toUnlock")}";
                             unlockTexts[iteration].text = unlockText;
                             unlockTexts[iteration].gameObject.SetActive(true);
+                            continue;
                         }
                         if(craftingDatabase.agilityRecipes[i].input0 != null) {
                             inputImages[index + (iteration * gridCount)].firstImage.sprite = craftingDatabase.agilityRecipes[i].input0.firstIcon;
@@ -387,10 +394,12 @@ public class CraftingPanel : MonoBehaviour {
                 for(int i = startingIndex; i < startingIndex + recipeCountPerPage; i++) {
                     index = 0;
                     if(i <= craftingDatabase.dexterityRecipes.Count - 1) {
-                        if(playerStats.dexterity < craftingDatabase.dexterityRecipes[i].dexterityRequirement) {
-                            unlockText = $"{GT("need")} {craftingDatabase.dexterityRecipes[i].dexterityRequirement} {GT("dexterity")} {GT("toUnlock")}";
+                        int requirement = player.raceIndex == 4 ? craftingDatabase.dexterityRecipes[i].dexterityRequirement - 3 : craftingDatabase.dexterityRecipes[i].dexterityRequirement;
+                        if(playerStats.dexterity < requirement) {
+                            unlockText = $"{GT("need")} {requirement} {GT("dexterity")} {GT("toUnlock")}";
                             unlockTexts[iteration].text = unlockText;
                             unlockTexts[iteration].gameObject.SetActive(true);
+                            continue;
                         }
                         if(craftingDatabase.dexterityRecipes[i].input0 != null) {
                             inputImages[index + (iteration * gridCount)].firstImage.sprite = craftingDatabase.dexterityRecipes[i].input0.firstIcon;
@@ -491,10 +500,12 @@ public class CraftingPanel : MonoBehaviour {
                 for(int i = startingIndex; i < startingIndex + recipeCountPerPage; i++) {
                     index = 0;
                     if(i <= craftingDatabase.intelligenceRecipes.Count - 1) {
-                        if(playerStats.intelligence < craftingDatabase.intelligenceRecipes[i].intelligenceRequirement) {
-                            unlockText = $"{GT("need")} {craftingDatabase.intelligenceRecipes[i].intelligenceRequirement} {GT("intelligence")} {GT("toUnlock")}";
+                        int requirement = player.raceIndex == 4 ? craftingDatabase.intelligenceRecipes[i].intelligenceRequirement - 3 : craftingDatabase.intelligenceRecipes[i].intelligenceRequirement;
+                        if(playerStats.intelligence < requirement) {
+                            unlockText = $"{GT("need")} {requirement} {GT("intelligence")} {GT("toUnlock")}";
                             unlockTexts[iteration].text = unlockText;
                             unlockTexts[iteration].gameObject.SetActive(true);
+                            continue;
                         }
                         if(craftingDatabase.intelligenceRecipes[i].input0 != null) {
                             inputImages[index + (iteration * gridCount)].firstImage.sprite = craftingDatabase.intelligenceRecipes[i].input0.firstIcon;
@@ -595,10 +606,12 @@ public class CraftingPanel : MonoBehaviour {
                 for(int i = startingIndex; i < startingIndex + recipeCountPerPage; i++) {
                     index = 0;
                     if(i <= craftingDatabase.faithRecipes.Count - 1) {
-                        if(playerStats.faith < craftingDatabase.faithRecipes[i].faithRequirement) {
-                            unlockText = $"{GT("need")} {craftingDatabase.faithRecipes[i].faithRequirement} {GT("faith")} {GT("toUnlock")}";
+                        int requirement = player.raceIndex == 4 ? craftingDatabase.faithRecipes[i].faithRequirement - 3 : craftingDatabase.faithRecipes[i].faithRequirement;
+                        if(playerStats.faith < requirement) {
+                            unlockText = $"{GT("need")} {requirement} {GT("faith")} {GT("toUnlock")}";
                             unlockTexts[iteration].text = unlockText;
                             unlockTexts[iteration].gameObject.SetActive(true);
+                            continue;
                         }
                         if(craftingDatabase.faithRecipes[i].input0 != null) {
                             inputImages[index + (iteration * gridCount)].firstImage.sprite = craftingDatabase.faithRecipes[i].input0.firstIcon;
@@ -699,10 +712,12 @@ public class CraftingPanel : MonoBehaviour {
                 for(int i = startingIndex; i < startingIndex + recipeCountPerPage; i++) {
                     index = 0;
                     if(i <= craftingDatabase.wisdomRecipes.Count - 1) {
-                        if(playerStats.wisdom < craftingDatabase.wisdomRecipes[i].wisdomRequirement) {
-                            unlockText = $"{GT("need")} {craftingDatabase.wisdomRecipes[i].wisdomRequirement} {GT("wisdom")} {GT("toUnlock")}";
+                        int requirement = player.raceIndex == 4 ? craftingDatabase.wisdomRecipes[i].wisdomRequirement - 3 : craftingDatabase.wisdomRecipes[i].wisdomRequirement;
+                        if(playerStats.wisdom < requirement) {
+                            unlockText = $"{GT("need")} {requirement} {GT("wisdom")} {GT("toUnlock")}";
                             unlockTexts[iteration].text = unlockText;
                             unlockTexts[iteration].gameObject.SetActive(true);
+                            continue;
                         }
                         if(craftingDatabase.wisdomRecipes[i].input0 != null) {
                             inputImages[index + (iteration * gridCount)].firstImage.sprite = craftingDatabase.wisdomRecipes[i].input0.firstIcon;
@@ -803,10 +818,12 @@ public class CraftingPanel : MonoBehaviour {
                 for(int i = startingIndex; i < startingIndex + recipeCountPerPage; i++) {
                     index = 0;
                     if(i <= craftingDatabase.vitalityRecipes.Count - 1) {
-                        if(playerStats.vitality < craftingDatabase.vitalityRecipes[i].vitalityRequirement) {
-                            unlockText = $"{GT("need")} {craftingDatabase.vitalityRecipes[i].vitalityRequirement} {GT("vitality")} {GT("toUnlock")}";
+                        int requirement = player.raceIndex == 4 ? craftingDatabase.vitalityRecipes[i].vitalityRequirement - 3 : craftingDatabase.vitalityRecipes[i].vitalityRequirement;
+                        if(playerStats.vitality < requirement) {
+                            unlockText = $"{GT("need")} {requirement} {GT("vitality")} {GT("toUnlock")}";
                             unlockTexts[iteration].text = unlockText;
                             unlockTexts[iteration].gameObject.SetActive(true);
+                            continue;
                         }
                         if(craftingDatabase.vitalityRecipes[i].input0 != null) {
                             inputImages[index + (iteration * gridCount)].firstImage.sprite = craftingDatabase.vitalityRecipes[i].input0.firstIcon;
@@ -907,10 +924,12 @@ public class CraftingPanel : MonoBehaviour {
                 for(int i = startingIndex; i < startingIndex + recipeCountPerPage; i++) {
                     index = 0;
                     if(i <= craftingDatabase.charismaRecipes.Count - 1) {
-                        if(playerStats.charisma < craftingDatabase.charismaRecipes[i].charismaRequirement) {
-                            unlockText = $"{GT("need")} {craftingDatabase.charismaRecipes[i].charismaRequirement} {GT("charisma")} {GT("toUnlock")}";
+                        int requirement = player.raceIndex == 4 ? craftingDatabase.charismaRecipes[i].charismaRequirement - 3 : craftingDatabase.charismaRecipes[i].charismaRequirement;
+                        if(playerStats.charisma < requirement) {
+                            unlockText = $"{GT("need")} {requirement} {GT("charisma")} {GT("toUnlock")}";
                             unlockTexts[iteration].text = unlockText;
                             unlockTexts[iteration].gameObject.SetActive(true);
+                            continue;
                         }
                         if(craftingDatabase.charismaRecipes[i].input0 != null) {
                             inputImages[index + (iteration * gridCount)].firstImage.sprite = craftingDatabase.charismaRecipes[i].input0.firstIcon;
@@ -1037,12 +1056,14 @@ public class CraftingPanel : MonoBehaviour {
         }
         ClearGrids();
         ViewRecipes();
+        AudioSystem.audioManager.PlaySound("inGameButton", 0f);
     }
     private void ChangeTab(int index) {
         for(int i = 0; i < tabs.Length; i++) {
             tabs[i].color = inactiveTabPanelColor;
         }
         tabs[index].color = activeTabPanelColor;
+        AudioSystem.audioManager.PlaySound("inGameButton", 0f);
     }
     public void PressTab(int index) {
         currentTabIndex = index;

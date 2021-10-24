@@ -17,6 +17,7 @@ MonoBehaviour:
   skillIcon: {fileID: -670977565870606260, guid: 7851403918e7b7d488e90e9b350976de,
     type: 3}
   interruptable: 0
+  parryable: 0
   attackType: 1
   skillPointsNeeded: 0
   prerequisites: 
@@ -31,7 +32,7 @@ MonoBehaviour:
   - Arrow
   channelingAnimationName: 
   castingAnimationName: 
-  idleAnimationName: Idle
+  idleAnimationName: 
   projectileData:
     team: 0
     arrowSkill: 1
