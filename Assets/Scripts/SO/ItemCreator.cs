@@ -615,11 +615,14 @@ public class ItemCreator : ScriptableObject {
             }
             armorOverlay = chestArmorOverlays[leatherOverlayIndex];*/
             armorBack = chestArmorBacks[pseudoRandom.Next(0, chestArmorBacks.Length)];
-            inGameArmor = chestArmorInGame[1];
+            inGameArmor = chestArmorInGame[0];
         }
         else if(clothArmorIndices.Contains(armorBaseIndex)) {
             armorBack = chestArmorBacks[pseudoRandom.Next(0, chestArmorBacks.Length)];
-            inGameArmor = chestArmorInGame[1];
+            inGameArmor = chestArmorInGame[0];
+        }
+        else {
+            inGameArmor = chestArmorInGame[0];
         }
         Color baseColor = bladeMaterialColors[(int)mat];
         Color overlayColor = bladeMaterialColors[(int)mat];

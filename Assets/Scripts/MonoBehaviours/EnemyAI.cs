@@ -28,6 +28,7 @@ public class EnemyAI : MonoBehaviour {
     public bool hostile = false;            // Current hostility status
     public bool willDefendItself = true;    // Will this entity defend itself if it gets attacked?
     public bool hasEars = true;             // If this enemy is hostile and it hears footsteps, will it attack the target?
+    public bool isBoss = false;
 
     public string walkAnimationName;
     public string idleAnimationName;

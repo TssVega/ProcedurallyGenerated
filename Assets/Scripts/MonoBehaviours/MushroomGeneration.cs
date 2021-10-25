@@ -9,24 +9,21 @@ public class MushroomGeneration : MonoBehaviour {
     public int[,] mushroomValues;
     public List<GameObject> mushrooms;
 
-    private LevelGeneration levelGeneration;
+    public LevelGeneration levelGeneration;
     private System.Random pseudoRandomForMushrooms;
 
     private const int levelSize = 32;
 
-    private void Awake() {
-        levelGeneration = GetComponent<LevelGeneration>();
-    }
     public void GenerateMushrooms(int slot, string seed) {
         pseudoRandomForMushrooms = new System.Random(seed.GetHashCode());
+        mushroomData = SaveSystem.LoadMushrooms(slot, levelGeneration.layout.worldCoordinates);
         mushrooms = new List<GameObject>();
         mushroomValues = new int[levelSize, levelSize];
         for(int i = 0; i < levelSize; i++) {
             for(int j = 0; j < levelSize; j++) {
                 mushroomValues[i, j] = -1;
             }
-        }
-        mushroomData = SaveSystem.LoadMushrooms(slot, levelGeneration.layout.worldCoordinates);
+        }        
         if(mushroomData != null) {            
             for(int x = 0; x < levelSize; x++) {
                 for(int y = 0; y < levelSize; y++) {
@@ -107,6 +104,7 @@ public class MushroomGeneration : MonoBehaviour {
     }
     public void TakeMushroom(Vector2Int coordinates) {
         mushroomValues[coordinates.x, coordinates.y] = -1;
+        // mushrooms.Remove();
     }
     public void SaveMushrooms(int slot) {
         SaveSystem.SaveMushrooms(this, slot, levelGeneration.layout.worldCoordinates);

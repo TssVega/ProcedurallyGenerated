@@ -162,7 +162,7 @@ public class CharacterCreation : MonoBehaviour {
             player.inventory.equipment[i] = null;
         }
         // Transform
-        player.transform.position = new Vector3(5, 0, 0);
+        player.transform.position = Vector3.zero;
         player.transform.rotation = Quaternion.identity;
         // Main
         player.stats.strength = 10;

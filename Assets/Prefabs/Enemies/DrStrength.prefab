@@ -213,8 +213,11 @@ MonoBehaviour:
   poisonThreshold: 100
   bleedThreshold: 100
   curseThreshold: 100
+  drops: []
   living: 0
   status: {fileID: 0}
+  player: {fileID: 0}
+  inventory: {fileID: 0}
 --- !u!114 &7357263703601316305
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -227,6 +230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bde332c1a9495294daf47a94f1ff2362, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   deathPanel: {fileID: 0}
   statusUI: {fileID: 0}
   hitWarning: {fileID: 0}
@@ -251,9 +255,13 @@ MonoBehaviour:
   chanelling: 0
   blocking: 0
   parrying: 0
+  blessed: 0
   defaultShieldTransform: {fileID: 0}
   forwardShieldTransform: {fileID: 0}
   parryTransform: {fileID: 0}
+  blessRate: 1
+  lowEnergyParticles: {fileID: 0}
+  blessParticles: {fileID: 0}
 --- !u!114 &7357263703601316304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -375,10 +383,13 @@ MonoBehaviour:
   timeBetweenSkills: 2
   rotationTime: 1.5
   speed: 3
+  moving: 0
   attacked: 0
   hostility: 1
   hostile: 1
   willDefendItself: 1
+  hasEars: 1
+  isBoss: 1
   walkAnimationName: DrStrengthWalk
   idleAnimationName: DrStrengthIdle
   level: {fileID: 0}

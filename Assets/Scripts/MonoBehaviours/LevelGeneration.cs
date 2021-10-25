@@ -23,7 +23,7 @@ public class LevelGeneration : MonoBehaviour {
     // A reference to world generation script
     private WorldGeneration worldGeneration;
     private ChestGeneration chestGeneration;
-    private MushroomGeneration mushroomGeneration;
+    public MushroomGeneration mushroomGeneration;
     private PoolGeneration poolGeneration;
 
     private List<Vector3Int> wallCoordinates;
@@ -46,7 +46,6 @@ public class LevelGeneration : MonoBehaviour {
     private void Awake() {
         worldGeneration = FindObjectOfType<WorldGeneration>();
         chestGeneration = GetComponent<ChestGeneration>();
-        mushroomGeneration = GetComponent<MushroomGeneration>();
         poolGeneration = GetComponent<PoolGeneration>();
         torches = new List<GameObject>();
         occupiedCoordinates = new List<Vector3Int>();
@@ -58,7 +57,7 @@ public class LevelGeneration : MonoBehaviour {
         if(collision.CompareTag("Player")) {
             worldGeneration.ChangeCurrentCoordinates(layout.worldCoordinates);
         }
-        else if(enemy && enemy.moving) {
+        else if(enemy && enemy.moving && !enemy.isBoss) {
             enemy.level = this;
         }
     }    

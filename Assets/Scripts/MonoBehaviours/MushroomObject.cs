@@ -22,9 +22,6 @@ public class MushroomObject : MonoBehaviour, IInteractable {
         spriteRen = GetComponent<SpriteRenderer>();
         UISprite = interactImage;
     }
-    private void OnDisable() {
-        Debug.Log("Here", this);
-    }
     private void OnTriggerEnter2D(Collider2D collision) {
         if(collision.CompareTag("Player")) {
             collision.GetComponent<Player>().SetInteraction(this);
@@ -46,6 +43,7 @@ public class MushroomObject : MonoBehaviour, IInteractable {
     private void TakeMushroom() {
         spriteRen.sprite = null;
         this.mushroomGeneration.TakeMushroom(new Vector2Int(this.mushroomCoordinates.x, this.mushroomCoordinates.y));
+        mushroomGeneration.mushrooms.Remove(this.gameObject);
         gameObject.SetActive(false);
     }
     public Mushroom GetMushroom() {

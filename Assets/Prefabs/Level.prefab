@@ -113,6 +113,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: df23bcf016f93ac4490cfe612dfbc81a, type: 2}
     - {fileID: 11400000, guid: 27cd4228fe86f964b94ae2a4291f39f7, type: 2}
     - {fileID: 11400000, guid: 2f3f6585c100f234abe9f4989afea4be, type: 2}
+  mushroomGeneration: {fileID: 579866985699479157}
   occupiedCoordinates: []
   crystals:
   - {fileID: 5036906735598353528, guid: 88fe3c3e8b550bc4fa8efb13560d0046, type: 3}
@@ -155,6 +156,7 @@ MonoBehaviour:
   mushroomDatabase: {fileID: 11400000, guid: cd02dd15f0de94643ac6f426f808693a, type: 2}
   itemDatabase: {fileID: 11400000, guid: 54f63e30eeab869438b4c4e0e1e6351e, type: 2}
   mushrooms: []
+  levelGeneration: {fileID: 2016924447434614480}
 --- !u!114 &-109976545555676187
 MonoBehaviour:
   m_ObjectHideFlags: 0

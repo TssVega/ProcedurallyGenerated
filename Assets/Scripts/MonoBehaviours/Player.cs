@@ -443,7 +443,12 @@ public class Player : MonoBehaviour {
     }
     private void SetBodyArmor(Armor armor) {
         bodyArmor.sprite = armor.firstSprite;
-        bodyArmor.color = armor.secondColor;
+        if(armor.secondColor != Color.clear) {
+            bodyArmor.color = armor.secondColor;
+        }
+        else {
+            bodyArmor.color = armor.firstColor;
+        }
     }
     private void ClearBodyArmor() {
         bodyArmor.sprite = appearance.defaultShoulders;
