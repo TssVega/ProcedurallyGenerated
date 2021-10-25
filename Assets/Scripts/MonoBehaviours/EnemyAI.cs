@@ -35,6 +35,8 @@ public class EnemyAI : MonoBehaviour {
 
     public LevelGeneration level;
 
+    private WaitForSeconds rotationTimeWait;
+
     private void Awake() {
         status = GetComponent<StatusEffects>();
         rb2D = GetComponent<Rigidbody2D>();
@@ -43,7 +45,8 @@ public class EnemyAI : MonoBehaviour {
         skillUser = GetComponent<SkillUser>();
         enemyAnimator = GetComponent<Animator>();
         destinationSetter = GetComponent<AIDestinationSetter>();
-        aiPath = GetComponent<AIPath>();        
+        aiPath = GetComponent<AIPath>();
+        rotationTimeWait = new WaitForSeconds(rotationTime);
     }
     private void OnEnable() {
         moving = false;
@@ -117,7 +120,7 @@ public class EnemyAI : MonoBehaviour {
             }
         }
         rotating = false;
-        yield return new WaitForSeconds(rotationTime);
+        yield return rotationTimeWait;
         if(stats.living && gameObject.activeInHierarchy) {
             StartCoroutine(RotateTowardsPlayer());
         }        

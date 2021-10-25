@@ -21,10 +21,13 @@ public class Spawner : MonoBehaviour {
 
     private const float disableDistance = 60f;
 
+    private WaitForSeconds waitASec;
+
     private void Awake() {
         sideLevels = new List<LevelGeneration>();
         spawner = this;
         playerTransform = FindObjectOfType<Player>().transform;
+        waitASec = new WaitForSeconds(1f);
     }
     private void Start() {
         density = 0;
@@ -65,7 +68,7 @@ public class Spawner : MonoBehaviour {
     }
     private IEnumerator SpawnCounter() {
         while(true) {
-            yield return new WaitForSeconds(1f);
+            yield return waitASec;
             if(density <= 10) {
                 SpawnEntity();
             }

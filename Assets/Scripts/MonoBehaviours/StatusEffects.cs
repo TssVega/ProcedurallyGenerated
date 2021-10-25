@@ -107,6 +107,8 @@ public class StatusEffects : MonoBehaviour {
     private const float energyTime = 8f;
     private const float hungerSlowRate = 0.2f;
 
+    private WaitForSeconds energyTimeWait;
+
     public float blessRate = 1f;
 
     public GameObject lowEnergyParticles;
@@ -142,7 +144,8 @@ public class StatusEffects : MonoBehaviour {
             statusUI.UpdateEnergy(stats.energy / stats.trueMaxEnergy, stats.energy);
         }
         if(player && statusUI) {
-            GradualEnergyDrop();
+            energyTimeWait = new WaitForSeconds(energyTime);
+            StartCoroutine(EnergyCounter());
         }
     }
     // Stop all effect counters and reset values on disable
@@ -201,12 +204,9 @@ public class StatusEffects : MonoBehaviour {
             stunParticles.SetActive(false);
         }
     }
-    private void GradualEnergyDrop() {
-        StartCoroutine(EnergyCounter());
-    }
     private IEnumerator EnergyCounter() {
         for(; ; ) {
-            yield return new WaitForSeconds(energyTime);
+            yield return energyTimeWait;
             DecreaseEnergy(1f);
             CheckEnergy();
         }

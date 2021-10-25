@@ -9,8 +9,4 @@ public class Enemy : MonoBehaviour {
     private void Awake() {
         enemyAnimator = GetComponent<Animator>();
     }
-
-    private void Update() {
-        //enemyAnimator.SetFloat("Speed", rb2d.);
-    }
 }

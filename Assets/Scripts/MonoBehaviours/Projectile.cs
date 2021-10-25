@@ -18,12 +18,17 @@ public class Projectile : MonoBehaviour {
 
     private const float setTargetDelay = 0.75f;
 
+    private WaitForSeconds endProjectileWait;
+    private WaitForSeconds setTargetDelayWait;
+
     private bool isActive = true;
 
     private void Awake() {
         rb2d = GetComponent<Rigidbody2D>();
         circleCollider2D = GetComponent<CircleCollider2D>();
         light2D = GetComponent<Light2D>();
+        endProjectileWait = new WaitForSeconds(1f);
+        setTargetDelayWait = new WaitForSeconds(setTargetDelay);
     }
     private void OnEnable() {
         if(targetToSet) {
@@ -83,7 +88,7 @@ public class Projectile : MonoBehaviour {
             }            
         }
         light2D.enabled = false;
-        yield return new WaitForSeconds(1f);
+        yield return endProjectileWait;
         for(int i = 0; i < transform.childCount; i++) {
             if(transform.GetChild(i).GetComponent<ParticleSystem>()) {
                 transform.GetChild(i).gameObject.SetActive(false);
@@ -108,7 +113,7 @@ public class Projectile : MonoBehaviour {
         targetToSet = target;
     }
     public IEnumerator SetTargetDelayed(Transform target) {
-        yield return new WaitForSeconds(setTargetDelay);
+        yield return setTargetDelayWait;
         this.target = target;
     }
 }

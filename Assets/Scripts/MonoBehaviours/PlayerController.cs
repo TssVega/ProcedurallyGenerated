@@ -18,6 +18,12 @@ public class PlayerController : MonoBehaviour {
     private const float autoLockSearchInterval = 0.5f;
     private const float footstepInterval = 0.4f;
     private const float footstepThreshold = 2.7f;
+    private const float checkLockInterval = 1f;
+
+    private WaitForSeconds autoLockSearchIntervalWait;
+    private WaitForSeconds footstepIntervalWait;
+    private WaitForSeconds checkLockIntervalWait;
+
     private FieldOfView fov;
 
     private bool autoLock;
@@ -41,6 +47,9 @@ public class PlayerController : MonoBehaviour {
         statusEffects = GetComponent<StatusEffects>();        
         rb2D = GetComponent<Rigidbody2D>();
         joystickInput = Vector2.zero;
+        autoLockSearchIntervalWait = new WaitForSeconds(autoLockSearchInterval);
+        footstepIntervalWait = new WaitForSeconds(footstepInterval);
+        checkLockIntervalWait = new WaitForSeconds(checkLockInterval);
     }
     private void OnEnable() {
         lockedOn = false;
@@ -65,7 +74,7 @@ public class PlayerController : MonoBehaviour {
     }
     private IEnumerator AutoLock() {
         while(true) {
-            yield return new WaitForSeconds(autoLockSearchInterval);
+            yield return autoLockSearchIntervalWait;
             if(fov.visibleTargets.Count > 0) {
                 nearestEnemy = fov.GetClosestTarget();
                 if(nearestEnemy) {
@@ -99,7 +108,7 @@ public class PlayerController : MonoBehaviour {
             if(lockUI && LocalizationManager.localization) {
                 lockUI.CheckLock();
             }
-            yield return new WaitForSeconds(1f);            
+            yield return checkLockIntervalWait;            
         }        
     }
     private IEnumerator CheckFootsteps() {
@@ -111,7 +120,7 @@ public class PlayerController : MonoBehaviour {
             else {
                 makingNoise = false;
             }
-            yield return new WaitForSeconds(footstepInterval);
+            yield return footstepIntervalWait;
         }        
     }
     private void GetInput() {

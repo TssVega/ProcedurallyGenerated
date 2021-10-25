@@ -16,6 +16,8 @@ public class FieldOfView : MonoBehaviour {
 
     private const float delay = 0.5f;
 
+    private WaitForSeconds delayWait;
+
     private AIDestinationSetter destinationSetter;
     private Stats stats;
     private EnemyAI enemyAI;
@@ -32,6 +34,7 @@ public class FieldOfView : MonoBehaviour {
         enemyAI = GetComponent<EnemyAI>();
         destinationSetter = GetComponent<AIDestinationSetter>();
         stats = GetComponent<Stats>();
+        delayWait = new WaitForSeconds(delay);
     }
     private void OnEnable() {
         StartCoroutine(FindTargetWithDelay());
@@ -41,7 +44,7 @@ public class FieldOfView : MonoBehaviour {
     }
     private IEnumerator FindTargetWithDelay() {
         for(; ; ) {
-            yield return new WaitForSeconds(delay);
+            yield return delayWait;
             FindVisibleTargets();
             if(enemyAI) {
                 ChaseClosestTarget();
