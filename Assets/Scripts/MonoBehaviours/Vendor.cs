@@ -9,6 +9,13 @@ public class Vendor : MonoBehaviour, IInteractable {
     private VendorUI vendorUI;
 
     public Sprite interactImage;
+    public ItemCreator itemCreator;
+
+    private Item[] items;
+
+    private const int shopSize = 8;
+
+    private System.Random shopRandom;
 
     public Sprite UISprite {
         get;
@@ -24,11 +31,18 @@ public class Vendor : MonoBehaviour, IInteractable {
         vendorUI = uiCanvas.vendorPanel.GetComponent<VendorUI>();
         Seller = true;
     }
+    private void OnEnable() {
+        shopRandom = new System.Random(Random.Range(0, 999999999).GetHashCode());
+        items = new Item[shopSize];
+        for(int i = 0; i < items.Length; i++) {
+            items[i] = itemCreator.GetRandomItem(shopRandom.Next().ToString());
+        }
+    }
     public void Interact() {
         uiCanvas.vendorPanel.SetActive(!uiCanvas.vendorPanel.activeSelf);
         uiCanvas.inventoryIcon.SetActive(!uiCanvas.vendorPanel.activeSelf);
-        if(uiCanvas.chestPanel.activeSelf) {
-            // vendorUI.SetChestUI(this);
+        if(uiCanvas.vendorPanel.activeSelf) {
+            vendorUI.SetItems(items);
         }
         uiCanvas.playerUI.SetActive(!uiCanvas.vendorPanel.activeSelf);
     }

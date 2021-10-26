@@ -48,6 +48,9 @@ public class Inventory : MonoBehaviour {
 
     private Light2D playerLight;
 
+    private const int goldIndex = 87;
+    private const int silverIndex = 88;
+
     private void Awake() {
         if(craftingDatabase) {
             craftingDatabase.SortAllRecipes();
@@ -607,6 +610,52 @@ public class Inventory : MonoBehaviour {
         UpdateStats();
         UpdateEquipmentSlot((int)item.slot);
     }
+    public (int, int) GetGoldCountAndIndex() {
+        for(int i = 0; i < InventorySize; i++) {
+            // Gold
+            if(inventory[i] == itemDatabase.items[goldIndex]) {
+                return (quantities[i], i);
+            }
+        }
+        return (0, 0);
+    }
+    public (int, int) GetSilverCountAndIndex() {
+        for(int i = 0; i < InventorySize; i++) {
+            // Silver
+            if(inventory[i] == itemDatabase.items[silverIndex]) {
+                return (quantities[i], i);
+            }
+        }
+        return (0, 0);
+    }
+    public void TakeGold(int amount) {
+        int index = -1;
+        for(int i = 0; i < InventorySize; i++) {
+            // Gold
+            if(inventory[i] == itemDatabase.items[goldIndex]) {
+                index = i;
+                break;
+            }
+        }
+        if(index >= 0) {
+            quantities[index] -= amount;
+            UpdateSlot(index);
+        }        
+    }
+    public void TakeSilver(int amount) {
+        int index = -1;
+        for(int i = 0; i < InventorySize; i++) {
+            // Gold
+            if(inventory[i] == itemDatabase.items[silverIndex]) {
+                index = i;
+                break;
+            }
+        }
+        if(index >= 0) {
+            quantities[index] -= amount;
+            UpdateSlot(index);
+        }
+    }
     public void SellItem(int slot) {
         if(inventory[slot] == null) {
             return;
@@ -614,11 +663,13 @@ public class Inventory : MonoBehaviour {
         if(!CanAddToInventory()) {
             return;
         }
+        // Gold
         for(int i = 0; i < inventory[slot].goldCost; i++) {
-            AddToInventory(itemDatabase.items[87], false);
+            AddToInventory(itemDatabase.items[goldIndex], false);
         }
+        // Silver
         for(int i = 0; i < inventory[slot].silverCost; i++) {
-            AddToInventory(itemDatabase.items[88], false);
+            AddToInventory(itemDatabase.items[silverIndex], false);
         }
         TakeItemFromSlot(slot);
         AudioSystem.audioManager.PlaySound("sell", 0f);

@@ -76,7 +76,7 @@ public class ItemInfoPanel : MonoBehaviour {
         totalChart.SetActive(true);
     }
     public void SetItem(Item item, int index, bool isInventorySlot) {
-        if(player is null) {
+        if(player == null) {
             player = FindObjectOfType<Player>();
         }        
         this.item = item;
@@ -86,6 +86,9 @@ public class ItemInfoPanel : MonoBehaviour {
         SetButtons();
         UpdateStats();
         Refresh();
+    }
+    public void SetShopItem(Item item) {
+    
     }
     private void SetStats() {
         if(item != null) {
@@ -220,7 +223,7 @@ public class ItemInfoPanel : MonoBehaviour {
                 }
                 infoText.gameObject.SetActive(false);
             }
-            if(player.Interaction != null && player.Interaction.Seller) {
+            if(player.Interaction != null && player.Interaction.Seller && (item.goldCost > 0 || item.silverCost > 0)) {
                 sellButton.SetActive(true);
                 sellText.text = LocalizationManager.localization.GetText("sell");
                 sellAmountText.text = item.goldCost > 0 ? item.goldCost.ToString() : item.silverCost > 0 ? item.silverCost.ToString() : "0";

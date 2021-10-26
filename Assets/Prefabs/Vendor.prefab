@@ -49,6 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactImage: {fileID: 21300000, guid: 4b97ab81add329d479a9dcd53efe0879, type: 3}
+  itemCreator: {fileID: 11400000, guid: 17c145380eb92d442b27f9d5113445cb, type: 2}
 --- !u!212 &2402765579060539872
 SpriteRenderer:
   m_ObjectHideFlags: 0

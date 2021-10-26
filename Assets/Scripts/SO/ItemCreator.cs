@@ -115,6 +115,9 @@ public class ItemCreator : ScriptableObject {
 
     private System.Random pseudoRandom;
 
+    public Item GetRandomItem(string seed) {
+        return itemDatabase.items[new System.Random(seed.GetHashCode()).Next(0, itemDatabase.items.Count)];
+    }
     // Create an item
     public Item CreateItem(string seed, int luck) {
         uniqueRate = luck;
@@ -135,13 +138,11 @@ public class ItemCreator : ScriptableObject {
             switch(slotIndex) {
                 case 6:
                 case 7:
-                    return itemDatabase.coins[1];
-                case 8:
                     return itemDatabase.commonBooks[pseudoRandom.Next(0, itemDatabase.commonBooks.Count)];
                 case 9:
+                case 8:
                     return itemDatabase.essentialBooks[pseudoRandom.Next(0, itemDatabase.essentialBooks.Count)];
                 case 10:
-                    return itemDatabase.coins[0];
                 case 11:
                     return itemDatabase.grimoire[pseudoRandom.Next(0, itemDatabase.grimoire.Count)];
                 case 12:
