@@ -24,9 +24,12 @@ public class ItemInfoPanel : MonoBehaviour {
     public TextMeshProUGUI infoText;
     public TextMeshProUGUI areYouSureText;
     public TextMeshProUGUI yesText;
+    public TextMeshProUGUI sellText;
+    public TextMeshProUGUI sellAmountText;
 
     public GameObject consumeEquipButton;
     public GameObject dismantleButton;
+    public GameObject sellButton;
 
     public TextMeshProUGUI quantityText;
 
@@ -36,6 +39,9 @@ public class ItemInfoPanel : MonoBehaviour {
     public Image equippedItemFirstImage;
     public Image equippedItemSecondImage;
     public Image equippedItemThirdImage;
+
+    public Image goldImage;
+    public Image silverImage;
 
     public GameObject currentItemChart;
     public GameObject equippedItemChart;
@@ -56,18 +62,23 @@ public class ItemInfoPanel : MonoBehaviour {
 
     public TextMeshProUGUI[] quantityTexts;
 
+    private Player player;
+
     private void Awake() {
         equippedItemText.text = LocalizationManager.localization.GetText("equippedItem");
         areYouSureText.text = LocalizationManager.localization.GetText("dismantleConfirmation");
         yesText.text = LocalizationManager.localization.GetText("yes");
     }
-    private void OnEnable() {
+    private void OnEnable() {        
         dismantleConfirmationPanel.SetActive(false);
     }
     private void OnDisable() {
         totalChart.SetActive(true);
     }
     public void SetItem(Item item, int index, bool isInventorySlot) {
+        if(player is null) {
+            player = FindObjectOfType<Player>();
+        }        
         this.item = item;
         currentIndex = index;
         this.isInventorySlot = isInventorySlot;
@@ -209,6 +220,20 @@ public class ItemInfoPanel : MonoBehaviour {
                 }
                 infoText.gameObject.SetActive(false);
             }
+            if(player.Interaction != null && player.Interaction.Seller) {
+                sellButton.SetActive(true);
+                sellText.text = LocalizationManager.localization.GetText("sell");
+                sellAmountText.text = item.goldCost > 0 ? item.goldCost.ToString() : item.silverCost > 0 ? item.silverCost.ToString() : "0";
+                goldImage.gameObject.SetActive(item.goldCost > 0);
+                silverImage.gameObject.SetActive(item.silverCost > 0);
+            }
+            else {
+                sellButton.SetActive(false);
+                sellText.text = "";
+                sellAmountText.text = "";
+                goldImage.gameObject.SetActive(false);
+                silverImage.gameObject.SetActive(false);
+            }
         }
         else {
             consumeEquipButton.SetActive(true);
@@ -221,6 +246,11 @@ public class ItemInfoPanel : MonoBehaviour {
                 secondaryImages[i].gameObject.SetActive(false);
             }
             infoText.gameObject.SetActive(false);
+            sellButton.SetActive(false);
+            sellText.text = "";
+            sellAmountText.text = "";
+            goldImage.gameObject.SetActive(false);
+            silverImage.gameObject.SetActive(false);
         }
     }
     public void ConsumeEquipButton() {
@@ -266,7 +296,16 @@ public class ItemInfoPanel : MonoBehaviour {
             gameObject.SetActive(false);
         }
     }
+    public void Sell() {
+        if(isInventorySlot) {
+            inventory.SellItem(currentIndex);
+            UpdateStats();
+        }
+    }
     private void UpdateStats() {
+        if(isInventorySlot && inventory.inventory[currentIndex] == null) {
+            gameObject.SetActive(false);
+        }
         currentItemDescription.text = LocalizationManager.localization.GetText($"{item.seed}Desc");
         Item equippedItem = null;
         if((int)item.slot < 6) {

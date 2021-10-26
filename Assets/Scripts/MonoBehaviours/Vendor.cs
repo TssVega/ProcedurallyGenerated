@@ -1,16 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class ChestObject : MonoBehaviour, IInteractable {
+public class Vendor : MonoBehaviour, IInteractable {
 
     private UICanvas uiCanvas;
-    private ChestUI chestUI;
+
+    private VendorUI vendorUI;
 
     public Sprite interactImage;
-
-    public Chest chestContent;
 
     public Sprite UISprite {
         get;
@@ -23,24 +21,16 @@ public class ChestObject : MonoBehaviour, IInteractable {
     private void Awake() {
         uiCanvas = FindObjectOfType<UICanvas>();
         UISprite = interactImage;
-        chestUI = uiCanvas.chestPanel.GetComponent<ChestUI>();
-        Seller = false;
-    }
-    public void SetChest(Chest chest) {
-        chestContent = new Chest();
-        chestContent = chest;
-    }
-    public Chest GetChest() {
-        return chestContent;
+        vendorUI = uiCanvas.vendorPanel.GetComponent<VendorUI>();
+        Seller = true;
     }
     public void Interact() {
-        // Open and close chest here
-        uiCanvas.chestPanel.SetActive(!uiCanvas.chestPanel.activeSelf);
-        uiCanvas.inventoryIcon.SetActive(!uiCanvas.chestPanel.activeSelf);
+        uiCanvas.vendorPanel.SetActive(!uiCanvas.vendorPanel.activeSelf);
+        uiCanvas.inventoryIcon.SetActive(!uiCanvas.vendorPanel.activeSelf);
         if(uiCanvas.chestPanel.activeSelf) {
-            chestUI.SetChestUI(this);
-        }        
-        uiCanvas.playerUI.SetActive(!uiCanvas.chestPanel.activeSelf);
+            // vendorUI.SetChestUI(this);
+        }
+        uiCanvas.playerUI.SetActive(!uiCanvas.vendorPanel.activeSelf);
     }
     private void OnTriggerEnter2D(Collider2D collision) {
         if(collision.CompareTag("Player")) {

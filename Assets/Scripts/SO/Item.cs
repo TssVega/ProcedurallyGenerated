@@ -38,6 +38,7 @@ using UnityEngine;
 public class Item : ScriptableObject {
 
     public string seed;
+    public int luck;
     //public int itemSaveIndex;
     public string itemName;
     public Sprite firstSprite;

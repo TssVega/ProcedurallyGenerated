@@ -83,6 +83,8 @@ public class SaveData {
     public string[] inventory;
     public string[] equipment;
     public int[] inventoryQuantities;
+    public int[] lucks;
+    public int[] equipmentLucks;
     // Skills
     public int[] acquiredSkills;
     public int[] currentSkills;
@@ -118,6 +120,14 @@ public class SaveData {
         inventoryQuantities = new int[data.inventory.InventorySize];
         for(int i = 0; i < data.inventory.InventorySize; i++) {
             inventoryQuantities[i] = data.inventory.quantities[i];
+        }
+        lucks = new int[data.inventory.InventorySize];
+        for(int i = 0; i < data.inventory.InventorySize; i++) {
+            lucks[i] = data.inventory.lucks[i];
+        }
+        equipmentLucks = new int[data.inventory.EquipmentSize];
+        for(int i = 0; i < data.inventory.EquipmentSize; i++) {
+            equipmentLucks[i] = data.inventory.equipmentLucks[i];
         }
         // Position and world data
         position = new float[3];

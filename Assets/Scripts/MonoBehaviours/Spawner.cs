@@ -33,7 +33,15 @@ public class Spawner : MonoBehaviour {
         density = 0;
         if(spawn) {
             StartCoroutine(SpawnCounter());
-        }        
+        }
+        StartCoroutine(SpawnVendor());
+    }
+    private IEnumerator SpawnVendor() {
+        yield return new WaitForSeconds(1f);
+        GameObject vendorObj = ObjectPooler.objectPooler.GetPooledObject("Vendor");
+        vendorObj.transform.position = Vector3.one * 5;
+        vendorObj.transform.rotation = Quaternion.Euler(0f, 0f, Random.Range(0f, 359f));
+        vendorObj.SetActive(true);
     }
     public void AddSideLevel(LevelGeneration sideLevel) {
         sideLevels.Add(sideLevel);

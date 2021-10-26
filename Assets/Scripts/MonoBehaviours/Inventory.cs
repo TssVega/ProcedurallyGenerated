@@ -15,6 +15,8 @@ public class Inventory : MonoBehaviour {
     public Item[] craftingSlots;
     public Item craft;
     public int[] quantities;
+    public int[] lucks;
+    public int[] equipmentLucks;
     private readonly int inventorySize = 70;
     private readonly int equipmentSize = 6;
     private const int gridSize = 9;
@@ -52,7 +54,9 @@ public class Inventory : MonoBehaviour {
         }        
         skillUI = FindObjectOfType<SkillUI>();
         inventoryPanel = FindObjectOfType<InventoryPanel>();
-        quantities = new int[inventorySize];
+        quantities = new int[InventorySize];
+        lucks = new int[InventorySize];
+        equipmentLucks = new int[EquipmentSize];
         craftingSlots = new Item[gridSize];
         player = FindObjectOfType<Player>();
         playerLight = GetComponent<Light2D>();
@@ -66,6 +70,12 @@ public class Inventory : MonoBehaviour {
             }
             for(int i = 0; i < quantities.Length; i++) {
                 quantities[i] = 0;
+            }
+            for(int i = 0; i < lucks.Length; i++) {
+                lucks[i] = 0;
+            }
+            for(int i = 0; i < equipmentLucks.Length; i++) {
+                equipmentLucks[i] = 0;
             }
         }        
     }
@@ -522,6 +532,7 @@ public class Inventory : MonoBehaviour {
         }
         if(quantities[slotIndex] < 1) {
             inventory[slotIndex] = null;
+            lucks[slotIndex] = 0;
         }
         UpdateSlot(slotIndex);
         UpdateStats();
@@ -538,6 +549,7 @@ public class Inventory : MonoBehaviour {
         }
         inventory[slotIndex] = null;
         quantities[slotIndex]--;
+        lucks[slotIndex] = 0;
         UpdateSlot(slotIndex);
     }
     public void EquipItem(Item item) {
@@ -586,13 +598,30 @@ public class Inventory : MonoBehaviour {
             // Debug.Log("Trying to equip ring");
         }
         equipment[(int)item.slot] = item;
+        equipmentLucks[(int)item.slot] = item.luck;
         AudioSystem.audioManager.PlaySound("itemEquip", 0f);
         stats.OnItemEquip(item);
         if(item.alterLight) {
             CheckLights(item);
-        }        
+        }
         UpdateStats();
         UpdateEquipmentSlot((int)item.slot);
+    }
+    public void SellItem(int slot) {
+        if(inventory[slot] == null) {
+            return;
+        }
+        if(!CanAddToInventory()) {
+            return;
+        }
+        for(int i = 0; i < inventory[slot].goldCost; i++) {
+            AddToInventory(itemDatabase.items[87], false);
+        }
+        for(int i = 0; i < inventory[slot].silverCost; i++) {
+            AddToInventory(itemDatabase.items[88], false);
+        }
+        TakeItemFromSlot(slot);
+        AudioSystem.audioManager.PlaySound("sell", 0f);
     }
     public void EquipItemInSlot(int slot) {
         Item item;
@@ -608,6 +637,7 @@ public class Inventory : MonoBehaviour {
         if(item && item.slot != EquipSlot.Consumable && !equipment[(int)item.slot]) {
             inventory[slot] = null;
             quantities[slot]--;
+            lucks[slot] = 0;
             EquipItem(item);
             UpdateSlot(slot);
         }
@@ -616,6 +646,7 @@ public class Inventory : MonoBehaviour {
             //equipment[(int)item.slot] = null;
             inventory[slot] = null;
             quantities[slot]--;
+            lucks[slot] = 0;
             player.ClearItem(tempItem);
             EquipItem(item);
             AddToInventory(tempItem, false);
@@ -642,6 +673,7 @@ public class Inventory : MonoBehaviour {
                 for(int i = 0; i < inventorySize; i++) {
                     if(inventory[i] == item) {
                         quantities[i]++;
+                        lucks[i] = inventory[i].luck;
                         UpdateSlot(i);
                         skillUI.UpdateQuantities();
                         if(playSound) {
@@ -656,6 +688,7 @@ public class Inventory : MonoBehaviour {
                     if(inventory[i] == null) {
                         inventory[i] = item;
                         quantities[i]++;
+                        lucks[i] = inventory[i].luck;
                         UpdateSlot(i);
                         skillUI.UpdateQuantities();
                         if(playSound) {
@@ -684,6 +717,7 @@ public class Inventory : MonoBehaviour {
             else {
                 inventory[i] = item;
                 quantities[i]++;
+                lucks[i] = inventory[i].luck;
                 UpdateSlot(i);
                 skillUI.UpdateQuantities();
                 AudioSystem.audioManager.PlaySound("pickItem", 0f);
@@ -721,11 +755,12 @@ public class Inventory : MonoBehaviour {
         if(quantities[slot] < 1) {
             return;
         }
-        --quantities[slot];
+        --quantities[slot];        
         if(quantities[slot] < 1) {
             inventory[slot] = null;
+            lucks[slot] = 0;
         }
-        UpdateSlot(slot);
+        UpdateSlot(slot);        
     }
     public void MoveItem(int fromSlot, int toSlot) {
         if(!inventory[fromSlot]) {
@@ -739,6 +774,9 @@ public class Inventory : MonoBehaviour {
             int tempQuantity = quantities[toSlot];
             quantities[toSlot] = quantities[fromSlot];
             quantities[fromSlot] = tempQuantity;
+            int tempLuck = lucks[toSlot];
+            lucks[toSlot] = lucks[fromSlot];
+            lucks[fromSlot] = tempLuck;
         }
         else {
             Item tempItem = inventory[toSlot];
@@ -748,6 +786,9 @@ public class Inventory : MonoBehaviour {
             int tempQuantity = quantities[toSlot];
             quantities[toSlot] = quantities[fromSlot];
             quantities[fromSlot] = tempQuantity;
+            int tempLuck = lucks[toSlot];
+            lucks[toSlot] = lucks[fromSlot];
+            lucks[fromSlot] = tempLuck;
         }
         UpdateSlot(fromSlot);
         UpdateSlot(toSlot);
@@ -759,10 +800,12 @@ public class Inventory : MonoBehaviour {
         if(!inventory[toSlot]) {
             inventory[toSlot] = equipment[fromSlot];            
             quantities[toSlot]++;
+            lucks[toSlot] = inventory[toSlot].luck;
             UpdateSpritesOnUnequip(equipment[fromSlot]);
             stats.OnItemUnequip(equipment[fromSlot]);
             UpdateStats();
             equipment[fromSlot] = null;
+            equipmentLucks[fromSlot] = 0;
         }
         else {
             return;

@@ -123,6 +123,7 @@ public class ItemCreator : ScriptableObject {
         ItemMaterial mat = GetItemMaterial();
         if(CheckSpecialCase(seed) != null) {
             item = CheckSpecialCase(seed);
+            item.luck = luck;
             return item;
         }
         int slotIndex = pseudoRandom.Next(0, 15);
@@ -215,6 +216,7 @@ public class ItemCreator : ScriptableObject {
         }
         if(item != null) {
             item.seed = seed;
+            item.luck = luck;
             item.itemMaterial = mat;
             SetStats(item);
         }

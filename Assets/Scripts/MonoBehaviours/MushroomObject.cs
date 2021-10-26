@@ -16,11 +16,15 @@ public class MushroomObject : MonoBehaviour, IInteractable {
         get;
         set;
     }
-
+    public bool Seller {
+        get;
+        set;
+    }
     private void Awake() {
         player = FindObjectOfType<Player>();
         spriteRen = GetComponent<SpriteRenderer>();
         UISprite = interactImage;
+        Seller = false;
     }
     private void OnTriggerEnter2D(Collider2D collision) {
         if(collision.CompareTag("Player")) {

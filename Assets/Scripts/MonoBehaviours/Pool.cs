@@ -29,7 +29,10 @@ public class Pool : MonoBehaviour, IInteractable {
         get;
         set;
     }
-
+    public bool Seller {
+        get;
+        set;
+    }
     private void Awake() {
         playerStatus = FindObjectOfType<Player>().GetComponent<StatusEffects>();
         inventory = FindObjectOfType<Player>().GetComponent<Inventory>();
@@ -38,6 +41,7 @@ public class Pool : MonoBehaviour, IInteractable {
         particleSys = GetComponent<ParticleSystem>();
         light2D = GetComponent<Light2D>();
         UISprite = interactImage;
+        Seller = false;
     }
     private void OnTriggerEnter2D(Collider2D collision) {
         if(collision.CompareTag("Player")) {

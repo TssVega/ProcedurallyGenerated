@@ -167,9 +167,15 @@ public class Player : MonoBehaviour {
             //hairStyleIndex = data.hairStyleIndex;
             SetAppearance();
             // Inventory and equipment
+            for(int i = 0; i < data.lucks.Length; i++) {
+                inventory.lucks[i] = data.lucks[i];
+            }
+            for(int i = 0; i < data.equipmentLucks.Length; i++) {
+                inventory.equipmentLucks[i] = data.equipmentLucks[i];
+            }
             for(int i = 0; i < data.inventory.Length; i++) {
                 if(data.inventory[i] != null) {
-                    inventory.inventory[i] = itemCreator.CreateItem(data.inventory[i], stats.luck);
+                    inventory.inventory[i] = itemCreator.CreateItem(data.inventory[i], inventory.lucks[i]);
                 }
                 else {
                     inventory.inventory[i] = null;
@@ -177,7 +183,7 @@ public class Player : MonoBehaviour {
             }
             for(int i = 0; i < data.equipment.Length; i++) {
                 if(data.equipment[i] != null) {
-                    inventory.equipment[i] = itemCreator.CreateItem(data.equipment[i], stats.luck);
+                    inventory.equipment[i] = itemCreator.CreateItem(data.equipment[i], inventory.equipmentLucks[i]);
                     SetItem(inventory.equipment[i]);
                 }
                 else {
@@ -188,10 +194,10 @@ public class Player : MonoBehaviour {
                     }
                     inventory.equipment[i] = null;
                 }
-            }            
+            }
             for(int i = 0; i < data.inventoryQuantities.Length; i++) {
                 inventory.quantities[i] = data.inventoryQuantities[i];
-            }            
+            }
             // Status
             stats.maxHealth = data.maxHealth;
             stats.maxMana = data.maxMana;
@@ -201,7 +207,7 @@ public class Player : MonoBehaviour {
             stats.trueMaxEnergy = stats.maxEnergy + stats.vitality * 5 + stats.strength * 2 + stats.dexterity * 2 + stats.agility * 2;
             stats.health = data.health;
             stats.mana = data.mana;
-            stats.energy = data.energy;            
+            stats.energy = data.energy;
             stats.runSpeed = data.runSpeed;
             // Main
             stats.strength = data.strength;
@@ -287,7 +293,7 @@ public class Player : MonoBehaviour {
                         }
                     }
                     if(index >= 0) {
-                        skillUser.currentSkills[i] = itemDatabase.items[index] as IUsable;                        
+                        skillUser.currentSkills[i] = itemDatabase.items[index] as IUsable;
                     }
                 }
             }
@@ -298,7 +304,7 @@ public class Player : MonoBehaviour {
             statusUI.UpdateHealth(stats.health / stats.trueMaxHealth, stats.health);
             statusUI.UpdateMana(stats.mana / stats.trueMaxMana, stats.mana);
             statusUI.UpdateEnergy(stats.energy / stats.trueMaxEnergy, stats.energy);
-        }        
+        }
     }
     private void SetItemParticles(Item item) {
         if(item.particles) {
@@ -314,7 +320,7 @@ public class Player : MonoBehaviour {
                 default:
                     part = rightHand;
                     break;
-            }            
+            }
             p.transform.localPosition = part.position;
             p.transform.rotation = part.rotation;
             p.transform.SetParent(part);
@@ -350,9 +356,9 @@ public class Player : MonoBehaviour {
     }
     public void SetWeapon(Weapon weapon) {
         ClearWeapons();
-        if(!weapon) {            
+        if(!weapon) {
             return;
-        }        
+        }
         if(weapon.weaponType == WeaponType.OneHanded) {
             weaponHandle.sprite = weapon.firstSprite;
             weaponGuard.sprite = weapon.secondSprite;
@@ -474,6 +480,15 @@ public class Player : MonoBehaviour {
         this.shield.sprite = null;
         this.shield.color = Color.clear;
     }
+    public bool InTradeArea() {
+        if(interactionList.Count > 0) {
+            /*if(interactionList[interactionList.Count - 1]) {
+            
+            }*/
+            return true;
+        }
+        return false;
+    }
     public void SetInteraction(IInteractable interactable) {
         /*interaction = interactable;
         uiCanvas.ChangeInteractButton(interactable.UISprite);*/
@@ -505,7 +520,11 @@ public class Player : MonoBehaviour {
             interaction.Interact();
         }*/
         if(interactionList.Count > 0) {
-            interactionList[interactionList.Count - 1].Interact();
+            Interaction.Interact();
         }
+    }
+    public IInteractable Interaction {
+        get => interactionList.Count > 0 ? interactionList [interactionList.Count - 1] : null;
+        private set { }
     }
 }

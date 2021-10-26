@@ -5,5 +5,8 @@ using UnityEngine;
 public interface IInteractable {
 
     Sprite UISprite { get; set; }
-    void Interact();
+    bool Seller {
+        get; set;
+    }
+    void Interact();    
 }
