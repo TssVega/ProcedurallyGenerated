@@ -20,6 +20,10 @@ public class VendorUI : MonoBehaviour {
     public Sprite goldCoin;
     public Sprite silverCoin;
 
+    public ShopItemInfo itemInfo;
+
+    private const int priceMultiplier = 5;  // The cost of the items will be this times more than its value
+
     private void Awake() {
         inventory = FindObjectOfType<Player>().GetComponent<Inventory>();
         items = new Item[shopSize];
@@ -29,7 +33,7 @@ public class VendorUI : MonoBehaviour {
             this.items[i] = items[i];
             bool costsGold = this.items[i].goldCost > 0;
             coinImages[i].sprite = costsGold ? goldCoin : silverCoin;
-            costTexts[i].text = costsGold ? this.items[i].goldCost.ToString() : this.items[i].silverCost.ToString();
+            costTexts[i].text = costsGold ? (this.items[i].goldCost * priceMultiplier).ToString() : (this.items[i].silverCost * priceMultiplier).ToString();
             itemImages[i].firstImage.sprite = this.items[i].firstIcon;
             itemImages[i].secondImage.sprite = this.items[i].secondIcon;
             itemImages[i].thirdImage.sprite = this.items[i].thirdIcon;
@@ -38,24 +42,30 @@ public class VendorUI : MonoBehaviour {
             itemImages[i].thirdImage.color = this.items[i].thirdColor;
         }
     }
-    public void OpenItemInfo() {
-    
+    public void OpenItemInfo(int index) {
+        itemInfo.gameObject.SetActive(true);
+        itemInfo.SetItem(items[index], index);
     }
     public void BuyItem(int i) {
         if(!inventory.CanAddToInventory()) {
             return;
         }
-        bool costsGold = this.items[i].goldCost > 0;
+        if(items[i] == null) {
+            return;
+        }
+        bool costsGold = items[i].goldCost > 0;
         (int goldCount, int goldIndex) = inventory.GetGoldCountAndIndex();
         (int silverCount, int silverIndex) = inventory.GetSilverCountAndIndex();
-        if(costsGold && goldCount >= this.items[i].goldCost) {
-            inventory.TakeGold(this.items[i].goldCost);
-            inventory.AddToInventory(this.items[i], false);
+        if(costsGold && goldCount >= items[i].goldCost * priceMultiplier) {
+            inventory.TakeGold(items[i].goldCost);
+            inventory.AddToInventory(items[i], false);
+            itemInfo.gameObject.SetActive(false);
             AudioSystem.audioManager.PlaySound("buy", 0f);
         }
-        else if(silverCount >= this.items[i].silverCost) {
-            inventory.TakeSilver(this.items[i].silverCost);
-            inventory.AddToInventory(this.items[i], false);
+        else if(silverCount >= items[i].silverCost * priceMultiplier) {
+            inventory.TakeSilver(items[i].silverCost);
+            inventory.AddToInventory(items[i], false);
+            itemInfo.gameObject.SetActive(false);
             AudioSystem.audioManager.PlaySound("buy", 0f);
         }
         else {

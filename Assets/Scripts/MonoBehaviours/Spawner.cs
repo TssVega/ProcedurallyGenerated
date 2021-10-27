@@ -19,11 +19,23 @@ public class Spawner : MonoBehaviour {
 
     private Transform playerTransform;
 
-    private const float disableDistance = 60f;
+    //private const float disableDistance = 60f;
 
     private WaitForSeconds waitASec;
 
+    private float spawnCounter;
+    private float vendorCounter;
+
+    private const float spawnTime = 1f;
+    private const int maxDensity = 10;
+    private const float vendorTime = 300f;
+    private const float vendorDisableDistance = 15f;
+
+    private Vendor vendor;
+
     private void Awake() {
+        spawnCounter = spawnTime;
+        vendorCounter = vendorTime;
         sideLevels = new List<LevelGeneration>();
         spawner = this;
         playerTransform = FindObjectOfType<Player>().transform;
@@ -31,17 +43,44 @@ public class Spawner : MonoBehaviour {
     }
     private void Start() {
         density = 0;
-        if(spawn) {
-            StartCoroutine(SpawnCounter());
-        }
-        StartCoroutine(SpawnVendor());
     }
-    private IEnumerator SpawnVendor() {
-        yield return new WaitForSeconds(1f);
+    private void Update() {
+        if(spawnCounter > 0f) {
+            spawnCounter -= Time.deltaTime;
+        }
+        if(vendorCounter > 0f) {
+            vendorCounter -= Time.deltaTime;
+        }
+        if(spawnCounter <= 0f && spawn && density < maxDensity) {
+            spawnCounter = spawnTime;
+            SpawnEntity();
+        }
+        if(vendorCounter <= vendorTime * 0.5f) {
+            DisableVendor();
+        }
+        if(vendorCounter <= 0f && Vector3.Distance(vendor.transform.position, playerTransform.position) > vendorDisableDistance) {
+            SpawnVendor();
+            vendorCounter = vendorTime;
+        }
+    }
+    private void SpawnVendor() {
+        LevelGeneration level = null;
+        if(sideLevels.Count > 0) {
+            level = sideLevels[Random.Range(0, sideLevels.Count)];
+        }
+        if(!level) {
+            return;
+        }
         GameObject vendorObj = ObjectPooler.objectPooler.GetPooledObject("Vendor");
-        vendorObj.transform.position = Vector3.one * 5;
+        vendorObj.transform.position = level.GetRandomLocation();
         vendorObj.transform.rotation = Quaternion.Euler(0f, 0f, Random.Range(0f, 359f));
+        vendor = vendorObj.GetComponent<Vendor>();
         vendorObj.SetActive(true);
+    }
+    private void DisableVendor() {
+        if(vendor && vendor.gameObject.activeInHierarchy && Vector3.Distance(vendor.transform.position, playerTransform.position) > vendorDisableDistance) {
+            vendor.gameObject.SetActive(false);
+        }        
     }
     public void AddSideLevel(LevelGeneration sideLevel) {
         sideLevels.Add(sideLevel);
@@ -73,14 +112,6 @@ public class Spawner : MonoBehaviour {
     public void AddEntity(GameObject entity) {
         entities.Add(entity);
         density++;
-    }
-    private IEnumerator SpawnCounter() {
-        while(true) {
-            yield return waitASec;
-            if(density <= 10) {
-                SpawnEntity();
-            }
-        }        
     }
     private void SpawnEntity() {
         LevelGeneration level = null;

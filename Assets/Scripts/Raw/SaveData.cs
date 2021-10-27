@@ -15,7 +15,6 @@ public class SaveData {
     public float[] position;
     public float[] rotation;
     // Appearance
-    public int skinColorIndex;
     public int hairColorIndex;
     public int hairStyleIndex;
     // Status
