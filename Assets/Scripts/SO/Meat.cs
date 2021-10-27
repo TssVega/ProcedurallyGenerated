@@ -16,7 +16,7 @@ public class Meat : Item, IUsable {
     public ItemDatabase itemDatabase;
 
     public void Consume(StatusEffects status) {
-        status.StartRegen(timePeriod, cooked ? power / timePeriod : power / 3f / timePeriod);
+        status.StartRegen(status.player.npcBonuses[41] ? timePeriod * 2f : timePeriod, cooked ? power / timePeriod : power / 3f / timePeriod, false);
         status.GiveEnergy(power);
         // Vilgerosi bless
         if(cooked && status.player.raceIndex == 9) {

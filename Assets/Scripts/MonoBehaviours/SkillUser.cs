@@ -143,7 +143,17 @@ public class SkillUser : MonoBehaviour {
         }
         // Set projectile game object
         if(proj.skillIndex >= 0) {
-            skillCooldowns[proj.skillIndex] = proj.cooldown;
+            float cd = proj.cooldown;
+            if(player && player.npcBonuses[34] && proj.cooldown > 3f) {
+                cd -= 1;
+            }
+            if(player && player.npcBonuses[35] && proj.cooldown < 5f) {
+                cd *= 0.67f;
+            }
+            if(player && player.npcBonuses[36] && proj.cooldown > 10f) {
+                cd *= 0.75f;
+            }
+            skillCooldowns[proj.skillIndex] = cd;
         }
         // Set channelling particles
         List<GameObject> channelingParticles = new List<GameObject>();
@@ -227,7 +237,17 @@ public class SkillUser : MonoBehaviour {
         }
         // Set buffer game object
         if(buff.skillIndex >= 0) {
-            skillCooldowns[buff.skillIndex] = buff.cooldown;
+            float cd = buff.cooldown;
+            if(player && player.npcBonuses[34] && buff.cooldown > 3f) {
+                cd -= 1;
+            }
+            if(player && player.npcBonuses[35] && buff.cooldown < 5f) {
+                cd *= 0.67f;
+            }
+            if(player && player.npcBonuses[36] && buff.cooldown > 10f) {
+                cd *= 0.75f;
+            }
+            skillCooldowns[buff.skillIndex] = cd;
         }        
         GameObject b = ObjectPooler.objectPooler.GetPooledObject("Buff");
         b.GetComponent<Buff>().SetBuff(buff.buffData);
@@ -277,7 +297,17 @@ public class SkillUser : MonoBehaviour {
             statusEffects.StartImmobilize(dash.channelingTime/* + dash.castTime*/);
         }
         if(dash.skillIndex >= 0) {
-            skillCooldowns[dash.skillIndex] = dash.cooldown;
+            float cd = dash.cooldown;
+            if(player && player.npcBonuses[34] && dash.cooldown > 3f) {
+                cd -= 1;
+            }
+            if(player && player.npcBonuses[35] && dash.cooldown < 5f) {
+                cd *= 0.67f;
+            }
+            if(player && player.npcBonuses[36] && dash.cooldown > 10f) {
+                cd *= 0.75f;
+            }
+            skillCooldowns[dash.skillIndex] = cd;
         }        
         // Set channelling particles
         List<GameObject> channelingParticles = new List<GameObject>();
@@ -317,7 +347,17 @@ public class SkillUser : MonoBehaviour {
             statusEffects.StartImmobilize(area.channelingTime + area.castTime);
         }
         if(area.skillIndex >= 0) {
-            skillCooldowns[area.skillIndex] = area.cooldown;
+            float cd = area.cooldown;
+            if(player && player.npcBonuses[34] && area.cooldown > 3f) {
+                cd -= 1;
+            }
+            if(player && player.npcBonuses[35] && area.cooldown < 5f) {
+                cd *= 0.67f;
+            }
+            if(player && player.npcBonuses[36] && area.cooldown > 10f) {
+                cd *= 0.75f;
+            }
+            skillCooldowns[area.skillIndex] = cd;
         }        
         // Set channelling particles
         List<GameObject> channelingParticles = new List<GameObject>();
@@ -355,7 +395,17 @@ public class SkillUser : MonoBehaviour {
         if(block.focusedSkill) {
             statusEffects.StartImmobilize(block.channelingTime + block.castTime);
         }
-        skillCooldowns[block.skillIndex] = block.cooldown;
+        float cd = block.cooldown;
+        if(player && player.npcBonuses[34] && block.cooldown > 3f) {
+            cd -= 1;
+        }
+        if(player && player.npcBonuses[35] && block.cooldown < 5f) {
+            cd *= 0.67f;
+        }
+        if(player && player.npcBonuses[36] && block.cooldown > 10f) {
+            cd *= 0.75f;
+        }
+        skillCooldowns[block.skillIndex] = cd;
         // Set channelling particles
         List<GameObject> channelingParticles = new List<GameObject>();
         for(int i = 0; i < block.channelingParticleNames.Length; i++) {

@@ -154,6 +154,11 @@ public class CharacterCreation : MonoBehaviour {
         player.raceIndex = currentRaceIndex;
         player.hairColorIndex = currentHairColorIndex;
         player.hairStyleIndex = currentHairStyleIndex;
+        // Npc bonuses
+        player.npcBonuses = new bool[player.npcBonusesLength];
+        for(int i = 0; i < player.npcBonusesLength; i++) {
+            player.npcBonuses[i] = false;
+        }
         // Inventory and equipment
         for(int i = 0; i < player.inventory.InventorySize; i++) {
             player.inventory.inventory[i] = null;

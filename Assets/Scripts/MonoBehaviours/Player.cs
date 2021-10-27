@@ -9,6 +9,9 @@ public class Player : MonoBehaviour {
 
     public int raceIndex;
 
+    public bool[] npcBonuses;
+    public readonly int npcBonusesLength = 44;
+
     public Stats stats;
     public Inventory inventory;
     public SkillUser skillUser;
@@ -75,6 +78,10 @@ public class Player : MonoBehaviour {
         inventory = GetComponent<Inventory>();
         statusUI = FindObjectOfType<StatusUI>();
         skillUI = FindObjectOfType<SkillUI>();
+        npcBonuses = new bool[npcBonusesLength];
+        for(int i = 0; i < npcBonuses.Length; i++) {
+            npcBonuses[i] = false;
+        }
     }
     private void Start() {
         interactionList = new List<IInteractable>();
@@ -96,6 +103,76 @@ public class Player : MonoBehaviour {
             SetWeapon(itemCreator.CreateWeaponSprite(Time.time.ToString()));
         }
     }*/
+    public void AddNPCBonus(int index) {
+        npcBonuses[index] = true;
+        switch(index) {
+            case 0:
+                stats.strength += 5;
+                break;
+            case 1:
+                stats.agility += 5;
+                break;
+            case 2:
+                stats.dexterity += 5;
+                break;
+            case 3:
+                stats.intelligence += 5;
+                break;
+            case 4:
+                stats.faith += 5;
+                break;
+            case 5:
+                stats.wisdom += 5;
+                break;
+            case 6:
+                stats.vitality += 5;
+                break;
+            case 7:
+                stats.charisma += 5;
+                break;
+            case 8:
+                stats.fireDamage += 20;
+                break;
+            case 9:
+                stats.iceDamage += 20;
+                break;
+            case 10:
+                stats.airDamage += 20;
+                break;
+            case 11:
+                stats.earthDamage += 20;
+                break;
+            case 12:
+                stats.lightningDamage += 20;
+                break;
+            case 13:
+                stats.lightDamage += 20;
+                break;
+            case 14:
+                stats.darkDamage += 20;
+                break;
+            case 15:
+                stats.slashDamage += 20;
+                break;
+            case 16:
+                stats.pierceDamage += 20;
+                break;
+            case 17:
+                stats.bashDamage += 20;
+                break;
+            case 18:
+                stats.bleedDamage += 20;
+                break;
+            case 19:
+                stats.poisonDamage += 20;
+                break;
+            case 20:
+                stats.curseDamage += 20;
+                break;
+            default:
+                break;
+        }
+    }
     public void CheckWeapon() {
         /*
         if(bodyParts[0].item && bodyParts[0].item.hasTrail) {
@@ -153,6 +230,7 @@ public class Player : MonoBehaviour {
         if(data != null) {
             saveSlot = data.saveSlot;
             raceIndex = data.race;
+            npcBonuses = data.npcBonuses;
             Vector3 pos = new Vector3(data.position[0], data.position[1], data.position[2]);
             transform.position = pos;
             Quaternion quat = new Quaternion(data.rotation[0], data.rotation[1], data.rotation[2], data.rotation[3]);

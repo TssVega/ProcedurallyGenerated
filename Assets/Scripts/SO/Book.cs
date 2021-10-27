@@ -180,6 +180,37 @@ public class Book : Item, IUsable {
         for(int i = 0; i < skillDatabase.skills.Count; i++) {
             if(skillDatabase.skills[i].attackType == attackType) {
                 status.skillUser.acquiredSkills.Add(skillDatabase.skills[i]);
+                if(status.player.npcBonuses[26]) {
+                    int randomIndex = Random.Range(0, 9);
+                    switch(randomIndex) {
+                        case 0:
+                            status.stats.strength++;
+                            break;
+                        case 1:
+                            status.stats.agility++;
+                            break;
+                        case 2:
+                            status.stats.dexterity++;
+                            break;
+                        case 3:
+                            status.stats.intelligence++;
+                            break;
+                        case 4:
+                            status.stats.faith++;
+                            break;
+                        case 5:
+                            status.stats.wisdom++;
+                            break;
+                        case 6:
+                            status.stats.vitality++;
+                            break;
+                        case 7:
+                            status.stats.charisma++;
+                            break;
+                    }
+                    status.player.inventory.CheckCrafting();
+                    AudioSystem.audioManager.PlaySound("mainStatGained", 0f);
+                }
                 AudioSystem.audioManager.PlaySound("skillUnlocked", 0f);
                 return;
             }

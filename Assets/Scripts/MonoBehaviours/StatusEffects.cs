@@ -106,8 +106,12 @@ public class StatusEffects : MonoBehaviour {
 
     private const float energyTime = 8f;
     private const float hungerSlowRate = 0.2f;
+    private const float defaultParryStunDuration = 0.4f;
+
+    private const float maximumDamageDistance = 10f;
 
     private WaitForSeconds energyTimeWait;
+    private WaitForSeconds waitASec;
 
     public float blessRate = 1f;
 
@@ -129,6 +133,7 @@ public class StatusEffects : MonoBehaviour {
         passives = GetComponent<Passives>();
         rb2d = GetComponent<Rigidbody2D>();
         skillUser = GetComponent<SkillUser>();
+        waitASec = new WaitForSeconds(1f);
         //if(enemy) {
         //    stats.walkSpeed = enemy.enemy.speed;
         //}
@@ -314,13 +319,14 @@ public class StatusEffects : MonoBehaviour {
         }
         else if(stats) {
             damage = amount;
-        }
+        }        
         if(passives) {
             damage = passives.OnHitTaken(damage, attackType, stats);
         }
         if(parrying && attacker && skill && skill.parryable) {
             damage = 0f;
-            attacker.StartStun(stats.vitality * 0.05f);
+            float defaultStunDuration = stats.vitality * 0.05f + defaultParryStunDuration;
+            attacker.StartStun(!player && globalPlayer.npcBonuses[24] ? 1.5f * defaultStunDuration : defaultStunDuration);
             AudioSystem.audioManager.PlaySound("parry", DistanceToPlayer);
         }
         else if(blocking && attacker && skill && skill.parryable) {
@@ -415,6 +421,41 @@ public class StatusEffects : MonoBehaviour {
             default:
                 break;
         }
+        if(attacker.player && globalPlayer.npcBonuses[25]) {
+            attacker.GiveMana(0.5f);
+        }
+        if(attacker.player && globalPlayer.npcBonuses[31] && skill is AreaSkill) {
+            damage *= 1.15f;
+        }
+        if(attacker.player && globalPlayer.npcBonuses[32] && skill is ProjectileSkill) {
+            damage *= 1.2f;
+        }
+        if(attacker.player && globalPlayer.npcBonuses[37] && skill is ProjectileSkill) {
+            damage *= 0.5f;
+        }
+        if(attacker.player && globalPlayer.npcBonuses[37] && skill is AreaSkill) {
+            damage *= 1.33f;
+        }
+        if(attacker.player && globalPlayer.npcBonuses[38] && skill is ProjectileSkill) {
+            damage *= 1.4f;
+        }
+        if(attacker.player && globalPlayer.npcBonuses[38] && skill is AreaSkill) {
+            damage *= 0.33f;
+        }
+        if(attacker.player && globalPlayer.npcBonuses[39]) {
+            float extraDamage = 1f;
+            // Increases extra damage by up to 0.1f depending on how far the player is
+            extraDamage += Mathf.Clamp(Vector3.Distance(attacker.transform.position, transform.position) / (maximumDamageDistance * 5f), 0f, 0.2f);
+            damage *= extraDamage;
+        }
+        if(attacker.player && globalPlayer.npcBonuses[40]) {
+            float extraDamage = 1f;
+            // Increases extra damage by up to 0.1f depending on how far the player is
+            if(Vector3.Distance(attacker.transform.position, transform.position) < 3f) {
+                extraDamage += 0.2f;
+            }
+            damage *= extraDamage;
+        }
         damage = Mathf.Clamp(damage, 0f, stats.maxDamageTimesHealth * stats.trueMaxHealth);
         stats.health -= damage;
         GenerateBloodParticles();
@@ -432,7 +473,18 @@ public class StatusEffects : MonoBehaviour {
             hitWarning.Hit();
         }
         if(stats.health <= 0f) {
-            Die();
+            if(player && player.npcBonuses[28] && attackType == AttackType.Poison) {
+                stats.health = 1f;
+            }
+            else if(player && player.npcBonuses[29] && attackType == AttackType.Bleed) {
+                stats.health = 1f;
+            }
+            else if(player && player.npcBonuses[30] && attackType == AttackType.Curse) {
+                stats.health = 1f;
+            }
+            else {
+                Die();
+            }
         }
         // Havellian clarity
         if(player && player.raceIndex == 11) {
@@ -466,6 +518,9 @@ public class StatusEffects : MonoBehaviour {
         if(player && deathPanel) {
             deathPanel.gameObject.SetActive(true);
             deathPanel.DeathPanelInit();
+        }
+        if(!player && globalPlayer.npcBonuses[27]) {
+            globalPlayer.stats.status.GiveMana(10f);
         }
         if(enemyAI) {
             Spawner.spawner.RemoveEntity(gameObject);
@@ -519,7 +574,7 @@ public class StatusEffects : MonoBehaviour {
             return;
         }
         StopCoroutine(Bless(extraDamageRate, duration));
-        StartCoroutine(Bless(extraDamageRate, duration));
+        StartCoroutine(Bless(extraDamageRate, player && player.npcBonuses[42] ? duration * 1.5f : duration));
     }
     private IEnumerator Bless(float extraDamageRate, float duration) {
         blessRate = extraDamageRate;
@@ -572,7 +627,7 @@ public class StatusEffects : MonoBehaviour {
         if(!lightningStacksCounterRunning) {
             lightningStacksCounterRunning = true;
         }
-        yield return new WaitForSeconds(1f);
+        yield return waitASec;
         if(lightningStacks > 0 && gameObject.activeInHierarchy) {
             StartCoroutine(DecreaseLightningStacks());
         }
@@ -603,7 +658,7 @@ public class StatusEffects : MonoBehaviour {
         if(!iceStacksCounterRunning) {
             iceStacksCounterRunning = true;
         }
-        yield return new WaitForSeconds(1);
+        yield return waitASec;
         if(iceStacks > 0 && gameObject.activeInHierarchy) {
             StartCoroutine(DecreaseIceStacks());
         }
@@ -612,12 +667,12 @@ public class StatusEffects : MonoBehaviour {
         }
     }
     // Start regeneration coroutine
-    public void StartRegen(float duration, float healAmountPerTick) {
+    public void StartRegen(float duration, float healAmountPerTick, bool mushroom) {
         if(gameObject.activeInHierarchy) {
             if(regenerating) {
                 StopRegen();
             }
-            regenCounter = StartCoroutine(Regeneration(duration, healAmountPerTick));
+            regenCounter = StartCoroutine(Regeneration(duration, healAmountPerTick, mushroom));
         }
     }
     // Stop regeneration
@@ -626,13 +681,16 @@ public class StatusEffects : MonoBehaviour {
         regenerating = false;
     }
     // Damage over time coroutines
-    public IEnumerator Regeneration(float duration, float healAmountPerTick) {
+    public IEnumerator Regeneration(float duration, float healAmountPerTick, bool mushroom) {
         float period = 1f;
         bool done = false;
         regenerating = true;
         while(!done) {
             yield return new WaitForSeconds(period);
             Heal(healAmountPerTick);
+            if(!player && globalPlayer.npcBonuses[23] && mushroom) {
+                GiveMana(healAmountPerTick);
+            }
             duration -= period;
             if(duration <= 0) {
                 done = true;
@@ -663,7 +721,7 @@ public class StatusEffects : MonoBehaviour {
         if(!fireStacksCounterRunning) {
             fireStacksCounterRunning = true;
         }
-        yield return new WaitForSeconds(1);
+        yield return waitASec;
         if(fireStacks > 0 && gameObject.activeInHierarchy) {
             StartCoroutine(DecreaseFireStacks());
         }
@@ -730,7 +788,7 @@ public class StatusEffects : MonoBehaviour {
         if(!poisonStacksCounterRunning) {
             poisonStacksCounterRunning = true;
         }
-        yield return new WaitForSeconds(1f);
+        yield return waitASec;
         if(poisonStacks > 0 && gameObject.activeInHierarchy) {
             StartCoroutine(DecreasePoisonStacks());
         }
@@ -804,7 +862,7 @@ public class StatusEffects : MonoBehaviour {
         if(!bleedStacksCounterRunning) {
             bleedStacksCounterRunning = true;
         }
-        yield return new WaitForSeconds(1f);
+        yield return waitASec;
         if(bleedStacks > 0 && gameObject.activeInHierarchy) {
             StartCoroutine(DecreaseBleedStacks());
         }
@@ -863,7 +921,7 @@ public class StatusEffects : MonoBehaviour {
         if(!curseStacksCounterRunning) {
             curseStacksCounterRunning = true;
         }
-        yield return new WaitForSeconds(1f);
+        yield return waitASec;
         if(curseStacks > 0 && gameObject.activeInHierarchy) {
             StartCoroutine(DecreaseCurseStacks());
         }
@@ -903,7 +961,7 @@ public class StatusEffects : MonoBehaviour {
             if(stunned) {
                 StopStun();
             }
-            stunCounter = StartCoroutine(Stun(duration));
+            stunCounter = StartCoroutine(Stun(player && player.npcBonuses[33] ? duration * 0.75f : duration));
         }
     }
     public void StopStun() {
@@ -1163,7 +1221,7 @@ public class StatusEffects : MonoBehaviour {
         if(!earthStacksCounterRunning) {
             earthStacksCounterRunning = true;
         }
-        yield return new WaitForSeconds(1f);
+        yield return waitASec;
         if(earthStacks > 0 && gameObject.activeInHierarchy) {
             StartCoroutine(DecreaseEarthStacks());
         }
@@ -1212,7 +1270,7 @@ public class StatusEffects : MonoBehaviour {
         if(!lightStacksCounterRunning) {
             lightStacksCounterRunning = true;
         }
-        yield return new WaitForSeconds(1f);
+        yield return waitASec;
         if(lightStacks > 0 && gameObject.activeInHierarchy) {
             StartCoroutine(DecreaseLightStacks());
         }
@@ -1248,7 +1306,7 @@ public class StatusEffects : MonoBehaviour {
             if(spedUp) {
                 StopSpeedUp();
             }
-            speedUpCounter = StartCoroutine(SpeedUp(speedRate, duration));
+            speedUpCounter = StartCoroutine(SpeedUp(speedRate, player && player.npcBonuses[43] ? duration * 1.5f : duration));
         }
     }
     public void StopSpeedUp() {

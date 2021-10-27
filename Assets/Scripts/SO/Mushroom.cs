@@ -20,7 +20,7 @@ public class Mushroom : Item, IUsable {
         }
         if(mushroomType == MushroomType.Edible) {
             // Heal over time and satisfy hunger here
-            status.StartRegen(timePeriod, mushroomPower / timePeriod);
+            status.StartRegen(status.player.npcBonuses[41] ? timePeriod * 2f : timePeriod, mushroomPower / timePeriod, true);
             status.GiveEnergy(mushroomPower);
         }
         else {

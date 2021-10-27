@@ -82,8 +82,11 @@ public class Stats : MonoBehaviour {
 
     public Inventory inventory;
 
+    private Player globalPlayer;
+
     private void Awake() {
         //int skillCooldownsSize = FindObjectOfType<GameMaster>().talentDatabase.talents.Length;
+        globalPlayer = FindObjectOfType<Player>();
         player = GetComponent<Player>();
         enemy = GetComponent<Enemy>();
         status = GetComponent<StatusEffects>();
@@ -94,7 +97,8 @@ public class Stats : MonoBehaviour {
     private void OnEnable() {
         living = true;
         if(enemy) {
-            trueMaxHealth = maxHealth + strength * 2 + vitality * 5;
+            // Decrease true max health of enemies by %10 if the player has the 21st bonus
+            trueMaxHealth = globalPlayer.npcBonuses[21] ? (maxHealth + strength * 2 + vitality * 5) * 0.9f: maxHealth + strength * 2 + vitality * 5;
             trueMaxMana = maxMana + dexterity * 2 + wisdom * 5 + intelligence * 2 + faith * 2;
             trueMaxEnergy = maxEnergy + vitality * 5 + strength * 2 + dexterity * 2 + agility * 2;
             health = trueMaxHealth;

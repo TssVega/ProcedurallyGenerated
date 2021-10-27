@@ -15,7 +15,7 @@ public class Potion : Item, IUsable {
     public void Consume(StatusEffects status) {
         switch(potionType) {
             case PotionType.Healing:
-                status.Heal(power);
+                status.Heal(status.player.npcBonuses[22] ? power * 1.5f : power);
                 break;
             case PotionType.Mana:
                 status.GiveMana(power);

@@ -8,6 +8,8 @@ public class SaveData {
     public int saveSlot;
     // Race
     public int race;
+    // Npc bonuses
+    public bool[] npcBonuses;
     // Inventory buttons
     public bool skillBookUnlocked;
     public bool mapUnlocked;
@@ -94,6 +96,8 @@ public class SaveData {
         saveSlot = data.saveSlot;
         // Race
         race = data.raceIndex;
+        // Npc bonuses
+        npcBonuses = data.npcBonuses;
         // Inventory buttons
         skillBookUnlocked = data.skillBookUnlocked;
         mapUnlocked = data.mapUnlocked;
