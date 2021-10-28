@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Glass
   m_EditorClassIdentifier: 
   seed: glass
+  luck: 0
   itemName: 
   firstSprite: {fileID: 21300000, guid: b1097dd0bd1076247879d09bdd7faf8e, type: 3}
   secondSprite: {fileID: 0}
@@ -26,7 +27,7 @@ MonoBehaviour:
   slot: 7
   rarity: 0
   goldCost: 0
-  silverCost: 0
+  silverCost: 3
   stackable: 1
   dismantleOutput: 0
   particles: {fileID: 0}

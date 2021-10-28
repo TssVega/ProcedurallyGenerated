@@ -117,6 +117,7 @@ public int curseThreshold;
             inventory.SetInventoryImages();
         }
         CheckButtons();
+        inventory.UpdateStats();
         UpdateTexts(playerStats);
     }
     public void PutItem(Item item, int index) {

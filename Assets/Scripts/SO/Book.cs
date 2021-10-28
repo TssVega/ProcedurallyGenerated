@@ -209,6 +209,7 @@ public class Book : Item, IUsable {
                             break;
                     }
                     status.player.inventory.CheckCrafting();
+                    status.player.UpdateMaxHealth();
                     AudioSystem.audioManager.PlaySound("mainStatGained", 0f);
                 }
                 AudioSystem.audioManager.PlaySound("skillUnlocked", 0f);

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Torch
   m_EditorClassIdentifier: 
   seed: torch
+  luck: 0
   itemName: Torch
   firstSprite: {fileID: -5223475502992812154, guid: ca2f5f40ce53249429cfc772a1b49a97,
     type: 3}
@@ -28,7 +29,7 @@ MonoBehaviour:
   slot: 1
   rarity: 0
   goldCost: 0
-  silverCost: 0
+  silverCost: 1
   stackable: 0
   dismantleOutput: 1
   particles: {fileID: 7695109055436943505, guid: 0a8fc7451a676ef45b18eb57d77e6e15,

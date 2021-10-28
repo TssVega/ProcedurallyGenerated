@@ -142,6 +142,7 @@ public class Pool : MonoBehaviour, IInteractable {
                         break;
                 }
                 inventory.CheckCrafting();
+                playerStats.player.UpdateMaxHealth();
                 AudioSystem.audioManager.PlaySound("mainStatGained", 0f);
             }
             FindObjectOfType<Player>().ClearInteraction(this);

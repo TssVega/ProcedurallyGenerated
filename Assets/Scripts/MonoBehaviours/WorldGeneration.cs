@@ -56,7 +56,7 @@ public class WorldGeneration : MonoBehaviour {
         tilemap.ClearAllTiles();
         LoadWorldData();
         //world = new WorldData(new string[worldSize, worldSize], new int[] { currentCoordinates.x, currentCoordinates.y});
-        pseudoRandomForWorld = new System.Random(WorldSeed.GetHashCode());        
+        pseudoRandomForWorld = new System.Random(WorldSeed.GetHashCode());
         GenerateCurrentLevels();
         /*
         for(int x = 0; x < worldSize; x++) {
@@ -122,20 +122,20 @@ public class WorldGeneration : MonoBehaviour {
                 lastCoordinates = new[] { -1, -1 }
             };
         }
-    }   
+    }
     public void ChangeCurrentCoordinates(Vector2Int coordinates) {
         //ChangeLastCoordinates(new Vector2Int(world.currentCoordinates[0], world.currentCoordinates[1]));
-        world.currentCoordinates = new[] { coordinates.x, coordinates.y};
+        world.currentCoordinates = new[] { coordinates.x, coordinates.y };
         GenerateCurrentLevels();
         SetSideLevels();
     }
     public void ChangeLastCoordinates(Vector2Int coordinates) {
-        world.lastCoordinates = new[] { coordinates.x, coordinates.y};
+        world.lastCoordinates = new[] { coordinates.x, coordinates.y };
     }
     // Generate adjacent levels and unload farther ones
     private void GenerateCurrentLevels() {
         for(int x = world.currentCoordinates[0] - 1; x <= world.currentCoordinates[0] + 1; x++) {
-            for(int y = world.currentCoordinates[1] - 1; y <= world.currentCoordinates[1] + 1; y++) {                
+            for(int y = world.currentCoordinates[1] - 1; y <= world.currentCoordinates[1] + 1; y++) {
                 if(world.currentCoordinates[0] == world.lastCoordinates[0] && world.currentCoordinates[1] == world.lastCoordinates[1]) {
                     return;
                 }
@@ -161,14 +161,14 @@ public class WorldGeneration : MonoBehaviour {
                 if(!CheckBounds(x, y)) {
                     continue;
                 }
-                if(x == world.currentCoordinates[0] && y == world.currentCoordinates[1]) {                    
+                if(x == world.currentCoordinates[0] && y == world.currentCoordinates[1]) {
                     mapPanel.SetCursor(new Vector2Int(x, y));
                     aStarPath.graphs[0].active.data.gridGraph.center = new Vector3Int(levelSize * x, levelSize * y, 0);
                     StartCoroutine(ScanPath());
                     //ScanPath();
                 }
                 if(currentRenderedLevels.Contains(new Vector2Int(x, y))) {
-                    continue;                    
+                    continue;
                 }
                 //PersistentData.AddWorkingThread();
                 if(world.worldData[x, y] == null) {
@@ -192,9 +192,9 @@ public class WorldGeneration : MonoBehaviour {
                 levelGen.layout = new LevelLayout(world.worldData[x, y]) {
                     worldCoordinates = new Vector2Int(x, y),
                     worldSize = worldSize,
-                    biomeIndex = WorldMap[x, y]                    
+                    biomeIndex = WorldMap[x, y]
                 };
-                levelClone.SetActive(true);                              
+                levelClone.SetActive(true);
                 /*
                 Thread th = new Thread(() => levelGen.SetLayout(this));
                 th.Start();*/
@@ -223,16 +223,16 @@ public class WorldGeneration : MonoBehaviour {
         for(int i = 0; i < levels.Count; i++) {
             int xDifference = Mathf.Abs(levels[i].layout.worldCoordinates.x - world.currentCoordinates[0]);
             int yDifference = Mathf.Abs(levels[i].layout.worldCoordinates.y - world.currentCoordinates[1]);
-            if(xDifference + yDifference > 1) {                
+            if(xDifference + yDifference > 1) {
                 Spawner.spawner.RemoveSideLevel(levels[i]);
                 levels[i].UnloadLevel();
                 currentRenderedLevels.Remove(levels[i].layout.worldCoordinates);
-                levels.Remove(levels[i]);                
+                levels.Remove(levels[i]);
                 --i;
                 // levels.RemoveAt(i);
                 //currentRenderedLevels.RemoveAt(i);
             }
-        }        
+        }
     }
     private void SetSideLevels() {
         Spawner.spawner.ClearSideLevels();
@@ -261,10 +261,10 @@ public class WorldGeneration : MonoBehaviour {
         return x >= 0 && y >= 0 && x < worldSize && y < worldSize;
     }
     private IEnumerator ScanPath() {
-        yield return new WaitForSeconds(0.5f);        
+        yield return new WaitForSeconds(0.5f);
         if(aStarPath) {
             aStarPath.Scan(aStarPath.graphs[0]);
         }
         loadingPanel.FadeOut();
-    }    
+    }
 }

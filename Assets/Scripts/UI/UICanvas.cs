@@ -16,6 +16,7 @@ public class UICanvas : MonoBehaviour {
     public GameObject craftingPanel;
     public GameObject vendorPanel;
     public GameObject inventoryIcon;
+    public GameObject portalPanel;
     public Image interactImage;
     public SelectedItem selectedItem;
 
@@ -31,6 +32,7 @@ public class UICanvas : MonoBehaviour {
         craftingPanel.SetActive(false);
         vendorPanel.SetActive(false);
         inventoryIcon.SetActive(true);
+        portalPanel.SetActive(false);
         ClearInteractButton();
     }
     public void TogglePlayerUI() {
