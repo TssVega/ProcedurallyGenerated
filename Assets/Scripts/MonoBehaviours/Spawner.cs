@@ -58,9 +58,12 @@ public class Spawner : MonoBehaviour {
         if(vendorCounter <= vendorTime * 0.5f) {
             DisableVendor();
         }
-        if(vendorCounter <= 0f && Vector3.Distance(vendor.transform.position, playerTransform.position) > vendorDisableDistance) {
+        if(vendorCounter <= 0f/* && Vector3.Distance(vendor.transform.position, playerTransform.position) > vendorDisableDistance*/) {
+            if(vendor && Vector3.Distance(vendor.transform.position, playerTransform.position) < vendorDisableDistance) {
+                return;
+            }
             SpawnVendor();
-            vendorCounter = vendorTime;
+            vendorCounter = vendorTime;         
         }
     }
     private void SpawnVendor() {

@@ -24,7 +24,7 @@ public class LevelGeneration : MonoBehaviour {
     private WorldGeneration worldGeneration;
     private ChestGeneration chestGeneration;
     public MushroomGeneration mushroomGeneration;
-    private PoolGeneration poolGeneration;
+    public PoolGeneration poolGeneration;
 
     private List<Vector3Int> wallCoordinates;
     private const int torchCount = 1;

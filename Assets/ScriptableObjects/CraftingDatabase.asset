@@ -16,6 +16,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4c2d4f4581dab0644a87647599b83156, type: 2}
   - {fileID: 11400000, guid: d44842f3a69f67f4fb9851bc440476c3, type: 2}
   - {fileID: 11400000, guid: 605abf7fc1b92a64098ed7995aeca1af, type: 2}
+  - {fileID: 11400000, guid: b845cfdfc5b486c45a72e2da3ba56f88, type: 2}
+  - {fileID: 11400000, guid: abb807dad214b624592abde6e88f22bf, type: 2}
   generalRecipes: []
   strengthRecipes: []
   agilityRecipes: []

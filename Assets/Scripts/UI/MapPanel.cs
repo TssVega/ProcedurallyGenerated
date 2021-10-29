@@ -21,19 +21,53 @@ public class MapPanel : MonoBehaviour {
 
     public Image cursor;
 
+    public GameObject portalIcon;
+
+    private List<GameObject> portalIcons;
+
     private void Awake() {
         //mapTexture = mapImage.mainTexture;
+        portalIcons = new List<GameObject>();
         worldGeneration = FindObjectOfType<WorldGeneration>();
     }
+    private void OnEnable() {
+        SetPortalIcons();
+    }
+    private void OnDisable() {
+        ClearPortalIcons();
+    }
     public void SetCursor(Vector2Int coordinates) {
-        Vector3 screenPosition = new Vector3(coordinates.x * 2 - 127, coordinates.y * 2 - 127, 0);
+        Vector3 screenPosition = new Vector3(coordinates.x * 2 - 143, coordinates.y * 2 - 143, 0);
         cursor.rectTransform.anchoredPosition = screenPosition;
     }
     public void Set() {
         if(!mapSet) {
             mapSet = true;
-            SetMap(worldGeneration.WorldMap);
-        }        
+            SetMap(worldGeneration.WorldMap);            
+        }
+    }
+    public void SetPortalIcons() {
+        for(int x = 0; x < worldGeneration.PortalData.GetUpperBound(0); x++) {
+            for(int y = 0; y < worldGeneration.PortalData.GetUpperBound(1); y++) {
+                if(worldGeneration.PortalData[x, y]) {
+                    Vector3 screenPosition = new Vector3(x * 2 - 143, y * 2 - 143, 0);
+                    GameObject portalIcon = ObjectPooler.objectPooler.GetPooledObject("PortalIcon");
+                    portalIcon.transform.SetParent(transform);
+                    RectTransform rt = portalIcon.GetComponent<RectTransform>();
+                    rt.anchoredPosition = screenPosition;
+                    rt.localScale = Vector3.one;
+                    portalIcons.Add(portalIcon);
+                    portalIcon.GetComponent<PortalTeleport>().SetPortal(new Vector2Int(x, y), this);
+                    portalIcon.SetActive(true);
+                }
+            }
+        }
+    }
+    public void ClearPortalIcons() {
+        for(int i = 0; i < portalIcons.Count; i++) {
+            portalIcons[i].SetActive(false);
+        }
+        portalIcons.Clear();
     }
     public void NewExploration(Vector2Int coordinates, int[,] worldMap) {
         switch(worldMap[coordinates.x, coordinates.y]) {

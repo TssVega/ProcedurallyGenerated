@@ -533,6 +533,14 @@ public class Inventory : MonoBehaviour {
         else if(inventory[slotIndex] is Meat meat) {
             meat.Consume(stats.status);
         }
+        else if(inventory[slotIndex] is MapUnlocker mu) {
+            mu.Consume(player);
+            inventoryPanel.CheckButtons();
+        }
+        else if(inventory[slotIndex] is SkillBookUnlocker sbu) {
+            sbu.Consume(player);
+            inventoryPanel.CheckButtons();
+        }
         if(quantities[slotIndex] < 1) {
             inventory[slotIndex] = null;
             lucks[slotIndex] = 0;

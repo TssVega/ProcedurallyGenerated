@@ -23,7 +23,7 @@ public class PoolGeneration : MonoBehaviour {
     private const int portalChance = 2;
 
     private List<GameObject> pools;
-    private List<GameObject> portals;
+    public List<GameObject> portals;
 
     private void Awake() {
         levelGeneration = GetComponent<LevelGeneration>();
@@ -44,13 +44,23 @@ public class PoolGeneration : MonoBehaviour {
             // This is to prevent the pool to swapn in a different position when you come back to it
             pseudoRandomForPools.Next(0, 100);
             pseudoRandomForPools.Next(0, 2);
-            pseudoRandomForPortals.Next(0, 100);
+            bool x = levelGeneration.layout.worldCoordinates.x == 0;
+            bool y = levelGeneration.layout.worldCoordinates.y == 0;
+            if(x && y) {
+                pseudoRandomForPortals.Next(0, 100);
+            }
+            pseudoRandomForPortals.Next(0, 100);            
         }
         else {
             hasPool = pseudoRandomForPools.Next(0, 100) < poolChance;
             full = hasPool;
             healthPool = pseudoRandomForPools.Next(0, 2) == 0;
-            hasPortal = pseudoRandomForPortals.Next(0, 100) < portalChance;
+            bool x = levelGeneration.layout.worldCoordinates.x == 0;
+            bool y = levelGeneration.layout.worldCoordinates.y == 0;
+            if(x && y) {
+                pseudoRandomForPortals.Next(0, 100);
+            }
+            hasPortal = (x && y) || pseudoRandomForPortals.Next(0, 100) < portalChance;
             usedPortal = false;
         }
         if(hasPool) {
@@ -72,7 +82,7 @@ public class PoolGeneration : MonoBehaviour {
             pool.SetPool(healthPool, full, hasPool, this);
         }
         if(hasPortal) {
-            Portal portal = ObjectPooler.objectPooler.GetPooledObject("Portal").GetComponent<Portal>();
+            Portal portal = ObjectPooler.objectPooler.GetPooledObject("PortalInGame").GetComponent<Portal>();
             Vector3Int randomLocation = Vector3Int.zero;
             bool valid = false;
             while(!valid) {

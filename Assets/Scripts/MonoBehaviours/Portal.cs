@@ -17,6 +17,9 @@ public class Portal : MonoBehaviour, IInteractable {
 
     private Player player;
     private PoolGeneration generator;
+    private WorldGeneration worldGen;
+
+    private GameObject mapPanel;
 
     private System.Random pseudoRandom;
 
@@ -29,7 +32,11 @@ public class Portal : MonoBehaviour, IInteractable {
         set;
     }
     public void Interact() {
+        if(!mapPanel) {
+            mapPanel = FindObjectOfType<UICanvas>().mapPanel;
+        }
         if(bonusTaken) {
+            mapPanel.SetActive(true);
             return;
         }
         if(seed == null) {
@@ -61,24 +68,26 @@ public class Portal : MonoBehaviour, IInteractable {
     public void GetBonus(int index) {
         bonusTaken = true;
         generator.usedPortal = true;
+        AudioSystem.audioManager.PlaySound("bookRead", 0f);
         player.AddNPCBonus(indices[index]);
         player.ClearInteraction(this);
+        worldGen.PortalData[worldGen.CurrentCoordinates[0], worldGen.CurrentCoordinates[1]] = true;
         uiCanvas.portalPanel.SetActive(!uiCanvas.portalPanel.activeSelf);
         uiCanvas.inventoryIcon.SetActive(!uiCanvas.portalPanel.activeSelf);
         uiCanvas.playerUI.SetActive(!uiCanvas.portalPanel.activeSelf);
     }
     private void Awake() {
+        worldGen = FindObjectOfType<WorldGeneration>();
         player = FindObjectOfType<Player>();
+        
         bonusTaken = false;
         uiCanvas = FindObjectOfType<UICanvas>();
+        mapPanel = uiCanvas.mapPanel;
         portalUI = uiCanvas.portalPanel.GetComponent<PortalUI>();
         Seller = false;
         UISprite = interactIcon;
     }
     private void OnTriggerEnter2D(Collider2D collision) {
-        if(bonusTaken) {
-            return;
-        }
         if(collision.CompareTag("Player")) {
             player.SetInteraction(this);
         }

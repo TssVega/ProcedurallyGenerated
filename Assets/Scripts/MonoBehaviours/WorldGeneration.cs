@@ -16,7 +16,7 @@ public class WorldGeneration : MonoBehaviour {
     // So each world can be same with same seed
     private System.Random pseudoRandomForWorld;
     private List<Vector2Int> currentRenderedLevels;
-    private List<LevelGeneration> levels;
+    public List<LevelGeneration> levels;
     private LoadingPanel loadingPanel;
     public GameObject level;
     private Player player;
@@ -52,12 +52,7 @@ public class WorldGeneration : MonoBehaviour {
         if(!tilemap) {
             tilemap = GameObject.FindWithTag("Grid").transform.GetChild(1).GetComponent<Tilemap>();
         }
-        groundTilemap.ClearAllTiles();
-        tilemap.ClearAllTiles();
-        LoadWorldData();
-        //world = new WorldData(new string[worldSize, worldSize], new int[] { currentCoordinates.x, currentCoordinates.y});
-        pseudoRandomForWorld = new System.Random(WorldSeed.GetHashCode());
-        GenerateCurrentLevels();
+        SetupLevels();
         /*
         for(int x = 0; x < worldSize; x++) {
             for(int y = 0; y < worldSize; y++) {
@@ -71,6 +66,12 @@ public class WorldGeneration : MonoBehaviour {
             }
         }*/
     }
+    public void SetupLevels() {
+        groundTilemap.ClearAllTiles();
+        tilemap.ClearAllTiles();
+        LoadWorldData();        
+        GenerateCurrentLevels();
+    }
 
     public int WorldSize => worldSize;
 
@@ -79,6 +80,12 @@ public class WorldGeneration : MonoBehaviour {
     public string WorldSeed => world.seed;
 
     public int[,] ExplorationData => world.explorationData;
+
+    public int[] CurrentCoordinates => world.currentCoordinates;
+
+    public bool[,] PortalData { get => world?.portalData;
+        set { } 
+    }
 
     private void GetAutosaveFiles() {
         List<string> chestFiles = PersistentData.GetAllFilesWithKey($"ChestData{PersistentData.saveSlot}", $"", $"");
@@ -114,11 +121,11 @@ public class WorldGeneration : MonoBehaviour {
     public void LoadWorldData() {
         WorldData data = SaveSystem.LoadWorld(PersistentData.saveSlot);
         if(data != null) {
-            world = new WorldData(data.worldData, data.currentCoordinates, data.worldMap, data.seed, data.explorationData);
+            world = new WorldData(data.worldData, data.currentCoordinates, data.worldMap, data.seed, data.explorationData, data.portalData);
         }
         else {
             world = new WorldData(new string[worldSize, worldSize], new[] { 0, 0 }, new int[worldSize, worldSize],
-                Random.Range(0, 99999999).ToString(), new int[worldSize, worldSize]) {
+                Random.Range(0, 99999999).ToString(), new int[worldSize, worldSize], new bool[worldSize, worldSize]) {
                 lastCoordinates = new[] { -1, -1 }
             };
         }

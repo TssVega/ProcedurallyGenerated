@@ -28,8 +28,6 @@ public class SkillInfoPanel : MonoBehaviour {
     private Stats playerStats;
     public SkillTreeManager skillTree;
 
-    public TextMeshProUGUI[] quantityTexts;
-
     public SkillDatabase skillDatabase;
 
     public Sprite[] damageIcons;
@@ -39,9 +37,6 @@ public class SkillInfoPanel : MonoBehaviour {
         localizationManager = FindObjectOfType<LocalizationManager>();
         playerSkills = FindObjectOfType<Player>().GetComponent<SkillUser>();
         skillUI = FindObjectOfType<SkillUI>();
-    }
-    private void OnEnable() {
-        //RefreshText();
     }
     public void SetSkill(Skill skill) {
         currentSkill = skill;
@@ -103,7 +98,7 @@ public class SkillInfoPanel : MonoBehaviour {
                     skillSlots[i].color = Color.white;
                     secondaryImages[i].sprite = null;
                     secondaryImages[i].color = Color.clear;
-                    quantityTexts[i].text = "";
+                    //quantityTexts[i].text = "";
                     continue;
                 }
                 ActiveSkill a = playerSkills.currentSkills[i] as ActiveSkill;
@@ -112,27 +107,29 @@ public class SkillInfoPanel : MonoBehaviour {
                     skillSlots[i].color = ColorBySkillType.GetColorByType(a.attackType);
                     secondaryImages[i].sprite = null;
                     secondaryImages[i].color = Color.clear;
-                    quantityTexts[i].text = "";
+                    //quantityTexts[i].text = "";
                 }
                 else if(playerSkills.currentSkills[i] is Mushroom m) {
                     skillSlots[i].sprite = m.firstIcon;
                     skillSlots[i].color = m.firstColor;
                     secondaryImages[i].sprite = null;
-                    secondaryImages[i].color = Color.white;
+                    secondaryImages[i].color = Color.clear;
+                    //quantityTexts[i].text = skillUI.sk;
                 }
-                /* Potions here
-                else if(playerSkills.currentSkills[i] is Mushroom m) {
-                    skillSlots[i].sprite = m.firstIcon;
-                    skillSlots[i].color = m.firstColor;
-                    secondaryImages[i].sprite = null;
-                    secondaryImages[i].color = Color.white;
-                }*/
+                // Potions here
+                else if(playerSkills.currentSkills[i] is Potion p) {
+                    skillSlots[i].sprite = p.firstIcon;
+                    skillSlots[i].color = p.firstColor;
+                    secondaryImages[i].sprite = p.secondIcon;
+                    secondaryImages[i].color = p.secondColor;
+                    //quantityTexts[i].text = "";
+                }
                 else {
                     skillSlots[i].sprite = emptySlotSprite;
                     skillSlots[i].color = Color.white;
                     secondaryImages[i].sprite = null;
                     secondaryImages[i].color = Color.clear;
-                    quantityTexts[i].text = "";
+                    //quantityTexts[i].text = "";
                 }
             }
         }

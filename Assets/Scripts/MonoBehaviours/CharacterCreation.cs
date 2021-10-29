@@ -138,7 +138,7 @@ public class CharacterCreation : MonoBehaviour {
     }
     private async Task SetNewGameData() {
         // World data
-        world = new WorldData(new string[worldSize, worldSize], new[] { 0, 0 }, new int[worldSize, worldSize], UnityEngine.Random.Range(0, 99999999).ToString(), new int[worldSize, worldSize]);
+        world = new WorldData(new string[worldSize, worldSize], new[] { 0, 0 }, new int[worldSize, worldSize], UnityEngine.Random.Range(0, 99999999).ToString(), new int[worldSize, worldSize], new bool[worldSize, worldSize]);
         await GenerateNewWorld();
         SaveSystem.SaveWorld(world, PersistentData.saveSlot);
         if(!player || !player.skinColor || !player.hairColor || !player.hairStyle) {
