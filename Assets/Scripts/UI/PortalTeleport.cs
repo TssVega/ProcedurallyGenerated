@@ -22,6 +22,10 @@ public class PortalTeleport : MonoBehaviour {
     }
     public void UsePortal() {
         //Debug.Log("Trying to use portal");
+        if(worldGen.CurrentCoordinates == worldGen.LastCoordinates) {
+            mapPanel.gameObject.SetActive(false);
+            return;
+        }
         if(player.Interaction is Portal) {
             //Debug.Log($"Using portal to {coordinates}");
             worldGen.ChangeCurrentCoordinates(coordinates);

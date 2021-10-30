@@ -119,7 +119,7 @@ MonoBehaviour:
   earthDamage: 10
   lightDamage: 10
   darkDamage: 10
-  poisonDamage: 30
+  poisonDamage: 10
   bleedDamage: 10
   curseDamage: 10
   bashDefence: 50
@@ -141,6 +141,7 @@ MonoBehaviour:
   blockDuration: 0.5
   damageBlockRate: 0.95
   luck: 0
+  backstabMultiplier: 1.2
   burningThreshold: 100
   earthingThreshold: 100
   frostbiteThreshold: 100
@@ -159,6 +160,7 @@ MonoBehaviour:
   living: 1
   status: {fileID: 1553987817055992803}
   player: {fileID: 0}
+  inventory: {fileID: 0}
 --- !u!114 &1553987817055992803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,6 +205,17 @@ MonoBehaviour:
   blessRate: 1
   lowEnergyParticles: {fileID: 0}
   blessParticles: {fileID: 0}
+  burningParticles: {fileID: 0}
+  litParticles: {fileID: 0}
+  rootParticles: {fileID: 0}
+  bleedingParticles: {fileID: 0}
+  poisonedParticles: {fileID: 0}
+  cursedParticles: {fileID: 0}
+  frostbittenParticles: {fileID: 0}
+  chilledParticles: {fileID: 0}
+  darkSigilParticles: {fileID: 0}
+  spedUpParticles: {fileID: 0}
+  shockedParticles: {fileID: 0}
 --- !u!114 &1553987817055992802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -340,10 +353,13 @@ MonoBehaviour:
   timeBetweenSkills: 1
   rotationTime: 1.5
   speed: 3
+  moving: 0
   attacked: 0
   hostility: 0
   hostile: 0
   willDefendItself: 1
+  hasEars: 1
+  isBoss: 0
   walkAnimationName: Fly
   idleAnimationName: 
   level: {fileID: 0}

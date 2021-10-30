@@ -61,6 +61,7 @@ public class Stats : MonoBehaviour {
     public float blockDuration;
     public float damageBlockRate;
     public int luck;
+    public float backstabMultiplier = 1.2f;
     [Header("Stack Counter Thresholds")]
     public int burningThreshold;
     public int earthingThreshold;
@@ -98,7 +99,7 @@ public class Stats : MonoBehaviour {
         living = true;
         if(enemy) {
             // Decrease true max health of enemies by %10 if the player has the 21st bonus
-            trueMaxHealth = globalPlayer.npcBonuses[21] ? (maxHealth + strength * 2 + vitality * 5) * 0.9f: maxHealth + strength * 2 + vitality * 5;
+            trueMaxHealth = globalPlayer.npcBonuses.Length > 0 && globalPlayer.npcBonuses[21] ? (maxHealth + strength * 2 + vitality * 5) * 0.9f: maxHealth + strength * 2 + vitality * 5;
             trueMaxMana = maxMana + dexterity * 2 + wisdom * 5 + intelligence * 2 + faith * 2;
             trueMaxEnergy = maxEnergy + vitality * 5 + strength * 2 + dexterity * 2 + agility * 2;
             health = trueMaxHealth;
@@ -106,14 +107,14 @@ public class Stats : MonoBehaviour {
             energy = trueMaxEnergy;
         }
     }
-    public void Die() {
-        CalculateDrops();
+    public void Die(bool backstabbedByNastac) {
+        CalculateDrops(backstabbedByNastac);
         gameObject.SetActive(false);
         living = false;
     }
-    private void CalculateDrops() {
+    private void CalculateDrops(bool backstabbedByNastac) {
         for(int i = 0; i < drops.Count; i++) {
-            if(Random.Range(0f, 1f) <= drops[i].dropRate) {
+            if(Random.Range(0f, 1f) <= (backstabbedByNastac ? drops[i].dropRate * 1.5f : drops[i].dropRate)) {
                 for(int j = 0; j < Random.Range(1, drops[i].dropRange + 1); j++) {
                     GameObject dropObj = ObjectPooler.objectPooler.GetPooledObject("Drop");
                     Drop drop = dropObj.GetComponent<Drop>();

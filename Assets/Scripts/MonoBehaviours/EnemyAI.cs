@@ -132,7 +132,7 @@ public class EnemyAI : MonoBehaviour {
             if(level && level.isActiveAndEnabled) {
                 aiPath.destination = GetRoamingPosition();
             }
-            else {
+            else if(!isBoss) {
                 gameObject.SetActive(false);
             }
         }

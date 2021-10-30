@@ -83,6 +83,8 @@ public class WorldGeneration : MonoBehaviour {
 
     public int[] CurrentCoordinates => world.currentCoordinates;
 
+    public int[] LastCoordinates => world.lastCoordinates;
+
     public bool[,] PortalData { get => world?.portalData;
         set { } 
     }

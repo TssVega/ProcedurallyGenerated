@@ -78,8 +78,7 @@ public class Portal : MonoBehaviour, IInteractable {
     }
     private void Awake() {
         worldGen = FindObjectOfType<WorldGeneration>();
-        player = FindObjectOfType<Player>();
-        
+        player = FindObjectOfType<Player>();        
         bonusTaken = false;
         uiCanvas = FindObjectOfType<UICanvas>();
         mapPanel = uiCanvas.mapPanel;
