@@ -603,7 +603,9 @@ public class StatusEffects : MonoBehaviour {
         AudioSystem.audioManager.PlaySound("blessed", DistanceToPlayer);
         yield return new WaitForSeconds(duration);
         blessRate = 1f;
-        blessParticles.SetActive(false);
+        if(blessParticles) {
+            blessParticles.SetActive(false);
+        }
     }
     public void StartChanelling(float duration) {
         if(gameObject.activeInHierarchy) {
@@ -632,12 +634,10 @@ public class StatusEffects : MonoBehaviour {
             lightningStacks = 0;
             StartStun(duration);
             // Particles
-            if(!shockedParticles) {
-                shockedParticles = ObjectPooler.objectPooler.GetPooledObject("ShockedParticles");
-                shockedParticles.transform.position = transform.position;
-                shockedParticles.transform.rotation = Quaternion.identity;
-                shockedParticles.transform.SetParent(transform);
-            }
+            shockedParticles = ObjectPooler.objectPooler.GetPooledObject("ShockedParticles");
+            shockedParticles.transform.position = transform.position;
+            shockedParticles.transform.rotation = Quaternion.identity;
+            shockedParticles.transform.SetParent(transform);
             shockedParticles.GetComponent<Particles>().duration = duration;
             shockedParticles.SetActive(true);
             // Sound
@@ -773,19 +773,19 @@ public class StatusEffects : MonoBehaviour {
             //statusParticles.StopBurningParticles();
             StopCoroutine(burnCounter);
             burning = false;
-            burningParticles.SetActive(false);
+            if(burningParticles) {
+                burningParticles.SetActive(false);
+            }
         }
     }
     public IEnumerator Burn(float duration, float damage, Skill skill, StatusEffects attacker) {
         float period = 2f;
         bool done = false;
         burning = true;
-        if(!burningParticles) {
-            burningParticles = ObjectPooler.objectPooler.GetPooledObject("BurningParticles");
-            burningParticles.transform.position = transform.position;
-            burningParticles.transform.rotation = Quaternion.identity;
-            burningParticles.transform.SetParent(transform);
-        }
+        burningParticles = ObjectPooler.objectPooler.GetPooledObject("BurningParticles");
+        burningParticles.transform.position = transform.position;
+        burningParticles.transform.rotation = Quaternion.identity;
+        burningParticles.transform.SetParent(transform);
         burningParticles.GetComponent<Particles>().duration = duration;
         burningParticles.SetActive(true);
         while(!done) {
@@ -856,19 +856,19 @@ public class StatusEffects : MonoBehaviour {
         if(poisonCounter != null) {
             StopCoroutine(poisonCounter);
             poisoned = false;
-            poisonedParticles.SetActive(false);
+            if(poisonedParticles) {
+                poisonedParticles.SetActive(false);
+            }
         }        
     }
     private IEnumerator Poison(float duration, float damage, float periodTimeDecrease, Skill skill, StatusEffects attacker) {
         float period = 1f;
         bool done = false;
         poisoned = true;
-        if(!poisonedParticles) {
-            poisonedParticles = ObjectPooler.objectPooler.GetPooledObject("PoisonedParticles");
-            poisonedParticles.transform.position = transform.position;
-            poisonedParticles.transform.rotation = Quaternion.identity;
-            poisonedParticles.transform.SetParent(transform);
-        }
+        poisonedParticles = ObjectPooler.objectPooler.GetPooledObject("PoisonedParticles");
+        poisonedParticles.transform.position = transform.position;
+        poisonedParticles.transform.rotation = Quaternion.identity;
+        poisonedParticles.transform.SetParent(transform);
         poisonedParticles.GetComponent<Particles>().duration = duration;
         poisonedParticles.SetActive(true);
         AudioSystem.audioManager.PlaySound("poisoned", DistanceToPlayer);
@@ -932,19 +932,19 @@ public class StatusEffects : MonoBehaviour {
         if(bleedCounter != null) {
             StopCoroutine(bleedCounter);
             bleeding = false;
-            bleedingParticles.SetActive(false);
+            if(bleedingParticles) {
+                bleedingParticles.SetActive(false);
+            }
         }        
     }
     public IEnumerator Bleed(float duration, float damage, float damageIncrease, Skill skill, StatusEffects attacker) {
         float period = 0.5f;
         bool done = false;
         bleeding = true;
-        if(!bleedingParticles) {
-            bleedingParticles = ObjectPooler.objectPooler.GetPooledObject("BleedingParticles");
-            bleedingParticles.transform.position = transform.position;
-            bleedingParticles.transform.rotation = Quaternion.identity;
-            bleedingParticles.transform.SetParent(transform);
-        }
+        bleedingParticles = ObjectPooler.objectPooler.GetPooledObject("BleedingParticles");
+        bleedingParticles.transform.position = transform.position;
+        bleedingParticles.transform.rotation = Quaternion.identity;
+        bleedingParticles.transform.SetParent(transform);
         bleedingParticles.GetComponent<Particles>().duration = duration;
         bleedingParticles.SetActive(true);
         AudioSystem.audioManager.PlaySound("bleeding", DistanceToPlayer);
@@ -1002,19 +1002,19 @@ public class StatusEffects : MonoBehaviour {
         if(curseCounter != null) {
             StopCoroutine(curseCounter);
             cursed = false;
-            cursedParticles.SetActive(false);
+            if(cursedParticles) {
+                cursedParticles.SetActive(false);
+            }
         }        
     }
     public IEnumerator Curse(float duration, float damage, Skill skill, StatusEffects attacker) {
         float period = 2f;
         bool done = false;
         cursed = true;
-        if(!cursedParticles) {
-            cursedParticles = ObjectPooler.objectPooler.GetPooledObject("CursedParticles");
-            cursedParticles.transform.position = transform.position;
-            cursedParticles.transform.rotation = Quaternion.identity;
-            cursedParticles.transform.SetParent(transform);
-        }
+        cursedParticles = ObjectPooler.objectPooler.GetPooledObject("CursedParticles");
+        cursedParticles.transform.position = transform.position;
+        cursedParticles.transform.rotation = Quaternion.identity;
+        cursedParticles.transform.SetParent(transform);
         cursedParticles.GetComponent<Particles>().duration = duration;
         cursedParticles.SetActive(true);
         AudioSystem.audioManager.PlaySound("cursed", DistanceToPlayer);
@@ -1038,7 +1038,9 @@ public class StatusEffects : MonoBehaviour {
     }
     public void StopStun() {
         stunned = false;
-        stunParticles.SetActive(false);
+        if(stunParticles) {
+            stunParticles.SetActive(false);
+        }
         StopCoroutine(stunCounter);
         CommenceEnemyAI();
     }
@@ -1102,7 +1104,9 @@ public class StatusEffects : MonoBehaviour {
         if(frostbiteCounter != null) {
             frostbitten = false;
             StopCoroutine(frostbiteCounter);
-            frostbittenParticles.SetActive(false);
+            if(frostbittenParticles) {
+                frostbittenParticles.SetActive(false);
+            }
         }        
     }
     // Frostbite effect stops burn
@@ -1112,12 +1116,10 @@ public class StatusEffects : MonoBehaviour {
             StopBurn();
         }
         // Particles
-        if(!frostbittenParticles) {
-            frostbittenParticles = ObjectPooler.objectPooler.GetPooledObject("FrostbiteParticles");
-            frostbittenParticles.transform.position = transform.position;
-            frostbittenParticles.transform.rotation = Quaternion.identity;
-            frostbittenParticles.transform.SetParent(transform);
-        }
+        frostbittenParticles = ObjectPooler.objectPooler.GetPooledObject("FrostbiteParticles");
+        frostbittenParticles.transform.position = transform.position;
+        frostbittenParticles.transform.rotation = Quaternion.identity;
+        frostbittenParticles.transform.SetParent(transform);
         frostbittenParticles.GetComponent<Particles>().duration = duration;
         frostbittenParticles.SetActive(true);
         /*if(enemy) {
@@ -1164,7 +1166,9 @@ public class StatusEffects : MonoBehaviour {
             if(aiPath) {
                 aiPath.maxSpeed = aiPath.GetComponent<EnemyAI>().speed;
             }
-            chilledParticles.SetActive(false);
+            if(chilledParticles) {
+                chilledParticles.SetActive(false);
+            }
         }        
     }
     // Chill effect stops burn
@@ -1180,12 +1184,10 @@ public class StatusEffects : MonoBehaviour {
         if(aiPath) {
             aiPath.maxSpeed *= 1f - slowRate;
         }
-        if(!chilledParticles) {
-            chilledParticles = ObjectPooler.objectPooler.GetPooledObject("ChilledParticles");
-            chilledParticles.transform.position = transform.position;
-            chilledParticles.transform.rotation = Quaternion.identity;
-            chilledParticles.transform.SetParent(transform);
-        }
+        chilledParticles = ObjectPooler.objectPooler.GetPooledObject("ChilledParticles");
+        chilledParticles.transform.position = transform.position;
+        chilledParticles.transform.rotation = Quaternion.identity;
+        chilledParticles.transform.SetParent(transform);
         chilledParticles.GetComponent<Particles>().duration = duration;
         chilledParticles.SetActive(true);
         /*
@@ -1218,7 +1220,9 @@ public class StatusEffects : MonoBehaviour {
             darkSigilRunning = false;
             darkSigilCharge = 0;
             StopCoroutine(darkSigilCounter);
-            darkSigilParticles.SetActive(false);
+            if(darkSigilParticles) {
+                darkSigilParticles.SetActive(false);
+            }
         }        
     }
     // Dark sigil deals dark damage when time ends depending on the target's 
@@ -1228,12 +1232,10 @@ public class StatusEffects : MonoBehaviour {
         if(!darkSigilRunning) {
             darkSigilRunning = true;
         }
-        if(!darkSigilParticles) {
-            darkSigilParticles = ObjectPooler.objectPooler.GetPooledObject("DarkSigilParticles");
-            darkSigilParticles.transform.position = transform.position;
-            darkSigilParticles.transform.rotation = Quaternion.identity;
-            darkSigilParticles.transform.SetParent(transform);
-        }
+        darkSigilParticles = ObjectPooler.objectPooler.GetPooledObject("DarkSigilParticles");
+        darkSigilParticles.transform.position = transform.position;
+        darkSigilParticles.transform.rotation = Quaternion.identity;
+        darkSigilParticles.transform.SetParent(transform);
         darkSigilParticles.GetComponent<Particles>().duration = duration;
         darkSigilParticles.SetActive(true);
         AudioSystem.audioManager.PlaySound("darkSigilActivate", DistanceToPlayer);
@@ -1347,17 +1349,17 @@ public class StatusEffects : MonoBehaviour {
         if(earthenCounter != null) {
             StopCoroutine(earthenCounter);
             earthed = false;
-            rootParticles.SetActive(false);
+            if(rootParticles) {
+                rootParticles.SetActive(false);
+            }
         }        
     }
     private IEnumerator Earthen(float duration) {
         earthed = true;
-        if(!rootParticles) {
-            rootParticles = ObjectPooler.objectPooler.GetPooledObject("RootParticles");
-            rootParticles.transform.position = transform.position;
-            rootParticles.transform.rotation = Quaternion.identity;
-            rootParticles.transform.SetParent(transform);
-        }
+        rootParticles = ObjectPooler.objectPooler.GetPooledObject("RootParticles");
+        rootParticles.transform.position = transform.position;
+        rootParticles.transform.rotation = Quaternion.identity;
+        rootParticles.transform.SetParent(transform);
         rootParticles.GetComponent<Particles>().duration = duration;
         rootParticles.SetActive(true);
         AudioSystem.audioManager.PlaySound("rooted", DistanceToPlayer);
@@ -1407,17 +1409,17 @@ public class StatusEffects : MonoBehaviour {
         if(lightCounter != null) {
             StopCoroutine(lightCounter);
             lit = false;
-            litParticles.SetActive(false);
+            if(litParticles) {
+                litParticles.SetActive(false);
+            }            
         }        
     }
     private IEnumerator Enlighten(float duration) {
         lit = true;
-        if(!litParticles) {
-            litParticles = ObjectPooler.objectPooler.GetPooledObject("LitParticles");
-            litParticles.transform.position = transform.position;
-            litParticles.transform.rotation = Quaternion.identity;
-            litParticles.transform.SetParent(transform);
-        }
+        litParticles = ObjectPooler.objectPooler.GetPooledObject("LitParticles");
+        litParticles.transform.position = transform.position;
+        litParticles.transform.rotation = Quaternion.identity;
+        litParticles.transform.SetParent(transform);
         litParticles.GetComponent<Particles>().duration = duration;
         litParticles.SetActive(true);
         yield return new WaitForSeconds(duration);
@@ -1442,19 +1444,19 @@ public class StatusEffects : MonoBehaviour {
             StopCoroutine(speedUpCounter);
             stats.runSpeed = originalSpeed;
             spedUp = false;
-            spedUpParticles.SetActive(false);
+            if(spedUpParticles) {
+                spedUpParticles.SetActive(false);
+            }            
         }        
     }
     private IEnumerator SpeedUp(float speedRate, float duration) {
         if(chilled) {
             StopChill();
         }
-        if(!spedUpParticles) {
-            spedUpParticles = ObjectPooler.objectPooler.GetPooledObject("SpedUpParticles");
-            spedUpParticles.transform.position = transform.position;
-            spedUpParticles.transform.rotation = Quaternion.identity;
-            spedUpParticles.transform.SetParent(transform);
-        }
+        spedUpParticles = ObjectPooler.objectPooler.GetPooledObject("SpedUpParticles");
+        spedUpParticles.transform.position = transform.position;
+        spedUpParticles.transform.rotation = Quaternion.identity;
+        spedUpParticles.transform.SetParent(transform);
         spedUpParticles.GetComponent<Particles>().duration = duration;
         spedUpParticles.SetActive(true);
         stats.runSpeed *= speedRate;
