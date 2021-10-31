@@ -19,8 +19,10 @@ public class SkillUser : MonoBehaviour {
     private Inventory inventory;
     private AIDestinationSetter destinationSetter;
     private FieldOfView fov;
+    private Player globalPlayer;
 
     private void Awake() {
+        globalPlayer = FindObjectOfType<Player>();
         player = GetComponent<Player>();
         enemy = GetComponent<Enemy>();
         destinationSetter = GetComponent<AIDestinationSetter>();
@@ -169,8 +171,15 @@ public class SkillUser : MonoBehaviour {
                 ps.Play();
             }
         }
+        
         PlayAnimation(proj.channelingAnimationName);
+        if(!string.IsNullOrEmpty(proj.channelingSound)) {
+            PlaySound(proj.channelingSound);
+        }
         yield return new WaitForSeconds(proj.channelingTime);
+        if(!string.IsNullOrEmpty(proj.castingSound)) {
+            PlaySound(proj.castingSound);
+        }
         // Set projectile game object
         for(int i = 0; i < proj.projectileData.projectileCount; i++) {
                         
@@ -266,7 +275,13 @@ public class SkillUser : MonoBehaviour {
             channelingParticles[i].GetComponent<ParticleSystem>().Play();
         }
         PlayAnimation(buff.channelingAnimationName);
+        if(!string.IsNullOrEmpty(buff.channelingSound)) {
+            PlaySound(buff.channelingSound);
+        }
         yield return new WaitForSeconds(buff.channelingTime);
+        if(!string.IsNullOrEmpty(buff.castingSound)) {
+            PlaySound(buff.castingSound);
+        }
         buff.Launch(statusEffects, stats);
         PlayAnimation(buff.castingAnimationName);
         yield return new WaitForSeconds(buff.castTime);
@@ -321,7 +336,13 @@ public class SkillUser : MonoBehaviour {
             channelingParticles[i].GetComponent<ParticleSystem>().Play();
         }
         PlayAnimation(dash.channelingAnimationName);
+        if(!string.IsNullOrEmpty(dash.channelingSound)) {
+            PlaySound(dash.channelingSound);
+        }
         yield return new WaitForSeconds(dash.channelingTime);
+        if(!string.IsNullOrEmpty(dash.castingSound)) {
+            PlaySound(dash.castingSound);
+        }
         PlayAnimation(dash.castingAnimationName);
         dash.Launch(statusEffects, stats);
         yield return new WaitForSeconds(dash.castTime);
@@ -371,7 +392,13 @@ public class SkillUser : MonoBehaviour {
             channelingParticles[i].GetComponent<ParticleSystem>().Play();
         }
         PlayAnimation(area.channelingAnimationName);
+        if(!string.IsNullOrEmpty(area.channelingSound)) {
+            PlaySound(area.channelingSound);
+        }
         yield return new WaitForSeconds(area.channelingTime);
+        if(!string.IsNullOrEmpty(area.castingSound)) {
+            PlaySound(area.castingSound);
+        }
         PlayAnimation(area.castingAnimationName);
         if(area.hitbox) {
             area.Launch(stats);
@@ -418,7 +445,13 @@ public class SkillUser : MonoBehaviour {
             channelingParticles[i].GetComponent<ParticleSystem>().Play();
         }
         PlayAnimation(block.channelingAnimationName);
+        if(!string.IsNullOrEmpty(block.channelingSound)) {
+            PlaySound(block.channelingSound);
+        }
         yield return new WaitForSeconds(block.channelingTime);
+        if(!string.IsNullOrEmpty(block.castingSound)) {
+            PlaySound(block.castingSound);
+        }
         PlayAnimation(block.castingAnimationName);
         block.Launch(statusEffects);
         yield return new WaitForSeconds(block.castTime);
@@ -471,6 +504,14 @@ public class SkillUser : MonoBehaviour {
             hitboxWarning.transform.parent = transform;
             hitboxWarning.SetActive(true);
             hitboxWarning.GetComponent<HitboxWarning>().SetWarning(area.channelingTime, area.hitboxWarningScale);
+        }
+    }
+    private void PlaySound(string soundString) {
+        AudioSystem.audioManager.PlaySound(soundString, DistanceToPlayer);
+    }
+    private float DistanceToPlayer {
+        get {
+            return player ? 0f : Vector3.Distance(globalPlayer.transform.position, transform.position);
         }
     }
 }

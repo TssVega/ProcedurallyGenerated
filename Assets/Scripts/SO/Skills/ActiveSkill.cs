@@ -15,7 +15,8 @@ public class ActiveSkill : Skill, IUsable {
     public string channelingAnimationName;
     public string castingAnimationName;
     public string idleAnimationName;
-
+    public string channelingSound;
+    public string castingSound;
     
     public virtual void Launch(Stats stats) {
     
