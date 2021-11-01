@@ -365,5 +365,7 @@
 "HolyHeal":"Kutsal İyileşme",
 "HolyHealDesc":"İyileşmek için kısa bir süre dua et. Daha fazla İnanç ve lanet gücüyle daha güçlü olur.",
 "ToughSkin":"Sert Deri",
-"ToughSkinDesc":"10 saniye boyunca hasar almazsan, bir sonraki aldığın hasar %50 azalır. Bu oran daha fazla Canlılıkla daha fazla olur."
+"ToughSkinDesc":"10 saniye boyunca hasar almazsan, bir sonraki aldığın hasar %50 azalır. Bu oran daha fazla Canlılıkla daha fazla olur.",
+"ThrowingKnife":"Fırlatma Bıçağı",
+"ThrowingKnifeDesc":"Hızlıca ileriye küçük bir bıçak fırlat."
 }

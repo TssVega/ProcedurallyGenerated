@@ -70,7 +70,7 @@ MonoBehaviour:
     pitchRandomness: 0
     audioSource: {fileID: 0}
   - audioName: menuButton
-    audioClip: {fileID: 8300000, guid: ca315992a9f0b604ebf671a0e1681c91, type: 3}
+    audioClip: {fileID: 8300000, guid: 6e8772b49f34d402a90016ed445d8a2f, type: 3}
     volume: 1
     currentVolume: 1
     pitch: 1
@@ -106,7 +106,7 @@ MonoBehaviour:
     pitchRandomness: 0
     audioSource: {fileID: 0}
   - audioName: bashDamage
-    audioClip: {fileID: 8300000, guid: a5d4d6eabb184f340815b2a2b51963c7, type: 3}
+    audioClip: {fileID: 8300000, guid: 68f36522820ba7042800c3d3991ce0ad, type: 3}
     volume: 1
     currentVolume: 1
     pitch: 1
@@ -442,7 +442,7 @@ MonoBehaviour:
     pitchRandomness: 0
     audioSource: {fileID: 0}
   - audioName: pierceDamage
-    audioClip: {fileID: 8300000, guid: 7d6f037fdb0b01c409417ca6130e4818, type: 3}
+    audioClip: {fileID: 8300000, guid: c31a9603f8c98144fbd428cf5d209aef, type: 3}
     volume: 1
     currentVolume: 1
     pitch: 1
@@ -526,7 +526,7 @@ MonoBehaviour:
     pitchRandomness: 0
     audioSource: {fileID: 0}
   - audioName: slashDamage
-    audioClip: {fileID: 8300000, guid: 0fbdf9bd3fb28b44faeb9fc16a373583, type: 3}
+    audioClip: {fileID: 8300000, guid: 4532c8d715dcfea439cc366ea0970a6e, type: 3}
     volume: 1
     currentVolume: 1
     pitch: 1
@@ -586,7 +586,7 @@ MonoBehaviour:
     pitchRandomness: 0
     audioSource: {fileID: 0}
   - audioName: buy
-    audioClip: {fileID: 8300000, guid: e36e68c8058fb9740b2ed24b2f2a3d0a, type: 3}
+    audioClip: {fileID: 8300000, guid: 6c699b660ed4308428e0a0fc9cb69bdd, type: 3}
     volume: 1
     currentVolume: 1
     pitch: 1
@@ -598,7 +598,103 @@ MonoBehaviour:
     pitchRandomness: 0
     audioSource: {fileID: 0}
   - audioName: sell
-    audioClip: {fileID: 8300000, guid: 0b712fec621c5c24ca51bbeca5b71e2c, type: 3}
+    audioClip: {fileID: 8300000, guid: b1818f540b6beb04e8d8d8d46f51e964, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: backstab
+    audioClip: {fileID: 8300000, guid: dcb9accb930f18446bbdd9236e57d2a8, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: swing
+    audioClip: {fileID: 8300000, guid: 2a262d0ca89526c4d916c133106a9449, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: swing2
+    audioClip: {fileID: 8300000, guid: 6082ef8ea94bd5c4e8febcc1eb290a39, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: swing3
+    audioClip: {fileID: 8300000, guid: 0df716c8a20ded646a4e79dc3d6402dc, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: caveAmbience
+    audioClip: {fileID: 8300000, guid: f855c281ce3e72c47b361b42df6ceab0, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 1
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: voidHit
+    audioClip: {fileID: 8300000, guid: 159b4767e3be861498d0315503b03357, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: teleport
+    audioClip: {fileID: 8300000, guid: 013dc1dbef1c80e40942fc1081ee8b64, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 0
+    volumeRandomness: 0
+    pitchRandomness: 0
+    audioSource: {fileID: 0}
+  - audioName: powerup
+    audioClip: {fileID: 8300000, guid: d880bc79d3b837149b3c27e1de77183b, type: 3}
     volume: 1
     currentVolume: 1
     pitch: 1

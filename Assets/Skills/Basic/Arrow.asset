@@ -33,6 +33,8 @@ MonoBehaviour:
   channelingAnimationName: 
   castingAnimationName: 
   idleAnimationName: 
+  channelingSound: swing
+  castingSound: 
   projectileData:
     team: 0
     arrowSkill: 1

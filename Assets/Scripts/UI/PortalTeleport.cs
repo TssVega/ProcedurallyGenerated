@@ -24,6 +24,7 @@ public class PortalTeleport : MonoBehaviour {
         //Debug.Log("Trying to use portal");
         if(worldGen.CurrentCoordinates == worldGen.LastCoordinates) {
             mapPanel.gameObject.SetActive(false);
+            mapPanel.mapX.SetActive(false);
             return;
         }
         if(player.Interaction is Portal) {
@@ -41,7 +42,9 @@ public class PortalTeleport : MonoBehaviour {
             if(levelGen != null && levelGen.poolGeneration.portals[0] != null) {
                 //Debug.Log("Teleporting");
                 player.transform.position = Vector3.down + levelGen.poolGeneration.portals[0].transform.position;
+                AudioSystem.audioManager.PlaySound("teleport", 0f);
                 mapPanel.gameObject.SetActive(false);
+                mapPanel.mapX.SetActive(false);
             }            
         }
         else {

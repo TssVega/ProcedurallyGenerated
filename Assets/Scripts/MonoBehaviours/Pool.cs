@@ -110,7 +110,7 @@ public class Pool : MonoBehaviour, IInteractable {
                 playerStatus.Heal(playerStats.trueMaxHealth);                
             }
             else {
-                playerStatus.GiveMana(playerStats.maxMana);
+                playerStatus.GiveMana(playerStats.trueMaxMana);
             }
             // Milona wonder
             if(playerStats.player.raceIndex == 8) {

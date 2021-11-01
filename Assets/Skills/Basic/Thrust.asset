@@ -32,6 +32,8 @@ MonoBehaviour:
   channelingAnimationName: Thrust
   castingAnimationName: 
   idleAnimationName: Idle
+  channelingSound: swing3
+  castingSound: 
   damageRate: 0.5
   duration: 0.1
   hitbox: {fileID: 6890043100139161156, guid: e15f05b17f5d7fb47b4d0a415a1d0f5f, type: 3}

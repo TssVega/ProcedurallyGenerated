@@ -71,6 +71,7 @@ public class WorldGeneration : MonoBehaviour {
         tilemap.ClearAllTiles();
         LoadWorldData();        
         GenerateCurrentLevels();
+        AudioSystem.audioManager.PlaySound("caveAmbience", 0f);
     }
 
     public int WorldSize => worldSize;

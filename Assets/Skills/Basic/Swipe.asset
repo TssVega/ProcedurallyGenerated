@@ -32,6 +32,8 @@ MonoBehaviour:
   channelingAnimationName: Swipe
   castingAnimationName: 
   idleAnimationName: Idle
+  channelingSound: swing2
+  castingSound: 
   damageRate: 0.5
   duration: 0.1
   hitbox: {fileID: 6890043100139161156, guid: 3ec92c4a7cc49364da510a88805e9d5e, type: 3}

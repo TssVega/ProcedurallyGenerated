@@ -22,6 +22,7 @@ public class MapPanel : MonoBehaviour {
     public Image cursor;
 
     public GameObject portalIcon;
+    public GameObject mapX;
 
     private List<GameObject> portalIcons;
 
@@ -59,6 +60,7 @@ public class MapPanel : MonoBehaviour {
                     portalIcons.Add(portalIcon);
                     portalIcon.GetComponent<PortalTeleport>().SetPortal(new Vector2Int(x, y), this);
                     portalIcon.SetActive(true);
+                    mapX.SetActive(true);
                 }
             }
         }

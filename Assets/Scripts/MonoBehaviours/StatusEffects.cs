@@ -472,6 +472,7 @@ public class StatusEffects : MonoBehaviour {
             if(attacker.player && attacker.player.raceIndex == 10) {
                 backstabbedByNastac = true;
             }
+            AudioSystem.audioManager.PlaySound("backstab", DistanceToPlayer);
             damage *= stats.backstabMultiplier;
         }
         // Take damage

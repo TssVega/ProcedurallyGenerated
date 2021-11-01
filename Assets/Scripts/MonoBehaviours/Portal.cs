@@ -68,7 +68,7 @@ public class Portal : MonoBehaviour, IInteractable {
     public void GetBonus(int index) {
         bonusTaken = true;
         generator.usedPortal = true;
-        AudioSystem.audioManager.PlaySound("bookRead", 0f);
+        AudioSystem.audioManager.PlaySound("powerup", 0f);
         player.AddNPCBonus(indices[index]);
         player.ClearInteraction(this);
         worldGen.PortalData[worldGen.CurrentCoordinates[0], worldGen.CurrentCoordinates[1]] = true;

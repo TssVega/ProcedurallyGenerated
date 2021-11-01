@@ -377,5 +377,7 @@
 "HolyHeal":"Holy Heal",
 "HolyHealDesc":"Channel for a short moment to heal. Gets more powerful with more Faith and curse power.",
 "ToughSkin":"Tough Skin",
-"ToughSkinDesc":"If you don't take damage for 10 seconds, the next damage you take is reduced by at least %50. This rate can go up with more Vitality."
+"ToughSkinDesc":"If you don't take damage for 10 seconds, the next damage you take is reduced by at least %50. This rate can go up with more Vitality.",
+"ThrowingKnife":"Throwing Knife",
+"ThrowingKnifeDesc":"Throw a small knife forward."
 }
