@@ -61,7 +61,7 @@ public class ShopItemInfo : MonoBehaviour {
     }
     private void SetSellButton() {
         bool costsGold = item.goldCost > 0;
-        costText.text = costsGold ? item.goldCost.ToString() : item.silverCost.ToString();
+        costText.text = costsGold ? (item.goldCost * vendorUI.priceMultiplier).ToString() : (item.silverCost * vendorUI.priceMultiplier).ToString();
         coinImage.sprite = costsGold ? goldImage : silverImage;
     }
     private void UpdateStats() {

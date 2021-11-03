@@ -22,7 +22,7 @@ public class VendorUI : MonoBehaviour {
 
     public ShopItemInfo itemInfo;
 
-    private const int priceMultiplier = 5;  // The cost of the items will be this times more than its value
+    public readonly int priceMultiplier = 5;  // The cost of the items will be this times more than its value
 
     private void Awake() {
         inventory = FindObjectOfType<Player>().GetComponent<Inventory>();
@@ -57,13 +57,13 @@ public class VendorUI : MonoBehaviour {
         (int goldCount, int goldIndex) = inventory.GetGoldCountAndIndex();
         (int silverCount, int silverIndex) = inventory.GetSilverCountAndIndex();
         if(costsGold && goldCount >= items[i].goldCost * priceMultiplier) {
-            inventory.TakeGold(items[i].goldCost);
+            inventory.TakeGold(items[i].goldCost * priceMultiplier);
             inventory.AddToInventory(items[i], false);
             itemInfo.gameObject.SetActive(false);
             AudioSystem.audioManager.PlaySound("buy", 0f);
         }
         else if(silverCount >= items[i].silverCost * priceMultiplier) {
-            inventory.TakeSilver(items[i].silverCost);
+            inventory.TakeSilver(items[i].silverCost * priceMultiplier);
             inventory.AddToInventory(items[i], false);
             itemInfo.gameObject.SetActive(false);
             AudioSystem.audioManager.PlaySound("buy", 0f);

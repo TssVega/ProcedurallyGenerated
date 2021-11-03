@@ -109,6 +109,9 @@ public class PoolGeneration : MonoBehaviour {
             pools[i].SetActive(false);
         }
         pools.Clear();
+        for(int i = 0; i < portals.Count; i++) {
+            portals[i].SetActive(false);
+        }
         portals.Clear();
     }
 }

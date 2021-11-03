@@ -7,7 +7,7 @@ public class GameMaster : MonoBehaviour {
     public SkillDatabase skillDatabase;
 
     private void Awake() {
-        Application.targetFrameRate = 60;
+        //Application.targetFrameRate = 60;
         skillDatabase.SetIndices();
     }
 }
