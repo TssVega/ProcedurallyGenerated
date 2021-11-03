@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-[CreateAssetMenu(menuName = "Scriptable Objects/Item Creator")]
+[CreateAssetMenu(menuName = "ScriptableObjects/Item Creator")]
 public class ItemCreator : ScriptableObject {
     // Mine and weapon material colors
     public Color[] bladeMaterialColors;

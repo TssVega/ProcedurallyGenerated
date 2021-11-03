@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using static System.IO.File;
 
 public class Player : MonoBehaviour {
 
@@ -24,6 +25,7 @@ public class Player : MonoBehaviour {
     [HideInInspector] public int hairStyleIndex = 0;
 
     public CharacterAppearance appearance;
+
     public ItemCreator itemCreator;
     // Sprites for weapons
     public SpriteRenderer weaponHandle;
@@ -220,10 +222,10 @@ public class Player : MonoBehaviour {
             return;
         }
         for(int i = 0; i < autosaveFiles.Count; i++) {
-            if(File.Exists(autosaveFiles[i].Replace("Data0", $"Data{PersistentData.saveSlot}"))) {
-                File.Delete(autosaveFiles[i].Replace("Data0", $"Data{PersistentData.saveSlot}"));
+            if(Exists(autosaveFiles[i].Replace("Data0", $"Data{PersistentData.saveSlot}"))) {
+                Delete(autosaveFiles[i].Replace("Data0", $"Data{PersistentData.saveSlot}"));
             }
-            File.Copy(autosaveFiles[i], autosaveFiles[i].Replace("Data0", $"Data{PersistentData.saveSlot}"));
+            Copy(autosaveFiles[i], autosaveFiles[i].Replace("Data0", $"Data{PersistentData.saveSlot}"));
         }
     }
     public void LoadPlayer() {
