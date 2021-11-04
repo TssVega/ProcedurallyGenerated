@@ -40,8 +40,8 @@ MonoBehaviour:
   outerRadius: 7
   intensity: 1
   strength: 0
-  agility: 15
-  dexterity: 15
+  agility: 8
+  dexterity: 6
   intelligence: 0
   faith: 0
   wisdom: 0
@@ -50,7 +50,7 @@ MonoBehaviour:
   weaponType: 2
   preset: 4
   bashDamage: 0
-  pierceDamage: 100
+  pierceDamage: 60
   slashDamage: 0
   fireDamage: 0
   iceDamage: 0

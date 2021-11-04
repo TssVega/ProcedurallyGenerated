@@ -218,7 +218,7 @@ public class ItemCreator : ScriptableObject {
         if(item != null) {
             item.seed = seed;
             item.luck = luck;
-            item.itemMaterial = mat;
+            item.itemMaterial = mat;            
             SetStats(item);
         }
         return item;

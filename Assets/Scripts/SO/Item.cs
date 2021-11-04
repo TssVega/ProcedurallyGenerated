@@ -46,10 +46,12 @@ public class Item : ScriptableObject {
     public Sprite thirdSprite;
     public Sprite firstIcon;
     public Sprite secondIcon;
-    public Sprite thirdIcon;
+    public Sprite thirdIcon;    
     public Color firstColor;
     public Color secondColor;
     public Color thirdColor;
+    public bool overrideSpriteColorInGame = false;
+    public Color overriddenColor;
     public EquipSlot slot;
     public Rarity rarity;
     public int goldCost;

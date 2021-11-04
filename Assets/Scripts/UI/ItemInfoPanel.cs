@@ -305,11 +305,38 @@ public class ItemInfoPanel : MonoBehaviour {
             UpdateStats();
         }
     }
+    private string GT(string str) {
+        return LocalizationManager.localization.GetText(str);
+    }
     private void UpdateStats() {
         if(isInventorySlot && inventory.inventory[currentIndex] == null) {
             gameObject.SetActive(false);
         }
-        currentItemDescription.text = LocalizationManager.localization.GetText($"{item.seed}Desc");
+        currentItemDescription.text = GT($"{item.seed}Desc");
+        if(inventory.inventory[currentIndex].strength > 0) {
+            currentItemDescription.text += $"{inventory.inventory[currentIndex].strength} {GT("strength")} ";
+        }
+        if(inventory.inventory[currentIndex].agility > 0) {
+            currentItemDescription.text += $"{inventory.inventory[currentIndex].agility} {GT("agility")} ";
+        }
+        if(inventory.inventory[currentIndex].dexterity > 0) {
+            currentItemDescription.text += $"{inventory.inventory[currentIndex].dexterity} {GT("dexterity")} ";
+        }
+        if(inventory.inventory[currentIndex].intelligence > 0) {
+            currentItemDescription.text += $"{inventory.inventory[currentIndex].intelligence} {GT("intelligence")} ";
+        }
+        if(inventory.inventory[currentIndex].faith > 0) {
+            currentItemDescription.text += $"{inventory.inventory[currentIndex].faith} {GT("faith")} ";
+        }
+        if(inventory.inventory[currentIndex].wisdom > 0) {
+            currentItemDescription.text += $"{inventory.inventory[currentIndex].wisdom} {GT("wisdom")} ";
+        }
+        if(inventory.inventory[currentIndex].vitality > 0) {
+            currentItemDescription.text += $"{inventory.inventory[currentIndex].vitality} {GT("vitality")} ";
+        }
+        if(inventory.inventory[currentIndex].charisma > 0) {
+            currentItemDescription.text += $"{inventory.inventory[currentIndex].charisma} {GT("charisma")} ";
+        }
         Item equippedItem = null;
         if((int)item.slot < 6) {
             equippedItem = inventory.equipment[(int)item.slot];

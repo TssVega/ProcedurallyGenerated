@@ -28,7 +28,7 @@ MonoBehaviour:
   thirdColor: {r: 0, g: 0, b: 0, a: 0}
   slot: 0
   rarity: 2
-  goldCost: 13
+  goldCost: 25
   silverCost: 0
   stackable: 0
   dismantleOutput: 3
@@ -42,9 +42,9 @@ MonoBehaviour:
   strength: 0
   agility: 0
   dexterity: 0
-  intelligence: 10
+  intelligence: 6
   faith: 10
-  wisdom: 10
+  wisdom: 4
   vitality: 0
   charisma: 0
   weaponType: 1

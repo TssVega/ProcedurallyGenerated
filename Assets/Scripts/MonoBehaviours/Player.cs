@@ -539,10 +539,21 @@ public class Player : MonoBehaviour {
     private void SetBodyArmor(Armor armor) {
         bodyArmor.sprite = armor.firstSprite;
         if(armor.secondColor != Color.clear) {
-            bodyArmor.color = armor.secondColor;
+            if(armor.overrideSpriteColorInGame) {
+                bodyArmor.color = armor.overriddenColor;
+            }
+            else {
+                bodyArmor.color = armor.secondColor;
+            }
+            
         }
         else {
-            bodyArmor.color = armor.firstColor;
+            if(armor.overrideSpriteColorInGame) {
+                bodyArmor.color = armor.overriddenColor;
+            }
+            else {
+                bodyArmor.color = armor.firstColor;
+            }
         }
     }
     private void ClearBodyArmor() {

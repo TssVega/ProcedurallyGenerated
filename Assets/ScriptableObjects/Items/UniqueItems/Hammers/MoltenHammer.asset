@@ -39,7 +39,7 @@ MonoBehaviour:
   innerRadius: 6
   outerRadius: 7
   intensity: 1
-  strength: 25
+  strength: 10
   agility: 0
   dexterity: 0
   intelligence: 0
