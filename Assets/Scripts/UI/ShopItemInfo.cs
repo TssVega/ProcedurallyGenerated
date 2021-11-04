@@ -70,28 +70,28 @@ public class ShopItemInfo : MonoBehaviour {
     private void UpdateStats() {
         currentItemDescription.text = LocalizationManager.localization.GetText($"{item.seed}Desc");
         if(item.strength > 0) {
-            currentItemDescription.text += $"{item.strength} {GT("strength")} ";
+            currentItemDescription.text += $"+{item.strength} {GT("strength")} ";
         }
         if(item.agility > 0) {
-            currentItemDescription.text += $"{item.agility} {GT("agility")} ";
+            currentItemDescription.text += $"+{item.agility} {GT("agility")} ";
         }
         if(item.dexterity > 0) {
-            currentItemDescription.text += $"{item.dexterity} {GT("dexterity")} ";
+            currentItemDescription.text += $"+{item.dexterity} {GT("dexterity")} ";
         }
         if(item.intelligence > 0) {
-            currentItemDescription.text += $"{item.intelligence} {GT("intelligence")} ";
+            currentItemDescription.text += $"+{item.intelligence} {GT("intelligence")} ";
         }
         if(item.faith > 0) {
-            currentItemDescription.text += $"{item.faith} {GT("faith")} ";
+            currentItemDescription.text += $"+{item.faith} {GT("faith")} ";
         }
         if(item.wisdom > 0) {
-            currentItemDescription.text += $"{item.wisdom} {GT("wisdom")} ";
+            currentItemDescription.text += $"+{item.wisdom} {GT("wisdom")} ";
         }
         if(item.vitality > 0) {
-            currentItemDescription.text += $"{item.vitality} {GT("vitality")} ";
+            currentItemDescription.text += $"+{item.vitality} {GT("vitality")} ";
         }
         if(item.charisma > 0) {
-            currentItemDescription.text += $"{item.charisma} {GT("charisma")} ";
+            currentItemDescription.text += $"+{item.charisma} {GT("charisma")} ";
         }
         Item equippedItem = null;
         if((int)item.slot < 6) {

@@ -544,8 +544,7 @@ public class Player : MonoBehaviour {
             }
             else {
                 bodyArmor.color = armor.secondColor;
-            }
-            
+            }            
         }
         else {
             if(armor.overrideSpriteColorInGame) {

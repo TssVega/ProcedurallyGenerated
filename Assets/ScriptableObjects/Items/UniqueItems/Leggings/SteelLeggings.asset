@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71d89288d493c044a8f5dedbc5558756, type: 3}
+  m_Name: SteelLeggings
+  m_EditorClassIdentifier: 
+  seed: steelLeggings
+  luck: 0
+  itemName: 
+  firstSprite: {fileID: 8728921569375082348, guid: f8acae61dc207374c852ec44a10b47a7,
+    type: 3}
+  secondSprite: {fileID: 0}
+  thirdSprite: {fileID: 0}
+  firstIcon: {fileID: 8728921569375082348, guid: f8acae61dc207374c852ec44a10b47a7,
+    type: 3}
+  secondIcon: {fileID: 0}
+  thirdIcon: {fileID: 0}
+  firstColor: {r: 1, g: 1, b: 1, a: 1}
+  secondColor: {r: 0, g: 0, b: 0, a: 0}
+  thirdColor: {r: 0, g: 0, b: 0, a: 0}
+  overrideSpriteColorInGame: 0
+  overriddenColor: {r: 0, g: 0, b: 0, a: 0}
+  slot: 4
+  rarity: 0
+  goldCost: 2
+  silverCost: 0
+  stackable: 0
+  dismantleOutput: 7
+  particles: {fileID: 0}
+  material: 0
+  itemMaterial: 2
+  alterLight: 0
+  innerRadius: 6
+  outerRadius: 7
+  intensity: 1
+  strength: 2
+  agility: 0
+  dexterity: 0
+  intelligence: 0
+  faith: 0
+  wisdom: 0
+  vitality: 2
+  charisma: 0
+  bashDefence: 30
+  pierceDefence: 40
+  slashDefence: 40
+  fireDefence: 10
+  iceDefence: 20
+  lightningDefence: 10
+  airDefence: 20
+  earthDefence: 30
+  lightDefence: 10
+  darkDefence: 20
+  poisonDefence: 20
+  bleedDefence: 20
+  curseDefence: 10

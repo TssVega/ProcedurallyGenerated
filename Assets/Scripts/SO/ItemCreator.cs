@@ -944,6 +944,27 @@ public class ItemCreator : ScriptableObject {
             r.bleedDefence = RollDice(diceRolls[matIndex + 1][index++], dieCapacity);
             r.poisonDefence = RollDice(diceRolls[matIndex + 1][index++], dieCapacity);
             r.curseDefence = RollDice(diceRolls[matIndex + 1][index++], dieCapacity);
+
+            r.fireDamage *= 0.1f;
+            r.iceDamage *= 0.1f;
+            r.airDamage *= 0.1f;
+            r.earthDamage *= 0.1f;
+            r.lightningDamage *= 0.1f;
+            r.lightDamage *= 0.1f;
+            r.darkDamage *= 0.1f;
+            r.poisonDamage *= 0.1f;
+            r.bleedDamage *= 0.1f;
+            r.curseDefence *= 0.1f;
+            r.fireDefence *= 0.1f;
+            r.iceDefence *= 0.1f;
+            r.airDefence *= 0.1f;
+            r.earthDefence *= 0.1f;
+            r.lightningDefence *= 0.1f;
+            r.lightDefence *= 0.1f;
+            r.darkDefence *= 0.1f;
+            r.poisonDefence *= 0.1f;
+            r.bleedDefence *= 0.1f;
+            r.curseDefence *= 0.1f;
         }
     }
 }
