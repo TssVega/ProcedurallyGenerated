@@ -15,6 +15,10 @@ public class MainMenu : MonoBehaviour {
     public TextMeshProUGUI soundFXText;
     public TextMeshProUGUI autoLockText;
     public TextMeshProUGUI autoLockDescText;
+    public TextMeshProUGUI qualityText;
+    public TextMeshProUGUI lowText;
+    public TextMeshProUGUI mediumText;
+    public TextMeshProUGUI hightText;
 
     public void OnEnable() {
         RefreshTexts();
@@ -28,6 +32,10 @@ public class MainMenu : MonoBehaviour {
         soundFXText.text = localizationManager.GetText("soundFX");
         autoLockText.text = localizationManager.GetText("autoLock");
         autoLockDescText.text = localizationManager.GetText("autoLockDesc");
+        qualityText.text = localizationManager.GetText("quality");
+        lowText.text = localizationManager.GetText("low");
+        mediumText.text = localizationManager.GetText("medium");
+        hightText.text = localizationManager.GetText("high");
     }
     public void StartNewGame(int slot) {
         PersistentData.saveSlot = slot;

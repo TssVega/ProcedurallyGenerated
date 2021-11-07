@@ -293,6 +293,7 @@ public class CraftingPanel : MonoBehaviour {
                             unlockText = $"{GT("need")} {requirement} {GT("agility")} {GT("toUnlock")}";
                             unlockTexts[iteration].text = unlockText;
                             unlockTexts[iteration].gameObject.SetActive(true);
+                            iteration++;
                             continue;
                         }
                         if(craftingDatabase.agilityRecipes[i].input0 != null) {
@@ -399,6 +400,7 @@ public class CraftingPanel : MonoBehaviour {
                             unlockText = $"{GT("need")} {requirement} {GT("dexterity")} {GT("toUnlock")}";
                             unlockTexts[iteration].text = unlockText;
                             unlockTexts[iteration].gameObject.SetActive(true);
+                            iteration++;
                             continue;
                         }
                         if(craftingDatabase.dexterityRecipes[i].input0 != null) {
@@ -505,6 +507,7 @@ public class CraftingPanel : MonoBehaviour {
                             unlockText = $"{GT("need")} {requirement} {GT("intelligence")} {GT("toUnlock")}";
                             unlockTexts[iteration].text = unlockText;
                             unlockTexts[iteration].gameObject.SetActive(true);
+                            iteration++;
                             continue;
                         }
                         if(craftingDatabase.intelligenceRecipes[i].input0 != null) {
@@ -611,6 +614,7 @@ public class CraftingPanel : MonoBehaviour {
                             unlockText = $"{GT("need")} {requirement} {GT("faith")} {GT("toUnlock")}";
                             unlockTexts[iteration].text = unlockText;
                             unlockTexts[iteration].gameObject.SetActive(true);
+                            iteration++;
                             continue;
                         }
                         if(craftingDatabase.faithRecipes[i].input0 != null) {
@@ -717,6 +721,7 @@ public class CraftingPanel : MonoBehaviour {
                             unlockText = $"{GT("need")} {requirement} {GT("wisdom")} {GT("toUnlock")}";
                             unlockTexts[iteration].text = unlockText;
                             unlockTexts[iteration].gameObject.SetActive(true);
+                            iteration++;
                             continue;
                         }
                         if(craftingDatabase.wisdomRecipes[i].input0 != null) {
@@ -823,6 +828,7 @@ public class CraftingPanel : MonoBehaviour {
                             unlockText = $"{GT("need")} {requirement} {GT("vitality")} {GT("toUnlock")}";
                             unlockTexts[iteration].text = unlockText;
                             unlockTexts[iteration].gameObject.SetActive(true);
+                            iteration++;
                             continue;
                         }
                         if(craftingDatabase.vitalityRecipes[i].input0 != null) {
@@ -929,6 +935,7 @@ public class CraftingPanel : MonoBehaviour {
                             unlockText = $"{GT("need")} {requirement} {GT("charisma")} {GT("toUnlock")}";
                             unlockTexts[iteration].text = unlockText;
                             unlockTexts[iteration].gameObject.SetActive(true);
+                            iteration++;
                             continue;
                         }
                         if(craftingDatabase.charismaRecipes[i].input0 != null) {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.Rendering.Universal;
 
 public class OptionsUI : MonoBehaviour {
 
@@ -17,14 +18,25 @@ public class OptionsUI : MonoBehaviour {
     public Slider fxSlider;
     public Slider musicSlider;
 
+    public TextMeshProUGUI lowText;
+    public TextMeshProUGUI mediumText;
+    public TextMeshProUGUI highText;
+
+    public Color activeQualityColor;
+
+    public UniversalRenderPipelineAsset urpAsset;
+
+    private const int defaultQuality = 2;
+
     private void Awake() {
         localizationManager = FindObjectOfType<LocalizationManager>();
         mainMenu = FindObjectOfType<MainMenu>();        
     }
     private void OnEnable() {
         LoadSoundOptions();
-        LoadLockOptions();
+        UpdateLockOptions();
         UpdateLanguageHighlighters(localizationManager.GetLanguage());
+        UpdateQualitySettings();
     }
     private void RefreshTexts() {
         languageText.text = localizationManager.GetText("language");
@@ -33,6 +45,41 @@ public class OptionsUI : MonoBehaviour {
         localizationManager.SetLocalization(language);
         UpdateLanguageHighlighters(language);
         AudioSystem.audioManager.PlaySound("menuButton", 0f);
+    }
+    // 0 is low, 1 is medium, 2 is high quality
+    public void ChangeQuality(int quality) {
+        PlayerPrefs.SetInt("quality", quality);
+        PlayerPrefs.Save();
+        AudioSystem.audioManager.PlaySound("menuButton", 0f);
+        UpdateQualitySettings();
+    }
+    private void UpdateQualitySettings() {
+        
+        int quality = PlayerPrefs.HasKey("quality") ? PlayerPrefs.GetInt("quality") : defaultQuality;
+        PlayerPrefs.SetInt("quality", quality);
+        PlayerPrefs.Save();
+        switch(quality) {
+            case 0:
+                lowText.color = activeQualityColor;
+                mediumText.color = Color.white;
+                highText.color = Color.white;
+                urpAsset.renderScale = 0.33f;
+                break;
+            case 1:
+                lowText.color = Color.white;
+                mediumText.color = activeQualityColor;
+                highText.color = Color.white;
+                urpAsset.renderScale = 0.5f;
+                break;
+            case 2:
+                lowText.color = Color.white;
+                mediumText.color = Color.white;
+                highText.color = activeQualityColor;
+                urpAsset.renderScale = 1f;
+                break;
+            default:
+                break;
+        }
     }
     private void UpdateLanguageHighlighters(string language) {
         mainMenu.RefreshTexts();
@@ -48,33 +95,25 @@ public class OptionsUI : MonoBehaviour {
     }
     public void ChangeFXVolume() {
         UpdateFXVolume();
-        AudioSystem.audioManager.PlaySound("menuButton", 0f);
+        //AudioSystem.audioManager.PlaySound("menuButton", 0f);
         PlayerPrefs.SetFloat("fx", fxSlider.value);
         PlayerPrefs.Save();
     }
     public void ChangeMusicVolume() {
         UpdateMusicVolume();
-        AudioSystem.audioManager.PlaySound("menuButton", 0f);
+        //AudioSystem.audioManager.PlaySound("menuButton", 0f);
         PlayerPrefs.SetFloat("music", musicSlider.value);
         PlayerPrefs.Save();
     }
     public void ToggleLock() {
-        int lockValue = PlayerPrefs.GetInt("lock");
-
-        if(!PlayerPrefs.HasKey("lock")) {
-            lockValue = 1;
-            PlayerPrefs.SetInt("lock", 1);
-            PlayerPrefs.Save();
-        }
-        lockValue = lockValue == 1 ? 0 : 1;
+        int lockValue = PlayerPrefs.HasKey("lock") ? PlayerPrefs.GetInt("lock") : 1;
+        /*
         PlayerPrefs.SetInt("lock", lockValue);
-        if(lockValue == 1) {
-            autoLockTick.SetActive(true);
-        }
-        else {
-            autoLockTick.SetActive(false);
-        }
+        PlayerPrefs.Save();*/
+        lockValue = lockValue == 1 ? 0 : 1;
+        PlayerPrefs.SetInt("lock", lockValue);        
         PlayerPrefs.Save();
+        UpdateLockOptions();
         AudioSystem.audioManager.PlaySound("menuButton", 0f);
     }
     public void Mute() {
@@ -95,12 +134,10 @@ public class OptionsUI : MonoBehaviour {
         PlayerPrefs.Save();
         AudioSystem.audioManager.PlaySound("menuButton", 0f);
     }
-    private void LoadLockOptions() {
-        int lockValue = PlayerPrefs.GetInt("lock");
-
-        if(!PlayerPrefs.HasKey("lock")) {
-            lockValue = 1;
-        }
+    private void UpdateLockOptions() {
+        int lockValue = PlayerPrefs.HasKey("lock") ? PlayerPrefs.GetInt("lock") : 1;
+        PlayerPrefs.SetInt("lock", lockValue);
+        PlayerPrefs.Save();
         if(lockValue == 1) {
             autoLockTick.SetActive(true);
         }
@@ -150,13 +187,13 @@ public class OptionsUI : MonoBehaviour {
         AudioSystem.audioManager.sounds[1].volume = musicSlider.value;
         AudioSystem.audioManager.sounds[0].ChangeVolume(0f);
         AudioSystem.audioManager.sounds[1].ChangeVolume(0f);
-        AudioSystem.audioManager.PlaySound("menuButton", 0f);
+        // AudioSystem.audioManager.PlaySound("menuButton", 0f);
     }
-    private void UpdateFXVolume() {        
-        AudioSystem.audioManager.sounds[2].volume = fxSlider.value;        
-        AudioSystem.audioManager.sounds[3].volume = fxSlider.value;
-        AudioSystem.audioManager.sounds[2].ChangeVolume(0f);
-        AudioSystem.audioManager.sounds[3].ChangeVolume(0f);
+    private void UpdateFXVolume() {
+        for(int i = 2; i < AudioSystem.audioManager.sounds.Length; i++) {
+            AudioSystem.audioManager.sounds[i].volume = fxSlider.value;
+            AudioSystem.audioManager.sounds[i].ChangeVolume(0f);
+        }
         AudioSystem.audioManager.PlaySound("menuButton", 0f);
     }
 }

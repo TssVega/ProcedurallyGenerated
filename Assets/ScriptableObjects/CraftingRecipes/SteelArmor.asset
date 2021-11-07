@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfcfe2b21785eb54688c47ead057ca9b, type: 3}
+  m_Name: SteelArmor
+  m_EditorClassIdentifier: 
+  strengthRequirement: 14
+  agilityRequirement: 0
+  dexterityRequirement: 0
+  intelligenceRequirement: 0
+  faithRequirement: 0
+  wisdomRequirement: 0
+  vitalityRequirement: 11
+  charismaRequirement: 0
+  output: {fileID: 11400000, guid: 4a730f53a5588c746bc45174b7aeb913, type: 2}
+  input0: {fileID: 11400000, guid: e48678defbe01a64ebf62417ea6ec278, type: 2}
+  input1: {fileID: 0}
+  input2: {fileID: 11400000, guid: e48678defbe01a64ebf62417ea6ec278, type: 2}
+  input3: {fileID: 11400000, guid: e48678defbe01a64ebf62417ea6ec278, type: 2}
+  input4: {fileID: 11400000, guid: 645e19f11202fee49b99bc2df3ebd682, type: 2}
+  input5: {fileID: 11400000, guid: e48678defbe01a64ebf62417ea6ec278, type: 2}
+  input6: {fileID: 11400000, guid: e48678defbe01a64ebf62417ea6ec278, type: 2}
+  input7: {fileID: 11400000, guid: e48678defbe01a64ebf62417ea6ec278, type: 2}
+  input8: {fileID: 11400000, guid: e48678defbe01a64ebf62417ea6ec278, type: 2}

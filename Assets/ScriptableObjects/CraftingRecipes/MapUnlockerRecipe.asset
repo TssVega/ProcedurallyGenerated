@@ -21,12 +21,12 @@ MonoBehaviour:
   vitalityRequirement: 0
   charismaRequirement: 0
   output: {fileID: 11400000, guid: 8fc5886da7e5c3e409a3887595f1c9eb, type: 2}
-  input0: {fileID: 11400000, guid: 338546b794b3b954c87bc6ec633d3ed3, type: 2}
-  input1: {fileID: 11400000, guid: 338546b794b3b954c87bc6ec633d3ed3, type: 2}
+  input0: {fileID: 0}
+  input1: {fileID: 0}
   input2: {fileID: 0}
   input3: {fileID: 11400000, guid: 338546b794b3b954c87bc6ec633d3ed3, type: 2}
   input4: {fileID: 11400000, guid: 338546b794b3b954c87bc6ec633d3ed3, type: 2}
   input5: {fileID: 0}
-  input6: {fileID: 0}
-  input7: {fileID: 0}
+  input6: {fileID: 11400000, guid: 338546b794b3b954c87bc6ec633d3ed3, type: 2}
+  input7: {fileID: 11400000, guid: 338546b794b3b954c87bc6ec633d3ed3, type: 2}
   input8: {fileID: 0}

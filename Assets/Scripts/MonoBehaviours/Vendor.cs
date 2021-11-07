@@ -36,6 +36,7 @@ public class Vendor : MonoBehaviour, IInteractable {
         items = new Item[shopSize];
         for(int i = 0; i < items.Length; i++) {
             items[i] = itemCreator.GetRandomItem(shopRandom.Next().ToString());
+            // items[i] = itemCreator.
         }
     }
     public void Interact() {

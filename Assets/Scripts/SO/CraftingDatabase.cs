@@ -57,7 +57,7 @@ public class CraftingDatabase : ScriptableObject {
         wisdomRecipes = wisList.OrderBy(x => x.wisdomRequirement).ToList();
 
         var vitalList = allRecipes.Where(x => x.vitalityRequirement > 0);
-        vitalityRecipes = vitalityRecipes.OrderBy(x => x.vitalityRequirement).ToList();
+        vitalityRecipes = vitalList.OrderBy(x => x.vitalityRequirement).ToList();
 
         var chaList = allRecipes.Where(x => x.charismaRequirement > 0);
         charismaRecipes = chaList.OrderBy(x => x.charismaRequirement).ToList();

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seed: waterTome
   luck: 0
-  itemName: waterTome
+  itemName: Water Tome
   firstSprite: {fileID: 8162441437260079077, guid: fea0c2577fe44dd43912d1e0dd0d70de,
     type: 3}
   secondSprite: {fileID: 0}
@@ -26,12 +26,14 @@ MonoBehaviour:
   firstColor: {r: 1, g: 1, b: 1, a: 1}
   secondColor: {r: 0, g: 0, b: 0, a: 0}
   thirdColor: {r: 0, g: 0, b: 0, a: 0}
+  overrideSpriteColorInGame: 0
+  overriddenColor: {r: 0, g: 0, b: 0, a: 0}
   slot: 0
   rarity: 1
   goldCost: 10
   silverCost: 0
   stackable: 0
-  dismantleOutput: 3
+  dismantleOutput: 1
   particles: {fileID: 0}
   material: 0
   itemMaterial: 8

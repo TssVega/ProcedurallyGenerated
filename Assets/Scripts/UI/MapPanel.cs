@@ -31,6 +31,9 @@ public class MapPanel : MonoBehaviour {
         portalIcons = new List<GameObject>();
         worldGeneration = FindObjectOfType<WorldGeneration>();
     }
+    private void Start() {
+        Set();
+    }
     private void OnEnable() {
         SetPortalIcons();
     }
@@ -44,7 +47,7 @@ public class MapPanel : MonoBehaviour {
     public void Set() {
         if(!mapSet) {
             mapSet = true;
-            SetMap(worldGeneration.WorldMap);            
+            SetMap(worldGeneration.WorldMap);
         }
     }
     public void SetPortalIcons() {

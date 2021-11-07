@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfcfe2b21785eb54688c47ead057ca9b, type: 3}
+  m_Name: KnightsSpear
+  m_EditorClassIdentifier: 
+  strengthRequirement: 0
+  agilityRequirement: 15
+  dexterityRequirement: 0
+  intelligenceRequirement: 0
+  faithRequirement: 0
+  wisdomRequirement: 0
+  vitalityRequirement: 0
+  charismaRequirement: 0
+  output: {fileID: 11400000, guid: 9bbf548b49399534097f0e1dd80a29bf, type: 2}
+  input0: {fileID: 0}
+  input1: {fileID: 0}
+  input2: {fileID: 11400000, guid: 996b587829b67ce4e94e40ad8cc856e9, type: 2}
+  input3: {fileID: 0}
+  input4: {fileID: 11400000, guid: 996b587829b67ce4e94e40ad8cc856e9, type: 2}
+  input5: {fileID: 0}
+  input6: {fileID: 11400000, guid: e48678defbe01a64ebf62417ea6ec278, type: 2}
+  input7: {fileID: 0}
+  input8: {fileID: 0}

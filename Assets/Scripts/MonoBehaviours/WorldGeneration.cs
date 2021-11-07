@@ -272,6 +272,7 @@ public class WorldGeneration : MonoBehaviour {
     }
     private IEnumerator ScanPath() {
         yield return new WaitForSeconds(0.5f);
+        
         if(aStarPath) {
             aStarPath.Scan(aStarPath.graphs[0]);
         }

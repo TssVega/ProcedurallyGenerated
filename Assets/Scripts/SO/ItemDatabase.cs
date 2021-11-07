@@ -14,6 +14,8 @@ public class ItemDatabase : ScriptableObject {
     public List<Item> essentialBooks;
     public List<Item> potions;
     public List<Item> coins;
+    [Header("Vendor Items")]
+    public List<Item> vendorItems;
 
     public Item GetItemByMaterial(ItemMaterial mat) {
         if((int)mat < 15) {

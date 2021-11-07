@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b1fe8012146a5b43a3295441628d4bb, type: 3}
   m_Name: QotushBlade
   m_EditorClassIdentifier: 
-  seed: qotushBlade
+  seed: qotushSword
   luck: 0
   itemName: 
   firstSprite: {fileID: -2120591376523916669, guid: 05b52b6e2dba5b8499032eecbc4621d9,
@@ -26,6 +26,8 @@ MonoBehaviour:
   firstColor: {r: 1, g: 1, b: 1, a: 1}
   secondColor: {r: 0, g: 0, b: 0, a: 0}
   thirdColor: {r: 0, g: 0, b: 0, a: 0}
+  overrideSpriteColorInGame: 0
+  overriddenColor: {r: 0, g: 0, b: 0, a: 0}
   slot: 0
   rarity: 0
   goldCost: 2

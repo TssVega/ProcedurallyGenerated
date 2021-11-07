@@ -21,12 +21,12 @@ MonoBehaviour:
   vitalityRequirement: 0
   charismaRequirement: 0
   output: {fileID: 11400000, guid: 6e1b99fd1c7c61c4485315f56d332cd7, type: 2}
-  input0: {fileID: 11400000, guid: 338546b794b3b954c87bc6ec633d3ed3, type: 2}
+  input0: {fileID: 11400000, guid: 59dcd44ce56875d46ba50ad18858812e, type: 2}
   input1: {fileID: 11400000, guid: 338546b794b3b954c87bc6ec633d3ed3, type: 2}
-  input2: {fileID: 11400000, guid: 338546b794b3b954c87bc6ec633d3ed3, type: 2}
+  input2: {fileID: 11400000, guid: 59dcd44ce56875d46ba50ad18858812e, type: 2}
   input3: {fileID: 11400000, guid: 338546b794b3b954c87bc6ec633d3ed3, type: 2}
-  input4: {fileID: 11400000, guid: 338546b794b3b954c87bc6ec633d3ed3, type: 2}
+  input4: {fileID: 11400000, guid: 6a0279edbea37e84199f962dcf54be41, type: 2}
   input5: {fileID: 11400000, guid: 338546b794b3b954c87bc6ec633d3ed3, type: 2}
-  input6: {fileID: 11400000, guid: 338546b794b3b954c87bc6ec633d3ed3, type: 2}
+  input6: {fileID: 11400000, guid: 59dcd44ce56875d46ba50ad18858812e, type: 2}
   input7: {fileID: 11400000, guid: 338546b794b3b954c87bc6ec633d3ed3, type: 2}
-  input8: {fileID: 11400000, guid: 338546b794b3b954c87bc6ec633d3ed3, type: 2}
+  input8: {fileID: 11400000, guid: 59dcd44ce56875d46ba50ad18858812e, type: 2}

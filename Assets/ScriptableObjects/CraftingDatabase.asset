@@ -13,15 +13,36 @@ MonoBehaviour:
   m_Name: CraftingDatabase
   m_EditorClassIdentifier: 
   allRecipes:
-  - {fileID: 11400000, guid: 4c2d4f4581dab0644a87647599b83156, type: 2}
   - {fileID: 11400000, guid: d44842f3a69f67f4fb9851bc440476c3, type: 2}
+  - {fileID: 11400000, guid: de5e63ec20be6d7478354f7a12ff3dfc, type: 2}
+  - {fileID: 11400000, guid: 675b4a04af47351408c7024d165f33c7, type: 2}
+  - {fileID: 11400000, guid: 1a3f20cf62ac7a04d890aa34d08205c8, type: 2}
+  - {fileID: 11400000, guid: 01d551ec8d99de8488ab7919a4e1aa23, type: 2}
+  - {fileID: 11400000, guid: 81092dcca58ac0f4982183fdbf8b0565, type: 2}
+  - {fileID: 11400000, guid: 7b606289210cd60459b65573b2b921f6, type: 2}
+  - {fileID: 11400000, guid: b845cfdfc5b486c45a72e2da3ba56f88, type: 2}
+  - {fileID: 11400000, guid: a0bcef0087c3f1a40843974a4e6401dd, type: 2}
+  - {fileID: 11400000, guid: b542193cb7f6b184cb3a133493a286a1, type: 2}
+  - {fileID: 11400000, guid: 710c2fcfb9394c64c9d681c0cb348cab, type: 2}
   - {fileID: 11400000, guid: 605abf7fc1b92a64098ed7995aeca1af, type: 2}
+  - {fileID: 11400000, guid: abb807dad214b624592abde6e88f22bf, type: 2}
+  - {fileID: 11400000, guid: 3f664fcf765406c4b8ccca98d20523e8, type: 2}
+  - {fileID: 11400000, guid: 53c48d695f6743a4e8e71bd2c377afe4, type: 2}
+  - {fileID: 11400000, guid: 336545dd7913d1a4e8a095b0b516e34a, type: 2}
+  - {fileID: 11400000, guid: 838a011f6a193144dadc899ed2b5a03f, type: 2}
+  - {fileID: 11400000, guid: 4c2d4f4581dab0644a87647599b83156, type: 2}
+  - {fileID: 11400000, guid: 3208a00f62194634fa3858e7128a3ee8, type: 2}
+  generalRecipes:
+  - {fileID: 11400000, guid: 4c2d4f4581dab0644a87647599b83156, type: 2}
   - {fileID: 11400000, guid: b845cfdfc5b486c45a72e2da3ba56f88, type: 2}
   - {fileID: 11400000, guid: abb807dad214b624592abde6e88f22bf, type: 2}
-  generalRecipes: []
-  strengthRecipes: []
-  agilityRecipes: []
-  dexterityRecipes: []
+  strengthRecipes:
+  - {fileID: 11400000, guid: 605abf7fc1b92a64098ed7995aeca1af, type: 2}
+  - {fileID: 11400000, guid: d44842f3a69f67f4fb9851bc440476c3, type: 2}
+  agilityRecipes:
+  - {fileID: 11400000, guid: 605abf7fc1b92a64098ed7995aeca1af, type: 2}
+  dexterityRecipes:
+  - {fileID: 11400000, guid: 605abf7fc1b92a64098ed7995aeca1af, type: 2}
   intelligenceRecipes: []
   faithRecipes: []
   wisdomRecipes: []

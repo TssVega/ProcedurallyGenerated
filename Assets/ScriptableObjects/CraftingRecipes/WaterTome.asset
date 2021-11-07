@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfcfe2b21785eb54688c47ead057ca9b, type: 3}
+  m_Name: WaterTome
+  m_EditorClassIdentifier: 
+  strengthRequirement: 0
+  agilityRequirement: 0
+  dexterityRequirement: 0
+  intelligenceRequirement: 14
+  faithRequirement: 0
+  wisdomRequirement: 0
+  vitalityRequirement: 0
+  charismaRequirement: 0
+  output: {fileID: 11400000, guid: 385abbe3a07a60c43b255a25cd387a3a, type: 2}
+  input0: {fileID: 11400000, guid: 59dcd44ce56875d46ba50ad18858812e, type: 2}
+  input1: {fileID: 11400000, guid: 338546b794b3b954c87bc6ec633d3ed3, type: 2}
+  input2: {fileID: 11400000, guid: 59dcd44ce56875d46ba50ad18858812e, type: 2}
+  input3: {fileID: 11400000, guid: 338546b794b3b954c87bc6ec633d3ed3, type: 2}
+  input4: {fileID: 11400000, guid: 520686671f21e6646a5de3b0ce35fd01, type: 2}
+  input5: {fileID: 11400000, guid: 338546b794b3b954c87bc6ec633d3ed3, type: 2}
+  input6: {fileID: 11400000, guid: 59dcd44ce56875d46ba50ad18858812e, type: 2}
+  input7: {fileID: 11400000, guid: 338546b794b3b954c87bc6ec633d3ed3, type: 2}
+  input8: {fileID: 11400000, guid: 59dcd44ce56875d46ba50ad18858812e, type: 2}

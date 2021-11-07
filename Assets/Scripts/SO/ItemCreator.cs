@@ -116,7 +116,13 @@ public class ItemCreator : ScriptableObject {
     private System.Random pseudoRandom;
 
     public Item GetRandomItem(string seed) {
-        return itemDatabase.items[new System.Random(seed.GetHashCode()).Next(0, itemDatabase.items.Count)];
+        pseudoRandom = new System.Random(seed.GetHashCode());
+        Item item = itemDatabase.vendorItems[pseudoRandom.Next(0, itemDatabase.vendorItems.Count)];
+        string itemName = LocalizationManager.localization.GetText(item.seed);
+        if(itemName != null) {
+            item.itemName = itemName;
+        }
+        return item;
     }
     // Create an item
     public Item CreateItem(string seed, int luck) {

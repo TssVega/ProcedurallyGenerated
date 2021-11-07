@@ -87,12 +87,9 @@ public class AudioSystem : MonoBehaviour {
         sounds[1].volume = musicValue;
         sounds[0].ChangeVolume(0f);
         sounds[1].ChangeVolume(0f);
-        sounds[2].volume = fxValue;
-        sounds[3].volume = fxValue;
-        sounds[2].ChangeVolume(0f);
-        sounds[3].ChangeVolume(0f);
-        for(int i = 4; i < sounds.Length; i++) {
+        for(int i = 2; i < sounds.Length; i++) {
             sounds[i].volume = fxValue;
+            sounds[i].ChangeVolume(0f);
         }
     }
 }

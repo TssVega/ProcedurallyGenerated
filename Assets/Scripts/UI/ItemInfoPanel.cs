@@ -87,9 +87,6 @@ public class ItemInfoPanel : MonoBehaviour {
         UpdateStats();
         Refresh();
     }
-    public void SetShopItem(Item item) {
-    
-    }
     private void SetStats() {
         if(item != null) {
             itemName.text = item.itemName;
@@ -309,34 +306,36 @@ public class ItemInfoPanel : MonoBehaviour {
         return LocalizationManager.localization.GetText(str);
     }
     private void UpdateStats() {
-        if(isInventorySlot && inventory.inventory[currentIndex] == null) {
+        if(isInventorySlot && item == null) {
             gameObject.SetActive(false);
         }
         currentItemDescription.text = GT($"{item.seed}Desc");
-        if(inventory.inventory[currentIndex].strength > 0) {
-            currentItemDescription.text += $"+{inventory.inventory[currentIndex].strength} {GT("strength")} ";
-        }
-        if(inventory.inventory[currentIndex].agility > 0) {
-            currentItemDescription.text += $"+{inventory.inventory[currentIndex].agility} {GT("agility")} ";
-        }
-        if(inventory.inventory[currentIndex].dexterity > 0) {
-            currentItemDescription.text += $"+{inventory.inventory[currentIndex].dexterity} {GT("dexterity")} ";
-        }
-        if(inventory.inventory[currentIndex].intelligence > 0) {
-            currentItemDescription.text += $"+{inventory.inventory[currentIndex].intelligence} {GT("intelligence")} ";
-        }
-        if(inventory.inventory[currentIndex].faith > 0) {
-            currentItemDescription.text += $"+{inventory.inventory[currentIndex].faith} {GT("faith")} ";
-        }
-        if(inventory.inventory[currentIndex].wisdom > 0) {
-            currentItemDescription.text += $"+{inventory.inventory[currentIndex].wisdom} {GT("wisdom")} ";
-        }
-        if(inventory.inventory[currentIndex].vitality > 0) {
-            currentItemDescription.text += $"+{inventory.inventory[currentIndex].vitality} {GT("vitality")} ";
-        }
-        if(inventory.inventory[currentIndex].charisma > 0) {
-            currentItemDescription.text += $"+{inventory.inventory[currentIndex].charisma} {GT("charisma")} ";
-        }
+        if(item != null) {
+            if(item.strength > 0) {
+                currentItemDescription.text += $"+{item.strength} {GT("strength")}\n";
+            }
+            if(item.agility > 0) {
+                currentItemDescription.text += $"+{item.agility} {GT("agility")}\n";
+            }
+            if(item.dexterity > 0) {
+                currentItemDescription.text += $"+{item.dexterity} {GT("dexterity")}\n";
+            }
+            if(item.intelligence > 0) {
+                currentItemDescription.text += $"+{item.intelligence} {GT("intelligence")}\n";
+            }
+            if(item.faith > 0) {
+                currentItemDescription.text += $"+{item.faith} {GT("faith")}\n";
+            }
+            if(item.wisdom > 0) {
+                currentItemDescription.text += $"+{item.wisdom} {GT("wisdom")}\n";
+            }
+            if(item.vitality > 0) {
+                currentItemDescription.text += $"+{item.vitality} {GT("vitality")}\n";
+            }
+            if(item.charisma > 0) {
+                currentItemDescription.text += $"+{item.charisma} {GT("charisma")}\n";
+            }
+        }        
         Item equippedItem = null;
         if((int)item.slot < 6) {
             equippedItem = inventory.equipment[(int)item.slot];
@@ -363,7 +362,33 @@ public class ItemInfoPanel : MonoBehaviour {
             currentItemThirdImage.color = Color.clear;
         }
         if(equippedItem) {
-            equippedItemDescription.text = LocalizationManager.localization.GetText($"{equippedItem.seed}Desc");
+            equippedItemDescription.text = GT($"{equippedItem.seed}Desc");
+            if(equippedItem != null) {
+                if(equippedItem.strength > 0) {
+                    equippedItemDescription.text += $"+{equippedItem.strength} {GT("strength")}\n";
+                }
+                if(equippedItem.agility > 0) {
+                    equippedItemDescription.text += $"+{equippedItem.agility} {GT("agility")}\n";
+                }
+                if(equippedItem.dexterity > 0) {
+                    equippedItemDescription.text += $"+{equippedItem.dexterity} {GT("dexterity")}\n";
+                }
+                if(equippedItem.intelligence > 0) {
+                    equippedItemDescription.text += $"+{equippedItem.intelligence} {GT("intelligence")}\n";
+                }
+                if(equippedItem.faith > 0) {
+                    equippedItemDescription.text += $"+{equippedItem.faith} {GT("faith")}\n";
+                }
+                if(equippedItem.wisdom > 0) {
+                    equippedItemDescription.text += $"+{equippedItem.wisdom} {GT("wisdom")}\n";
+                }
+                if(equippedItem.vitality > 0) {
+                    equippedItemDescription.text += $"+{equippedItem.vitality} {GT("vitality")}\n";
+                }
+                if(equippedItem.charisma > 0) {
+                    equippedItemDescription.text += $"+{equippedItem.charisma} {GT("charisma")}\n";
+                }
+            }
             if(equippedItem && equippedItem.firstIcon) {
                 equippedItemFirstImage.sprite = equippedItem.firstIcon;
                 equippedItemFirstImage.color = equippedItem.firstColor;

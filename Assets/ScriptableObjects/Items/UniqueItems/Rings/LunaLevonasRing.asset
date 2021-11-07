@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49a62cf252a418f4f804fd6f3236d823, type: 3}
+  m_Name: LunaLevonasRing
+  m_EditorClassIdentifier: 
+  seed: lunaLevonasRing
+  luck: 0
+  itemName: 
+  firstSprite: {fileID: -3023326895916273931, guid: 12c1f64d8282a464a933a7175f8e632e,
+    type: 3}
+  secondSprite: {fileID: 0}
+  thirdSprite: {fileID: 0}
+  firstIcon: {fileID: -3023326895916273931, guid: 12c1f64d8282a464a933a7175f8e632e,
+    type: 3}
+  secondIcon: {fileID: 0}
+  thirdIcon: {fileID: 0}
+  firstColor: {r: 1, g: 1, b: 1, a: 1}
+  secondColor: {r: 0, g: 0, b: 0, a: 0}
+  thirdColor: {r: 0, g: 0, b: 0, a: 0}
+  overrideSpriteColorInGame: 0
+  overriddenColor: {r: 0, g: 0, b: 0, a: 0}
+  slot: 5
+  rarity: 3
+  goldCost: 200
+  silverCost: 0
+  stackable: 0
+  dismantleOutput: 4
+  particles: {fileID: 0}
+  material: 0
+  itemMaterial: 9
+  alterLight: 0
+  innerRadius: 6
+  outerRadius: 7
+  intensity: 1
+  strength: 0
+  agility: 0
+  dexterity: 0
+  intelligence: 0
+  faith: 0
+  wisdom: 0
+  vitality: 0
+  charisma: 50
+  bashDamage: 0
+  pierceDamage: 0
+  slashDamage: 0
+  fireDamage: 0
+  iceDamage: 0
+  lightningDamage: 0
+  airDamage: 0
+  earthDamage: 0
+  lightDamage: 0
+  darkDamage: 0
+  poisonDamage: 50
+  bleedDamage: 50
+  curseDamage: 50
+  bashDefence: 0
+  pierceDefence: 0
+  slashDefence: 0
+  fireDefence: 0
+  iceDefence: 0
+  lightningDefence: 0
+  airDefence: 0
+  earthDefence: 0
+  lightDefence: 0
+  darkDefence: 0
+  poisonDefence: 125
+  bleedDefence: 125
+  curseDefence: 125

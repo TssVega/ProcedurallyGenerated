@@ -485,10 +485,7 @@ public class StatusEffects : MonoBehaviour {
             }
             enemyAI.hostile = true;
             enemyAI.attacked = true;
-        }
-        if(statusUI) {
-            statusUI.UpdateHealth(stats.health / stats.trueMaxHealth, stats.health);
-        }
+        }        
         if(hitWarning) {
             hitWarning.Hit();
         }
@@ -505,11 +502,14 @@ public class StatusEffects : MonoBehaviour {
             else {
                 Die(backstabbedByNastac);
             }
-        }
+        }        
         // Havellian clarity
         if(player && player.raceIndex == 11) {
             const float havellianManaRate = 0.2f;
             GiveMana(damage * havellianManaRate);
+        }
+        if(statusUI) {
+            statusUI.UpdateHealth(stats.health / stats.trueMaxHealth, stats.health);
         }
         //statusParticles.StartHitParticles();
         /*if(enemy && enemy.gameObject.activeInHierarchy) {

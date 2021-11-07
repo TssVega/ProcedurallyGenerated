@@ -113,7 +113,7 @@ namespace Pathfinding {
 		int maxVecPool = 0;
 		int maxNodePool = 0;
 
-		PathTypeDebug[] debugTypes = {
+		PathTypeDebug[] debugTypes = new PathTypeDebug[] {
 			new PathTypeDebug("ABPath", () => PathPool.GetSize(typeof(ABPath)), () => PathPool.GetTotalCreated(typeof(ABPath)))
 		};
 
@@ -281,8 +281,8 @@ namespace Pathfinding {
 						text.Append("\nSearch Speed	(nodes/ms)	").Append(searchSpeed.ToString("0")).Append(" ("+AstarPath.TotalSearchedNodes+" / ").Append(((double)AstarPath.TotalSearchTime/10000F).ToString("0")+")");
 #endif
 
-						if (Pathfinding.Util.ListPool<Vector3>.GetSize() > maxVecPool) maxVecPool = Pathfinding.Util.ListPool<Vector3>.GetSize ();
-						if (Pathfinding.Util.ListPool<Pathfinding.GraphNode>.GetSize() > maxNodePool) maxNodePool = Pathfinding.Util.ListPool<Pathfinding.GraphNode>.GetSize ();
+						if (Pathfinding.Util.ListPool<Vector3>.GetSize() > maxVecPool) maxVecPool = Pathfinding.Util.ListPool<Vector3>.GetSize();
+						if (Pathfinding.Util.ListPool<Pathfinding.GraphNode>.GetSize() > maxNodePool) maxNodePool = Pathfinding.Util.ListPool<Pathfinding.GraphNode>.GetSize();
 
 						text.Append("\nPool Sizes (size/total created)");
 

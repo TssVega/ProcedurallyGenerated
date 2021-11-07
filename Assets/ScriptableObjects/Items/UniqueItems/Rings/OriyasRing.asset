@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49a62cf252a418f4f804fd6f3236d823, type: 3}
+  m_Name: OriyasRing
+  m_EditorClassIdentifier: 
+  seed: oriyasRing
+  luck: 0
+  itemName: 
+  firstSprite: {fileID: 5162327605517957800, guid: 12c1f64d8282a464a933a7175f8e632e,
+    type: 3}
+  secondSprite: {fileID: 0}
+  thirdSprite: {fileID: 0}
+  firstIcon: {fileID: 5162327605517957800, guid: 12c1f64d8282a464a933a7175f8e632e,
+    type: 3}
+  secondIcon: {fileID: 0}
+  thirdIcon: {fileID: 0}
+  firstColor: {r: 1, g: 1, b: 1, a: 1}
+  secondColor: {r: 0, g: 0, b: 0, a: 0}
+  thirdColor: {r: 0, g: 0, b: 0, a: 0}
+  overrideSpriteColorInGame: 0
+  overriddenColor: {r: 0, g: 0, b: 0, a: 0}
+  slot: 5
+  rarity: 3
+  goldCost: 180
+  silverCost: 0
+  stackable: 0
+  dismantleOutput: 4
+  particles: {fileID: 0}
+  material: 0
+  itemMaterial: 15
+  alterLight: 0
+  innerRadius: 6
+  outerRadius: 7
+  intensity: 1
+  strength: 10
+  agility: 10
+  dexterity: 10
+  intelligence: 10
+  faith: 10
+  wisdom: 10
+  vitality: 10
+  charisma: 10
+  bashDamage: 10
+  pierceDamage: 10
+  slashDamage: 10
+  fireDamage: 10
+  iceDamage: 10
+  lightningDamage: 10
+  airDamage: 10
+  earthDamage: 10
+  lightDamage: 10
+  darkDamage: 10
+  poisonDamage: 10
+  bleedDamage: 10
+  curseDamage: 10
+  bashDefence: 10
+  pierceDefence: 10
+  slashDefence: 10
+  fireDefence: 10
+  iceDefence: 10
+  lightningDefence: 10
+  airDefence: 10
+  earthDefence: 10
+  lightDefence: 10
+  darkDefence: 10
+  poisonDefence: 10
+  bleedDefence: 10
+  curseDefence: 10

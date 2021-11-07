@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   seed: blackScythe
   luck: 0
-  itemName: 
+  itemName: Black Scythe
   firstSprite: {fileID: 7493889818145497154, guid: 11db60c2e82d51f4b9605a5a16f749fe,
     type: 3}
   secondSprite: {fileID: 0}
@@ -26,6 +26,8 @@ MonoBehaviour:
   firstColor: {r: 1, g: 1, b: 1, a: 1}
   secondColor: {r: 0, g: 0, b: 0, a: 0}
   thirdColor: {r: 0, g: 0, b: 0, a: 0}
+  overrideSpriteColorInGame: 0
+  overriddenColor: {r: 0, g: 0, b: 0, a: 0}
   slot: 0
   rarity: 2
   goldCost: 20

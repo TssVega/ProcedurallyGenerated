@@ -68,31 +68,33 @@ public class ShopItemInfo : MonoBehaviour {
         return LocalizationManager.localization.GetText(str);
     }
     private void UpdateStats() {
-        currentItemDescription.text = LocalizationManager.localization.GetText($"{item.seed}Desc");
-        if(item.strength > 0) {
-            currentItemDescription.text += $"+{item.strength} {GT("strength")} ";
-        }
-        if(item.agility > 0) {
-            currentItemDescription.text += $"+{item.agility} {GT("agility")} ";
-        }
-        if(item.dexterity > 0) {
-            currentItemDescription.text += $"+{item.dexterity} {GT("dexterity")} ";
-        }
-        if(item.intelligence > 0) {
-            currentItemDescription.text += $"+{item.intelligence} {GT("intelligence")} ";
-        }
-        if(item.faith > 0) {
-            currentItemDescription.text += $"+{item.faith} {GT("faith")} ";
-        }
-        if(item.wisdom > 0) {
-            currentItemDescription.text += $"+{item.wisdom} {GT("wisdom")} ";
-        }
-        if(item.vitality > 0) {
-            currentItemDescription.text += $"+{item.vitality} {GT("vitality")} ";
-        }
-        if(item.charisma > 0) {
-            currentItemDescription.text += $"+{item.charisma} {GT("charisma")} ";
-        }
+        currentItemDescription.text = GT($"{item.seed}Desc");
+        if(item != null) {
+            if(item.strength > 0) {
+                currentItemDescription.text += $"+{item.strength} {GT("strength")}\n";
+            }
+            if(item.agility > 0) {
+                currentItemDescription.text += $"+{item.agility} {GT("agility")}\n";
+            }
+            if(item.dexterity > 0) {
+                currentItemDescription.text += $"+{item.dexterity} {GT("dexterity")}\n";
+            }
+            if(item.intelligence > 0) {
+                currentItemDescription.text += $"+{item.intelligence} {GT("intelligence")}\n";
+            }
+            if(item.faith > 0) {
+                currentItemDescription.text += $"+{item.faith} {GT("faith")}\n";
+            }
+            if(item.wisdom > 0) {
+                currentItemDescription.text += $"+{item.wisdom} {GT("wisdom")}\n";
+            }
+            if(item.vitality > 0) {
+                currentItemDescription.text += $"+{item.vitality} {GT("vitality")}\n";
+            }
+            if(item.charisma > 0) {
+                currentItemDescription.text += $"+{item.charisma} {GT("charisma")}\n";
+            }
+        }        
         Item equippedItem = null;
         if((int)item.slot < 6) {
             equippedItem = inventory.equipment[(int)item.slot];
@@ -119,7 +121,33 @@ public class ShopItemInfo : MonoBehaviour {
             currentItemThirdImage.color = Color.clear;
         }
         if(equippedItem) {
-            equippedItemDescription.text = LocalizationManager.localization.GetText($"{equippedItem.seed}Desc");
+            equippedItemDescription.text = GT($"{equippedItem.seed}Desc");
+            if(equippedItem != null) {
+                if(equippedItem.strength > 0) {
+                    equippedItemDescription.text += $"+{equippedItem.strength} {GT("strength")}\n";
+                }
+                if(equippedItem.agility > 0) {
+                    equippedItemDescription.text += $"+{equippedItem.agility} {GT("agility")}\n";
+                }
+                if(equippedItem.dexterity > 0) {
+                    equippedItemDescription.text += $"+{equippedItem.dexterity} {GT("dexterity")}\n";
+                }
+                if(equippedItem.intelligence > 0) {
+                    equippedItemDescription.text += $"+{equippedItem.intelligence} {GT("intelligence")}\n";
+                }
+                if(equippedItem.faith > 0) {
+                    equippedItemDescription.text += $"+{equippedItem.faith} {GT("faith")}\n";
+                }
+                if(equippedItem.wisdom > 0) {
+                    equippedItemDescription.text += $"+{equippedItem.wisdom} {GT("wisdom")}\n";
+                }
+                if(equippedItem.vitality > 0) {
+                    equippedItemDescription.text += $"+{equippedItem.vitality} {GT("vitality")}\n";
+                }
+                if(equippedItem.charisma > 0) {
+                    equippedItemDescription.text += $"+{equippedItem.charisma} {GT("charisma")}\n";
+                }
+            }
             if(equippedItem && equippedItem.firstIcon) {
                 equippedItemFirstImage.sprite = equippedItem.firstIcon;
                 equippedItemFirstImage.color = equippedItem.firstColor;

@@ -26,6 +26,8 @@ MonoBehaviour:
   firstColor: {r: 1, g: 1, b: 1, a: 1}
   secondColor: {r: 0, g: 0, b: 0, a: 0}
   thirdColor: {r: 0, g: 0, b: 0, a: 0}
+  overrideSpriteColorInGame: 0
+  overriddenColor: {r: 0, g: 0, b: 0, a: 0}
   slot: 0
   rarity: 3
   goldCost: 200
@@ -49,10 +51,10 @@ MonoBehaviour:
   charisma: 0
   weaponType: 0
   preset: 0
-  bashDamage: 10
+  bashDamage: 50
   pierceDamage: 60
-  slashDamage: 150
-  fireDamage: 100
+  slashDamage: 120
+  fireDamage: 120
   iceDamage: 0
   lightningDamage: 0
   airDamage: 0
