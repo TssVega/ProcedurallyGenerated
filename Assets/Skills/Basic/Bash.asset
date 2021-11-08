@@ -16,7 +16,7 @@ MonoBehaviour:
   skillName: bash
   skillIcon: {fileID: 0}
   interruptable: 0
-  parryable: 0
+  parryable: 1
   attackType: 2
   skillPointsNeeded: 0
   prerequisites: 

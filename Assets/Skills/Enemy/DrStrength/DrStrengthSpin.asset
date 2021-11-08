@@ -16,6 +16,7 @@ MonoBehaviour:
   skillName: Dr. Strength Spin
   skillIcon: {fileID: 0}
   interruptable: 0
+  parryable: 1
   attackType: 2
   skillPointsNeeded: 0
   prerequisites: 
@@ -31,10 +32,13 @@ MonoBehaviour:
   channelingAnimationName: DrStrengthSpinChanneling
   castingAnimationName: DrStrengthSpin
   idleAnimationName: DrStrengthIdle
+  channelingSound: 
+  castingSound: 
   damageRate: 0.2
   duration: 1
   hitbox: {fileID: 6890043100139161156, guid: 4eff8b76ff273334cb6417e331857d2c, type: 3}
   warn: 0
+  checkRange: 0
   hitboxWarning: {fileID: 0}
   hitboxWarningScale: 1
   stunDuration: 0

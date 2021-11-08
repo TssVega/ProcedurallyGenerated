@@ -17,10 +17,11 @@ MonoBehaviour:
   skillIcon: {fileID: -1834977244087336064, guid: 8bdf6964d84a55d46a85dcf8ea72d604,
     type: 3}
   interruptable: 0
+  parryable: 0
   attackType: 12
   skillPointsNeeded: 2
   prerequisites: 
-  manaCost: 0
+  manaCost: 10
   focusedSkill: 0
   channelingTime: 1.5
   castTime: 0
@@ -33,6 +34,8 @@ MonoBehaviour:
   channelingAnimationName: 
   castingAnimationName: 
   idleAnimationName: 
+  channelingSound: 
+  castingSound: 
   buffData:
     buffType: 0
     healRate: 2

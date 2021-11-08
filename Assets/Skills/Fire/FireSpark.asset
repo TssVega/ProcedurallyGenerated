@@ -17,10 +17,11 @@ MonoBehaviour:
   skillIcon: {fileID: -8991306704326573702, guid: 8bdf6964d84a55d46a85dcf8ea72d604,
     type: 3}
   interruptable: 0
+  parryable: 0
   attackType: 3
   skillPointsNeeded: 2
   prerequisites: 
-  manaCost: 0
+  manaCost: 1
   focusedSkill: 0
   channelingTime: 0
   castTime: 0
@@ -28,17 +29,19 @@ MonoBehaviour:
   aiRange: 0
   channelingParticleNames: []
   particleNames:
-  - FireSpark
+  - FireSparkProj
   channelingAnimationName: 
   castingAnimationName: 
   idleAnimationName: 
+  channelingSound: 
+  castingSound: 
   projectileData:
     team: 0
     arrowSkill: 0
     lightIntensity: 0.5
     lightRadius: 0.4
     lightColor: {r: 1, g: 0.9274701, b: 0.3254717, a: 1}
-    damageRate: 0.3
+    damageRate: 0.15
     rotationSpeed: 0
     projectileSpeed: 15
     radius: 0.2

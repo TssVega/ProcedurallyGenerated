@@ -89,8 +89,11 @@ public class Spawner : MonoBehaviour {
         sideLevels.Add(sideLevel);
     }
     public void RemoveSideLevel(LevelGeneration sideLevel) {
+        if(!sideLevels.Contains(sideLevel)) {
+            return;
+        }
         sideLevels.Remove(sideLevel);
-        for(int i = 0; i < entities.Count; i++) {            
+        for(int i = 0; i < entities.Count; ++i) {
             /*
             if(Vector3.Distance(playerTransform.position, entities[i].transform.position) > disableDistance) {
                 entities[i].SetActive(false);

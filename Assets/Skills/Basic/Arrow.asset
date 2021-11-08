@@ -21,7 +21,7 @@ MonoBehaviour:
   attackType: 1
   skillPointsNeeded: 0
   prerequisites: 
-  manaCost: 0
+  manaCost: 1
   focusedSkill: 0
   channelingTime: 0
   castTime: 0
@@ -29,7 +29,7 @@ MonoBehaviour:
   aiRange: 0
   channelingParticleNames: []
   particleNames:
-  - Arrow
+  - ArrowProj
   channelingAnimationName: 
   castingAnimationName: 
   idleAnimationName: 
@@ -41,7 +41,7 @@ MonoBehaviour:
     lightIntensity: 0.5
     lightRadius: 0.2
     lightColor: {r: 1, g: 1, b: 1, a: 1}
-    damageRate: 0.4
+    damageRate: 0.25
     rotationSpeed: 0
     projectileSpeed: 25
     radius: 0.1

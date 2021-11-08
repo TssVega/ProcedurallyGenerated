@@ -12,6 +12,7 @@ public class SkillInfoPanel : MonoBehaviour {
     public TextMeshProUGUI damageType;
     public TextMeshProUGUI description;
     public TextMeshProUGUI skillPointsNeededText;
+    public TextMeshProUGUI manaCostText;
 
     public Image[] skillSlots;
     public Image[] secondaryImages;
@@ -173,7 +174,8 @@ public class SkillInfoPanel : MonoBehaviour {
         }
         else {
             skillPointsNeededText.text = $"{localizationManager.GetText("skillPointsNeeded")}: {currentSkill.skillPointsNeeded}";
-        }        
+        }
+        manaCostText.text = currentSkill is ActiveSkill a ? $"{GT("manaCost")}: {a.manaCost}" : "";
         acquireText.text = localizationManager.GetText("learn");
         if(playerSkills.acquiredSkills.Contains(currentSkill) && currentSkill is ActiveSkill) {
             guideText.text = localizationManager.GetText("skillInfoNotif");
@@ -184,5 +186,8 @@ public class SkillInfoPanel : MonoBehaviour {
         else {
             guideText.text = "";
         }
+    }
+    private string GT(string s) {
+        return LocalizationManager.localization.GetText(s);
     }
 }

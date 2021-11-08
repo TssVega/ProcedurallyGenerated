@@ -334,10 +334,12 @@ public class StatusEffects : MonoBehaviour {
         if(passives) {
             damage = passives.OnHitTaken(damage, attackType, stats);
         }
-        if(parrying && attacker && skill && skill.parryable) {
+        if(parrying && attacker && skill) {
             damage = 0f;
-            float defaultStunDuration = stats.vitality * 0.05f + defaultParryStunDuration;
-            attacker.StartStun(!player && globalPlayer.npcBonuses[24] ? 1.5f * defaultStunDuration : defaultStunDuration);
+            if(skill.parryable) {
+                float defaultStunDuration = stats.vitality * 0.05f + defaultParryStunDuration;
+                attacker.StartStun(!player && globalPlayer.npcBonuses[24] ? 1.5f * defaultStunDuration : defaultStunDuration);
+            }            
             AudioSystem.audioManager.PlaySound("parry", DistanceToPlayer);
         }
         else if(blocking && attacker && skill && skill.parryable) {
@@ -477,6 +479,12 @@ public class StatusEffects : MonoBehaviour {
         }
         // Take damage
         damage = Mathf.Clamp(damage, 0f, stats.maxDamageTimesHealth * stats.trueMaxHealth);
+        // Instantiate damage numbers
+        GameObject damageNum = ObjectPooler.objectPooler.GetPooledObject("DamageNumbers");
+        damageNum.transform.position = transform.position;
+        damageNum.transform.rotation = Quaternion.identity;
+        damageNum.GetComponent<DamageNumber>().SetNumber(damage, ColorBySkillType.GetColorByType(attackType));
+        // Take damage from health
         stats.health -= damage;
         GenerateBloodParticles();
         if(enemyAI && enemyAI.willDefendItself) {

@@ -16,6 +16,7 @@ MonoBehaviour:
   skillName: Nope Bite
   skillIcon: {fileID: 0}
   interruptable: 0
+  parryable: 1
   attackType: 0
   skillPointsNeeded: 0
   prerequisites: 
@@ -30,10 +31,13 @@ MonoBehaviour:
   channelingAnimationName: Bite
   castingAnimationName: 
   idleAnimationName: SpiderIdle
+  channelingSound: 
+  castingSound: 
   damageRate: 2
   duration: 0.1
   hitbox: {fileID: 6890043100139161156, guid: 0c64a208e95748c46be1f67b7a7d20b1, type: 3}
   warn: 0
+  checkRange: 0
   hitboxWarning: {fileID: 0}
   hitboxWarningScale: 1
   stunDuration: 0
