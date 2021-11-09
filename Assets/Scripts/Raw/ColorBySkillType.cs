@@ -25,7 +25,7 @@ public static class ColorBySkillType {
             color = new Color32(255, 255, 165, 255);
         }
         else if(attackType == AttackType.Dark) {
-            color = new Color32(97, 0, 116, 255);
+            color = new Color32(190, 0, 220, 255);
         }
         else if(attackType == AttackType.Bleed) {
             color = new Color32(229, 0, 0, 255);
@@ -37,7 +37,7 @@ public static class ColorBySkillType {
             color = new Color32(169, 108, 165, 255);
         }
         else if(attackType == AttackType.Bash) {
-            color = new Color32(55, 87, 60, 255);
+            color = new Color32(110, 174, 120, 255);
         }
         else if(attackType == AttackType.Pierce) {
             color = new Color32(200, 200, 200, 255);

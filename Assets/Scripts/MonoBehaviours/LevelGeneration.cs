@@ -479,71 +479,25 @@ public class LevelGeneration : MonoBehaviour {
     // Draw map with sprites
     private TileBase[] DrawMap() {
         TileBase[] tiles = new TileBase[layout.levelSize * layout.levelSize];
-        //int[] linearMap = new int[layout.levelSize * layout.levelSize];
         int index = 0;
-        //Vector3Int bottomLeft = new Vector3Int((-layout.levelSize / 2) + layout.worldCoordinates.x * layout.levelSize, (-layout.levelSize / 2) + layout.worldCoordinates.y * layout.levelSize, 0);
-        //Vector3Int topRight = new Vector3Int((layout.levelSize-layout.levelSize / 2) + layout.worldCoordinates.x * layout.levelSize, (layout.levelSize-layout.levelSize / 2) + layout.worldCoordinates.y * layout.levelSize, 0);
-        //BoundsInt bounds = new BoundsInt(bottomLeft, topRight);
+
         for(int x = 0; x < layout.levelSize; x++) {
             for(int y = 0; y < layout.levelSize; y++) {
-                /*
-                Vector3Int tileCoordinate = new Vector3Int(
-                    (x - layout.levelSize / 2) + layout.worldCoordinates.x * layout.levelSize,
-                    (y - layout.levelSize / 2) + layout.worldCoordinates.y * layout.levelSize, 0);*/
-                //linearMap[index] = map[x, y];
-                /*
-                if(linearMap[index] == 0) {
-                    tiles[index] = null;
-                }
-                else if(linearMap[index] == 1) {
-                    tiles[index] = tileDatabase.wallTiles[tileDatabase.wallTiles.Length - 1];
-                }
-                else {
-                    tiles[index] = null;
-                }
-                */
                 if(map[x, y] == 0) {
-                    tiles[index] = null;
-                    //worldGeneration.tilemap.SetTile(tileCoordinate, null);                    
+                    tiles[index] = null;                 
                 }
                 else if(map[x, y] == 1) {
                     tiles[index] = tileDatabase.wallTiles[tileDatabase.wallTiles.Length - 1];
-                    //worldGeneration.tilemap.SetTile(tileCoordinate, tileDatabase.wallTiles[tileDatabase.wallTiles.Length - 1]);                    
                 }
                 else {
-                    tiles[index] = null;
-                    //worldGeneration.tilemap.SetTile(tileCoordinate, null);                    
+                    tiles[index] = null;                
                 }                
                 index++;
             }
         }
         return tiles;
-        //worldGeneration.tilemap.SetTilesBlock(bounds, tiles);
     }
-    private void SetTiles(TileBase[] tiles) {
-        /*
-        var thread = new Thread(() => {
-            // example: expensive computation of camera position
-
-            Dispatcher.InvokeAsync(() => {
-                // I'm in the main thread
-                //Camera.main.transform.position = position;
-                int index = 0;
-                for(int x = 0; x < layout.levelSize; x++) {
-                    for(int y = 0; y < layout.levelSize; y++) {
-                        Vector3Int tileCoordinate = new Vector3Int(
-                            (x - layout.levelSize / 2) + layout.worldCoordinates.x * layout.levelSize,
-                            (y - layout.levelSize / 2) + layout.worldCoordinates.y * layout.levelSize, 0);
-
-                        worldGeneration.tilemap.SetTile(tileCoordinate, tiles[index]);
-                        index++;
-                    }
-                }
-            });
-        });
-        thread.Start();
-        thread.Join();
-        */        
+    private void SetTiles(TileBase[] tiles) {     
         int index = 0;
         for(int x = 0; x < layout.levelSize; x++) {
             for(int y = 0; y < layout.levelSize; y++) {
@@ -677,24 +631,6 @@ public class LevelGeneration : MonoBehaviour {
         }
         return wallCount;
     }
-    /*
-    private int GetSurroundingGrassCount(int gridX, int gridY, int grassLevel) {
-        int grassCount = 0;
-        for(int neighbourX = gridX - 1; neighbourX <= gridX + 1; neighbourX++) {
-            for(int neighbourY = gridY - 1; neighbourY <= gridY + 1; neighbourY++) {
-                if(IsInMapRange(neighbourX, neighbourY)) {
-                    if(neighbourX != gridX || neighbourY != gridY) {
-                        int surroundingGrass = 0;
-                        if(grassMap[neighbourX, neighbourY] == grassLevel) {
-                            surroundingGrass++;
-                        }
-                        grassCount += surroundingGrass;
-                    }
-                }
-            }
-        }
-        return grassCount;
-    }*/
     // Process map
     private void ProcessMap() {
         List<List<Coordinate>> wallRegions = GetRegions(1);

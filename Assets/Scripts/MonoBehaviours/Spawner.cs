@@ -118,6 +118,15 @@ public class Spawner : MonoBehaviour {
     public void AddEntity(GameObject entity) {
         entities.Add(entity);
         density++;
+        CheckEntities();
+    }
+    private void CheckEntities() {
+        for(int i = 0; i < entities.Count; i++) {
+            if(!entities[i].activeInHierarchy) {
+                RemoveEntity(entities[i]);
+                --i;
+            }
+        }
     }
     private void SpawnEntity() {
         LevelGeneration level = null;

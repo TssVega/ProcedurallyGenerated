@@ -951,26 +951,32 @@ public class ItemCreator : ScriptableObject {
             r.poisonDefence = RollDice(diceRolls[matIndex + 1][index++], dieCapacity);
             r.curseDefence = RollDice(diceRolls[matIndex + 1][index++], dieCapacity);
 
-            r.fireDamage *= 0.1f;
-            r.iceDamage *= 0.1f;
-            r.airDamage *= 0.1f;
-            r.earthDamage *= 0.1f;
-            r.lightningDamage *= 0.1f;
-            r.lightDamage *= 0.1f;
-            r.darkDamage *= 0.1f;
-            r.poisonDamage *= 0.1f;
-            r.bleedDamage *= 0.1f;
-            r.curseDefence *= 0.1f;
-            r.fireDefence *= 0.1f;
-            r.iceDefence *= 0.1f;
-            r.airDefence *= 0.1f;
-            r.earthDefence *= 0.1f;
-            r.lightningDefence *= 0.1f;
-            r.lightDefence *= 0.1f;
-            r.darkDefence *= 0.1f;
-            r.poisonDefence *= 0.1f;
-            r.bleedDefence *= 0.1f;
-            r.curseDefence *= 0.1f;
+            r.bashDamage *= 0.15f;
+            r.pierceDamage *= 0.15f;
+            r.slashDamage *= 0.15f;
+            r.fireDamage *= 0.15f;
+            r.iceDamage *= 0.15f;
+            r.airDamage *= 0.15f;
+            r.earthDamage *= 0.15f;
+            r.lightningDamage *= 0.15f;
+            r.lightDamage *= 0.15f;
+            r.darkDamage *= 0.15f;
+            r.poisonDamage *= 0.15f;
+            r.bleedDamage *= 0.15f;
+            r.curseDefence *= 0.15f;
+            r.bashDefence *= 0.15f;
+            r.pierceDefence *= 0.15f;
+            r.slashDefence *= 0.15f;
+            r.fireDefence *= 0.15f;
+            r.iceDefence *= 0.15f;
+            r.airDefence *= 0.15f;
+            r.earthDefence *= 0.15f;
+            r.lightningDefence *= 0.15f;
+            r.lightDefence *= 0.15f;
+            r.darkDefence *= 0.15f;
+            r.poisonDefence *= 0.15f;
+            r.bleedDefence *= 0.15f;
+            r.curseDefence *= 0.15f;
         }
     }
 }

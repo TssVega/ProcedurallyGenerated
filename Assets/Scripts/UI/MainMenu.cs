@@ -20,7 +20,12 @@ public class MainMenu : MonoBehaviour {
     public TextMeshProUGUI mediumText;
     public TextMeshProUGUI hightText;
 
-    public void OnEnable() {
+    public OptionsUI optionsUI;
+
+    private void Start() {
+        optionsUI.UpdateLockOptions();
+    }
+    private void OnEnable() {
         RefreshTexts();
     }
     public void RefreshTexts() {

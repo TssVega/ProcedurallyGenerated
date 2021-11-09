@@ -61,7 +61,7 @@ public class EnemyAI : MonoBehaviour {
         rotating = false;
         if(gameObject.activeInHierarchy && gameObject.activeSelf) {
             StartCoroutine(Roam());
-            StartCoroutine(RotateTowardsPlayer());
+            // StartCoroutine(RotateTowardsPlayer());
         }        
     }
     private void OnDisable() {
@@ -106,14 +106,13 @@ public class EnemyAI : MonoBehaviour {
 
         float progress = 0f;
         float speed = aiPath.rotationSpeed / 360f;
-
+        rotating = true;
         while(progress < 1f && destinationSetter.target && !stats.status.stunned && !stats.status.chanelling && !stats.status.immobilized) {
             Vector3 targetRotation = new Vector3(
             0, 0, Vector3.SignedAngle(
                 Vector3.up, destinationSetter.target.transform.position - transform.position, Vector3.forward));
             Quaternion lookOnLook = Quaternion.Euler(targetRotation);
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookOnLook, progress);
-            rotating = true;
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookOnLook, progress);            
             progress += Time.deltaTime * speed;
             if(progress <= 1f) {
                 yield return null;

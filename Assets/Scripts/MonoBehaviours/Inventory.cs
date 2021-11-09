@@ -167,6 +167,7 @@ public class Inventory : MonoBehaviour {
             }
         }
         UpdateCraftingResult();
+        skillUI.UpdateQuantities();
     }
     public void CheckCrafting() {
         for(int i = 0; i < craftingDatabase.allRecipes.Count; i++) {
@@ -547,6 +548,7 @@ public class Inventory : MonoBehaviour {
         }
         UpdateSlot(slotIndex);
         UpdateStats();
+        skillUI.UpdateQuantities();
     }
     public void DismantleInSlot(int slotIndex) {
         if(!inventory[slotIndex]) {

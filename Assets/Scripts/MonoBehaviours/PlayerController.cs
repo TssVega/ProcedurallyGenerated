@@ -73,7 +73,7 @@ public class PlayerController : MonoBehaviour {
         */
     }
     private IEnumerator AutoLock() {
-        while(true) {
+        for(; ; ) {
             yield return autoLockSearchIntervalWait;
             if(fov.visibleTargets.Count > 0) {
                 nearestEnemy = fov.GetClosestTarget();

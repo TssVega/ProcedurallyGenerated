@@ -154,9 +154,9 @@ MonoBehaviour:
   - dropRate: 0.0001
     dropRange: 1
     item: {fileID: 11400000, guid: 280cdaa66790ae645ae6732357db6cc1, type: 2}
-  - dropRate: 0.3
+  - dropRate: 0.2
     dropRange: 1
-    item: {fileID: 11400000, guid: 6a0279edbea37e84199f962dcf54be41, type: 2}
+    item: {fileID: 11400000, guid: 59dcd44ce56875d46ba50ad18858812e, type: 2}
   living: 1
   status: {fileID: 1553987817055992803}
   player: {fileID: 0}
@@ -251,6 +251,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -403,11 +404,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6eb1402c17e84a9282a7f0f62eb584f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  version: 2
+  version: 5
   radius: 0.12
   height: 0.01
-  repathRate: 0.5
-  canSearch: 1
   canMove: 1
   maxSpeed: 7
   gravity: {x: NaN, y: NaN, z: NaN}
@@ -415,8 +414,16 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   centerOffsetCompatibility: NaN
+  repathRateCompatibility: 0.5
+  canSearchCompability: 1
   orientation: 1
   enableRotation: 1
+  autoRepath:
+    mode: 2
+    interval: 0.5
+    sensitivity: 10
+    maximumInterval: 2
+    visualizeSensitivity: 0
   targetCompatibility: {fileID: 0}
   maxAcceleration: -2.5
   rotationSpeed: 720

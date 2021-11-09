@@ -29,8 +29,8 @@ MonoBehaviour:
   overrideSpriteColorInGame: 0
   overriddenColor: {r: 0, g: 0, b: 0, a: 0}
   slot: 0
-  rarity: 1
-  goldCost: 10
+  rarity: 2
+  goldCost: 20
   silverCost: 0
   stackable: 0
   dismantleOutput: 1
@@ -44,11 +44,11 @@ MonoBehaviour:
   strength: 0
   agility: 0
   dexterity: 0
-  intelligence: 2
-  faith: 2
+  intelligence: 0
+  faith: 0
   wisdom: 8
   vitality: 0
-  charisma: 0
+  charisma: 8
   weaponType: 1
   preset: 7
   bashDamage: 0
@@ -57,10 +57,10 @@ MonoBehaviour:
   fireDamage: 0
   iceDamage: 0
   lightningDamage: 0
-  airDamage: 70
+  airDamage: 90
   earthDamage: 0
   lightDamage: 0
   darkDamage: 0
   poisonDamage: 0
   bleedDamage: 0
-  curseDamage: 10
+  curseDamage: 30

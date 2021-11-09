@@ -70,7 +70,7 @@ public class Portal : MonoBehaviour, IInteractable {
         generator.usedPortal = true;
         AudioSystem.audioManager.PlaySound("powerup", 0f);
         player.AddNPCBonus(indices[index]);
-        player.ClearInteraction(this);
+        // player.ClearInteraction(this);
         worldGen.PortalData[worldGen.CurrentCoordinates[0], worldGen.CurrentCoordinates[1]] = true;
         uiCanvas.portalPanel.SetActive(!uiCanvas.portalPanel.activeSelf);
         uiCanvas.inventoryIcon.SetActive(!uiCanvas.portalPanel.activeSelf);

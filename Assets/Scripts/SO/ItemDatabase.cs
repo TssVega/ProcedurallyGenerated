@@ -17,6 +17,9 @@ public class ItemDatabase : ScriptableObject {
     [Header("Vendor Items")]
     public List<Item> vendorItems;
 
+    public Item GetVial() {
+        return items[84];
+    }
     public Item GetItemByMaterial(ItemMaterial mat) {
         if((int)mat < 15) {
             return items[(int)mat];

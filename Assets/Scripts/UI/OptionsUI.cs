@@ -134,7 +134,7 @@ public class OptionsUI : MonoBehaviour {
         PlayerPrefs.Save();
         AudioSystem.audioManager.PlaySound("menuButton", 0f);
     }
-    private void UpdateLockOptions() {
+    public void UpdateLockOptions() {
         int lockValue = PlayerPrefs.HasKey("lock") ? PlayerPrefs.GetInt("lock") : 1;
         PlayerPrefs.SetInt("lock", lockValue);
         PlayerPrefs.Save();

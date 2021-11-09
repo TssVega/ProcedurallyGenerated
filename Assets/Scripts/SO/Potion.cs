@@ -23,7 +23,7 @@ public class Potion : Item, IUsable {
         }
         // Add a vial to inventory after you consume a potion
         AudioSystem.audioManager.PlaySound("potionDrink", 0f);
-        status.player.inventory.AddToInventory(itemDatabase.GetItemByMaterial(ItemMaterial.Glass), false);
+        status.player.inventory.AddToInventory(itemDatabase.GetVial(), false);
         // Levona effect
         if(status.player && status.player.raceIndex == 0) {
             status.GiveEnergy(power * levonaEnergyRate);

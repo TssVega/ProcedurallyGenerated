@@ -18,8 +18,6 @@ public class WorldGeneration : MonoBehaviour {
     private List<Vector2Int> currentRenderedLevels;
     public List<LevelGeneration> levels;
     private LoadingPanel loadingPanel;
-    public GameObject level;
-    private Player player;
     [Header("Tilemaps")]
     [HideInInspector] public Tilemap groundTilemap;
     [HideInInspector] public Tilemap tilemap;
@@ -31,7 +29,6 @@ public class WorldGeneration : MonoBehaviour {
     public MapPanel mapPanel;
 
     private void Awake() {
-        player = FindObjectOfType<Player>();
         levels = new List<LevelGeneration>();
         currentRenderedLevels = new List<Vector2Int>();
         aStarPath = FindObjectOfType<AstarPath>();
@@ -186,7 +183,7 @@ public class WorldGeneration : MonoBehaviour {
                     world.worldData[x, y] = $"{WorldSeed}{Insignify(x)}{Insignify(y)}";
                 }
                 // Create a level with object pooling
-                GameObject levelClone = ObjectPooler.objectPooler.GetPooledObject(level.name);
+                GameObject levelClone = ObjectPooler.objectPooler.GetPooledObject("Level");
                 levelClone.transform.position = new Vector3(x * levelSize, y * levelSize, 0);
                 levelClone.transform.rotation = Quaternion.identity;
                 LevelGeneration levelGen = levelClone.GetComponent<LevelGeneration>();
