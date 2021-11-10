@@ -131,7 +131,7 @@ public class StatusEffects : MonoBehaviour {
 
     private float DistanceToPlayer {
         get {
-            return player ? 0f : Vector3.Distance(globalPlayer.transform.position, transform.position);
+            return player ? 0f : globalPlayer ? Vector3.Distance(globalPlayer.transform.position, transform.position) : 100f;
         }
     }
     private void OnEnable() {
@@ -338,7 +338,7 @@ public class StatusEffects : MonoBehaviour {
             damage = 0f;
             if(skill.parryable) {
                 float defaultStunDuration = stats.vitality * 0.05f + defaultParryStunDuration;
-                attacker.StartStun(!player && globalPlayer.npcBonuses[24] ? 1.5f * defaultStunDuration : defaultStunDuration);
+                attacker.StartStun(!player && globalPlayer && globalPlayer.npcBonuses[24] ? 1.5f * defaultStunDuration : defaultStunDuration);
             }            
             AudioSystem.audioManager.PlaySound("parry", DistanceToPlayer);
         }
@@ -434,34 +434,34 @@ public class StatusEffects : MonoBehaviour {
             default:
                 break;
         }
-        if(attacker.player && globalPlayer.npcBonuses[25]) {
+        if(attacker.player && globalPlayer && globalPlayer.npcBonuses[25]) {
             attacker.GiveMana(0.5f);
         }
-        if(attacker.player && globalPlayer.npcBonuses[31] && skill is AreaSkill) {
+        if(attacker.player && globalPlayer && globalPlayer.npcBonuses[31] && skill is AreaSkill) {
             damage *= 1.15f;
         }
-        if(attacker.player && globalPlayer.npcBonuses[32] && skill is ProjectileSkill) {
+        if(attacker.player && globalPlayer && globalPlayer.npcBonuses[32] && skill is ProjectileSkill) {
             damage *= 1.2f;
         }
-        if(attacker.player && globalPlayer.npcBonuses[37] && skill is ProjectileSkill) {
+        if(attacker.player && globalPlayer && globalPlayer.npcBonuses[37] && skill is ProjectileSkill) {
             damage *= 0.5f;
         }
-        if(attacker.player && globalPlayer.npcBonuses[37] && skill is AreaSkill) {
+        if(attacker.player && globalPlayer && globalPlayer.npcBonuses[37] && skill is AreaSkill) {
             damage *= 1.33f;
         }
-        if(attacker.player && globalPlayer.npcBonuses[38] && skill is ProjectileSkill) {
+        if(attacker.player && globalPlayer && globalPlayer.npcBonuses[38] && skill is ProjectileSkill) {
             damage *= 1.4f;
         }
-        if(attacker.player && globalPlayer.npcBonuses[38] && skill is AreaSkill) {
+        if(attacker.player && globalPlayer && globalPlayer.npcBonuses[38] && skill is AreaSkill) {
             damage *= 0.33f;
         }
-        if(attacker.player && globalPlayer.npcBonuses[39]) {
+        if(attacker.player && globalPlayer && globalPlayer.npcBonuses[39]) {
             float extraDamage = 1f;
             // Increases extra damage by up to 0.1f depending on how far the player is
             extraDamage += Mathf.Clamp(Vector3.Distance(attacker.transform.position, transform.position) / (maximumDamageDistance * 5f), 0f, 0.2f);
             damage *= extraDamage;
         }
-        if(attacker.player && globalPlayer.npcBonuses[40]) {
+        if(attacker.player && globalPlayer && globalPlayer.npcBonuses[40]) {
             float extraDamage = 1f;
             // Increases extra damage by up to 0.1f depending on how far the player is
             if(Vector3.Distance(attacker.transform.position, transform.position) < 3f) {
@@ -547,7 +547,7 @@ public class StatusEffects : MonoBehaviour {
             deathPanel.gameObject.SetActive(true);
             deathPanel.DeathPanelInit();
         }
-        if(!player && globalPlayer.npcBonuses[27]) {
+        if(!player && globalPlayer && globalPlayer.npcBonuses[27]) {
             globalPlayer.stats.status.GiveMana(10f);
         }
         if(enemyAI) {
@@ -727,7 +727,7 @@ public class StatusEffects : MonoBehaviour {
         while(!done) {
             yield return new WaitForSeconds(period);
             Heal(healAmountPerTick);
-            if(!player && globalPlayer.npcBonuses[23] && mushroom) {
+            if(!player && globalPlayer && globalPlayer.npcBonuses[23] && mushroom) {
                 GiveMana(healAmountPerTick);
             }
             duration -= period;

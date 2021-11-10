@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93330a1eca1b3204e8a2a27076590790, type: 3}
+  m_Name: SpecterAberranMultipleHits
+  m_EditorClassIdentifier: 
+  skillIndex: 15
+  skillName: 
+  skillIcon: {fileID: 0}
+  interruptable: 0
+  parryable: 1
+  attackType: 0
+  skillPointsNeeded: 0
+  prerequisites: 
+  manaCost: 0
+  focusedSkill: 0
+  channelingTime: 1.5
+  castTime: 3
+  cooldown: 20
+  aiRange: 2
+  channelingParticleNames: []
+  particleNames: []
+  channelingAnimationName: SpecterAberranChanneling
+  castingAnimationName: SpecterAberranDoubleHit
+  idleAnimationName: SpecterAberranIdle
+  channelingSound: 
+  castingSound: swing3
+  damageRate: 0.3
+  duration: 3
+  hitbox: {fileID: 6890043100139161156, guid: d10017244684d1f41b958b3cf3d3ef3e, type: 3}
+  warn: 0
+  checkRange: 0
+  hitboxWarning: {fileID: 0}
+  hitboxWarningScale: 1
+  stunDuration: 0
+  immobilizeDuration: 0
+  push: 0.5
+  poisonStacks: 0
+  poisonDuration: 0
+  bloodStacks: 20
+  bleedDuration: 15
+  curseStacks: 0
+  curseDuration: 0
+  fireStacks: 0
+  fireDuration: 0
+  iceStacks: 0
+  iceDuration: 0
+  iceDamageMultiplier: 1
+  lightningStacks: 0
+  shockDuration: 0
+  earthStacks: 0
+  earthenDuration: 0
+  earthenHeal: 0
+  lightStacks: 0
+  litDuration: 0

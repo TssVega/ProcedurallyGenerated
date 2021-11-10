@@ -88,7 +88,7 @@ public class SkillUser : MonoBehaviour {
         if(skill.skillIndex >= 0 && skillCooldowns[skill.skillIndex] > 0f) {
             return;
         }
-        if(statusEffects.chanelling || statusEffects.stunned || statusEffects.immobilized) {
+        if(statusEffects.chanelling || statusEffects.stunned/* || statusEffects.immobilized*/) {
             return;
         }
         if(!statusEffects.CanUseMana(skill.manaCost)) {
@@ -132,7 +132,7 @@ public class SkillUser : MonoBehaviour {
     }
     private IEnumerator ThrowProjectile(ProjectileSkill proj) {
         // Set status effects
-        statusEffects.StartChanelling(proj.channelingTime);
+        statusEffects.StartChanelling(proj.channelingTime + proj.castTime);
         // Set bow string appearance on Loose skill usage
         if(proj.projectileData.arrowSkill) {
             player.releasedBowString.SetActive(true);
@@ -209,7 +209,7 @@ public class SkillUser : MonoBehaviour {
             p.SetProjectile(proj, stats);
             p.StartProjectile(vect, target);
             //projectiles[i].GetComponent<Projectile>().StartProjectile(vect);
-            projectiles[i].SetActive(true);
+            
             PlayAnimation(proj.castingAnimationName);
             // Set projectile particles
             List<GameObject> particles = new List<GameObject>();
@@ -232,6 +232,7 @@ public class SkillUser : MonoBehaviour {
                     ps.Play();
                 }
             }
+            projectiles[i].SetActive(true);
             // Wait for next projectile
             yield return new WaitForSeconds(proj.projectileData.timeDifference);
         }
@@ -240,7 +241,7 @@ public class SkillUser : MonoBehaviour {
     }
     private IEnumerator Buff(BuffSkill buff) {
         // Set status effects
-        statusEffects.StartChanelling(buff.channelingTime);
+        statusEffects.StartChanelling(buff.channelingTime + buff.castTime);
         if(buff.focusedSkill) {
             statusEffects.StartImmobilize(buff.channelingTime + buff.castTime);
         }
@@ -300,14 +301,22 @@ public class SkillUser : MonoBehaviour {
         StopAnimation(buff);
     }
     private IEnumerator StartSkillSequence(SkillSequence seq) {
+        PlayAnimation(seq.channelingAnimationName);
+        yield return new WaitForSeconds(seq.channelingTime);
         skillCooldowns[seq.skillIndex] = seq.cooldown;
+        float immobilizeDuration = 0f;
         for(int i = 0; i < seq.sequence.Count; i++) {
+            immobilizeDuration += seq.sequence[i].activeSkill.channelingTime + seq.sequence[i].activeSkill.castTime;
+        }
+        statusEffects.StartImmobilize(immobilizeDuration);
+        for(int i = 0; i < seq.sequence.Count; i++) {
+            
             UseSkill(seq.sequence[i].activeSkill);
             yield return new WaitForSeconds(seq.sequence[i].activeSkill.channelingTime + seq.sequence[i].activeSkill.castTime);
         }
     }
     private IEnumerator StartDash(DashSkill dash) {        
-        statusEffects.StartChanelling(dash.channelingTime);
+        statusEffects.StartChanelling(dash.channelingTime + dash.castTime);
         if(dash.focusedSkill) {
             statusEffects.StartImmobilize(dash.channelingTime/* + dash.castTime*/);
         }
@@ -360,7 +369,7 @@ public class SkillUser : MonoBehaviour {
         StopAnimation(dash);
     }
     private IEnumerator StartAreaSkill(AreaSkill area) {
-        statusEffects.StartChanelling(area.channelingTime);
+        statusEffects.StartChanelling(area.channelingTime + area.castTime);
         if(area.warn) {
             ShowWarning(area);
         }        
@@ -418,7 +427,7 @@ public class SkillUser : MonoBehaviour {
         StopAnimation(area);
     }
     private IEnumerator StartBlockSkill(BlockSkill block) {
-        statusEffects.StartChanelling(block.channelingTime);
+        statusEffects.StartChanelling(block.channelingTime + block.castTime);
         if(block.focusedSkill) {
             statusEffects.StartImmobilize(block.channelingTime + block.castTime);
         }
@@ -470,12 +479,14 @@ public class SkillUser : MonoBehaviour {
     }
     private void PlayAnimation(string animationName) {
         if(!string.IsNullOrEmpty(animationName)) {
-            animator.SetTrigger(animationName);
+            //animator.SetTrigger(animationName);
+            animator.Play(animationName);
         }        
     }
     private void StopAnimation(ActiveSkill activeSkill) {
         if(!string.IsNullOrEmpty(activeSkill.idleAnimationName)) {
-            animator.SetTrigger(activeSkill.idleAnimationName);
+            //animator.SetTrigger(activeSkill.idleAnimationName);
+            animator.Play(activeSkill.idleAnimationName);
         }        
     }
     private void CountCooldowns() {

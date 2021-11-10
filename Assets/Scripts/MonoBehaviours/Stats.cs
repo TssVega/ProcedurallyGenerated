@@ -99,7 +99,7 @@ public class Stats : MonoBehaviour {
         living = true;
         if(enemy) {
             // Decrease true max health of enemies by %10 if the player has the 21st bonus
-            trueMaxHealth = globalPlayer.npcBonuses.Length > 0 && globalPlayer.npcBonuses[21] ? (maxHealth + strength * 2 + vitality * 5) * 0.9f: maxHealth + strength * 2 + vitality * 5;
+            trueMaxHealth = globalPlayer && globalPlayer.npcBonuses.Length > 0 && globalPlayer.npcBonuses[21] ? (maxHealth + strength * 2 + vitality * 5) * 0.9f: maxHealth + strength * 2 + vitality * 5;
             trueMaxMana = maxMana + dexterity * 2 + wisdom * 5 + intelligence * 2 + faith * 2;
             trueMaxEnergy = maxEnergy + vitality * 5 + strength * 2 + dexterity * 2 + agility * 2;
             health = trueMaxHealth;

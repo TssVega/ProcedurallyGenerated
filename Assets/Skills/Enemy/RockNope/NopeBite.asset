@@ -28,7 +28,7 @@ MonoBehaviour:
   aiRange: 1
   channelingParticleNames: []
   particleNames: []
-  channelingAnimationName: Bite
+  channelingAnimationName: NopeAttack
   castingAnimationName: 
   idleAnimationName: SpiderIdle
   channelingSound: 

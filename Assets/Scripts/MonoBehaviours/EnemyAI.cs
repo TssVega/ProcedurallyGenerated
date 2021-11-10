@@ -61,7 +61,7 @@ public class EnemyAI : MonoBehaviour {
         rotating = false;
         if(gameObject.activeInHierarchy && gameObject.activeSelf) {
             StartCoroutine(Roam());
-            // StartCoroutine(RotateTowardsPlayer());
+            StartCoroutine(RotateTowardsPlayer());
         }        
     }
     private void OnDisable() {
@@ -92,22 +92,24 @@ public class EnemyAI : MonoBehaviour {
             moving = false;
         }
         if(aiPath.canMove && moving) {
-            if(!string.IsNullOrEmpty(walkAnimationName)) {
-                enemyAnimator.SetTrigger(walkAnimationName);
+            if(!string.IsNullOrEmpty(walkAnimationName) && !rotating && !status.stunned && !status.immobilized && !status.chanelling) {
+                //enemyAnimator.SetTrigger(walkAnimationName);
+                //enemyAnimator.SetTrigger(walkAnimationName);
+                enemyAnimator.Play(walkAnimationName);
             }
-        }
-        else {
-            if(!string.IsNullOrEmpty(idleAnimationName)) {
-                enemyAnimator.SetTrigger(idleAnimationName);
-            }            
         }        
+        else {
+            if(!string.IsNullOrEmpty(idleAnimationName) && !rotating && !status.stunned && !status.immobilized && !status.chanelling) {
+                enemyAnimator.Play(idleAnimationName);
+            }            
+        }      
     }
     private IEnumerator RotateTowardsPlayer() {
 
         float progress = 0f;
         float speed = aiPath.rotationSpeed / 360f;
         rotating = true;
-        while(progress < 1f && destinationSetter.target && !stats.status.stunned && !stats.status.chanelling && !stats.status.immobilized) {
+        while(progress < 1f && destinationSetter.target && !stats.status.stunned && !stats.status.immobilized) {
             Vector3 targetRotation = new Vector3(
             0, 0, Vector3.SignedAngle(
                 Vector3.up, destinationSetter.target.transform.position - transform.position, Vector3.forward));
@@ -167,7 +169,7 @@ public class EnemyAI : MonoBehaviour {
             
             for(int i = 0; i < skillUser.currentSkills.Length; i++) {
                 ActiveSkill a = skillUser.currentSkills[i] as ActiveSkill;
-                if(a && a.aiRange > fov.GetDistanceToEnemy() && skillUser.skillCooldowns[i] <= 0f) {
+                if(a && a.aiRange >= fov.GetDistanceToEnemy() && skillUser.skillCooldowns[i] <= 0f) {
                     availableIndices.Add(i);
                 }
             }
@@ -178,7 +180,7 @@ public class EnemyAI : MonoBehaviour {
             if(destinationSetter.target != null) {
                 StartCoroutine(UseRandomSkill());
             }
-        }              
+        }
     }
     private Vector3 GetRoamingPosition() {
         if(level) {
