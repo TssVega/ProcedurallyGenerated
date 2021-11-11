@@ -594,7 +594,9 @@ public class StatusEffects : MonoBehaviour {
     }
     private void CommenceEnemyAI() {
         if(aiPath) {
-            aiPath.canMove = true;
+            if(!stunned && !immobilized) {
+                aiPath.canMove = true;
+            }            
         }
     }
     // Bless provides damage *= extraDamageRate extra damage
@@ -1469,10 +1471,16 @@ public class StatusEffects : MonoBehaviour {
         spedUpParticles.GetComponent<Particles>().duration = duration;
         spedUpParticles.SetActive(true);
         stats.runSpeed *= speedRate;
+        if(aiPath) {
+            aiPath.maxSpeed = stats.runSpeed;
+        }
         spedUp = true;
         yield return new WaitForSeconds(duration);
         spedUp = false;
         stats.runSpeed = originalSpeed;
+        if(aiPath) {
+            aiPath.maxSpeed = stats.runSpeed;
+        }
     }
     public void StartBlocking(float duration) {
         if(gameObject.activeInHierarchy) {
@@ -1513,5 +1521,16 @@ public class StatusEffects : MonoBehaviour {
         defaultShieldTransform.localPosition = Vector3.zero;
         defaultShieldTransform.localRotation = Quaternion.identity;
         parrying = false;
+    }
+    public void StartDash(DashSkill dashSkill) {
+        StartCoroutine(Dash(dashSkill));
+    }
+    private IEnumerator Dash(DashSkill dashSkill) {
+        float dashMultiplier = 0.1f;
+        Vector2 vect = transform.up.normalized;
+        // vect = new Vector2(Mathf.Cos(Mathf.Deg2Rad * dashSkill.dashData.angle) * vect.x - Mathf.Sin(Mathf.Deg2Rad * dashSkill.dashData.angle) * vect.y, Mathf.Sin(Mathf.Deg2Rad * dashSkill.dashData.angle) * vect.x + Mathf.Cos(Mathf.Deg2Rad * dashSkill.dashData.angle) * vect.y);
+        rb2d.velocity = vect.normalized * stats.agility * dashSkill.dashData.dashMultiplier * dashMultiplier;
+        yield return new WaitForSeconds(dashSkill.castTime);
+        rb2d.velocity = Vector2.zero;
     }
 }

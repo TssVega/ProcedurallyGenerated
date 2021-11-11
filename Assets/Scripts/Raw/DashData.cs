@@ -5,6 +5,6 @@ using UnityEngine;
 [System.Serializable]
 public class DashData {
 
-    public float dashMultiplier;
-    public float dashDuration;
+    public float dashMultiplier = 1f;
+    // Warning! Do not add sideways dashes. It conflicts with A* pathfinding
 }

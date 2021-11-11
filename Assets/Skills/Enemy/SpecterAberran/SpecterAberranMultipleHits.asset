@@ -21,7 +21,7 @@ MonoBehaviour:
   skillPointsNeeded: 0
   prerequisites: 
   manaCost: 0
-  focusedSkill: 0
+  focusedSkill: 1
   channelingTime: 1.5
   castTime: 3
   cooldown: 20
@@ -33,7 +33,7 @@ MonoBehaviour:
   idleAnimationName: SpecterAberranIdle
   channelingSound: 
   castingSound: swing3
-  damageRate: 0.3
+  damageRate: 0.5
   duration: 3
   hitbox: {fileID: 6890043100139161156, guid: d10017244684d1f41b958b3cf3d3ef3e, type: 3}
   warn: 0

@@ -10,12 +10,15 @@ public class Vendor : MonoBehaviour, IInteractable {
 
     public Sprite interactImage;
     public ItemCreator itemCreator;
+    public ItemDatabase itemDatabase;
 
     private Item[] items;
 
     private const int shopSize = 8;
 
     private System.Random shopRandom;
+
+    private List<int> indices;
 
     public Sprite UISprite {
         get;
@@ -34,9 +37,17 @@ public class Vendor : MonoBehaviour, IInteractable {
     private void OnEnable() {
         shopRandom = new System.Random(Random.Range(0, 999999999).GetHashCode());
         items = new Item[shopSize];
+        indices = new List<int>();
+        for(int i = 0; i < shopSize; i++) {
+            int index;
+            do {
+                index = shopRandom.Next(0, itemDatabase.blacksmithItems.Count);
+            }
+            while(indices.Contains(index));
+            indices.Add(index);
+        }
         for(int i = 0; i < items.Length; i++) {
-            items[i] = itemCreator.GetRandomItem(shopRandom.Next().ToString());
-            // items[i] = itemCreator.
+            items[i] = itemCreator.GetItemByIndex(indices[i]);
         }
     }
     public void Interact() {

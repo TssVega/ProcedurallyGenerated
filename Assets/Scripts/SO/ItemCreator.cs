@@ -115,9 +115,26 @@ public class ItemCreator : ScriptableObject {
 
     private System.Random pseudoRandom;
 
+    public Item GetItemByIndex(int index) {
+        Item item = itemDatabase.vendorItems[index];
+        string itemName = LocalizationManager.localization.GetText(item.seed);
+        if(itemName != null) {
+            item.itemName = itemName;
+        }
+        return item;
+    }
+    /*
     public Item GetRandomItem(string seed) {
         pseudoRandom = new System.Random(seed.GetHashCode());
         Item item = itemDatabase.vendorItems[pseudoRandom.Next(0, itemDatabase.vendorItems.Count)];
+        string itemName = LocalizationManager.localization.GetText(item.seed);
+        if(itemName != null) {
+            item.itemName = itemName;
+        }
+        return item;
+    }*/
+    public Item GetBlacksmithItemByIndex(int index) {
+        Item item = itemDatabase.blacksmithItems[index];
         string itemName = LocalizationManager.localization.GetText(item.seed);
         if(itemName != null) {
             item.itemName = itemName;

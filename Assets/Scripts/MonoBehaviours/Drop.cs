@@ -8,6 +8,8 @@ public class Drop : MonoBehaviour {
 
     private float takeItemTime = 0.5f;
 
+    private const float defaultTakeItemTime = 0.5f;
+    private const float defaultScale = 0.5f;
     private const float stayTime = 300f;
     private float timer;
 
@@ -15,9 +17,9 @@ public class Drop : MonoBehaviour {
 
     public void SetItem(Item item) {
         this.item = item;
-        transform.localScale = Vector3.one * 0.5f;
+        transform.localScale = Vector3.one * defaultScale;
         GetComponent<SpriteRenderer>().sprite = item.firstSprite;
-        takeItemTime = 0.5f;
+        takeItemTime = defaultTakeItemTime;
         taking = false;
         timer = stayTime;
     }
@@ -38,7 +40,7 @@ public class Drop : MonoBehaviour {
     }
     private IEnumerator TakeItem(Inventory inventory) {        
         while(takeItemTime > 0f) {
-            transform.localScale = new Vector3(takeItemTime, takeItemTime, 0.5f);
+            transform.localScale = new Vector3(takeItemTime, takeItemTime, 1f);
             takeItemTime -= Time.deltaTime;
             yield return null;
         }

@@ -15,11 +15,11 @@ public class LevelGeneration : MonoBehaviour {
     private int[,] map;
     private int[,] reservedForConnectionsMap;
     // Psuedo random number for generating chests and enemies
-    System.Random pseudoRandomForLevel;
-    System.Random pseudoRandomForGround;
-    System.Random pseudoRandomForTorches;
-    System.Random pseudoRandomForWalls;
-    System.Random pseudoRandomForPlants;
+    private System.Random pseudoRandomForLevel;
+    private System.Random pseudoRandomForGround;
+    private System.Random pseudoRandomForTorches;
+    private System.Random pseudoRandomForWalls;
+    private System.Random pseudoRandomForPlants;
     // A reference to world generation script
     private WorldGeneration worldGeneration;
     private ChestGeneration chestGeneration;
@@ -42,6 +42,8 @@ public class LevelGeneration : MonoBehaviour {
 
     private List<GameObject> activeCrystals;
     private List<GameObject> activeStalagmites;
+
+    private GameObject blacksmith;
 
     private void Awake() {
         worldGeneration = FindObjectOfType<WorldGeneration>();
@@ -126,6 +128,7 @@ public class LevelGeneration : MonoBehaviour {
         GenerateCrystals();
         GenerateStalagmites();
         poolGeneration.GeneratePools(0, layout.seed);
+        GenerateBlacksmith();
         //mushroomGeneration.GenerateMushrooms(0, layout.seed);        
     }
     private void GenerateStalagmites() {
@@ -228,6 +231,32 @@ public class LevelGeneration : MonoBehaviour {
     private Vector3Int GetRandomWallCoordinates() {
         return wallCoordinates[pseudoRandomForTorches.Next(0, wallCoordinates.Count)];
     }
+    private void GenerateBlacksmith() {
+        if(layout.worldCoordinates[0] == 0 && layout.worldCoordinates[1] == 0) {
+            GameObject smith = ObjectPooler.objectPooler.GetPooledObject("Blacksmith");
+            Vector3Int randomLocation = Vector3Int.zero;
+            bool valid = false;
+            while(!valid) {
+                // pseudoRandomForMushrooms.Next(3, levelGeneration.layout.levelSize - 4)
+                randomLocation = new Vector3Int(pseudoRandomForPlants.Next(3, layout.levelSize - 4), pseudoRandomForPlants.Next(3, layout.levelSize - 4), 0);
+                if(CheckLocation(randomLocation.x, randomLocation.y) && !occupiedCoordinates.Contains(randomLocation)) {
+                    valid = true;
+                }
+            }
+            occupiedCoordinates.Add(randomLocation);
+            smith.transform.position = GetPreciseLocation(randomLocation.x, randomLocation.y);
+            smith.transform.rotation = Quaternion.Euler(0f, 0f, pseudoRandomForPlants.Next(0, 359));
+            blacksmith = smith;
+            smith.GetComponent<Blacksmith>().SetBlacksmith();
+            smith.SetActive(true);
+        }
+    }
+    private void ClearBlacksmith() {
+        if(blacksmith) {
+            blacksmith.SetActive(false);
+            blacksmith = null;
+        }        
+    }
     public void UnloadLevel() {
         for(int x = 0; x < layout.levelSize; x++) {
             for(int y = 0; y < layout.levelSize; y++) {
@@ -246,6 +275,7 @@ public class LevelGeneration : MonoBehaviour {
         ClearStalagmites();
         poolGeneration.ClearPools();
         occupiedCoordinates.Clear();
+        ClearBlacksmith();
         gameObject.SetActive(false);
     }    
     private static int ConvertTileIdToTilesetIndex(int id) {

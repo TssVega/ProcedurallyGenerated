@@ -21,7 +21,7 @@ MonoBehaviour:
   skillPointsNeeded: 0
   prerequisites: 
   manaCost: 0
-  focusedSkill: 0
+  focusedSkill: 1
   channelingTime: 1
   castTime: 1
   cooldown: 10

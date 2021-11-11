@@ -34,13 +34,13 @@ public class SkillUser : MonoBehaviour {
                 skillCooldowns.Add(0f);
             }
         }
-        if(enemy) {
+        if(enemy && acquiredSkills.Count > 0) {
             for(int i = 0; i < acquiredSkills.Count; i++) {
                 if(acquiredSkills[i] is ActiveSkill a) {
                     currentSkills[i] = a;
                 }
             }
-            for(int i = 0; i < skillDatabase.enemySkills.Count; i++) {                
+            for(int i = 0; i < skillDatabase.enemySkills.Count; i++) {
                 skillCooldowns.Add(0f);
             }
         }
@@ -132,7 +132,7 @@ public class SkillUser : MonoBehaviour {
     }
     private IEnumerator ThrowProjectile(ProjectileSkill proj) {
         // Set status effects
-        statusEffects.StartChanelling(proj.channelingTime + proj.castTime);
+        statusEffects.StartChanelling(proj.channelingTime);
         // Set bow string appearance on Loose skill usage
         if(proj.projectileData.arrowSkill) {
             player.releasedBowString.SetActive(true);
@@ -241,7 +241,7 @@ public class SkillUser : MonoBehaviour {
     }
     private IEnumerator Buff(BuffSkill buff) {
         // Set status effects
-        statusEffects.StartChanelling(buff.channelingTime + buff.castTime);
+        statusEffects.StartChanelling(buff.channelingTime);
         if(buff.focusedSkill) {
             statusEffects.StartImmobilize(buff.channelingTime + buff.castTime);
         }
@@ -316,7 +316,7 @@ public class SkillUser : MonoBehaviour {
         }
     }
     private IEnumerator StartDash(DashSkill dash) {        
-        statusEffects.StartChanelling(dash.channelingTime + dash.castTime);
+        statusEffects.StartChanelling(dash.channelingTime);
         if(dash.focusedSkill) {
             statusEffects.StartImmobilize(dash.channelingTime/* + dash.castTime*/);
         }
@@ -359,7 +359,7 @@ public class SkillUser : MonoBehaviour {
         for(int i = 0; i < dash.particleNames.Length; i++) {
             particles.Add(ObjectPooler.objectPooler.GetPooledObject(dash.particleNames[i]));
             //particles[i] = ObjectPooler.objectPooler.GetPooledObject(proj.projectileData.particleNames[i]);
-            particles[i].GetComponent<Particles>().duration = dash.dashData.dashDuration;
+            particles[i].GetComponent<Particles>().duration = dash.castTime;
             particles[i].transform.parent = transform;
             particles[i].transform.position = transform.position;
             particles[i].transform.rotation = transform.rotation;
@@ -369,7 +369,7 @@ public class SkillUser : MonoBehaviour {
         StopAnimation(dash);
     }
     private IEnumerator StartAreaSkill(AreaSkill area) {
-        statusEffects.StartChanelling(area.channelingTime + area.castTime);
+        statusEffects.StartChanelling(area.channelingTime);
         if(area.warn) {
             ShowWarning(area);
         }        
@@ -427,7 +427,7 @@ public class SkillUser : MonoBehaviour {
         StopAnimation(area);
     }
     private IEnumerator StartBlockSkill(BlockSkill block) {
-        statusEffects.StartChanelling(block.channelingTime + block.castTime);
+        statusEffects.StartChanelling(block.channelingTime);
         if(block.focusedSkill) {
             statusEffects.StartImmobilize(block.channelingTime + block.castTime);
         }

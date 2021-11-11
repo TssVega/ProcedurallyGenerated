@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b1fe8012146a5b43a3295441628d4bb, type: 3}
   m_Name: Shortsword
   m_EditorClassIdentifier: 
-  seed: shordsword
+  seed: shortsword
   luck: 0
   itemName: 
   firstSprite: {fileID: 7910341638370986329, guid: 0e3550ced3b88ad498aece048598ccd2,

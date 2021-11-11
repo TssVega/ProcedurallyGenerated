@@ -16,6 +16,7 @@ public class ItemDatabase : ScriptableObject {
     public List<Item> coins;
     [Header("Vendor Items")]
     public List<Item> vendorItems;
+    public List<Item> blacksmithItems;
 
     public Item GetVial() {
         return items[84];

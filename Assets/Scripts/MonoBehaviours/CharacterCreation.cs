@@ -43,7 +43,13 @@ public class CharacterCreation : MonoBehaviour {
 
     private void Awake() {
         localizationManager = FindObjectOfType<LocalizationManager>();
-        player = FindObjectOfType<Player>();
+        player = FindObjectOfType<Player>();        
+        generatingWorldText.text = localizationManager.GetText("generatingWorld");
+    }
+    private void Start() {
+        currentRaceIndex = 0;
+        currentHairColorIndex = 0;
+        currentHairStyleIndex = 0;
         currentSkinColor = appearance.races[currentRaceIndex].skinColor;
         currentHairColor = appearance.hairColors[currentHairColorIndex];
         currentHairStyle = appearance.hairStyles[currentHairStyleIndex];
@@ -51,11 +57,7 @@ public class CharacterCreation : MonoBehaviour {
         hairImage.color = currentHairColor;
         hairImage.sprite = currentHairStyle;
         shoulderImage.color = currentSkinColor;
-        generatingWorldText.text = localizationManager.GetText("generatingWorld");
-    }
-    private void Start() {
         RefreshTexts();
-        Debug.Log(localizationManager.GetLanguage());
     }
     public async void CompleteCharacterCreation() {
         if(!newGameButtonPressed) {

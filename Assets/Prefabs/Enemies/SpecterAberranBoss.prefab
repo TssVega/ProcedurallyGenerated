@@ -28,7 +28,7 @@ GameObject:
   - component: {fileID: 7334311937824168072}
   - component: {fileID: 2670407203444412779}
   m_Layer: 9
-  m_Name: SpecterAberran
+  m_Name: SpecterAberranBoss
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -42,7 +42,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2052620962328762989}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 5, z: 0}
   m_LocalScale: {x: 1, y: -1, z: 1}
   m_Children:
   - {fileID: 2052620962606074962}
@@ -76,7 +76,7 @@ MonoBehaviour:
   trueMaxMana: 0
   trueMaxEnergy: 0
   strength: 10
-  agility: 15
+  agility: 5
   dexterity: 25
   intelligence: 10
   faith: 10
@@ -201,6 +201,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fec157bd9cd567645a24d7a082543180, type: 2}
   - {fileID: 11400000, guid: be3e7593fb3688f488094c39b424da6b, type: 2}
   - {fileID: 11400000, guid: 31f1147e3c56b4645a6601d5d3a2497e, type: 2}
+  - {fileID: 11400000, guid: 143193b5303031b45a259054ef8d7183, type: 2}
+  - {fileID: 11400000, guid: 1dffdbf2db821af42abb5e301cf6e017, type: 2}
+  - {fileID: 11400000, guid: 0324b1d450027624bb306873aa32b204, type: 2}
   skillCooldowns: []
   projectileExitPos: {fileID: 2052620962606074962}
   animator: {fileID: 2670407203444412779}
@@ -272,7 +275,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 0c37ae80be7fa924eb14728c294607a2, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
