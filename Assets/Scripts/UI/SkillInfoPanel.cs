@@ -13,6 +13,8 @@ public class SkillInfoPanel : MonoBehaviour {
     public TextMeshProUGUI description;
     public TextMeshProUGUI skillPointsNeededText;
     public TextMeshProUGUI manaCostText;
+    public TextMeshProUGUI damageRateText;
+    public TextMeshProUGUI cooldownText;
 
     public Image[] skillSlots;
     public Image[] secondaryImages;
@@ -176,6 +178,15 @@ public class SkillInfoPanel : MonoBehaviour {
             skillPointsNeededText.text = $"{localizationManager.GetText("skillPointsNeeded")}: {currentSkill.skillPointsNeeded}";
         }
         manaCostText.text = currentSkill is ActiveSkill a ? $"{GT("manaCost")}: {a.manaCost}" : "";
+        float damageRate = 0f;
+        if(currentSkill is ProjectileSkill proj) {
+            damageRate = proj.projectileData.damageRate;
+        }
+        else if(currentSkill is AreaSkill area) {
+            damageRate = area.damageRate;
+        }
+        damageRateText.text = damageRate > 0f ? $"{GT("damageRate")}: {damageRate}" : "";
+        cooldownText.text = currentSkill is ActiveSkill act ? $"{GT("cooldown")}: {act.cooldown}" : "";
         acquireText.text = localizationManager.GetText("learn");
         if(playerSkills.acquiredSkills.Contains(currentSkill) && currentSkill is ActiveSkill) {
             guideText.text = localizationManager.GetText("skillInfoNotif");

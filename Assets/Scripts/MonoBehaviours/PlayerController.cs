@@ -155,10 +155,7 @@ public class PlayerController : MonoBehaviour {
                 rb2D.angularVelocity = 0;
             }
             // If there is an input            
-            if(joystick && joystickInput.sqrMagnitude > 0.01f &&
-                (!statusEffects.chanelling
-                 && !statusEffects.stunned
-                 && !statusEffects.immobilized)) {
+            if(joystick && joystickInput.sqrMagnitude > 0.01f && !statusEffects.chanelling && !statusEffects.stunned && !statusEffects.immobilized) {
                 // Look at movement direction
                 if(!lockedOn) {
                     transform.eulerAngles = new Vector3(
@@ -171,19 +168,15 @@ public class PlayerController : MonoBehaviour {
             else if(statusEffects.stunned || statusEffects.immobilized) {
                 rb2D.velocity = Vector2.zero;
             }
-            if(horizontalInput != 0 || verticalInput != 0 &&
-                (!statusEffects.chanelling
-                 && !statusEffects.stunned
-                 && !statusEffects.immobilized)) {
+            if(horizontalInput != 0 || verticalInput != 0) {
                 Vector3 movingDirection = new Vector3(horizontalInput, verticalInput, 0f);
                 // Look at movement direction
-                if(!lockedOn) {
-                    transform.eulerAngles = new Vector3(
-                        0, 0, Vector3.SignedAngle(Vector3.up, movingDirection.normalized, Vector3.forward));
+                if(!lockedOn && !statusEffects.chanelling && !statusEffects.stunned && !statusEffects.immobilized) {
+                    transform.eulerAngles = new Vector3(0, 0, Vector3.SignedAngle(Vector3.up, movingDirection.normalized, Vector3.forward));
                     rb2D.angularVelocity = 0;
                 }
                 // Move
-                rb2D.AddForce(movingDirection.normalized * playerStats.runSpeed);
+                rb2D.AddForce(movingDirection.normalized * playerStats.runSpeed);                
             }
             else if(statusEffects.stunned || statusEffects.immobilized) {
                 rb2D.velocity = Vector2.zero;

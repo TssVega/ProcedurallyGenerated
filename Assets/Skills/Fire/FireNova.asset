@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06483e1273c0bf64e9475d86de85f9d9, type: 3}
+  m_Name: FireNova
+  m_EditorClassIdentifier: 
+  skillIndex: 18
+  skillName: FireNova
+  skillIcon: {fileID: -335713573499971078, guid: 918e87827b4cc08499d01172480cf584,
+    type: 3}
+  interruptable: 0
+  parryable: 0
+  attackType: 3
+  skillPointsNeeded: 3
+  prerequisites: 06000000
+  manaCost: 3
+  focusedSkill: 1
+  channelingTime: 0.5
+  castTime: 0.1
+  cooldown: 8
+  aiRange: 0
+  channelingParticleNames: []
+  particleNames:
+  - FireSparkProj
+  channelingAnimationName: 
+  castingAnimationName: 
+  idleAnimationName: 
+  channelingSound: 
+  castingSound: 
+  projectileData:
+    team: 0
+    arrowSkill: 0
+    lightIntensity: 0.5
+    lightRadius: 0.4
+    lightColor: {r: 1, g: 0.92941177, b: 0.3254902, a: 1}
+    damageRate: 0.1
+    rotationSpeed: 0
+    projectileSpeed: 10
+    radius: 0.2
+    lifetime: 2.5
+    stunDuration: 0
+    immobilizeDuration: 0
+    penetrates: 0
+    projectileCount: 36
+    angleDifference: 5
+    timeDifference: 0
+    homing: 0
+    push: 0
+    poisonStacks: 0
+    poisonDuration: 0
+    bloodStacks: 0
+    bleedDuration: 0
+    curseStacks: 0
+    curseDuration: 0
+    fireStacks: 10
+    fireDuration: 10
+    iceStacks: 0
+    iceDuration: 0
+    iceDamageMultiplier: 1
+    lightningStacks: 0
+    shockDuration: 0
+    earthStacks: 0
+    earthenDuration: 0
+    earthenHeal: 0
+    lightStacks: 0
+    litDuration: 0

@@ -13,6 +13,9 @@ public class VendorUI : MonoBehaviour {
     private const int shopSize = 8;
 
     public TextMeshProUGUI[] costTexts;
+    public TextMeshProUGUI goldAmount;
+    public TextMeshProUGUI silverAmount;
+    public TextMeshProUGUI vendorText;
 
     public ItemImages[] itemImages;
     public Image[] coinImages;
@@ -27,6 +30,16 @@ public class VendorUI : MonoBehaviour {
     private void Awake() {
         inventory = FindObjectOfType<Player>().GetComponent<Inventory>();
         items = new Item[shopSize];
+        vendorText.text = LocalizationManager.localization.GetText("vendor");
+    }
+    private void OnEnable() {
+        UpdateCoins();
+    }
+    private void UpdateCoins() {
+        (int goldAmount, int goldIndex) = inventory.GetGoldCountAndIndex();
+        this.goldAmount.text = goldAmount.ToString();
+        (int silverAmount, int silverIndex) = inventory.GetSilverCountAndIndex();
+        this.silverAmount.text = silverAmount.ToString();
     }
     public void SetItems(Item[] items) {
         for(int i = 0; i < items.Length; i++) {
@@ -45,6 +58,7 @@ public class VendorUI : MonoBehaviour {
     public void OpenItemInfo(int index) {
         itemInfo.gameObject.SetActive(true);
         itemInfo.SetItem(items[index], index);
+        inventory.UpdateStats();
     }
     public void BuyItem(int i) {
         if(!inventory.CanAddToInventory()) {
@@ -71,5 +85,6 @@ public class VendorUI : MonoBehaviour {
         else {
             AudioSystem.audioManager.PlaySound("inGameButton", 0f);
         }
+        UpdateCoins();
     }
 }

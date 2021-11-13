@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4181998898209685985}
-  - component: {fileID: 8713271842962705623}
+  - component: {fileID: 4918694580598425852}
   m_Layer: 0
   m_Name: BodyCollider
   m_TagString: Untagged
@@ -31,8 +31,8 @@ Transform:
   m_Father: {fileID: 7357263703601316307}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!60 &8713271842962705623
-PolygonCollider2D:
+--- !u!61 &4918694580598425852
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -54,17 +54,9 @@ PolygonCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0.4930373, y: 0.26942816}
-      - {x: -0.006416902, y: 0.19146621}
-      - {x: -0.4888811, y: 0.27003536}
-      - {x: -0.7906332, y: 0.6747823}
-      - {x: -0.87297606, y: 0.32757396}
-      - {x: -0.4658634, y: -0.16732359}
-      - {x: 0.43377912, y: -0.18015724}
-      - {x: 0.8471278, y: 0.30333394}
-      - {x: 0.7906333, y: 0.68119943}
+  serializedVersion: 2
+  m_Size: {x: 1.3, y: 0.35}
+  m_EdgeRadius: 0
 --- !u!1 &7357263703012634449
 GameObject:
   m_ObjectHideFlags: 0
@@ -118,7 +110,7 @@ GameObject:
   - component: {fileID: 7357263703601316317}
   - component: {fileID: 3198388987776513953}
   - component: {fileID: 5947027059093642796}
-  - component: {fileID: 729790461442242782}
+  - component: {fileID: 7960214669945096014}
   m_Layer: 9
   m_Name: DrStrengthBoss
   m_TagString: Enemy
@@ -502,6 +494,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27e1e09b92ae6d84688e1a342d86b2fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bossName: Doctor Strength
 --- !u!114 &7357263703601316317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -556,8 +549,8 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!60 &729790461442242782
-PolygonCollider2D:
+--- !u!61 &7960214669945096014
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -579,19 +572,6 @@ PolygonCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0.4784554, y: 0.24940157}
-      - {x: 0.22241849, y: 0.17147875}
-      - {x: -0.24270499, y: 0.18474054}
-      - {x: -0.49004364, y: 0.26488638}
-      - {x: -0.7010057, y: 0.65151834}
-      - {x: -0.8483834, y: 0.5671334}
-      - {x: -0.81555605, y: 0.20938492}
-      - {x: -0.47131336, y: -0.15565872}
-      - {x: -0.16817844, y: -0.3228507}
-      - {x: 0.18533158, y: -0.3264985}
-      - {x: 0.47860807, y: -0.1894722}
-      - {x: 0.8018839, y: 0.19478035}
-      - {x: 0.844359, y: 0.5804019}
-      - {x: 0.68568385, y: 0.6347108}
+  serializedVersion: 2
+  m_Size: {x: 1.3, y: 0.35}
+  m_EdgeRadius: 0

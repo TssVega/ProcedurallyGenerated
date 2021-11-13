@@ -120,6 +120,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 639a614daf911534fb52343a1207742c, type: 2}
   - {fileID: 11400000, guid: 8fc5886da7e5c3e409a3887595f1c9eb, type: 2}
   - {fileID: 11400000, guid: 6e1b99fd1c7c61c4485315f56d332cd7, type: 2}
+  - {fileID: 11400000, guid: 73a0dea8df56a2844bd74125ac0d36c4, type: 2}
   books:
   - {fileID: 11400000, guid: 3212137f97f6e484993c4b6b61414a08, type: 2}
   - {fileID: 11400000, guid: 7b98eae14e4f24a4f958af68cfc8ef65, type: 2}

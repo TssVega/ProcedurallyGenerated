@@ -31,6 +31,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cd12256f8d5045848b5b37f6332b535c, type: 2}
   - {fileID: 11400000, guid: 2cfe57d8887ece94ea622fdf53f0a938, type: 2}
   - {fileID: 11400000, guid: 97120cec34273ee4fa000ee1f974c84d, type: 2}
+  - {fileID: 11400000, guid: 94c446fb26c645d4ba9caad58a101765, type: 2}
+  - {fileID: 11400000, guid: 41e76d6fb76eec746b08263b35939c9b, type: 2}
+  - {fileID: 11400000, guid: 0b3a46970d01d124289d84a882925669, type: 2}
+  - {fileID: 11400000, guid: ede6a6399e338174aa045e5cb4477b4c, type: 2}
+  - {fileID: 11400000, guid: 1d1f7f8df8474ef47889c066a79cecbc, type: 2}
+  - {fileID: 11400000, guid: da135568df0e25e48a6889d7ef68580a, type: 2}
+  - {fileID: 11400000, guid: 40302c58d5ea97a43922500d8877ffee, type: 2}
+  - {fileID: 11400000, guid: ea938132ff53c4644940e3c7b5054c2f, type: 2}
+  - {fileID: 11400000, guid: 81ac777a36456394f8724ddad4a0bd51, type: 2}
   enemySkills:
   - {fileID: 11400000, guid: 6319b07559cc0a442aeb41d70126ed5d, type: 2}
   - {fileID: 11400000, guid: 1eda581d62f761e41b0a10b94499693d, type: 2}

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class DeathPanel : MonoBehaviour {
 
@@ -10,9 +11,16 @@ public class DeathPanel : MonoBehaviour {
     public Transform youDiedText;
     public Transform loadButton;
 
+    public TextMeshProUGUI youDied;
+    public TextMeshProUGUI loadText;
+
     private float opacity = 0f;
     private const float multiplier = 5f;
 
+    private void Start() {
+        youDied.text = LocalizationManager.localization.GetText("youDied");
+        loadText.text = LocalizationManager.localization.GetText("loadGame");
+    }
     public void DeathPanelInit() {
         StartCoroutine(Darken());
     }

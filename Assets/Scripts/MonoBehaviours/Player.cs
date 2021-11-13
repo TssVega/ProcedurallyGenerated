@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using Pathfinding;
+
 using static System.IO.File;
 
 public class Player : MonoBehaviour {
@@ -64,6 +66,7 @@ public class Player : MonoBehaviour {
 
     private StatusUI statusUI;
     private SkillUI skillUI;
+    public InventoryPanel inventoryPanel;
 
     public Transform rightHand;
     public Transform leftHand;
@@ -71,8 +74,20 @@ public class Player : MonoBehaviour {
     private GameObject rightHandParticles;
     private GameObject leftHandParticles;
 
+    public List<GameObject> bossList;
+
+    public bool bossAwake = false;
+    public int currentBossIndex = 0;
+
+    private NotificationText notificationText;
+    public ItemInfoPanel itemInfoPanel;
+
+    public Passives passives;
+
     private void Awake() {
+        passives = GetComponent<Passives>();
         consumableItems = new string[11];
+        notificationText = FindObjectOfType<NotificationText>();
         worldGeneration = FindObjectOfType<WorldGeneration>();
         stats = GetComponent<Stats>();
         skillUser = GetComponent<SkillUser>();
@@ -90,6 +105,14 @@ public class Player : MonoBehaviour {
         ClearWeapons();
         LoadPlayer();
         //SetWeapon(itemCreator.CreateWeaponSprite("tss"));
+    }
+    public GameObject CallBoss() {
+        bossAwake = true;
+        return ObjectPooler.objectPooler.GetPooledObject(bossList[currentBossIndex].name);
+    }
+    public void BossKilled() {
+        currentBossIndex++;
+        bossAwake = false;
     }
     /*
     private void Update() {
@@ -191,6 +214,29 @@ public class Player : MonoBehaviour {
             Debug.LogWarning($"Cannot save right now. Currently working threads: {PersistentData.ThreadCount}");
             return;
         }*/
+        if(bossAwake) {
+            AudioSystem.audioManager.PlaySound("menuButton", 0f);
+            notificationText.SetText(LocalizationManager.localization.GetText("cantSleep"));
+            itemInfoPanel.gameObject.SetActive(false);
+            inventoryPanel.gameObject.SetActive(false);
+            return;
+        }
+        bool canSave = true;
+        if(Spawner.spawner) {
+            for(int i = 0; i < Spawner.spawner.entities.Count; i++) {
+                if(Spawner.spawner.entities[i].GetComponent<AIDestinationSetter>().target == transform) {
+                    canSave = false;
+                    break;
+                }
+            }
+        }        
+        if(!canSave) {
+            AudioSystem.audioManager.PlaySound("menuButton", 0f);
+            notificationText.SetText(LocalizationManager.localization.GetText("cantSleep"));
+            itemInfoPanel.gameObject.SetActive(false);
+            inventoryPanel.gameObject.SetActive(false);
+            return;
+        }
         inventory.ClearCrafting();
         SaveSystem.Save(this, PersistentData.saveSlot);
         if(worldGeneration) {
@@ -210,7 +256,10 @@ public class Player : MonoBehaviour {
             poolGenerators[i].SavePools(0);
         }
         ReplaceAutosaveFilesWithSlotSpecificOnes();
-        Debug.Log($"Saved successfully");
+        AudioSystem.audioManager.PlaySound("saved", 0f);
+        notificationText?.SetText(LocalizationManager.localization?.GetText("savedGame"));
+        itemInfoPanel?.gameObject.SetActive(false);
+        inventoryPanel?.gameObject.SetActive(false);
         /*
         for(int i = 0; i < chestGen.Length; i++) {
             chestGen[i].SaveChests(PersistentData.saveSlot);
@@ -232,6 +281,7 @@ public class Player : MonoBehaviour {
         SaveData data = SaveSystem.Load(PersistentData.saveSlot);
         if(data != null) {
             saveSlot = data.saveSlot;
+            currentBossIndex = data.currentBossIndex;
             raceIndex = data.race;
             npcBonuses = data.npcBonuses;
             Vector3 pos = new Vector3(data.position[0], data.position[1], data.position[2]);

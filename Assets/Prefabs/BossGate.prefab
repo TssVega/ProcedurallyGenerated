@@ -2867,7 +2867,7 @@ ParticleSystem:
     scrollSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.1
+      scalar: 1
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -4850,3 +4850,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41ab8460d8b75d34d806195891edc52e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactSprite: {fileID: 21300000, guid: e8bb07e2360375a41857535988bebd12, type: 3}

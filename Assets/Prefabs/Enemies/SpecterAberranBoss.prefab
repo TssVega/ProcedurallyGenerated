@@ -415,6 +415,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27e1e09b92ae6d84688e1a342d86b2fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bossName: Specter Aberran
 --- !u!114 &2052620962328762977
 MonoBehaviour:
   m_ObjectHideFlags: 0

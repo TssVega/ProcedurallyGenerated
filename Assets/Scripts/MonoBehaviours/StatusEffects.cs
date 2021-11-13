@@ -46,6 +46,7 @@ public class StatusEffects : MonoBehaviour {
     private Coroutine fireStacksCounter;
     private Coroutine locatingTarget;
     private Coroutine blockingCoroutine;
+    private Coroutine shieldCoroutine;
     [Header("Status Effects")]
     public bool stunned = false;        // Prevents movement and attacking
     public bool frostbitten = false;    // Get more damage from ice or water when frostbitten
@@ -91,6 +92,7 @@ public class StatusEffects : MonoBehaviour {
     private bool curseStacksCounterRunning = false;
     private int curseStacks = 0;
     private bool blockingCoroutineRunning = false;
+    private bool shieldCoroutineRunning = false;
     //private bool locatingTargetRunning = false;
     // Constant values
     private const float lightningDamageForChilledMultiplier = 1.2f;
@@ -112,8 +114,10 @@ public class StatusEffects : MonoBehaviour {
 
     private WaitForSeconds energyTimeWait;
     private WaitForSeconds waitASec;
+    private WaitForSeconds waitFiveSec;
 
     public float blessRate = 1f;
+    private float shieldRate = 0f;
 
     public GameObject lowEnergyParticles;
     public GameObject blessParticles;
@@ -129,12 +133,15 @@ public class StatusEffects : MonoBehaviour {
     public GameObject spedUpParticles;
     public GameObject shockedParticles;
 
+    private List<float> healthLostInLastFiveSeconds;
+
     private float DistanceToPlayer {
         get {
             return player ? 0f : globalPlayer ? Vector3.Distance(globalPlayer.transform.position, transform.position) : 100f;
         }
     }
     private void OnEnable() {
+        healthLostInLastFiveSeconds = new List<float>();
         globalPlayer = FindObjectOfType<Player>();
         aiPath = GetComponent<AIPath>();
         enemyAI = GetComponent<EnemyAI>();
@@ -145,6 +152,7 @@ public class StatusEffects : MonoBehaviour {
         rb2d = GetComponent<Rigidbody2D>();
         skillUser = GetComponent<SkillUser>();
         waitASec = new WaitForSeconds(1f);
+        waitFiveSec = new WaitForSeconds(5f);
         //if(enemy) {
         //    stats.walkSpeed = enemy.enemy.speed;
         //}
@@ -168,6 +176,18 @@ public class StatusEffects : MonoBehaviour {
     private void OnDisable() {
         //statusParticles.StopAllParticles();
         StopAllCoroutines();
+    }
+    private IEnumerator RecentlyTakenDamage(float amount) {
+        healthLostInLastFiveSeconds.Add(amount);
+        yield return waitFiveSec;
+        healthLostInLastFiveSeconds.Remove(amount);
+    }
+    public float GetRecentlyTakenDamage() {
+        float total = 0f;
+        for(int i = 0; i < healthLostInLastFiveSeconds.Count; i++) {
+            total += healthLostInLastFiveSeconds[i];
+        }
+        return total;
     }
     // Reset status values
     private void DefaultStatusValues() {
@@ -195,6 +215,7 @@ public class StatusEffects : MonoBehaviour {
         curseStacks = 0;
         curseStacksCounterRunning = false;
         blockingCoroutineRunning = false;
+        shieldCoroutineRunning = false;
         //locatingTargetRunning = false;
         stunned = false;
         frostbitten = false;
@@ -216,6 +237,7 @@ public class StatusEffects : MonoBehaviour {
         parrying = false;
         blessed = false;
         blessRate = 1f;
+        shieldRate = 0f;
         if(stunParticles && stunParticles.activeInHierarchy) {
             stunParticles.SetActive(false);
         }
@@ -317,7 +339,7 @@ public class StatusEffects : MonoBehaviour {
             hitWarning.Hit();
         }
         if(stats.health <= 0f) {
-            Die(false);
+            Die(false, null);
         }
     }
     public void TakeDamage(float amount, AttackType attackType, Skill skill, StatusEffects attacker) {
@@ -477,8 +499,12 @@ public class StatusEffects : MonoBehaviour {
             AudioSystem.audioManager.PlaySound("backstab", DistanceToPlayer);
             damage *= stats.backstabMultiplier;
         }
-        // Take damage
-        damage = Mathf.Clamp(damage, 0f, stats.maxDamageTimesHealth * stats.trueMaxHealth);
+        // Calculate shield damage reduction
+        damage *= 1f - shieldRate;
+        // Calculate passives
+        damage = passives.OnHit(damage);
+        // Calculate max damage possible
+        damage = Mathf.Clamp(damage, 0f, stats.maxDamageTimesHealth * stats.trueMaxHealth);        
         // Instantiate damage numbers
         GameObject damageNum = ObjectPooler.objectPooler.GetPooledObject("DamageNumbers");
         damageNum.transform.position = transform.position;
@@ -486,6 +512,9 @@ public class StatusEffects : MonoBehaviour {
         damageNum.GetComponent<DamageNumber>().SetNumber(damage, ColorBySkillType.GetColorByType(attackType));
         // Take damage from health
         stats.health -= damage;
+        // Add damage to recently taken damages
+        StartCoroutine(RecentlyTakenDamage(damage));
+        // Instantiate blood particles
         GenerateBloodParticles();
         if(enemyAI && enemyAI.willDefendItself) {
             if(!stunned && !chanelling && !immobilized && !enemyAI.attacked) {
@@ -508,7 +537,7 @@ public class StatusEffects : MonoBehaviour {
                 stats.health = 1f;
             }
             else {
-                Die(backstabbedByNastac);
+                Die(backstabbedByNastac, attacker);
             }
         }        
         // Havellian clarity
@@ -542,15 +571,21 @@ public class StatusEffects : MonoBehaviour {
         blood.transform.rotation = Quaternion.identity;
         blood.SetActive(true);
     }
-    private void Die(bool backstabbedByNastac) {
+    private void Die(bool backstabbedByNastac, StatusEffects attacker) {
         if(player && deathPanel) {
             deathPanel.gameObject.SetActive(true);
             deathPanel.DeathPanelInit();
         }
-        if(!player && globalPlayer && globalPlayer.npcBonuses[27]) {
+        if(!player && globalPlayer && globalPlayer.npcBonuses[27] && attacker) {            
             globalPlayer.stats.status.GiveMana(10f);
         }
+        if(!player && attacker) {
+            attacker.passives.OnEnemyKill();
+        }
         if(enemyAI) {
+            if(enemyAI.isBoss && globalPlayer) {
+                globalPlayer.BossKilled();
+            }
             Spawner.spawner.RemoveEntity(gameObject);
         }
         AudioSystem.audioManager.PlaySound("death", DistanceToPlayer);
@@ -598,6 +633,22 @@ public class StatusEffects : MonoBehaviour {
                 aiPath.canMove = true;
             }            
         }
+    }
+    public void StartShield(float damageReductionRate, float duration) {
+        StopShield();
+        shieldCoroutine = StartCoroutine(Shield(damageReductionRate, duration));
+    }
+    public void StopShield() {
+        if(shieldCoroutine != null && shieldCoroutineRunning) {
+            StopCoroutine(shieldCoroutine);
+            shieldRate = 0f;
+        }
+    }
+    private IEnumerator Shield(float damageReductionRate, float duration) {
+        shieldRate = damageReductionRate;
+        AudioSystem.audioManager.PlaySound("blessed", DistanceToPlayer);
+        yield return new WaitForSeconds(duration);
+        shieldRate = 0f;
     }
     // Bless provides damage *= extraDamageRate extra damage
     public void StartBless(float extraDamageRate, float duration) {

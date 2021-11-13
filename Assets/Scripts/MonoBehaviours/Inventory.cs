@@ -519,8 +519,7 @@ public class Inventory : MonoBehaviour {
     public void ConsumeInSlot(int slotIndex) {
         if(!inventory[slotIndex] || quantities[slotIndex] < 1) {
             return;
-        }
-        quantities[slotIndex]--;
+        }        
         if(inventory[slotIndex] is Mushroom m) {
             m.Consume(stats.status);
         }
@@ -541,6 +540,12 @@ public class Inventory : MonoBehaviour {
         else if(inventory[slotIndex] is SkillBookUnlocker sbu) {
             sbu.Consume(player);
             inventoryPanel.CheckButtons();
+        }
+        else if(inventory[slotIndex] is Bedroll bed) {
+            bed.Consume(player);
+        }
+        if(!(inventory[slotIndex] is Bedroll)) {
+            quantities[slotIndex]--;
         }
         if(quantities[slotIndex] < 1) {
             inventory[slotIndex] = null;
@@ -648,8 +653,9 @@ public class Inventory : MonoBehaviour {
             }
         }
         if(index >= 0) {
-            quantities[index] -= amount;
-            UpdateSlot(index);
+            for(int i = 0; i < amount; i++) {
+                TakeItemFromSlot(index);
+            }
         }        
     }
     public void TakeSilver(int amount) {
@@ -662,8 +668,9 @@ public class Inventory : MonoBehaviour {
             }
         }
         if(index >= 0) {
-            quantities[index] -= amount;
-            UpdateSlot(index);
+            for(int i = 0; i < amount; i++) {
+                TakeItemFromSlot(index);
+            }
         }
     }
     public void SellItem(int slot) {
@@ -682,6 +689,7 @@ public class Inventory : MonoBehaviour {
             AddToInventory(itemDatabase.items[silverIndex], false);
         }
         TakeItemFromSlot(slot);
+        
         AudioSystem.audioManager.PlaySound("sell", 0f);
     }
     public void EquipItemInSlot(int slot) {
@@ -820,6 +828,7 @@ public class Inventory : MonoBehaviour {
         if(quantities[slot] < 1) {
             inventory[slot] = null;
             lucks[slot] = 0;
+            player.itemInfoPanel.gameObject.SetActive(false);
         }
         UpdateSlot(slot);        
     }

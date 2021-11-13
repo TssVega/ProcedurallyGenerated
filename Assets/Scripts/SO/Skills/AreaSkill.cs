@@ -6,9 +6,11 @@ using UnityEngine;
 public class AreaSkill : ActiveSkill {
 
     public float damageRate;
+    public int hitTime = 1;
     public float duration;
     public GameObject hitbox;
     public bool warn = false;
+    public bool kick = false;
     [Header("Is this attack melee?")]
     public bool checkRange = false; // If this is true, there will be a range check depending on the current weapon's type
     public GameObject hitboxWarning;
@@ -42,6 +44,8 @@ public class AreaSkill : ActiveSkill {
     private const float daggerRange = 1.7f;
     private const float spearRange = 2.9f;
     private const float swordRange = 2.2f;
+
+    private const float kickStun = 1f;
 
     public override void Activate(StatusEffects targetStatus, Stats attackerStats) {
         /*GameObject clone = ObjectPooler.objectPooler.GetPooledObject(hitbox.name);
@@ -78,6 +82,11 @@ public class AreaSkill : ActiveSkill {
         }
         targetStatus.TakeDamage(DamageFromDamageType.GetDamage(attackType, attackerStats)
             * damageRate, attackType, this, attackerStats.status);
+        if(kick) {
+            if(targetStatus.blocking || targetStatus.parrying) {
+                targetStatus.StartStun(kickStun);
+            }
+        }
         if(stunDuration > 0) {
             targetStatus.StartStun(stunDuration);
         }

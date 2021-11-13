@@ -5,12 +5,20 @@ using UnityEngine;
 public class Passives : MonoBehaviour {
 
     public PassiveSkill toughSkin;
+    public PassiveSkill lifeVamp;
+    public PassiveSkill clarity;
+
     private float toughSkinCounter;
     private bool toughSkinOnline;
     private SkillUser skillUser;
+    private StatusEffects status;
+
     private const float toughSkinCooldown = 10f;
+    private const float lifeVampHeal = 8f;
+    private const float clarityDamageBoostRate = 1.2f;
 
     private void Awake() {
+        status = GetComponent<StatusEffects>();
         skillUser = GetComponent<SkillUser>();
         toughSkinCounter = 0f;
         toughSkinOnline = false;
@@ -43,5 +51,16 @@ public class Passives : MonoBehaviour {
             toughSkinCounter = toughSkinCooldown;
         }
         return reducedDamage;
+    }
+    public float OnHit(float damage) {
+        if(skillUser.acquiredSkills.Contains(clarity)) {
+            damage *= clarityDamageBoostRate;
+        }
+        return damage;
+    }
+    public void OnEnemyKill() {
+        if(skillUser.acquiredSkills.Contains(lifeVamp)) {
+            status.Heal(lifeVampHeal);
+        }        
     }
 }

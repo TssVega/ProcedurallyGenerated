@@ -2,10 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Skills/Passive Skills/Tough Skin")]
+[CreateAssetMenu(menuName = "Skills/Passive Skill")]
 public class PassiveSkill : Skill {
 
-    public void GetPassive() {
-    
-    }
 }

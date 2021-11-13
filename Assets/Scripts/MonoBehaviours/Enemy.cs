@@ -6,6 +6,8 @@ public class Enemy : MonoBehaviour {
 
     private Animator enemyAnimator;
 
+    public string bossName;
+
     private void Awake() {
         enemyAnimator = GetComponent<Animator>();
     }

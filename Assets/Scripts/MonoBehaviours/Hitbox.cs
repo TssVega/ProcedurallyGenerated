@@ -9,29 +9,63 @@ public class Hitbox : MonoBehaviour {
     private Stats attackerStats;
     private float timer;
 
+    private float periodTimer;
+    private int hitTimes = 0;
+
+    public List<Collider2D> toHit;
+
+    private void OnDisable() {
+        toHit.Clear();
+        hitTimes = 0;
+    }
     public void SetTeam(int team) {
         this.team = team;
     }
     public void SetSkill(AreaSkill skill) {
         this.skill = skill;
         timer = skill.duration;
+        periodTimer = 0f;
+        hitTimes = 0;
     }
     public void SetAttackerStats(Stats attackerStats) {
         this.attackerStats = attackerStats;
+    }
+    private void FixedUpdate() {
+        if(periodTimer > 0f) {
+            periodTimer -= Time.fixedDeltaTime;            
+        }
+        if(periodTimer <= 0f && hitTimes < skill.hitTime && toHit.Count > 0) {
+            Hit();
+            hitTimes++;
+            periodTimer = skill.duration / skill.hitTime;
+        }
     }
     private void Update() {
         if(timer > 0f) {
             timer -= Time.deltaTime;
             if(timer <= 0f) {
+                toHit.Clear();
                 gameObject.SetActive(false);
             }
         }
     }
+    private void Hit() {
+        for(int i = 0; i < toHit.Count; i++) {
+            StatusEffects collisionStatus = toHit[i].GetComponent<StatusEffects>();
+            skill.Activate(collisionStatus, attackerStats);
+        }
+    }
     private void OnTriggerEnter2D(Collider2D collision) {        
         Stats collisionStats = collision.GetComponent<Stats>();
-        StatusEffects collisionStatus = collision.GetComponent<StatusEffects>();
+        // StatusEffects collisionStatus = collision.GetComponent<StatusEffects>();
         if(collisionStats && collisionStats.team != team) {
-            skill.Activate(collisionStatus, attackerStats);
+            toHit.Add(collision);
+            // skill.Activate(collisionStatus, attackerStats);
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision) {
+        if(toHit.Contains(collision)) {
+            toHit.Remove(collision);
         }
     }
 }

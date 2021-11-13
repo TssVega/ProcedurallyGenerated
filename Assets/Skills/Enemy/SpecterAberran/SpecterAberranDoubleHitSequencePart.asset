@@ -23,7 +23,7 @@ MonoBehaviour:
   manaCost: 0
   focusedSkill: 1
   channelingTime: 1
-  castTime: 1
+  castTime: 0.25
   cooldown: 10
   aiRange: 2
   channelingParticleNames: []
@@ -33,8 +33,9 @@ MonoBehaviour:
   idleAnimationName: SpecterAberranIdle
   channelingSound: 
   castingSound: swing3
-  damageRate: 0.3
-  duration: 1
+  damageRate: 0.1
+  hitTime: 2
+  duration: 0.25
   hitbox: {fileID: 6890043100139161156, guid: d10017244684d1f41b958b3cf3d3ef3e, type: 3}
   warn: 0
   checkRange: 0

@@ -173,7 +173,7 @@ public class EnemyAI : MonoBehaviour {
                     availableIndices.Add(i);
                 }
             }
-            if(availableIndices.Count > 0) {
+            if(availableIndices.Count > 0 && !status.chanelling && !status.stunned && !status.immobilized) {
                 ActiveSkill activeSkill = skillUser.currentSkills[availableIndices[Random.Range(0, availableIndices.Count)]] as ActiveSkill;
                 skillUser.UseSkill(activeSkill);
             }

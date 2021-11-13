@@ -234,7 +234,9 @@ public class SkillUser : MonoBehaviour {
             }
             projectiles[i].SetActive(true);
             // Wait for next projectile
-            yield return new WaitForSeconds(proj.projectileData.timeDifference);
+            if(proj.projectileData.timeDifference > 0f) {
+                yield return new WaitForSeconds(proj.projectileData.timeDifference);
+            }            
         }
         yield return new WaitForSeconds(proj.castTime);
         StopAnimation(proj);

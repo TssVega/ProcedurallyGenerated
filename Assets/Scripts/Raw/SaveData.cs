@@ -91,9 +91,13 @@ public class SaveData {
     public int[] currentSkills;
     // Consumable items in skill slots
     public string[] consumableItems;
+    // Boss index
+    public int currentBossIndex;
 
     public SaveData(Player data) {
         saveSlot = data.saveSlot;
+        // Bosses
+        currentBossIndex = data.currentBossIndex;
         // Race
         race = data.raceIndex;
         // Npc bonuses

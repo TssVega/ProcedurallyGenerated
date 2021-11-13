@@ -645,6 +645,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27e1e09b92ae6d84688e1a342d86b2fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bossName: Jath'tolid
 --- !u!114 &6712159656687601952
 MonoBehaviour:
   m_ObjectHideFlags: 0

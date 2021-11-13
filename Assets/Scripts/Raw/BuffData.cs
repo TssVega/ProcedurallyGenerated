@@ -6,10 +6,15 @@ using UnityEngine;
 public class BuffData {
 
     public BuffType buffType;
+    [Header("Heal")]
     public float healRate;
     public float lifetime;
+    [Header("Shield")]
+    public float damageReductionRate = 0.9f;
+    [Header("Restore lost health")]
+    public float restoreRate = 0.5f;
 }
 
 public enum BuffType {
-    Heal
+    Heal, Shield, RestoreLostHealth, HunterAid
 }

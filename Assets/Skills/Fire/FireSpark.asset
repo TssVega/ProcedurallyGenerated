@@ -43,7 +43,7 @@ MonoBehaviour:
     lightColor: {r: 1, g: 0.9274701, b: 0.3254717, a: 1}
     damageRate: 0.15
     rotationSpeed: 0
-    projectileSpeed: 15
+    projectileSpeed: 12
     radius: 0.2
     lifetime: 2
     stunDuration: 0

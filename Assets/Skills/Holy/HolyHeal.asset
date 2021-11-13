@@ -21,7 +21,7 @@ MonoBehaviour:
   attackType: 12
   skillPointsNeeded: 2
   prerequisites: 
-  manaCost: 10
+  manaCost: 25
   focusedSkill: 0
   channelingTime: 1.5
   castTime: 0
@@ -40,3 +40,5 @@ MonoBehaviour:
     buffType: 0
     healRate: 2
     lifetime: 1.5
+    damageReductionRate: 0.9
+    restoreRate: 0.5
