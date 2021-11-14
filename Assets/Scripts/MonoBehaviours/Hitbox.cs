@@ -30,17 +30,19 @@ public class Hitbox : MonoBehaviour {
     public void SetAttackerStats(Stats attackerStats) {
         this.attackerStats = attackerStats;
     }
+    /*
     private void FixedUpdate() {
+        
+    }*/
+    private void Update() {
         if(periodTimer > 0f) {
-            periodTimer -= Time.fixedDeltaTime;            
+            periodTimer -= Time.fixedDeltaTime;
         }
         if(periodTimer <= 0f && hitTimes < skill.hitTime && toHit.Count > 0) {
             Hit();
             hitTimes++;
             periodTimer = skill.duration / skill.hitTime;
         }
-    }
-    private void Update() {
         if(timer > 0f) {
             timer -= Time.deltaTime;
             if(timer <= 0f) {

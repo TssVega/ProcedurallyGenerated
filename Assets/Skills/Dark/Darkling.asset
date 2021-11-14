@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06483e1273c0bf64e9475d86de85f9d9, type: 3}
   m_Name: Darkling
   m_EditorClassIdentifier: 
-  skillIndex: -1
+  skillIndex: 12
   skillName: Darkling
   skillIcon: {fileID: -2883272034217992634, guid: 3b14433314abd804589ec1b89f0d9351,
     type: 3}
@@ -34,7 +34,7 @@ MonoBehaviour:
   castingAnimationName: 
   idleAnimationName: 
   channelingSound: 
-  castingSound: 
+  castingSound: magicCast
   projectileData:
     team: 0
     arrowSkill: 0

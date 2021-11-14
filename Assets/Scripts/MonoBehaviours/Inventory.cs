@@ -795,7 +795,7 @@ public class Inventory : MonoBehaviour {
         }
         return false;
     }
-    private int GetEmptyInventorySlot() {
+    public int GetEmptyInventorySlot() {
         for(int i = 0; i < inventorySize; i++) {
             if(inventory[i] != null) {
                 continue;

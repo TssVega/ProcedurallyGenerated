@@ -34,7 +34,7 @@ MonoBehaviour:
   channelingAnimationName: 
   castingAnimationName: 
   idleAnimationName: 
-  channelingSound: 
+  channelingSound: magicCast
   castingSound: 
   buffData:
     buffType: 0

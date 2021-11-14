@@ -8,20 +8,25 @@ public class NotificationText : MonoBehaviour {
     private WaitForSeconds wait;
     private TextMeshProUGUI notificationText;
 
+    private Coroutine textCoroutine;
+
     private void Awake() {
         notificationText = GetComponent<TextMeshProUGUI>();
-        wait = new WaitForSeconds(4f);        
+        wait = new WaitForSeconds(3f);        
     }
     private void Start() {
         gameObject.SetActive(false);
     }
-    public void SetText(string str) {
+    public void SetText(string str, Color color) {
         gameObject.SetActive(true);
-        StartCoroutine(TextAnimation(str));
+        if(textCoroutine != null && notificationText.color.a > 0f) {
+            StopCoroutine(textCoroutine);
+        }        
+        textCoroutine = StartCoroutine(TextAnimation(str, color));
     }
-    private IEnumerator TextAnimation(string str) {
+    private IEnumerator TextAnimation(string str, Color color) {
         notificationText.text = str;
-        notificationText.color = Color.white;
+        notificationText.color = color;
         yield return wait;
         var alpha = 1f;
         while(notificationText.color.a > 0f) {

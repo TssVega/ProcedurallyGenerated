@@ -21,6 +21,24 @@ public class CharacterCreation : MonoBehaviour {
     public TextMeshProUGUI confirmText;   
     public TextMeshProUGUI raceText;
     public TextMeshProUGUI raceDescription;
+    public TextMeshProUGUI classText;
+    public TextMeshProUGUI statsText;
+    public TextMeshProUGUI strText;
+    public TextMeshProUGUI agiText;
+    public TextMeshProUGUI dexText;
+    public TextMeshProUGUI intText;
+    public TextMeshProUGUI faiText;
+    public TextMeshProUGUI wisText;
+    public TextMeshProUGUI vitText;
+    public TextMeshProUGUI chaText;
+    public TextMeshProUGUI strValText;
+    public TextMeshProUGUI agiValText;
+    public TextMeshProUGUI dexValText;
+    public TextMeshProUGUI intValText;
+    public TextMeshProUGUI faiValText;
+    public TextMeshProUGUI wisValText;
+    public TextMeshProUGUI vitValText;
+    public TextMeshProUGUI chaValText;
 
     public TextMeshProUGUI generatingWorldText;
 
@@ -31,9 +49,9 @@ public class CharacterCreation : MonoBehaviour {
     private int currentHairColorIndex = 0;
     private int currentHairStyleIndex = 0;
     private int currentRaceIndex = 0;
+    private int currentClassIndex = 0;
 
     private Player player;
-    private LocalizationManager localizationManager;
 
     private WorldData world;
 
@@ -42,14 +60,15 @@ public class CharacterCreation : MonoBehaviour {
     private readonly int worldSize = 128;
 
     private void Awake() {
-        localizationManager = FindObjectOfType<LocalizationManager>();
         player = FindObjectOfType<Player>();        
-        generatingWorldText.text = localizationManager.GetText("generatingWorld");
-    }
-    private void Start() {
+        generatingWorldText.text = LocalizationManager.localization.GetText("generatingWorld");
+        currentClassIndex = 0;
         currentRaceIndex = 0;
         currentHairColorIndex = 0;
         currentHairStyleIndex = 0;
+        player.raceIndex = currentRaceIndex;
+        player.hairColorIndex = currentHairColorIndex;
+        player.hairStyleIndex = currentHairStyleIndex;
         currentSkinColor = appearance.races[currentRaceIndex].skinColor;
         currentHairColor = appearance.hairColors[currentHairColorIndex];
         currentHairStyle = appearance.hairStyles[currentHairStyleIndex];
@@ -58,6 +77,7 @@ public class CharacterCreation : MonoBehaviour {
         hairImage.sprite = currentHairStyle;
         shoulderImage.color = currentSkinColor;
         RefreshTexts();
+        UpdateStats();
     }
     public async void CompleteCharacterCreation() {
         if(!newGameButtonPressed) {
@@ -70,6 +90,22 @@ public class CharacterCreation : MonoBehaviour {
     }
     private void LoadSceneAsync(string sceneName) {
         SceneManager.LoadSceneAsync(sceneName);
+    }
+    public void ChangeClass(bool increment) {
+        if(increment) {
+            currentClassIndex++;
+            if(currentClassIndex > appearance.presets.Length - 1) {
+                currentClassIndex = 0;
+            }
+        }
+        else {
+            currentClassIndex--;
+            if(currentClassIndex < 0) {
+                currentClassIndex = appearance.presets.Length - 1;
+            }
+        }
+        UpdateStats();
+        AudioSystem.audioManager.PlaySound("inGameButton", 0f);
     }
     public void ChangeSkinColor(bool increment) {
         if(increment) {
@@ -131,12 +167,34 @@ public class CharacterCreation : MonoBehaviour {
         AudioSystem.audioManager.PlaySound("inGameButton", 0f);
     }
     public void RefreshTexts() {
-        skinColorText.text = localizationManager.GetText("race");
-        hairColorText.text = localizationManager.GetText("hairColor");
-        hairStyleText.text = localizationManager.GetText("hairStyle");
-        confirmText.text = localizationManager.GetText("complete");
+        skinColorText.text = LocalizationManager.localization.GetText("race");
+        hairColorText.text = LocalizationManager.localization.GetText("hairColor");
+        hairStyleText.text = LocalizationManager.localization.GetText("hairStyle");
+        confirmText.text = LocalizationManager.localization.GetText("complete");
+        // Races
         raceText.text = appearance.races[currentRaceIndex].raceName;
-        raceDescription.text = localizationManager.GetText($"{appearance.races[currentRaceIndex].raceName}Desc");
+        raceDescription.text = LocalizationManager.localization.GetText($"{appearance.races[currentRaceIndex].raceName}Desc");
+        // Classes
+        statsText.text = LocalizationManager.localization.GetText("stats");
+        strText.text = LocalizationManager.localization.GetText("strength");
+        agiText.text = LocalizationManager.localization.GetText("agility");
+        dexText.text = LocalizationManager.localization.GetText("dexterity");
+        intText.text = LocalizationManager.localization.GetText("intelligence");
+        faiText.text = LocalizationManager.localization.GetText("faith");
+        wisText.text = LocalizationManager.localization.GetText("wisdom");
+        vitText.text = LocalizationManager.localization.GetText("vitality");
+        chaText.text = LocalizationManager.localization.GetText("charisma");
+    }
+    private void UpdateStats() {
+        classText.text = LocalizationManager.localization.GetText(appearance.presets[currentClassIndex].classNameKey);
+        strValText.text = appearance.presets[currentClassIndex].strength.ToString();
+        agiValText.text = appearance.presets[currentClassIndex].agility.ToString();
+        dexValText.text = appearance.presets[currentClassIndex].dexterity.ToString();
+        intValText.text = appearance.presets[currentClassIndex].intelligence.ToString();
+        faiValText.text = appearance.presets[currentClassIndex].faith.ToString();
+        wisValText.text = appearance.presets[currentClassIndex].wisdom.ToString();
+        vitValText.text = appearance.presets[currentClassIndex].vitality.ToString();
+        chaValText.text = appearance.presets[currentClassIndex].charisma.ToString();
     }
     private async Task SetNewGameData() {
         // World data
@@ -172,14 +230,14 @@ public class CharacterCreation : MonoBehaviour {
         player.transform.position = Vector3.zero;
         player.transform.rotation = Quaternion.identity;
         // Main
-        player.stats.strength = 10;
-        player.stats.agility = 10;
-        player.stats.dexterity = 10;
-        player.stats.intelligence = 10;
-        player.stats.faith = 10;
-        player.stats.wisdom = 10;
-        player.stats.vitality = 10;
-        player.stats.charisma = 10;
+        player.stats.strength = appearance.presets[currentClassIndex].strength;
+        player.stats.agility = appearance.presets[currentClassIndex].agility;
+        player.stats.dexterity = appearance.presets[currentClassIndex].dexterity;
+        player.stats.intelligence = appearance.presets[currentClassIndex].intelligence;
+        player.stats.faith = appearance.presets[currentClassIndex].faith;
+        player.stats.wisdom = appearance.presets[currentClassIndex].wisdom;
+        player.stats.vitality = appearance.presets[currentClassIndex].vitality;
+        player.stats.charisma = appearance.presets[currentClassIndex].charisma;
         // Status
         player.stats.maxHealth = 100f;
         player.stats.maxMana = 100f;

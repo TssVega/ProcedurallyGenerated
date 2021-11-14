@@ -19,12 +19,15 @@ public class PlayerController : MonoBehaviour {
     private const float footstepInterval = 0.4f;
     private const float footstepThreshold = 2.7f;
     private const float checkLockInterval = 1f;
+    private const float agilityMultiplier = 0.01f;
 
     private WaitForSeconds autoLockSearchIntervalWait;
     private WaitForSeconds footstepIntervalWait;
     private WaitForSeconds checkLockIntervalWait;
 
     private FieldOfView fov;
+    private Passives passives;
+    private SkillUser skillUser;
 
     private bool autoLock;
 
@@ -41,6 +44,8 @@ public class PlayerController : MonoBehaviour {
         if(FindObjectOfType<UICanvas>()) {
             joystick = FindObjectOfType<UICanvas>().playerUI.GetComponent<UIPlayerStatus>().joystick;
         }*/
+        skillUser = GetComponent<SkillUser>();
+        passives = GetComponent<Passives>();
         autoLock = PlayerPrefs.GetInt("lock") == 1;
         fov = GetComponent<FieldOfView>();
         playerStats = FindObjectOfType<Player>().GetComponent<Stats>();
@@ -113,7 +118,7 @@ public class PlayerController : MonoBehaviour {
     }
     private IEnumerator CheckFootsteps() {
         for(; ; ) {
-            if(rb2D.velocity.magnitude >= footstepThreshold) {
+            if(rb2D.velocity.magnitude >= footstepThreshold && !skillUser.acquiredSkills.Contains(passives.twinkleToes)) {
                 AudioSystem.audioManager.PlaySound("footsteps", 0f);
                 makingNoise = true;
             }
@@ -155,7 +160,7 @@ public class PlayerController : MonoBehaviour {
                 rb2D.angularVelocity = 0;
             }
             // If there is an input            
-            if(joystick && joystickInput.sqrMagnitude > 0.01f && !statusEffects.chanelling && !statusEffects.stunned && !statusEffects.immobilized) {
+            if(joystick && joystickInput.sqrMagnitude > 0.01f && !statusEffects.chanelling && !statusEffects.stunned && !statusEffects.immobilized && joystick.gameObject.activeInHierarchy) {
                 // Look at movement direction
                 if(!lockedOn) {
                     transform.eulerAngles = new Vector3(
@@ -163,7 +168,7 @@ public class PlayerController : MonoBehaviour {
                     rb2D.angularVelocity = 0;
                 }
                 // Move
-                rb2D.AddForce(joystickInput * playerStats.runSpeed);
+                rb2D.AddForce(joystickInput * playerStats.runSpeed * (1 + playerStats.agility * agilityMultiplier));
             }
             else if(statusEffects.stunned || statusEffects.immobilized) {
                 rb2D.velocity = Vector2.zero;
@@ -176,7 +181,7 @@ public class PlayerController : MonoBehaviour {
                     rb2D.angularVelocity = 0;
                 }
                 // Move
-                rb2D.AddForce(movingDirection.normalized * playerStats.runSpeed);                
+                rb2D.AddForce(movingDirection.normalized * playerStats.runSpeed * (1 + playerStats.agility * agilityMultiplier));                
             }
             else if(statusEffects.stunned || statusEffects.immobilized) {
                 rb2D.velocity = Vector2.zero;

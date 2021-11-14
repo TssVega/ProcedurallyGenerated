@@ -576,7 +576,7 @@ public class StatusEffects : MonoBehaviour {
             deathPanel.gameObject.SetActive(true);
             deathPanel.DeathPanelInit();
         }
-        if(!player && globalPlayer && globalPlayer.npcBonuses[27] && attacker) {            
+        if(!player && globalPlayer && globalPlayer.npcBonuses[27] && attacker && attacker == globalPlayer.stats.status) {            
             globalPlayer.stats.status.GiveMana(10f);
         }
         if(!player && attacker) {

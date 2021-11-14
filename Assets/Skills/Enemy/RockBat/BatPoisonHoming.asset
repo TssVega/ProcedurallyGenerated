@@ -16,6 +16,7 @@ MonoBehaviour:
   skillName: 
   skillIcon: {fileID: 0}
   interruptable: 0
+  parryable: 0
   attackType: 10
   skillPointsNeeded: 0
   prerequisites: 
@@ -31,13 +32,15 @@ MonoBehaviour:
   channelingAnimationName: 
   castingAnimationName: 
   idleAnimationName: 
+  channelingSound: 
+  castingSound: 
   projectileData:
     team: 2
     arrowSkill: 0
     lightIntensity: 0.3
     lightRadius: 0.5
     lightColor: {r: 0, g: 1, b: 0.1764706, a: 1}
-    damageRate: 0.1
+    damageRate: 0.01
     rotationSpeed: 200
     projectileSpeed: 3
     radius: 0.1
@@ -51,7 +54,7 @@ MonoBehaviour:
     homing: 1
     push: 0
     poisonStacks: 50
-    poisonDuration: 15
+    poisonDuration: 10
     bloodStacks: 0
     bleedDuration: 0
     curseStacks: 0

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d46b9586e0d4c14c9eb757a686d0ece, type: 3}
   m_Name: FirstAid
   m_EditorClassIdentifier: 
-  skillIndex: -1
+  skillIndex: 26
   skillName: FirstAid
   skillIcon: {fileID: 1881831266212488994, guid: 918e87827b4cc08499d01172480cf584,
     type: 3}
@@ -32,7 +32,7 @@ MonoBehaviour:
   channelingAnimationName: 
   castingAnimationName: 
   idleAnimationName: 
-  channelingSound: 
+  channelingSound: swing
   castingSound: 
   buffData:
     buffType: 3

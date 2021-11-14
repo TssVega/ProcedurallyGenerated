@@ -16,6 +16,7 @@ MonoBehaviour:
   skillName: BatPoisonDouble
   skillIcon: {fileID: 0}
   interruptable: 0
+  parryable: 0
   attackType: 10
   skillPointsNeeded: 0
   prerequisites: 
@@ -31,13 +32,15 @@ MonoBehaviour:
   channelingAnimationName: 
   castingAnimationName: 
   idleAnimationName: 
+  channelingSound: 
+  castingSound: 
   projectileData:
     team: 2
     arrowSkill: 0
     lightIntensity: 0.3
     lightRadius: 0.5
     lightColor: {r: 0, g: 1, b: 0.17519307, a: 1}
-    damageRate: 0.1
+    damageRate: 0.05
     rotationSpeed: 0
     projectileSpeed: 4
     radius: 0.1
@@ -50,8 +53,8 @@ MonoBehaviour:
     timeDifference: 0
     homing: 0
     push: 0
-    poisonStacks: 35
-    poisonDuration: 15
+    poisonStacks: 25
+    poisonDuration: 10
     bloodStacks: 0
     bleedDuration: 0
     curseStacks: 0

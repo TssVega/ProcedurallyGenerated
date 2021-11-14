@@ -216,7 +216,7 @@ public class Player : MonoBehaviour {
         }*/
         if(bossAwake) {
             AudioSystem.audioManager.PlaySound("menuButton", 0f);
-            notificationText.SetText(LocalizationManager.localization.GetText("cantSleep"));
+            notificationText.SetText(LocalizationManager.localization.GetText("cantSleep"), Color.white);
             itemInfoPanel.gameObject.SetActive(false);
             inventoryPanel.gameObject.SetActive(false);
             return;
@@ -232,7 +232,7 @@ public class Player : MonoBehaviour {
         }        
         if(!canSave) {
             AudioSystem.audioManager.PlaySound("menuButton", 0f);
-            notificationText.SetText(LocalizationManager.localization.GetText("cantSleep"));
+            notificationText.SetText(LocalizationManager.localization.GetText("cantSleep"), Color.white);
             itemInfoPanel.gameObject.SetActive(false);
             inventoryPanel.gameObject.SetActive(false);
             return;
@@ -257,7 +257,7 @@ public class Player : MonoBehaviour {
         }
         ReplaceAutosaveFilesWithSlotSpecificOnes();
         AudioSystem.audioManager.PlaySound("saved", 0f);
-        notificationText?.SetText(LocalizationManager.localization?.GetText("savedGame"));
+        notificationText?.SetText(LocalizationManager.localization?.GetText("savedGame"), Color.white);
         itemInfoPanel?.gameObject.SetActive(false);
         inventoryPanel?.gameObject.SetActive(false);
         /*

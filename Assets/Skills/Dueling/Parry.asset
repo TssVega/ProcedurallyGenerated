@@ -14,22 +14,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillIndex: 9
   skillName: Parry
-  skillDescription: Parry the next physical attack for a brief moment. If you parry
-    successfully, your enemy gets stunned for a short time
   skillIcon: {fileID: -4821301291175551543, guid: 8bdf6964d84a55d46a85dcf8ea72d604,
     type: 3}
   interruptable: 0
+  parryable: 0
   attackType: 13
   skillPointsNeeded: 2
+  prerequisites: 
   manaCost: 0
   focusedSkill: 0
   channelingTime: 0
   castTime: 0.3
   cooldown: 0.9
+  aiRange: 0
   channelingParticleNames: []
-  castingParticleNames: []
   particleNames: []
   channelingAnimationName: 
   castingAnimationName: 
+  idleAnimationName: 
+  channelingSound: 
+  castingSound: swing2
   blockData:
     blockType: 1

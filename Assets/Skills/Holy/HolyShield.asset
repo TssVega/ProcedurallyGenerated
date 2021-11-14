@@ -34,7 +34,7 @@ MonoBehaviour:
   castingAnimationName: 
   idleAnimationName: 
   channelingSound: 
-  castingSound: 
+  castingSound: magicCast
   buffData:
     buffType: 1
     healRate: 0

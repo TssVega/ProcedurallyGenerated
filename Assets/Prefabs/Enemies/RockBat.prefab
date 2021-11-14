@@ -108,7 +108,7 @@ MonoBehaviour:
   faith: 10
   wisdom: 10
   vitality: 10
-  charisma: 2
+  charisma: 1
   bashDamage: 10
   pierceDamage: 10
   slashDamage: 10
@@ -119,7 +119,7 @@ MonoBehaviour:
   earthDamage: 10
   lightDamage: 10
   darkDamage: 10
-  poisonDamage: 10
+  poisonDamage: 5
   bleedDamage: 10
   curseDamage: 10
   bashDefence: 50
@@ -338,6 +338,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toughSkin: {fileID: 11400000, guid: 65efdbf97688d7f4fa84313bd8ae2949, type: 2}
+  lifeVamp: {fileID: 0}
+  clarity: {fileID: 0}
+  twinkleToes: {fileID: 0}
 --- !u!114 &1553987817055992809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -460,6 +463,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27e1e09b92ae6d84688e1a342d86b2fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bossName: 
 --- !u!114 &1553987817055992815
 MonoBehaviour:
   m_ObjectHideFlags: 0

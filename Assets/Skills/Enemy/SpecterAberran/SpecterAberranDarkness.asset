@@ -34,7 +34,7 @@ MonoBehaviour:
   castingAnimationName: 
   idleAnimationName: 
   channelingSound: 
-  castingSound: 
+  castingSound: longMagicCast
   projectileData:
     team: 3
     arrowSkill: 0

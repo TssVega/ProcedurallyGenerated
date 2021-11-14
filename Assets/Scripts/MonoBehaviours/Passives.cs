@@ -7,6 +7,7 @@ public class Passives : MonoBehaviour {
     public PassiveSkill toughSkin;
     public PassiveSkill lifeVamp;
     public PassiveSkill clarity;
+    public PassiveSkill twinkleToes;
 
     private float toughSkinCounter;
     private bool toughSkinOnline;

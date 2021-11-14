@@ -30,6 +30,25 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 57dac686daf97884bb559a7aa9aad3a0, type: 2}
   - {fileID: 11400000, guid: 68089e6fc66dd28489ae42c6e5f5484d, type: 2}
   - {fileID: 11400000, guid: 16c701472210ca4438f5a4fe9b730df4, type: 2}
+  presets:
+  - {fileID: 11400000, guid: 83cb73eaa0911fe4dbbdd42360e19ca6, type: 2}
+  - {fileID: 11400000, guid: 1dcc161206fe61d499a083ed0098baee, type: 2}
+  - {fileID: 11400000, guid: 5f347550bd4fe3845ac244d7e99442b9, type: 2}
+  - {fileID: 11400000, guid: addb3f934638c314ba277740c1609cd2, type: 2}
+  - {fileID: 11400000, guid: 33c5695c05aff48458917e113851bffe, type: 2}
+  - {fileID: 11400000, guid: 521a22cc99d474a409b7b59cffa12c7e, type: 2}
+  - {fileID: 11400000, guid: ee304bf98158d624292aab95a0fa9f72, type: 2}
+  - {fileID: 11400000, guid: 8f92d842ed407724bb9c76e6e677e2e6, type: 2}
+  - {fileID: 11400000, guid: 21b320d68ad45f94aa8bf9bcfed1f8d6, type: 2}
+  - {fileID: 11400000, guid: f78fc0356bf09e843b00058ecf645da8, type: 2}
+  - {fileID: 11400000, guid: f393e6202a917354097271517a139d2b, type: 2}
+  - {fileID: 11400000, guid: b0d1da1d6007f25429cfb5d08b1d9b0c, type: 2}
+  - {fileID: 11400000, guid: 7f1fdb9071237444b9c9cc214bf27c01, type: 2}
+  - {fileID: 11400000, guid: fa15b784637712148a0137d7fc751e44, type: 2}
+  - {fileID: 11400000, guid: 785948963d886d240b0ad4f24eac3420, type: 2}
+  - {fileID: 11400000, guid: 03e41cdcb8752004887f2fea56013cdd, type: 2}
+  - {fileID: 11400000, guid: 77869a7d7a46d7743ae4f9006db85229, type: 2}
+  - {fileID: 11400000, guid: d08d5e3ae217abc4b9ede71c4cc0748f, type: 2}
   hairColors:
   - {r: 0.6666667, g: 0.53333336, b: 0.4, a: 1}
   - {r: 0.87058824, g: 0.74509805, b: 0.6, a: 1}

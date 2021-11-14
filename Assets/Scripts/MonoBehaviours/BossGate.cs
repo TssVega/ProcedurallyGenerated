@@ -56,7 +56,7 @@ public class BossGate : MonoBehaviour, IInteractable {
         boss.transform.position = transform.position;
         boss.transform.rotation = Quaternion.Euler(0f, 0f, Random.Range(0f, 359f));
         boss.SetActive(true);
-        notificationText.SetText(boss.GetComponent<Enemy>().bossName);
+        notificationText.SetText(boss.GetComponent<Enemy>().bossName, Color.red);
         StartCoroutine(DisableAfterDelay());
     }
     private IEnumerator DisableAfterDelay() {

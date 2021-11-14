@@ -47,6 +47,10 @@ public class EquipmentSlot : MonoBehaviour, IBeginDragHandler, IEndDragHandler, 
         }
         else if(craftingOutput) {
             if(inventory.CanAddToInventory() && inventory.craft) {
+                if(inventory.GetEmptyInventorySlot() < 0) {
+                    return;
+                }
+                inventory.UnequipItem((int)inventory.craft.slot, inventory.GetEmptyInventorySlot());
                 inventory.EquipItem(inventory.craft);
                 inventory.craft = null;
                 inventory.UpdateCraftingResult();

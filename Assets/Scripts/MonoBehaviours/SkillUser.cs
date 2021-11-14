@@ -239,7 +239,9 @@ public class SkillUser : MonoBehaviour {
             }            
         }
         yield return new WaitForSeconds(proj.castTime);
-        StopAnimation(proj);
+        if(statusEffects.chanelling) {
+            StopAnimation(proj);
+        }
     }
     private IEnumerator Buff(BuffSkill buff) {
         // Set status effects
@@ -299,8 +301,10 @@ public class SkillUser : MonoBehaviour {
             particles[i].transform.rotation = transform.rotation;
             particles[i].SetActive(true);
             particles[i].GetComponent<ParticleSystem>().Play();
-        }        
-        StopAnimation(buff);
+        }
+        if(statusEffects.chanelling) {
+            StopAnimation(buff);
+        }
     }
     private IEnumerator StartSkillSequence(SkillSequence seq) {
         PlayAnimation(seq.channelingAnimationName);
@@ -367,8 +371,10 @@ public class SkillUser : MonoBehaviour {
             particles[i].transform.rotation = transform.rotation;
             particles[i].SetActive(true);
             particles[i].GetComponent<ParticleSystem>().Play();
+        }
+        if(statusEffects.chanelling) {
+            StopAnimation(dash);
         }        
-        StopAnimation(dash);
     }
     private IEnumerator StartAreaSkill(AreaSkill area) {
         statusEffects.StartChanelling(area.channelingTime);
@@ -425,8 +431,10 @@ public class SkillUser : MonoBehaviour {
             particles[i].SetActive(true);
             particles[i].GetComponent<ParticleSystem>().Play();
         }
-        yield return new WaitForSeconds(area.castTime);        
-        StopAnimation(area);
+        yield return new WaitForSeconds(area.castTime);
+        if(!statusEffects.chanelling) {
+            StopAnimation(area);
+        }
     }
     private IEnumerator StartBlockSkill(BlockSkill block) {
         statusEffects.StartChanelling(block.channelingTime);
@@ -477,7 +485,9 @@ public class SkillUser : MonoBehaviour {
             particles[i].SetActive(true);
             particles[i].GetComponent<ParticleSystem>().Play();
         }
-        StopAnimation(block);
+        if(!statusEffects.chanelling) {
+            StopAnimation(block);
+        }
     }
     private void PlayAnimation(string animationName) {
         if(!string.IsNullOrEmpty(animationName)) {

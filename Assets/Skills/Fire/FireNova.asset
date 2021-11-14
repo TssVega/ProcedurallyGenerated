@@ -21,7 +21,7 @@ MonoBehaviour:
   attackType: 3
   skillPointsNeeded: 3
   prerequisites: 06000000
-  manaCost: 3
+  manaCost: 8
   focusedSkill: 1
   channelingTime: 0.5
   castTime: 0.1
@@ -34,7 +34,7 @@ MonoBehaviour:
   castingAnimationName: 
   idleAnimationName: 
   channelingSound: 
-  castingSound: 
+  castingSound: longMagicCast
   projectileData:
     team: 0
     arrowSkill: 0

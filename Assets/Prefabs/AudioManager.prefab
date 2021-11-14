@@ -729,4 +729,40 @@ MonoBehaviour:
     volumeRandomness: 0
     pitchRandomness: 0
     audioSource: {fileID: 0}
+  - audioName: arrowRelease
+    audioClip: {fileID: 8300000, guid: 25665a8396bf37d4bbe0ef51e32d15df, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 1
+    volumeRandomness: 0
+    pitchRandomness: 0.2
+    audioSource: {fileID: 0}
+  - audioName: magicCast
+    audioClip: {fileID: 8300000, guid: 47cf7b84be2235646b9ec9fa1c3e6b5a, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 1
+    volumeRandomness: 0
+    pitchRandomness: 0.2
+    audioSource: {fileID: 0}
+  - audioName: longMagicCast
+    audioClip: {fileID: 8300000, guid: 566317d8164f8a44a9b648486aee6cb7, type: 3}
+    volume: 1
+    currentVolume: 1
+    pitch: 1
+    currentPitch: 1
+    looping: 0
+    randomizeVolume: 0
+    randomizePitch: 1
+    volumeRandomness: 0
+    pitchRandomness: 0.2
+    audioSource: {fileID: 0}
   optionsUI: {fileID: 0}
