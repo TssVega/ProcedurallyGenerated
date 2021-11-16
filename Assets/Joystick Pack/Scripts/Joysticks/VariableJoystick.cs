@@ -49,7 +49,7 @@ public class VariableJoystick : Joystick
         base.OnPointerUp(eventData);
     }
 
-    protected override void HandleInput(float magnitude, Vector2 normalised, Vector2 radius, Camera cam)
+    public override void HandleInput(float magnitude, Vector2 normalised, Vector2 radius, Camera cam)
     {
         if (joystickType == JoystickType.Dynamic && magnitude > moveThreshold)
         {

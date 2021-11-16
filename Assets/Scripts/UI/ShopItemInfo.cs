@@ -41,8 +41,14 @@ public class ShopItemInfo : MonoBehaviour {
 
     public VendorUI vendorUI;
 
+    public TextMeshProUGUI[] offenceStats;
+    public TextMeshProUGUI[] defenceStats;
+
+    private Stats stats;
+
     public void SetItem(Item item, int index) {
         inventory = FindObjectOfType<Player>().inventory;
+        stats = FindObjectOfType<Player>().GetComponent<Stats>();
         this.item = item;
         this.index = index;
         if(item == null) {
@@ -51,6 +57,7 @@ public class ShopItemInfo : MonoBehaviour {
         SetStats();
         SetSellButton();
         UpdateStats();
+        UpdateStatsChart();
     }
     public void Buy() {
         vendorUI.BuyItem(index);
@@ -66,6 +73,37 @@ public class ShopItemInfo : MonoBehaviour {
     }
     private string GT(string str) {
         return LocalizationManager.localization.GetText(str);
+    }
+    public void UpdateStatsChart() {
+        if(offenceStats.Length <= 0 || offenceStats[0] == null) {
+            return;
+        }
+        offenceStats[0].text = stats.fireDamage.ToString(Format);
+        offenceStats[1].text = stats.iceDamage.ToString(Format);
+        offenceStats[2].text = stats.airDamage.ToString(Format);
+        offenceStats[3].text = stats.earthDamage.ToString(Format);
+        offenceStats[4].text = stats.lightningDamage.ToString(Format);
+        offenceStats[5].text = stats.lightDamage.ToString(Format);
+        offenceStats[6].text = stats.darkDamage.ToString(Format);
+        offenceStats[7].text = stats.bashDamage.ToString(Format);
+        offenceStats[8].text = stats.pierceDamage.ToString(Format);
+        offenceStats[9].text = stats.slashDamage.ToString(Format);
+        offenceStats[10].text = stats.bleedDamage.ToString(Format);
+        offenceStats[11].text = stats.poisonDamage.ToString(Format);
+        offenceStats[12].text = stats.curseDamage.ToString(Format);
+        defenceStats[0].text = stats.fireDefence.ToString(Format);
+        defenceStats[1].text = stats.iceDefence.ToString(Format);
+        defenceStats[2].text = stats.airDefence.ToString(Format);
+        defenceStats[3].text = stats.earthDefence.ToString(Format);
+        defenceStats[4].text = stats.lightningDefence.ToString(Format);
+        defenceStats[5].text = stats.lightDefence.ToString(Format);
+        defenceStats[6].text = stats.darkDefence.ToString(Format);
+        defenceStats[7].text = stats.bashDefence.ToString(Format);
+        defenceStats[8].text = stats.pierceDefence.ToString(Format);
+        defenceStats[9].text = stats.slashDefence.ToString(Format);
+        defenceStats[10].text = stats.bleedDefence.ToString(Format);
+        defenceStats[11].text = stats.poisonDefence.ToString(Format);
+        defenceStats[12].text = stats.curseDefence.ToString(Format);
     }
     private void UpdateStats() {
         currentItemDescription.text = GT($"{item.seed}Desc");

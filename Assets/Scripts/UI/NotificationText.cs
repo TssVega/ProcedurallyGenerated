@@ -17,6 +17,10 @@ public class NotificationText : MonoBehaviour {
     private void Start() {
         gameObject.SetActive(false);
     }
+    private void OnDisable() {
+        StopAllCoroutines();
+        notificationText.color = new Color(notificationText.color.r, notificationText.color.g, notificationText.color.b, 0f);
+    }
     public void SetText(string str, Color color) {
         gameObject.SetActive(true);
         if(textCoroutine != null && notificationText.color.a > 0f) {

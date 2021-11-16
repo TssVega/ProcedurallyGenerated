@@ -25,7 +25,7 @@ public class Passives : MonoBehaviour {
         toughSkinOnline = false;
     }
     private void OnEnable() {
-        if(skillUser.acquiredSkills.Contains(toughSkin)) {
+        if(toughSkin && skillUser.acquiredSkills.Contains(toughSkin)) {
             toughSkinCounter = toughSkinCooldown;
             toughSkinOnline = true;
         }
@@ -34,33 +34,33 @@ public class Passives : MonoBehaviour {
         }
     }
     private void Update() {
-        if(skillUser.acquiredSkills.Contains(toughSkin) && toughSkinCounter > 0) {
+        if(toughSkin && skillUser.acquiredSkills.Contains(toughSkin) && toughSkinCounter > 0) {
             toughSkinCounter -= Time.deltaTime;
         }
-        else if(skillUser.acquiredSkills.Contains(toughSkin)) {
+        else if(toughSkin && skillUser.acquiredSkills.Contains(toughSkin)) {
             toughSkinOnline = true;
         }
     }
     public float OnHitTaken(float damage, AttackType type, Stats defender) {        
         float reducedDamage = damage;
-        if(skillUser.acquiredSkills.Contains(toughSkin) && toughSkinOnline) {
+        if(toughSkin && skillUser.acquiredSkills.Contains(toughSkin) && toughSkinOnline) {
             reducedDamage = damage / (defender.vitality * 0.2f);
             toughSkinOnline = false;
             toughSkinCounter = toughSkinCooldown;
         }
-        else if(skillUser.acquiredSkills.Contains(toughSkin) && !toughSkinOnline) {
+        else if(toughSkin && skillUser.acquiredSkills.Contains(toughSkin) && !toughSkinOnline) {
             toughSkinCounter = toughSkinCooldown;
         }
         return reducedDamage;
     }
     public float OnHit(float damage) {
-        if(skillUser.acquiredSkills.Contains(clarity)) {
+        if(clarity && skillUser.acquiredSkills.Contains(clarity)) {
             damage *= clarityDamageBoostRate;
         }
         return damage;
     }
     public void OnEnemyKill() {
-        if(skillUser.acquiredSkills.Contains(lifeVamp)) {
+        if(lifeVamp && skillUser.acquiredSkills.Contains(lifeVamp)) {
             status.Heal(lifeVampHeal);
         }        
     }

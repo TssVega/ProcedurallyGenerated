@@ -44,6 +44,7 @@ public class LevelGeneration : MonoBehaviour {
     private List<GameObject> activeStalagmites;
 
     private GameObject blacksmith;
+    private GameObject campfire;
 
     private void Awake() {
         worldGeneration = FindObjectOfType<WorldGeneration>();
@@ -129,6 +130,7 @@ public class LevelGeneration : MonoBehaviour {
         GenerateStalagmites();
         poolGeneration.GeneratePools(0, layout.seed);
         GenerateBlacksmith();
+        GenerateCampfire();
         //mushroomGeneration.GenerateMushrooms(0, layout.seed);        
     }
     private void GenerateStalagmites() {
@@ -231,6 +233,29 @@ public class LevelGeneration : MonoBehaviour {
     private Vector3Int GetRandomWallCoordinates() {
         return wallCoordinates[pseudoRandomForTorches.Next(0, wallCoordinates.Count)];
     }
+    private void GenerateCampfire() {
+        if(layout.worldCoordinates[0] == 0 && layout.worldCoordinates[1] == 0) {
+            GameObject campfire = ObjectPooler.objectPooler.GetPooledObject("Campfire");
+            Vector3Int randomLocation = Vector3Int.zero;
+            bool valid = false;
+            while(!valid) {
+                // pseudoRandomForMushrooms.Next(3, levelGeneration.layout.levelSize - 4)
+                randomLocation = new Vector3Int(pseudoRandomForPlants.Next(3, layout.levelSize - 4), pseudoRandomForPlants.Next(3, layout.levelSize - 4), 0);
+                if(CheckLocation(randomLocation.x, randomLocation.y) && !occupiedCoordinates.Contains(randomLocation)) {
+                    valid = true;
+                }
+            }
+            occupiedCoordinates.Add(randomLocation);
+            campfire.transform.position = GetPreciseLocation(randomLocation.x, randomLocation.y);
+            campfire.transform.rotation = Quaternion.identity;
+            this.campfire = campfire;
+            campfire.SetActive(true);
+        }
+    }
+    private void ClearCampfire() {
+        campfire?.SetActive(false);
+        campfire = null;
+    }
     private void GenerateBlacksmith() {
         if(layout.worldCoordinates[0] == 0 && layout.worldCoordinates[1] == 0) {
             GameObject smith = ObjectPooler.objectPooler.GetPooledObject("Blacksmith");
@@ -273,9 +298,10 @@ public class LevelGeneration : MonoBehaviour {
         ClearTorches();
         ClearCrystals();
         ClearStalagmites();
-        poolGeneration.ClearPools();
-        occupiedCoordinates.Clear();
+        poolGeneration.ClearPools();        
         ClearBlacksmith();
+        ClearCampfire();
+        occupiedCoordinates.Clear();
         gameObject.SetActive(false);
     }    
     private static int ConvertTileIdToTilesetIndex(int id) {

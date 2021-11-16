@@ -7,6 +7,7 @@ public class AreaSkill : ActiveSkill {
 
     public float damageRate;
     public int hitTime = 1;
+    public string hitSound;
     public float duration;
     public GameObject hitbox;
     public bool warn = false;
@@ -53,7 +54,7 @@ public class AreaSkill : ActiveSkill {
         clone.transform.rotation = rot;
         clone.SetActive(true);*/
         if(attackerStats.inventory && checkRange) {
-            float range = 0f;
+            float range;
             float distance = Vector3.Distance(attackerStats.transform.position, targetStatus.transform.position);
             Weapon w = attackerStats.inventory.equipment[0] as Weapon;
             if(w) {

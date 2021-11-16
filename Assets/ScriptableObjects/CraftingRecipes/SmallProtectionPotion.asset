@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfcfe2b21785eb54688c47ead057ca9b, type: 3}
+  m_Name: SmallProtectionPotion
+  m_EditorClassIdentifier: 
+  strengthRequirement: 0
+  agilityRequirement: 0
+  dexterityRequirement: 0
+  intelligenceRequirement: 0
+  faithRequirement: 0
+  wisdomRequirement: 0
+  vitalityRequirement: 11
+  charismaRequirement: 0
+  output: {fileID: 11400000, guid: 262123e488ab58d4ebdade39b9989dd4, type: 2}
+  input0: {fileID: 0}
+  input1: {fileID: 0}
+  input2: {fileID: 0}
+  input3: {fileID: 0}
+  input4: {fileID: 11400000, guid: 9f4331579d008ab479e167b6b46f0ad2, type: 2}
+  input5: {fileID: 0}
+  input6: {fileID: 0}
+  input7: {fileID: 11400000, guid: 942eabc6346452a4990010cb75e6102c, type: 2}
+  input8: {fileID: 0}

@@ -492,7 +492,7 @@ public class StatusEffects : MonoBehaviour {
             damage *= extraDamage;
         }
         bool backstabbedByNastac = false;
-        if(RelativePosition.GetRelativePosition(attacker.transform, transform) == Relative.Behind) {
+        if(RelativePosition.GetRelativePosition(attacker.transform, transform) == Relative.Behind && skill is AreaSkill) {
             if(attacker.player && attacker.player.raceIndex == 10) {
                 backstabbedByNastac = true;
             }
@@ -882,6 +882,10 @@ public class StatusEffects : MonoBehaviour {
                 poisonStacksCounter = StartCoroutine(DecreasePoisonStacks());
             }
         }
+    }
+    public void RemovePoisonStacks(int amount) {
+        poisonStacks -= amount;
+        poisonStacks = Mathf.Clamp(poisonStacks, 0, stats.poisonThreshold);
     }
     // Gradually decrease stack count over time
     private IEnumerator DecreasePoisonStacks() {

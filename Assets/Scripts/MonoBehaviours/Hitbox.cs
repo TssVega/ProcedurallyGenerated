@@ -14,6 +14,17 @@ public class Hitbox : MonoBehaviour {
 
     public List<Collider2D> toHit;
 
+    private Player player;
+
+    private float DistanceToPlayer {
+        get {
+            return player ? Vector3.Distance(transform.position, player.transform.position) : 100f;
+        }
+    }
+
+    private void Awake() {
+        player = FindObjectOfType<Player>();
+    }
     private void OnDisable() {
         toHit.Clear();
         hitTimes = 0;
@@ -39,6 +50,9 @@ public class Hitbox : MonoBehaviour {
             periodTimer -= Time.fixedDeltaTime;
         }
         if(periodTimer <= 0f && hitTimes < skill.hitTime && toHit.Count > 0) {
+            if(!string.IsNullOrEmpty(skill.hitSound)) {
+                AudioSystem.audioManager.PlaySound(skill.hitSound, DistanceToPlayer);
+            }
             Hit();
             hitTimes++;
             periodTimer = skill.duration / skill.hitTime;

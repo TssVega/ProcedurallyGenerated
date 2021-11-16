@@ -49,8 +49,8 @@ public class Sound {
         if(distance > 25f) {
             audioSource.volume = 0f;
         }
-        else if(distance > 5f) {
-            audioSource.volume = currentVolume / (distance * 0.2f);
+        else if(distance > 3f) {
+            audioSource.volume = Mathf.Clamp01(currentVolume / Mathf.Clamp(distance * 0.33f, 1f, 20f));
         }        
         else {
             audioSource.volume = currentVolume;

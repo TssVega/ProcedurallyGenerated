@@ -61,9 +61,9 @@ public class Inventory : MonoBehaviour {
         lucks = new int[InventorySize];
         equipmentLucks = new int[EquipmentSize];
         craftingSlots = new Item[gridSize];
-        player = FindObjectOfType<Player>();
+        player = GetComponent<Player>();
         playerLight = GetComponent<Light2D>();
-        stats = player.stats;
+        stats = player.GetComponent<Stats>();
         if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name.Equals("Levels")) {
             for(int i = 0; i < itemSlots.Length; i++) {
                 itemSlots[i].GetComponent<ItemSlot>().slotIndex = i;
@@ -607,9 +607,10 @@ public class Inventory : MonoBehaviour {
             if(w != null && CanAddToInventory() && (w.weaponType == WeaponType.TwoHanded || w.weaponType == WeaponType.Dagger)) {
                 UnequipItem((int)EquipSlot.RightHand, GetEmptyInventorySlot());
             }
+            /*
             else if(equipment[(int)EquipSlot.LeftHand] && CanAddToInventory()) {
                 UnequipItem((int)EquipSlot.LeftHand, GetEmptyInventorySlot());
-            }
+            }*/
             player.SetItem(s);
         }
         else if(item is Ring) {
@@ -624,6 +625,7 @@ public class Inventory : MonoBehaviour {
         }
         UpdateStats();
         UpdateEquipmentSlot((int)item.slot);
+        player.UpdateMaxHealth();
     }
     public (int, int) GetGoldCountAndIndex() {
         for(int i = 0; i < InventorySize; i++) {
@@ -746,7 +748,7 @@ public class Inventory : MonoBehaviour {
                         UpdateSlot(i);
                         skillUI.UpdateQuantities();
                         if(playSound) {
-                            AudioSystem.audioManager.PlaySound("pickItem", 0f);
+                            AudioSystem.audioManager.PlaySound("addToInventory", 0f);
                         }
                         return true;
                     }
@@ -761,7 +763,7 @@ public class Inventory : MonoBehaviour {
                         UpdateSlot(i);
                         skillUI.UpdateQuantities();
                         if(playSound) {
-                            AudioSystem.audioManager.PlaySound("pickItem", 0f);
+                            AudioSystem.audioManager.PlaySound("addToInventory", 0f);
                         }
                         return true;                        
                     }
@@ -789,7 +791,7 @@ public class Inventory : MonoBehaviour {
                 lucks[i] = inventory[i].luck;
                 UpdateSlot(i);
                 skillUI.UpdateQuantities();
-                AudioSystem.audioManager.PlaySound("pickItem", 0f);
+                AudioSystem.audioManager.PlaySound("addToInventory", 0f);
                 return true;
             }            
         }
@@ -883,6 +885,7 @@ public class Inventory : MonoBehaviour {
         UpdateEquipmentSlot(fromSlot);
         UpdateSlot(toSlot);
         CheckLights(null);
+        player.UpdateMaxHealth();
     }
     private void UpdateSpritesOnUnequip(Item item) {
         if(item is Weapon) {

@@ -33,10 +33,19 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4c2d4f4581dab0644a87647599b83156, type: 2}
   - {fileID: 11400000, guid: 3208a00f62194634fa3858e7128a3ee8, type: 2}
   - {fileID: 11400000, guid: 7c14636b1c68ed74d809c3015d836a3a, type: 2}
+  - {fileID: 11400000, guid: e25cff4aa86fd03448d65e0857802834, type: 2}
+  - {fileID: 11400000, guid: 2ad44cefbb6511a47915091cc96eb3d3, type: 2}
+  - {fileID: 11400000, guid: 086fe1b1fc89a4d46bef817d928c0d5d, type: 2}
+  - {fileID: 11400000, guid: 496d96bb1fba0ea49b228c91e2eb62c2, type: 2}
+  - {fileID: 11400000, guid: 3bf39a0628d226548b04594ee76146ba, type: 2}
+  - {fileID: 11400000, guid: 783a5eeb4618260449ee208c4727d479, type: 2}
+  - {fileID: 11400000, guid: 03700fe6b7ae91041b2d7f81ca71a23d, type: 2}
+  - {fileID: 11400000, guid: 40ad3c7e4479cf246b568bbf275b1593, type: 2}
   generalRecipes:
   - {fileID: 11400000, guid: b845cfdfc5b486c45a72e2da3ba56f88, type: 2}
   - {fileID: 11400000, guid: abb807dad214b624592abde6e88f22bf, type: 2}
   - {fileID: 11400000, guid: 4c2d4f4581dab0644a87647599b83156, type: 2}
+  - {fileID: 11400000, guid: 7c14636b1c68ed74d809c3015d836a3a, type: 2}
   strengthRecipes:
   - {fileID: 11400000, guid: 675b4a04af47351408c7024d165f33c7, type: 2}
   - {fileID: 11400000, guid: 605abf7fc1b92a64098ed7995aeca1af, type: 2}
@@ -59,16 +68,36 @@ MonoBehaviour:
   dexterityRecipes:
   - {fileID: 11400000, guid: 01d551ec8d99de8488ab7919a4e1aa23, type: 2}
   - {fileID: 11400000, guid: 81092dcca58ac0f4982183fdbf8b0565, type: 2}
+  - {fileID: 11400000, guid: e25cff4aa86fd03448d65e0857802834, type: 2}
+  - {fileID: 11400000, guid: 2ad44cefbb6511a47915091cc96eb3d3, type: 2}
   - {fileID: 11400000, guid: 605abf7fc1b92a64098ed7995aeca1af, type: 2}
+  - {fileID: 11400000, guid: 086fe1b1fc89a4d46bef817d928c0d5d, type: 2}
+  - {fileID: 11400000, guid: 496d96bb1fba0ea49b228c91e2eb62c2, type: 2}
   - {fileID: 11400000, guid: 710c2fcfb9394c64c9d681c0cb348cab, type: 2}
+  - {fileID: 11400000, guid: 3bf39a0628d226548b04594ee76146ba, type: 2}
+  - {fileID: 11400000, guid: 783a5eeb4618260449ee208c4727d479, type: 2}
   - {fileID: 11400000, guid: 1a3f20cf62ac7a04d890aa34d08205c8, type: 2}
   - {fileID: 11400000, guid: 675b4a04af47351408c7024d165f33c7, type: 2}
   - {fileID: 11400000, guid: de5e63ec20be6d7478354f7a12ff3dfc, type: 2}
   - {fileID: 11400000, guid: b542193cb7f6b184cb3a133493a286a1, type: 2}
   intelligenceRecipes:
+  - {fileID: 11400000, guid: e25cff4aa86fd03448d65e0857802834, type: 2}
+  - {fileID: 11400000, guid: 2ad44cefbb6511a47915091cc96eb3d3, type: 2}
+  - {fileID: 11400000, guid: 086fe1b1fc89a4d46bef817d928c0d5d, type: 2}
+  - {fileID: 11400000, guid: 496d96bb1fba0ea49b228c91e2eb62c2, type: 2}
+  - {fileID: 11400000, guid: 3bf39a0628d226548b04594ee76146ba, type: 2}
+  - {fileID: 11400000, guid: 783a5eeb4618260449ee208c4727d479, type: 2}
   - {fileID: 11400000, guid: 3208a00f62194634fa3858e7128a3ee8, type: 2}
-  faithRecipes: []
+  faithRecipes:
+  - {fileID: 11400000, guid: 086fe1b1fc89a4d46bef817d928c0d5d, type: 2}
+  - {fileID: 11400000, guid: 496d96bb1fba0ea49b228c91e2eb62c2, type: 2}
   wisdomRecipes:
+  - {fileID: 11400000, guid: e25cff4aa86fd03448d65e0857802834, type: 2}
+  - {fileID: 11400000, guid: 2ad44cefbb6511a47915091cc96eb3d3, type: 2}
+  - {fileID: 11400000, guid: 086fe1b1fc89a4d46bef817d928c0d5d, type: 2}
+  - {fileID: 11400000, guid: 496d96bb1fba0ea49b228c91e2eb62c2, type: 2}
+  - {fileID: 11400000, guid: 3bf39a0628d226548b04594ee76146ba, type: 2}
+  - {fileID: 11400000, guid: 783a5eeb4618260449ee208c4727d479, type: 2}
   - {fileID: 11400000, guid: a0bcef0087c3f1a40843974a4e6401dd, type: 2}
   vitalityRecipes:
   - {fileID: 11400000, guid: 3f664fcf765406c4b8ccca98d20523e8, type: 2}

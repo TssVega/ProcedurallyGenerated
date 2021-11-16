@@ -67,7 +67,7 @@ public static class CalculateDamage {
             case AttackType.None:
                 break;
             default:
-                Debug.LogError("No AttackType found");
+                Debug.LogError("No AttackType");
                 break;
         }
         damage = attacker.status.blessed ? damage * attacker.status.blessRate : damage;
@@ -86,8 +86,17 @@ public static class CalculateDamage {
     }
     */
     private static float CalculateDecreasedDamage(float damage, float armor) {
+        float reducedDamage;
+        if(armor >= 0f) {
+            reducedDamage = damage * (100f / (100f + armor));
+        }
+        else {
+            reducedDamage = damage * (2f - 100f / (100f - armor));
+        }
+        /*
         float damageReductionRate = (Mathf.Log10(armor) - 0.9f + armor * 0.02f) * 0.2f;
-        damage *= 1f - damageReductionRate;
+        damage *= 1f - damageReductionRate;*/
+        damage = reducedDamage;
         damage = Mathf.Clamp(damage, 0f, float.MaxValue);
         return damage;        
     }

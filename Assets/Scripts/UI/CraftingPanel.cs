@@ -1058,7 +1058,7 @@ public class CraftingPanel : MonoBehaviour {
         if(currentPageIndex < 0) {
             currentPageIndex = pageCounts[currentTabIndex] - 1;
         }
-        else if(currentPageIndex >= pageCounts[currentTabIndex] - 1) {
+        else if(currentPageIndex >= pageCounts[currentTabIndex]) {
             currentPageIndex = 0;
         }
         ClearGrids();

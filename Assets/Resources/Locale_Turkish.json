@@ -1,4 +1,7 @@
 {
+    "smallProtectionPotion":"Küçük Korunma İksiri",
+    "smallSwiftnessPotion":"Küçük Hız İksiri",
+    "smallAntidote":"Küçük Panzehir",
     "aeromancer":"Hava Büyücüsü",
     "assassin":"Suikastçı",
     "cryomancer":"Buz Büyücüsü",
@@ -617,5 +620,16 @@
 "AquaOrbs":"Su Küreleri",
 "AquaOrbsDesc":"Yakınında 3 su küresi ortaya çıkar. Bu küreler seni iyileştirir ve rakiplere hasar verir.",
 "Pyromania":"Piromani",
-"PyromaniaDesc":"Kendini yak ve yavaşça mana yenile."
+"PyromaniaDesc":"Kendini yak ve yavaşça mana yenile.",
+"wizardHat":"Sihirbaz Şapkası",
+"executionersHelm":"Cellat'ın Kaskı",
+"shadeCap":"Gölge Kep",
+"wizardRobe":"Sihirbaz Kaftanı",
+"shadeArmor":"Gölge Zırh",
+"helgafelliArmor":"Helgafelli Zırhı",
+"wizardPants":"Sihirbaz Pantolonu",
+"executionersPants":"Cellat'ın Pantolonu",
+"shadeLeggings":"Gölge Bacak Zırhı",
+"helgafelliLeggings":"Helgafelli Bacak Zırhı",
+"executionersArmor":"Cellat'ın Zırhı"
 }

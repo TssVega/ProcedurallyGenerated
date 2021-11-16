@@ -9,6 +9,8 @@ public class Potion : Item, IUsable {
     public float power = 20f;
 
     private const float levonaEnergyRate = 0.6f;
+    private const float speedBoostDurationMultiplier = 0.4f;
+    private const float protectionDurationMultiplier = 0.3f;
 
     public ItemDatabase itemDatabase;
 
@@ -19,6 +21,17 @@ public class Potion : Item, IUsable {
                 break;
             case PotionType.Mana:
                 status.GiveMana(power);
+                break;
+            case PotionType.Antidote:
+                status.StopPoison();
+                status.RemovePoisonStacks((int)power);
+                break;
+            case PotionType.Speed:
+                // For 20 power, this potion provides %20 speed boost for 8 seconds (20 * 0.4)
+                status.StartSpeedUp(1f + power * 0.01f, power * speedBoostDurationMultiplier);
+                break;
+            case PotionType.Protection:
+                status.StartShield(power * 0.01f, power * protectionDurationMultiplier);
                 break;
         }
         // Add a vial to inventory after you consume a potion
@@ -32,5 +45,5 @@ public class Potion : Item, IUsable {
 }
 
 public enum PotionType {
-    Healing, Mana
+    Healing, Mana, Antidote, Speed, Protection
 }

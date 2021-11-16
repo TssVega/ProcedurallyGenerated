@@ -1,4 +1,7 @@
 {
+    "smallProtectionPotion":"Small Protection Potion",
+    "smallSwiftnessPotion":"Small Swiftness Potion",
+    "smallAntidote":"Small Antidote",
     "aeromancer":"Aeromancer",
     "assassin":"Assassin",
     "cryomancer":"Cryomancer",
@@ -630,5 +633,16 @@
 "AquaOrbs":"Aqua Orbs",
 "AquaOrbsDesc":"3 water orbs appear near you. They heal you on contact and damage enemies.",
 "Pyromania":"Pyromania",
-"PyromaniaDesc":"Burn yourself to slowly generate mana."
+"PyromaniaDesc":"Burn yourself to slowly generate mana.",
+"wizardHat":"Wizard Hat",
+"executionersHelm":"Executioner's Helm",
+"shadeCap":"Shade Cap",
+"wizardRobe":"Wizard Robe",
+"shadeArmor":"Shade Armor",
+"helgafelliArmor":"Helgafelli Armor",
+"wizardPants":"Wizard Pants",
+"executionersPants":"Executioner's Pants",
+"shadeLeggings":"Shade Leggings",
+"helgafelliLeggings":"Helgafelli Leggings",
+"executionersArmor":"Executioner's Armor"
 }

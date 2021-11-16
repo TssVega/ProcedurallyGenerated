@@ -151,16 +151,16 @@ public class PlayerController : MonoBehaviour {
         if(!playerStats.living) {
             return;
         }
-        if(!(statusEffects.stunned || statusEffects.immobilized || statusEffects.chanelling)) {
-            // Look at the locked enemy
-            if(lockedOn && nearestEnemy) {
-                transform.eulerAngles = new Vector3(
-                        0, 0, Vector3.SignedAngle(
-                            Vector3.up, nearestEnemy.transform.position - transform.position, Vector3.forward));
-                rb2D.angularVelocity = 0;
-            }
+        if(!(statusEffects.stunned || statusEffects.immobilized || statusEffects.chanelling)) {            
             // If there is an input            
             if(joystick && joystickInput.sqrMagnitude > 0.01f && !statusEffects.chanelling && !statusEffects.stunned && !statusEffects.immobilized && joystick.gameObject.activeInHierarchy) {
+                // Look at the locked enemy
+                if(lockedOn && nearestEnemy) {
+                    transform.eulerAngles = new Vector3(
+                            0, 0, Vector3.SignedAngle(
+                                Vector3.up, nearestEnemy.transform.position - transform.position, Vector3.forward));
+                    rb2D.angularVelocity = 0;
+                }
                 // Look at movement direction
                 if(!lockedOn) {
                     transform.eulerAngles = new Vector3(
@@ -172,6 +172,10 @@ public class PlayerController : MonoBehaviour {
             }
             else if(statusEffects.stunned || statusEffects.immobilized) {
                 rb2D.velocity = Vector2.zero;
+            }
+            else if(joystick && !joystick.gameObject.activeInHierarchy) {
+                rb2D.velocity = Vector2.zero;
+                joystick.OnPointerUp(null);
             }
             if(horizontalInput != 0 || verticalInput != 0) {
                 Vector3 movingDirection = new Vector3(horizontalInput, verticalInput, 0f);

@@ -34,9 +34,11 @@ MonoBehaviour:
   channelingSound: 
   castingSound: 
   damageRate: 2
+  hitTime: 1
   duration: 0.1
   hitbox: {fileID: 6890043100139161156, guid: 0c64a208e95748c46be1f67b7a7d20b1, type: 3}
   warn: 0
+  kick: 0
   checkRange: 0
   hitboxWarning: {fileID: 0}
   hitboxWarningScale: 1

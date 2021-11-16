@@ -41,6 +41,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ea938132ff53c4644940e3c7b5054c2f, type: 2}
   - {fileID: 11400000, guid: 81ac777a36456394f8724ddad4a0bd51, type: 2}
   - {fileID: 11400000, guid: 423508b7f7f2c6e4e9aa1823e239f6a3, type: 2}
+  - {fileID: 11400000, guid: ae647447246d08b46a67ae9d22a4a5a2, type: 2}
+  - {fileID: 11400000, guid: 9febcf9b109eaee4795ad7d6635421e8, type: 2}
   enemySkills:
   - {fileID: 11400000, guid: 6319b07559cc0a442aeb41d70126ed5d, type: 2}
   - {fileID: 11400000, guid: 1eda581d62f761e41b0a10b94499693d, type: 2}
