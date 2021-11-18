@@ -92,6 +92,7 @@ public class SkillUser : MonoBehaviour {
             return;
         }
         if(!statusEffects.CanUseMana(skill.manaCost)) {
+            AudioSystem.audioManager.PlaySound("menuButton", 0f);
             return;
         }
         if(skill is ProjectileSkill) {
